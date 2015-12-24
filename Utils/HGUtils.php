@@ -479,4 +479,227 @@ class HGUtils
     
     return new Response(json_encode(array('valid' => true)));
   }
+  
+   public static function mbUcfirst($str, $encoding = "UTF-8", $lower_str_end = false)
+   {
+      $first_letter = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding);
+      $str_end = "";
+      if ($lower_str_end)
+      {
+        $str_end = mb_strtolower(mb_substr($str, 1, mb_strlen($str, $encoding), $encoding), $encoding);
+      }
+      else
+      {
+        $str_end = mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
+      }
+      $str = $first_letter . $str_end;
+
+      return $str;
+    }
+
+    public static function stripNewlines($string)
+    {
+      if (!is_string($string))
+      {
+        return $string;
+      }
+
+      return str_replace(array("\r", "\n"), array(), $string);
+    }
+
+  public static function num2text($nsz)
+  {
+    $hatv=array('','ezer','millió','milliárd','billió','billiárd','trillió','trilliárd', 'kvadrillió','kvadrilliárd','kvintillió','kvintilliárd','szextillió',
+        'szextilliárd','szeptillió','szeptilliárd','oktillió','oktilliárd', 'nonillió','nonilliárd','decillió','decilliárd','centillió');
+
+    $tizesek=array('','','harminc','negyven','ötven','hatvan','hetven','nyolcvan','kilencven');
+    $szamok=array('egy','kettő','három','négy','öt','hat','hét','nyolc','kilenc');
+
+    $tsz='';
+    $ej=($nsz<0?'- ':'');
+    $sz=trim(''.floor($nsz));
+    $hj=0;
+    if ($sz=='0')
+    {
+      $tsz='nulla';
+    }
+    else
+    {
+      while ($sz>'')
+      {
+        $hj++;
+        $t='';
+        $wsz=substr('00'.substr($sz,-3),-3);
+        $tizesek[0]=($wsz[2]=='0'?'tíz':'tizen');
+        $tizesek[1]=($wsz[2]=='0'?'húsz':'huszon');
+        if ($c=$wsz[0])
+        {
+          $t=$szamok[$c-1].'száz';
+        }
+        if ($c=$wsz[1])
+        {
+          $t.=$tizesek[$c-1];
+        }
+        if ($c=$wsz[2])
+        {
+          $t.=$szamok[$c-1];
+        }
+        //        $tsz=($t?$t.$hatv[$hj-1]:'').($tsz==''?'':'-').$tsz;
+        $tsz=($t?$t.$hatv[$hj-1]:'').($tsz==''?'':($nsz>2000?'-':'')).$tsz;
+        $sz=substr($sz,0,-3);
+      }
+    }
+
+    return ucfirst($ej.$tsz);
+  }
+  
+  public static function getKozteruletJellegek()
+  {
+     return array('árok', 'átjáró', 'dűlősor', 'dűlőút', 'erdősor', 'fasor', 'forduló', 'gát', 'határsor', 'határút', 'híd', 'kert', 'körönd', 'körtér', 'körút', 'köz', 'lakótelep', 'lejáró', 'lejtő', 'lépcső', 'liget', 'mélyút', 'orom', 'országút', 'ösvény', 'park', 'part', 'pincesor', 'rakpart', 'sétány', 'sétaút', 'sor', 'sugárút', 'tere', 'tér', 'turistaút', 'udvar', 'utca', 'út', 'útja', 'üdülőpart');
+  }
+
+  public static function removeAccents($text)
+  {
+    return str_replace(array('Á', 'É', 'Í', 'Ó', 'Ö', 'Ő', 'Ú', 'Ü', 'Ű', 'á', 'é', 'í', 'ó', 'ö', 'ő', 'ú', 'ü', 'ű'),
+                       array('A', 'E', 'I', 'O', 'O', 'O', 'U', 'U', 'U', 'a', 'e', 'i', 'o', 'o', 'o', 'u', 'u', 'u'), $text);
+  }
+
+  public static function xmlEscape($string)
+  {
+    return str_replace(array('&', '<', '>', '\'', '"'), array('&amp;', '&lt;', '&gt;', '&apos;', '&quot;'), $string);
+  }
+
+  /**
+   *  Egy tömb permutációja
+   *
+   **/
+  public static function permuteUnique($items, $perms = array(), &$return = array()) 
+  {
+    if (empty($items)) 
+    {
+      $return[] = $perms;
+    } 
+    else 
+    {
+      sort($items);
+      $prev = false;
+      for ($i = count($items) - 1; $i >= 0; --$i) 
+      {
+          $newitems = $items;
+          $arr = array_splice($newitems, $i, 1);
+          $tmp = $arr[0];
+          if ($tmp != $prev) 
+          {
+            $prev = $tmp;
+            $newperms = $perms;
+            array_unshift($newperms, $tmp);
+            self::permuteUnique($newitems, $newperms, $return);
+          }
+      }
+      
+      return $return;
+    }
+  }
+  
+
+   /**
+    * DatePeriod hívás shortcut. Két dátum között visszaadja az összes, $interval paraméternek megfelelő dátumot.
+    * Ha a végdátum 00:00:00 időpontot tartalmaz akkor nem lesz benne az eredményben, egyébként igen.
+    * @param date $from
+    * @param date $to
+    * @param string $interval
+    * @param bool $returnArray Tömbben adja vissza a dátumokat?
+    * @return DatePeriod|array
+    */
+   public static function getDatePeriod($from, $to, $interval = null, $returnArray = false)
+   {
+     $period = new \DatePeriod(self::createDateTime($from), new \DateInterval($interval ?: 'P1D'), self::createDateTime($to));
+
+     if ($returnArray)
+     {
+       $ret = array();
+       foreach ($period as $dt)
+       {
+         $ret[] = $dt->format('Y-m-d');
+       }
+       $period = $ret;
+     }
+
+     return $period;
+   }
+   
+   public static function getDateDiff($from, $to, $format = null)
+   {
+	  $from = self::createDateTime($from);
+      $to = self::createDateTime($to);
+
+      $interval = $from->diff($to);
+      
+      if (empty($format))
+      {
+		return $interval->days;
+	  }
+     
+      return $interval->format($format);	 
+   }
+   
+  /**
+   * DateTime készítése egy bejövő dátumból vagy timestampból
+   * @param DateTime|string|int $date
+   * @param bool $throwOnError
+   * @return DateTime|null
+   */
+  public static function createDateTime($date, $throwOnError = false)
+  {
+    if (!is_null($date) && !($date instanceof \DateTime))
+    {
+      try
+      {
+        if (ctype_digit($date))
+        {
+          $dt = new \DateTime();
+          $dt->setTimestamp($date);
+
+          $date = $dt;
+        }
+        else
+        {
+          $date = new \DateTime($date);
+        }
+      }
+      catch (\Exception $e)
+      {
+        if ($throwOnError)
+        {
+          throw $e;
+        }
+
+        $date = null;
+      }
+    }
+
+    return $date;
+  }
+
+  /**
+   * Egy tömb minden eleme elé rak egy szöveget
+   * @param array $choices
+   * @param string $prefix
+   * @return array
+   */
+  public static function prefixArrayElements(array $choices, $prefix)
+  {
+    $data = array();
+    foreach ($choices as $choice)
+    {
+      $data[$choice] = $prefix.$choice;
+    }
+
+    return $data;
+  }
+
+  public static function htmlToText($html)
+  {
+    return preg_replace( "/\n\s+/", "\n", rtrim(html_entity_decode(strip_tags($html))));
+  }
 }
