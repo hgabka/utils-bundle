@@ -1,0 +1,35 @@
+parameters:
+#    hg_utils.example.class: HG\UtilsBundle\Example
+
+services:
+#    hg_utils.example:
+#        class: %hg_utils.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    hg_utils.type.plain:
+        class: HG\UtilsBundle\Form\Type\PlainType
+        tags:
+            - { name: form.type, alias: plain }
+            
+    hg_utils.type.uploadify:
+        class: HG\UtilsBundle\Form\Type\UploadifyType
+        calls:
+            - [setParamName, ['%hg_utils.session_param_name%']]
+            - [setRouter, ['@router']]
+        tags:
+            - { name: form.type, alias: uploadify }
+            
+    hg_utils.locale_listener:
+        class: HG\UtilsBundle\EventListener\HGEventSubscriber
+        arguments: ["%kernel.default_locale%", '%hg_utils.session_from_request%', '%hg_utils.session_param_name%']
+        tags:
+            - { name: kernel.event_subscriber }
+            
+    hg_utils.form.type.upload:
+        class: HG\UtilsBundle\Form\Type\UploadType
+        tags:
+            - { name: form.type, alias: uploadify_upload }
+            
+    hg_utils.form.type.datepicker:
+        class: HG\UtilsBundle\Form\Type\DatepickerType
+        tags:
+            - { name: form.type, alias: datepicker }            

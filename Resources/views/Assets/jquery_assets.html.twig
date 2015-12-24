@@ -1,0 +1,11 @@
+{% if version is not defined or version is empty %}
+  {% set version='1.10.2' %}
+{% endif %}  
+<script type="text/javascript" src="{{ asset('bundles/hgutils/js/jquery-' ~ version ~ '.min.js') }}"></script>
+{% if with_ui is not defined or with_ui is not empty %}
+  <script type="text/javascript" src="{{ asset('bundles/hgutils/js/plugins/jquery-ui-1.10.3.custom.min.js') }}"></script>
+  {% if ui_theme is not defined or ui_theme is empty %}
+    {% set ui_theme = 'ui-lightness' %}
+  {% endif %}  
+  <link rel="stylesheet" type="text/css" href="{{ asset('bundles/hgutils/css/' ~ ui_theme ~ '/jquery-ui-1.10.3.custom.min.css') }}" />
+{% endif %}

@@ -1,0 +1,3 @@
+hg_utils_uploadify:
+    pattern:  /uploadify/{name}/{formType}/{controller}
+    defaults: { _controller: HGUtilsBundle:Default:uploadify, controller: '' }

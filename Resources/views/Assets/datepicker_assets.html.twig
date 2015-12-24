@@ -1,0 +1,4 @@
+{% if locale is not defined or locale is empty %}
+  {% set locale='hu' %}
+{% endif %}  
+<script src="{{ asset('bundles/hgutils/js/i18n/jquery.ui.datepicker-' ~ locale ~ '.js')}}"></script>

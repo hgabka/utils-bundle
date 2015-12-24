@@ -1,0 +1,29 @@
+{
+    "name": "hgabka/utils-bundle",
+    "type": "symfony-bundle",
+    "description": "hgabka UtilsBundle",
+    "keywords": ["Utilities"],
+    "homepage": "http://sfhungary.eu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gabor Harmat",
+            "email": "hgabka@sfhungary.eu"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "~2.3|~3.0",
+        "twig/twig": "~1.5",
+        "symfony/yaml": "~2.3|~3.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "*",
+        "symfony/validator": "~2.3|~3.0"
+    },
+    "autoload": {
+        "psr-0": { "HG\\UtilsBundle": "" }
+    },
+    "target-dir": "HG/UtilsBundle"
+}

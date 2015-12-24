@@ -1,0 +1,60 @@
+{% block uploadify_widget %}
+  {% spaceless %}
+
+   <input type="file" {{ block('widget_attributes') }} />
+   <script type="text/javascript">
+   window.uploadify_i18n = {
+  default: '{{ 'generic_file_upload_error' | trans }}'
+};
+jQuery(document).ready(function()
+{
+  jQuery('#{{ form.vars.id }}').uploadify(
+  {
+    swf             : '{{ asset('bundles/hgutils/js/uploadify/uploadify.swf')}}',
+    uploader        : '{{ url }}',
+    formData        : { '{{ param_name }}': '{{session_id}}' },
+    fileObjName     : '{{ form_type}}[{{ widget_name }}]',
+    fileSizeLimit   : {{ size }},
+    fileTypeDesc    : '{{ types }}',
+    fileTypeExts    : '{{ types }}',
+    buttonText      : '{{ label | trans }}',
+    debug           : {{ debug }},
+    onUploadSuccess : function (file, data, response)
+    {
+      // if not JSON
+      if (! data.length || (data[0] !== '{'))
+      {
+        alert(uploadify_i18n['default']);
+      }
+      else
+      {
+        data = jQuery.parseJSON(data);
+        if (data == undefined)
+        {
+          alert(uploadify_i18n['default']);
+        }
+        else if (data.valid == undefined || !data.valid)
+        {
+          if (data.msgs != undefined)
+          {
+            alert(data.msgs);
+          }
+          else
+          {
+            alert(uploadify_i18n['default']);
+          }
+         }
+        else
+        {
+          {% if has_callback %}
+            {{js_upload_callback}}(file, data, response);
+          {% endif %}
+        }
+      }
+    }
+  });
+});
+</script>
+
+  {% endspaceless %}
+{% endblock %}
