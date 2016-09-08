@@ -48,7 +48,7 @@ class UploadifyType extends AbstractType
       return 'file';
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
       return 'uploadify';
   }

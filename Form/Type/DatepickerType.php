@@ -48,7 +48,7 @@ class DatepickerType extends AbstractType
       return 'date';
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
       return 'datepicker';
   }

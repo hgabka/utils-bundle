@@ -13,7 +13,7 @@ class PlainType extends AbstractType
       return 'text';
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
       return 'plain';
   }
