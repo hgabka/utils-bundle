@@ -1,0 +1,51 @@
+kuma_admin:
+    settings:
+        cache:
+            menu_label:     Clear cache
+    cache:
+        flash:
+            cache_purged:   Cache has been purged!
+            'cache_not_purged.%exception%': 'Cache not purged: `%exception%`'
+        'info.raw':         Clear the cache by hand
+        clear:
+            label:          Clear
+
+wt_kuma_extension:
+    locales:
+        hu: Hungarian
+        en: English
+        de: German
+        es: Spanish
+        fr: French
+    slider:
+        link:
+            more:       More
+        form:
+            image:
+                label:  Image
+            images:
+                label:  Images
+            caption_title:
+                label:  Caption title
+            caption:
+                label:  Caption
+            alt_text:
+                label:  Alternative text
+            link:
+                label:  Link
+            open_in_new_window:
+                label:  Open in new window
+    gallery:
+        form:
+            folder:
+                label:          Folder of images
+                empty_value:    Select folder
+    insert_page:
+        form:
+            label:
+                inserted_node:  Inserted page
+user_edit:
+    property:
+        username: Username
+        email: E-mail address
+        password: Password

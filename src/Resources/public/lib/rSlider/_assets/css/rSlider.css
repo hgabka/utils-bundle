@@ -1,0 +1,62 @@
+/*
+  # ----- Script info:
+  - Author: Michael Mammoliti
+  - Name: rSlider.js
+  - Version: 0.2.1
+  - js dipendencies: jQuery
+  - Release date: 8 February 2016
+  - GitHub: https://github.com/MichaelMammoliti/rSlider.js
+
+  # ----- Contact info
+  - GitHub: https://github.com/MichaelMammoliti
+  - Mail: mammoliti.michael@gmail.com
+  - Twitter: @MichMammoliti
+
+  # ----- License Info
+  - Released under the GPL v3 license.
+*/
+
+* { padding: 0; margin: 0; border: 0; color: #888; font-family: "Source Sans Pro", sans-serif; font-weight: 300; outline: none; box-sizing: border-box; }
+
+html { font-size: 1rem; padding: 20px; }
+
+body { width: 100%; min-width: 200px; margin: auto; }
+
+.rSlider { overflow: hidden; width: 100%; position: relative; background: #000; }
+.rSlider > .rSlider--view { width: 1000%; overflow: hidden; display: block; overflow: hidden; }
+.rSlider > .rSlider--view:before { content: " "; display: block; }
+.rSlider > .rSlider--view > .rSlider--slide { float: left; overflow: hidden; position: relative; display: block; overflow: hidden; }
+.rSlider > .rSlider--view > .rSlider--slide:before { content: " "; display: block; }
+.rSlider > .rSlider--view > .rSlider--slide > .rSlider--image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center center; z-index: 0; }
+.rSlider > .rSlider--view > .rSlider--slide > .rSlider--container { padding: 150px 100px; max-width: 1200px; margin: auto; width: 100%; position: relative; z-index: 2; top: 50%; left: 0; -webkit-transform: translate(0, -50%); -ms-transform: translate(0, -50%); transform: translate(0, -50%); display: block; overflow: hidden; }
+.rSlider > .rSlider--view > .rSlider--slide > .rSlider--container:before { content: " "; display: block; }
+.rSlider > .rSlider--view > .rSlider--slide > .rSlider--bg-color { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; z-index: 1; }
+.rSlider > .rSlider--dots-controls { padding: 20px; position: absolute; bottom: 0; left: 50%; -webkit-transform: translate(-50%, 0); -ms-transform: translate(-50%, 0); transform: translate(-50%, 0); z-index: 2; display: block; overflow: hidden; }
+.rSlider > .rSlider--dots-controls:before { content: " "; display: block; }
+.rSlider > .rSlider--dots-controls button { float: left; cursor: pointer; background: #fff; height: 16px; width: 16px; border-radius: 50%; opacity: 0.4; border: 3px solid #fff; margin-right: 5px; margin-bottom: 5px; }
+.rSlider > .rSlider--dots-controls button:last-of-type { margin-right: 0; margin-bottom: 0; }
+.rSlider > .rSlider--dots-controls button.active { background: transparent; border: 3px solid #fff; opacity: 1; }
+.rSlider > .rSlider--arrow-controls { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.rSlider > .rSlider--arrow-controls span { width: 100px; padding: 20px; position: absolute; overflow: hidden; top: 0; height: 100%; z-index: 3; text-align: center; cursor: pointer; }
+.rSlider > .rSlider--arrow-controls span:first-child { left: 0; }
+.rSlider > .rSlider--arrow-controls span:last-child { right: 0; }
+.rSlider > .rSlider--arrow-controls span:hover button { border-color: #fff; }
+.rSlider > .rSlider--arrow-controls button { position: relative; width: 40px; height: 40px; top: 50%; color: #fff; border-radius: 50%; -webkit-transform: translate(0, -50%); -ms-transform: translate(0, -50%); transform: translate(0, -50%); background: transparent; border: 3px solid rgba(255, 255, 255, 0.4); cursor: pointer; }
+
+.rSlider.css-transitions .rSlider--view { -webkit-transition: all 0.6s ease 0s; transition: all 0.6s ease 0s; }
+.rSlider.css-transitions .rSlider--slide { -webkit-transition: all 0.6s ease 0s; transition: all 0.6s ease 0s; }
+.rSlider.css-transitions .rSlider--bg-color { -webkit-transition: all 0.6s ease 0s; transition: all 0.6s ease 0s; }
+.rSlider.css-transitions .rSlider--dots-controls button { -webkit-transition: all 0.6s ease 0s; transition: all 0.6s ease 0s; }
+.rSlider.css-transitions .rSlider--arrow-controls button { -webkit-transition: all 0.6s ease 0s; transition: all 0.6s ease 0s; }
+
+.rSlider .rSlider--bg-color { background: rgba(0, 0, 0, 0.5); }
+.rSlider .slide-styled { width: 100%; max-width: 700px; }
+.rSlider .slide-styled h1 { font-size: 4rem; color: #fff; font-weight: 600; }
+.rSlider .slide-styled p { font-size: 1.4rem; color: #fff; padding: 50px 0; }
+.rSlider .slide-styled a, .rSlider .slide-styled button { background: #DE6E70; display: inline-block; padding: 20px 40px; color: #fff; text-decoration: none; margin: auto; }
+.rSlider:hover .rSlider--bg-color { background: rgba(0, 0, 0, 0.3); }
+
+@media (min-width: 0) { html { font-size: 0.7rem; } }
+@media (min-width: 800px) { html { font-size: 1rem; } }
+@media (min-width: 1400px) { html { font-size: 1.2rem; } }
+@media (min-width: 0) and (max-width: 800px) { * { text-align: center; } }

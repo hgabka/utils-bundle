@@ -1,0 +1,34 @@
+.tag-list {
+
+  margin: 0 0 0 -5px;
+}
+
+.tag-list div.tag {
+  background: #ececec none repeat scroll 0 0;
+  border: 1px solid #dbdbdb;
+  color: #7d7d7d;
+  cursor: default;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 5px;
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.tag-list div.tag > span.fa-del::before {
+  content: "";
+}
+
+.tag-list div.tag > span.fa {
+  color: #ff0000;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal !important;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0 0 0 5px;
+}

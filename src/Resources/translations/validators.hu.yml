@@ -1,0 +1,3 @@
+wt_kuma_extension:
+    recaptcha:
+        message: Jelölje be, hogy Ön nem robot

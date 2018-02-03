@@ -1,0 +1,4 @@
+$(function()
+{
+    $('.fancybox').fancybox();
+});

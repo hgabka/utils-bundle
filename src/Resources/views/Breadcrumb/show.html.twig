@@ -1,0 +1,17 @@
+{% if breadcrumb_manager | length %}
+    <nav role="navigation" class="breadcrumb">
+        <ul>
+            {% for breadcrumb in breadcrumb_manager %}
+                {% set label = breadcrumb.label | trans(breadcrumb.i18nParams) %}
+
+                <li>
+                    {% if loop.last %}
+                        {{ label }}
+                    {% else %}
+                        <a href="{{ path(breadcrumb.route, breadcrumb.routeParams) }}">{{ label }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}

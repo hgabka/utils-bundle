@@ -1,4 +1,4 @@
-{% block hgabka_utils_plain_widget %}
+{% block hgabka_plain_widget %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control-static')|trim }) %}
 
     <div id="{{ id }}" {%- for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
@@ -69,7 +69,7 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block kuma_datepicker_widget %}
+{% block hgabka_datepicker_widget %}
     <div class="date-input js-datepicker{% if use_button %} input-group date{% endif %}" {{ block('widget_attributes') }} 
          data-format="{{ format }}" data-locale="{{ locale }}"
     >
@@ -103,4 +103,8 @@
             {{ form_widget(form.end) }}
         </div>
     </div>
+{% endblock %}
+
+{% block recaptcha_widget %}
+    <div id="recaptcha" class="g-recaptcha" data-sitekey="{{ sitekey }}"></div>
 {% endblock %}

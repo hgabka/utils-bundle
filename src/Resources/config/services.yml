@@ -1,0 +1,72 @@
+services:
+    hgabka_utils.form.type.autocomplete_entity_type:
+        class: Hgabka\UtilsBundle\Form\Type\EntityAutocompleteType
+        arguments:  ['@doctrine']
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.form.type.plain_widget:
+        class: Hgabka\UtilsBundle\Form\Type\StaticControlType
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.form.type.locale_type:
+        class: Hgabka\UtilsBundle\Form\Type\LocaleType
+        arguments:  ['@hgabka_utils.hgabka_utils']
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.form.help_type_extension:
+        class: Hgabka\UtilsBundle\Form\Extension\HelpTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    hgabka_utils.hgabka_utils:
+        class: Hgabka\UtilsBundle\Helper\HgabkaUtils
+        arguments:  ["@service_container"]
+
+    hgabka_utils.breadcrumb_manager:
+        class: Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager
+        arguments:  ["@security.token_storage", "@request_stack"]
+
+    hgabka_utils.number_to_text:
+        class: Hgabka\UtilsBundle\Helper\Number\NumberToText
+
+    hgabka_utils.fill_filter:
+        class: Hgabka\UtilsBundle\Imagine\Filter\Loader\FillFilterLoader
+        tags:
+            - { name: "liip_imagine.filter.loader", loader: hg_fill }
+
+    hgabka_utils.fit_filter:
+        class: Hgabka\UtilsBundle\Imagine\Filter\Loader\FitFilterLoader
+        arguments: ["@liip_imagine"]
+        tags:
+            - { name: "liip_imagine.filter.loader", loader: hg_fit }
+
+    hgabka_utils.paste_filter:
+        class: Hgabka\UtilsBundle\Imagine\Filter\Loader\PasteFilterLoader
+        arguments: ["@liip_imagine"]
+        tags:
+            - { name: "liip_imagine.filter.loader", loader: hg_paste }
+
+    hgabka_utils.form.recaptcha_type:
+        class: Hgabka\UtilsBundle\Form\Type\RecaptchaType
+        arguments: ['']
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.validator.recaptcha:
+        class: Hgabka\UtilsBundle\Validator\Constraints\RecaptchaValidator
+        arguments: ["@request_stack", "@hgabka_utils.hgabka_utils", '']
+        tags:
+            - { name: validator.constraint_validator }
+
+    hgabka_utils.breadcrumb_twig_extension:
+        class: Hgabka\UtilsBundle\Twig\Extension\BreadcrumbTwigExtension
+        arguments: ['@hgabka_utils.breadcrumb_manager']
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    Hgabka\UtilsBundle\Helper\HgabkaUtils: "@hgabka_utils.hgabka_utils"
+    Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"

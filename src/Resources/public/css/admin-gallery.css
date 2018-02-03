@@ -1,0 +1,8 @@
+div.gallery-box {
+    float:left;
+    width:400px;
+}
+
+div.gallery-clearfix {
+    clear:both;
+}

@@ -1,0 +1,22 @@
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="equals" {% if data.comparator is defined and data.comparator == "equals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.equals' | trans }}</option>
+        <option value="notequals" {% if data.comparator is defined and data.comparator == "notequals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.notequals' | trans }}</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <select name="{{nameprefix}}value{{namesuffix}}" class="form-control">
+    {% for key,option in options %}
+        {% if option is iterable %}
+            <optgroup label="{{ key | trans }}">
+            {% for subKey, subOption in option %}
+                <option value="{{ subKey }}"{% if data.value is defined and subKey == data.value %} selected{% endif %}>{{ subOption|trans }}</option>
+            {% endfor %}
+            </optgroup>
+        {% else %}
+            <option value="{{ key }}"{% if data.value is defined and key == data.value %} selected{% endif %}>{{ option|trans }}</option>
+        {% endif %}
+    {% endfor %}
+    </select>
+</div>

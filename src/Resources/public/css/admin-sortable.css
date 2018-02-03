@@ -1,0 +1,13 @@
+table.sortabletable tr {
+    cursor: all-scroll;
+}
+
+div.sortable-submit {
+    float:right;
+    margin: 10px 0;
+}
+
+div.table-responsive {
+    clear: both;
+
+}

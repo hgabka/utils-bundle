@@ -1,0 +1,69 @@
+=section
+  width: 100%
+
+=padding
+  padding: $spacing
+
+=block
+  display: block
+  width: 100%
+
+=clearfix
+  display: block
+  overflow: hidden
+
+  &:before
+    +before
+
+=round-image($size: 140px)
+  height: #{$size}
+  width: #{$size}
+  border: 3px solid #fff
+  position: relative
+  z-index: 1
+  +radius(50%)
+
+=prefix($property, $value)
+  -webkit-#{$property}: #{$value}
+  -ms-#{$property}: #{$value}
+  -moz-#{$property}: #{$value}
+  -o-#{$property}: #{$value}
+  #{$property}: #{$value}
+
+=radius($rad: $radius)
+  +prefix(border-radius, #{$rad})
+
+=transition($sec: $transition-duration)
+  +prefix(transition, #{$sec})
+
+=bg($position: "center center", $size: cover)
+  background-position: #{$position}
+  background-size: #{$size}
+  background-repeat: no-repeat
+
+=bg-image($dir, $size: cover, $position: "center center")
+  +bg(#{$position}, #{$size})
+  background-image: url(#{$dir})
+
+=bg-shadow($hex-color, $opacity)
+  &:after
+    +before
+    +absolute-width
+    background-color: rgba($hex-color, $opacity)
+
+=absolute-width
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+
+=absolute-center
+  position: absolute
+  left: 50%
+  top: 50%
+  +prefix(transform, translate(-50%, -50%))
+
+=before
+  content: " "
+  display: block

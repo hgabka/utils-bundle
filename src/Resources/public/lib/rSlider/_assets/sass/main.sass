@@ -1,0 +1,193 @@
+// # ----- Script info:
+// - Author: Michael Mammoliti
+// - Name: rSlider.js
+// - Version: 0.2.1
+// - js dipendencies: jQuery
+// - Release date: 8 February 2016
+// - GitHub: https://github.com/MichaelMammoliti/rSlider.js
+
+// # ----- Contact info
+// - GitHub: https://github.com/MichaelMammoliti
+// - Mail: mammoliti.michael@gmail.com
+// - Twitter: @MichMammoliti
+
+// # ----- License Info
+// - Released under the GPL v3 license.
+
+@import "_config.sass"
+@import "_mixins.sass"
+
+*
+  padding: 0
+  margin: 0
+  border: 0
+  color: #888
+  font-family: 'Source Sans Pro', sans-serif
+  font-weight: 300
+  outline: none
+  box-sizing: border-box
+
+html
+  font-size: 1rem
+  padding: 20px
+
+body
+  width: 100%
+  min-width: $screen-max-res-xxs
+  margin: auto
+
+.rSlider
+  overflow: hidden
+  width: 100%
+  position: relative
+  background: #000
+
+  >.rSlider--view
+    width: 1000%
+    overflow: hidden
+    +clearfix
+
+    >.rSlider--slide
+      float: left
+      overflow: hidden
+      position: relative
+      +clearfix
+
+      >.rSlider--image
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-size: cover
+        background-position: center center
+        z-index: 0
+
+      >.rSlider--container
+        padding: 150px 100px
+        max-width: 1200px
+        margin: auto
+        width: 100%
+        position: relative
+        z-index: 2
+        top: 50%
+        left: 0
+        transform: translate(0, -50%)
+        +clearfix
+
+      >.rSlider--bg-color
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        display: block
+        z-index: 1
+
+  >.rSlider--dots-controls
+    padding: $spacing/2
+    position: absolute
+    bottom: 0
+    left: 50%
+    transform: translate(-50%, 0)
+    z-index: 2
+    +clearfix
+
+    button
+      float: left
+      cursor: pointer
+      background: #fff
+      height: 16px
+      width: 16px
+      border-radius: 50%
+      opacity: .4
+      border: 3px solid #fff
+      margin-right: 5px
+      margin-bottom: 5px
+      &:last-of-type
+        margin-right: 0
+        margin-bottom: 0
+      &.active
+        background: transparent
+        border: 3px solid #fff
+        opacity: 1
+
+  >.rSlider--arrow-controls
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    span
+      width: 100px
+      padding: 20px
+      position: absolute
+      overflow: hidden
+      top: 0
+      height: 100%
+      z-index: 3
+      text-align: center
+      cursor: pointer
+      &:first-child
+        left: 0
+      &:last-child
+        right: 0
+      &:hover
+        button
+          border-color: #fff
+    button
+      position: relative
+      width: 40px
+      height: 40px
+      top: 50%
+      color: #fff
+      border-radius: 50%
+      transform: translate(0, -50%)
+      background: transparent
+      border: 3px solid rgba(#fff, .4)
+      cursor: pointer
+.rSlider
+  &.css-transitions
+    .rSlider--view
+      transition: all #{$transition-duration} #{$transition-type} 0s
+    .rSlider--slide
+      transition: all #{$transition-duration} #{$transition-type} 0s
+    .rSlider--bg-color
+      transition: all #{$transition-duration} #{$transition-type} 0s
+    .rSlider--dots-controls
+      button
+        transition: all #{$transition-duration} #{$transition-type} 0s
+    .rSlider--arrow-controls
+      button
+        transition: all #{$transition-duration} #{$transition-type} 0s
+
+
+.rSlider
+  .rSlider--bg-color
+    background: rgba(#000, .5)
+  .slide-styled
+    width: 100%
+    max-width: 700px
+
+    h1
+      font-size: 4rem
+      color: #fff
+      font-weight: 600
+    p
+      font-size: 1.4rem
+      color: #fff
+      padding: 50px 0
+
+    a, button
+      background: $color
+      display: inline-block
+      padding: 20px 40px
+      color: #fff
+      text-decoration: none
+      margin: auto
+
+  &:hover
+    .rSlider--bg-color
+      background: rgba(#000,.3)
+
+@import "_responsive.sass"

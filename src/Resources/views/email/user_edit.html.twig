@@ -1,0 +1,5 @@
+<p>Tisztelt címzett!</p>
+<p>Az alábbi felhasználió adatai módosultak</p>
+{% for key, value in changes %}
+<p><strong>{{ ('user_edit.property.'~key)|trans }}</strong> <span>{{ value }}</span></p>
+{% endfor %}

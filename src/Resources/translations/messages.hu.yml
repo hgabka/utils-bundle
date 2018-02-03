@@ -1,0 +1,51 @@
+kuma_admin:
+    settings:
+        cache:
+            menu_label:     Cache törlése
+    cache:
+        flash:
+            cache_purged:   A cache sikeresen törölve!
+            'cache_not_purged.%exception%': 'A cache törlése nem sikerült: `%exception%`'
+        'info.raw':         Cache törlése kézzel
+        clear:
+            label:          Törlés
+
+wt_kuma_extension:
+    locales:
+        hu: magyar
+        en: angol
+        de: német
+        es: spanyol
+        fr: francia
+    slider:
+        link:
+            more:       Részletek
+        form:
+            image:
+                label:  Kép
+            images:
+                label:  Képek
+            caption_title:
+                label:  Képaláírás címe
+            caption:
+                label:  Képaláírás
+            alt_text:
+                label:  Alternatív szöveg
+            link:
+                label:  Link
+            open_in_new_window:
+                label:  Megnyitás új ablakban
+    gallery:
+        form:
+            folder:
+                label:          Könyvtár
+                empty_value:    Válasszon könyvtárat
+    insert_page:
+        form:
+            label:
+                inserted_node:  Beszurandó oldal
+user_edit:
+    property:
+        username: Felhasználónév
+        email: E-mail cím
+        password: Jelszó

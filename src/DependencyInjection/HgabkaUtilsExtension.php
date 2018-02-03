@@ -36,9 +36,6 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
         $recaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
 
-        $recaptchaAdminTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_admin_type');
-        $recaptchaAdminTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
-
         $recaptchaValidatorDefinition = $container->getDefinition('hgabka_utils.validator.recaptcha');
         $recaptchaValidatorDefinition->replaceArgument(2, $config['recaptcha']['secret'] ?? null);
     }
@@ -65,6 +62,19 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomNumericFunction', [Rand::FUNCTION_NAME, Rand::class]);
             $definition->addMethodCall('addCustomStringFunction', [Repeat::FUNCTION_NAME, Repeat::class]);
         }
+
+        $filterSets = $container->getParameter('liip_imagine.filter_sets');
+        $filterSets['hgabka_utils_slider_fill'] = [
+            'quality' => 95,
+            'format' => 'jpg',
+            'filters' => [
+                'hg_fill' => [
+                    'size' => [600, 400],
+                ],
+            ],
+        ];
+
+        $container->setParameter('liip_imagine.filter_sets', $filterSets);
     }
 
     protected function configureTwigBundle(ContainerBuilder $container)
