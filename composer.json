@@ -1,29 +1,42 @@
 {
-    "name": "hgabka/utils-bundle",
-    "type": "symfony-bundle",
-    "description": "hgabka UtilsBundle",
-    "keywords": ["Utilities"],
-    "homepage": "http://sfhungary.eu",
-    "license": "MIT",
+    "name": "hgabka/logger-bundle",
+    "type": "kunstmaan-bundle",
+    "description": "Logger bundle",
+    "keywords": [
+    ],
+    "homepage": "https://github.com/hgabka/logger-bundle",
+    "license": "proprietary",
     "authors": [
         {
-            "name": "Gabor Harmat",
-            "email": "hgabka@sfhungary.eu"
+            "name": "Gabe",
+            "email": "hgabka@gmail.com",
+            "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=7.0",
-        "symfony/framework-bundle": "~2.3|~3.0",
-        "twig/twig": "~2.0",
-        "symfony/yaml": "~2.3|~3.0"
+        "php" : "~5.6|~7.0",
+        "symfony/symfony": "~3.2"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "*",
-        "symfony/validator": "~2.3|~3.0"
+        "phpunit/phpunit" : "4.*",
+        "mockery/mockery": "^0.9.4"
     },
     "autoload": {
-        "psr-0": { "HG\\UtilsBundle": "" }
+        "psr-4": {
+            "Hgabka\\LoggerBundle\\": "src"
+        }
     },
-    "target-dir": "HG/UtilsBundle"
+    "autoload-dev": {
+        "psr-4": {
+            "Hgabka\\LoggerBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
