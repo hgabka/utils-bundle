@@ -1,10 +1,9 @@
 <?php
 
-namespace Hgabka\LoggerBundle\DependencyInjection;
+namespace Hgabka\UtilsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -13,70 +12,22 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class Configuration implements ConfigurationInterface
 {
-    /** @var ContainerBuilder */
-    private $container;
-
-    public function __construct(ContainerBuilder $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('hgabka_logger');
+        $rootNode = $treeBuilder->root('hgabka_utils');
 
         $rootNode
             ->children()
-                ->arrayNode('notifier')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                          ->arrayNode('mails')
-                          ->addDefaultsIfNotSet()
-                              ->children()
-                                  ->enumNode('enabled')->values(['always', 'prod', 'debug', 'never'])->defaultValue('prod')->end()
-                                  ->scalarNode('from_mail')->defaultValue('info@hgabka.eu')->end()
-                                  ->scalarNode('from_name')->defaultValue('hgLoggerBundle')->end()
-                                  ->scalarNode('subject')->defaultValue('Exception a(z) [host] oldalon')->end()
-                                  ->arrayNode('recipients')
-                                      ->prototype('scalar')->end()
-                                  ->end()
-                                  ->booleanNode('send_only_if_new')->defaultFalse()->end()
-                                  ->scalarNode('send_404')->defaultTrue()->end()
-                              ->end()
-                          ->end()
-                          ->arrayNode('logging')
-                          ->addDefaultsIfNotSet()
-                              ->children()
-                                  ->enumNode('enabled')->values(['always', 'prod', 'debug', 'never'])->defaultValue('prod')->end()
-                                  ->arrayNode('type')
-                                  ->addDefaultsIfNotSet()
-                                  ->beforeNormalization()
-                                      ->ifString()
-                                      ->then(function ($v) { return ['debug' => $v, 'prod' => $v]; })
-                                  ->end()
-                                      ->children()
-                                          ->enumNode('debug')->values(['file', 'database', 'both', 'none'])->defaultValue('none')->end()
-                                          ->enumNode('prod')->values(['file', 'database', 'both', 'none'])->defaultValue('both')->end()
-                                      ->end()
-                                  ->end()
-                                  ->scalarNode('log_path')->defaultValue($this->container->getParameter('kernel.logs_dir').'/exception')->end()
-                              ->end()
-                          ->end()
-                    ->end()
+                ->arrayNode('recaptcha')
+                ->children()
+                    ->scalarNode('site_key')->end()
+                    ->scalarNode('secret')->end()
                 ->end()
-
-                ->arrayNode('logger')
-                ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('common_identifier')->defaultValue('symfony')->end()
-                        ->scalarNode('translation_domain')->defaultValue('logger')->end()
-                    ->end()
-                ->end()
-             ->end()
+            ->end()
         ;
 
         return $treeBuilder;

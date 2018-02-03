@@ -1,0 +1,106 @@
+{% block hgabka_utils_plain_widget %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control-static')|trim }) %}
+
+    <div id="{{ id }}" {%- for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {% if is_html %}{{ value|raw }}{% else %}{{ is_date ? value|date(date_format|default(null)) : value }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block object_autocomplete_widget %}
+    {% spaceless %}
+        {{ form_widget(form.title) }}
+        <div class="tag-list">
+          {{ form_widget(form.items) }}
+        </div>
+        <script type="text/javascript">
+            var cb = function() {
+                var $input = $('#{{ form.title.vars.id }}');
+                var $form = $input.next('.tag-list').find('div').first();
+
+                var $currentItems = $form.find('> .tag');
+                $form.data('index', $currentItems.length);
+                {% set acSource = source is defined and source is not empty ? source | json_encode : ("'"~(url ?: url(route.name, route.parameters|default([]))|e('js'))~"'") %}
+                $input.autocomplete({
+                                        source: {{ acSource | raw }},
+                                        minLength: {{ form.vars.minimum_input_length }},
+                                        select: function (event, ui) {
+                                            addAutocompleteItem(ui.item, $form, this);
+
+                                            return false;
+                                        }
+                                    });
+
+                $input.dblclick(function() {
+                    $(this).autocomplete('search', '');
+                })
+            };
+
+            document.addEventListener( "DOMContentLoaded", cb, false);
+            {% if kumaPagePartEvents is not empty %}
+                if (typeof kunstmaanbundles !== 'undefined') {
+                    {% for event in kumaPagePartEvents %}
+                        kunstmaanbundles.pagepartEditor.subscribeToEvent('{{ event }}', cb);
+                    {% endfor %}
+                }
+            {% endif %}
+        </script>
+    {% endspaceless %}
+{% endblock %}
+
+{% block entity_autocomplete_widget %}
+    {{ block('object_autocomplete_widget') }}
+{% endblock %}
+
+{% block document_autocomplete_widget %}
+    {{ block('object_autocomplete_widget') }}
+{% endblock %}
+
+{% block object_autocomplete_item_widget %}
+    {% spaceless %}
+        <div class="tag">
+            <input type="hidden" {{ block('widget_attributes') }} {% if value.id is defined %}value="{{ value.id }}" {% endif %}/>
+            <span class="tag-label">
+            {% if value.label is defined %}
+                {{ value.label }}
+            {% endif %}
+            </span>
+            <span onclick="$(this).parent('div.tag').remove();return false;" class="fa fa-del"></span>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block kuma_datepicker_widget %}
+    <div class="date-input js-datepicker{% if use_button %} input-group date{% endif %}" {{ block('widget_attributes') }} 
+         data-format="{{ format }}" data-locale="{{ locale }}"
+    >
+        {{ block('form_widget_simple') }}
+        {% if use_button %}
+            <span class="input-group-addon">
+                <span class="glyphicon fa-calendar"></span>
+            </span>
+        {% endif %}    
+
+    </div>
+{% endblock %}
+
+{% block datetimepicker_widget %}
+    {{ block('kuma_datepicker_widget') }}
+{% endblock %}
+
+{% block datepicker_range_widget %}
+    <div class="date-filter-container">
+        <div class="date-start">{{ form.start.vars.label|trans({}, translation_domain) }}</div>
+        <div class="date-select range-dependant" data-target="{{ form.end.vars.id }}" data-range="lt" data-errormsg="{{ 'range_error.from'|trans }}">
+            {{ form_widget(form.start) }}
+        </div>
+    </div>
+
+    <div class="clear-15"></div>
+
+    <div class="date-filter-container">
+        <div class="date-end">{{ form.end.vars.label|trans({}, translation_domain) }}</div>
+        <div class="date-select range-dependant" data-target="{{ form.start.vars.id }}" data-range="gt" data-errormsg="{{ 'range_error.to'|trans }}">
+            {{ form_widget(form.end) }}
+        </div>
+    </div>
+{% endblock %}
