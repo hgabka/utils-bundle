@@ -1,10 +1,10 @@
 {
     "name": "hgabka/utils-bundle",
-    "type": "kunstmaan-bundle",
-    "description": "Logger bundle",
+    "type": "symfony-bundle",
+    "description": "Utils bundle",
     "keywords": [
     ],
-    "homepage": "https://github.com/hgabka/logger-bundle",
+    "homepage": "https://github.com/hgabka/utils-bundle",
     "license": "proprietary",
     "authors": [
         {
@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Hgabka\\LoggerBundle\\": "src"
+            "Hgabka\\UtilsBundle\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Hgabka\\LoggerBundle\\Tests\\": "tests"
+            "Hgabka\\UtilsBundle\\Tests\\": "tests"
         }
     },
     "scripts": {
