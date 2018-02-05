@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class HgabkaUtilsExtension extends Extension implements PrependExtensionInterface, CompilerPassInterface
 {
     /** @var string */
-    protected $formTypeTemplate = 'HgabkaUtilsExtensionBundle:Form:fields.html.twig';
+    protected $formTypeTemplate = 'HgabkaUtilsBundle:Form:fields.html.twig';
 
     /**
      * {@inheritdoc}
