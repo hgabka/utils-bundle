@@ -1000,9 +1000,14 @@ class HgabkaUtils
      *
      * @return array|\DatePeriod
      */
-    public function getDatePeriod($from, $to, $interval = null, $returnArray = false)
+    public function getDatePeriod($from, $to, $interval = null, $returnArray = false, $intervalOptions = null)
     {
-        $period = new \DatePeriod($this->createDateTime($from), new \DateInterval($interval ?: 'P1D'), $this->createDateTime($to));
+        $period = new \DatePeriod(
+            $this->createDateTime($from),
+            new \DateInterval($interval ?: 'P1D'),
+            $this->createDateTime($to),
+            $intervalOptions
+        );
 
         if ($returnArray) {
             $ret = [];
@@ -1357,41 +1362,6 @@ class HgabkaUtils
         }
 
         return $object->$property;
-    }
-
-    /**
-     * @param $mediaId
-     *
-     * @return Response
-     */
-    public function createMediaDownloadResponse($mediaId)
-    {
-        $doctrine = $this->container->get('doctrine');
-
-        /** @var Media $media */
-        $media = $doctrine
-            ->getManager()
-            ->getRepository('KunstmaanMediaBundle:Media')
-            ->findOneBy(['id' => $mediaId])
-        ;
-
-        if (!$media) {
-            throw new NotFoundHttpException('Ervenytelen media id');
-        }
-
-        $response = new Response($this->getMediaContent($media));
-
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $media->getOriginalFilename()
-        );
-
-        $response->headers->set('Content-Disposition', $disposition);
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', $media->getContentType());
-        $response->headers->set('Content-length', $media->getFileSizeBytes());
-
-        return $response;
     }
 
     /**
