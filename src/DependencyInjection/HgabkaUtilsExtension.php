@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\DependencyInjection;
 
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
+use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Repeat;
@@ -61,7 +62,8 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition = $container->getDefinition('doctrine.orm.'.$name.'_configuration');
             $definition->addMethodCall('addCustomHydrationMode', $hydrator);
             $definition->addMethodCall('addCustomNumericFunction', [Rand::FUNCTION_NAME, Rand::class]);
-            $definition->addMethodCall('addCustomNumericFunction', [IfNull::FUNCTION_NAME, IfNull::class]);
+            $definition->addMethodCall('addCustomStringFunction', [IfElse::FUNCTION_NAME, IfElse::class]);
+            $definition->addMethodCall('addCustomStringFunction', [IfNull::FUNCTION_NAME, IfNull::class]);
             $definition->addMethodCall('addCustomStringFunction', [Repeat::FUNCTION_NAME, Repeat::class]);
         }
 

@@ -20,6 +20,7 @@ services:
         class: Hgabka\UtilsBundle\Form\Extension\HelpTypeExtension
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+        public: true
 
     hgabka_utils.hgabka_utils:
         class: Hgabka\UtilsBundle\Helper\HgabkaUtils
