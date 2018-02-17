@@ -16,7 +16,7 @@ abstract class ConstantsChoiceLoader extends CallbackChoiceLoader
             if (!empty($prefix)) {
                 $labels = [];
                 foreach ($constants as $constant) {
-                    $labels[] = $prefix . $constant;
+                    $labels[] = $prefix.$constant;
                 }
             } else {
                 $labels = $constants;

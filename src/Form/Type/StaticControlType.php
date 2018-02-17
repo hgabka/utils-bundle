@@ -29,7 +29,8 @@ class StaticControlType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $isDate = false;
-        $val = !empty($options['html']) ? str_replace('%value%', $view->vars['value'], $options['html']) : $view->vars['value'];
+        $value = is_string($view->vars['value']) ? $view->vars['value'] : '';
+        $val = !empty($options['html']) ? str_replace('%value%', $value, $options['html']) : $value;
         if ($val instanceof \DateTime) {
             $isDate = true;
         } else {

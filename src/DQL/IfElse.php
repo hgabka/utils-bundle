@@ -19,7 +19,7 @@ class IfElse extends FunctionNode
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
         $this->expr[] = $parser->ConditionalExpression();
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 2; ++$i) {
             $parser->match(Lexer::T_COMMA);
             $this->expr[] = $parser->ArithmeticExpression();
         }
@@ -29,9 +29,11 @@ class IfElse extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return sprintf('IF(%s, %s, %s)',
+        return sprintf(
+            'IF(%s, %s, %s)',
             $sqlWalker->walkConditionalExpression($this->expr[0]),
             $sqlWalker->walkArithmeticPrimary($this->expr[1]),
-            $sqlWalker->walkArithmeticPrimary($this->expr[2]));
+            $sqlWalker->walkArithmeticPrimary($this->expr[2])
+        );
     }
 }

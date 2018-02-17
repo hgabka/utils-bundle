@@ -4,11 +4,7 @@ namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class HgabkaUtils
 {
@@ -45,9 +41,9 @@ class HgabkaUtils
      *
      * @return null|string
      */
-    public function getCurrentLocale($baseLocale = null, bool $frontend = true)
+    public function getCurrentLocale($baseLocale = null)
     {
-        $availableLocales = $this->getAvailableLocales($frontend);
+        $availableLocales = $this->getAvailableLocales();
 
         if (!empty($baseLocale) && in_array($baseLocale, $availableLocales, true)) {
             return $baseLocale;
@@ -71,7 +67,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function getAvailableLocales(bool $frontend = true): array
+    public function getAvailableLocales(): array
     {
         return explode('|', $this->container->getParameter('requiredlocales'));
     }
@@ -82,9 +78,9 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function getLocaleChoices(bool $frontend = true, $prefix = 'wt_kuma_extension.locales.'): array
+    public function getLocaleChoices($prefix = 'hgabka.locales.'): array
     {
-        $locales = $this->getAvailableLocales($frontend);
+        $locales = $this->getAvailableLocales();
 
         return $this->prefixArrayElements($locales, $prefix);
     }
@@ -993,10 +989,11 @@ class HgabkaUtils
      * DatePeriod hívás shortcut. Két dátum között visszaadja az összes, $interval paraméternek megfelelő dátumot.
      * Ha a végdátum 00:00:00 időpontot tartalmaz akkor nem lesz benne az eredményben, egyébként igen.
      *
-     * @param mixed  $from
-     * @param mixed  $to
-     * @param string $interval
-     * @param bool   $returnArray Tömbben adja vissza a dátumokat?
+     * @param mixed      $from
+     * @param mixed      $to
+     * @param string     $interval
+     * @param bool       $returnArray     Tömbben adja vissza a dátumokat?
+     * @param null|mixed $intervalOptions
      *
      * @return array|\DatePeriod
      */

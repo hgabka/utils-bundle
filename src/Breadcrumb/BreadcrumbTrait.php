@@ -2,8 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Breadcrumb;
 
-use Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager;
-
 trait BreadcrumbTrait
 {
     /** @var BreadcrumbManager */

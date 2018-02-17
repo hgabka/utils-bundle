@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Validator\Constraints;
 
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
