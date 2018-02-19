@@ -108,3 +108,40 @@
 {% block recaptcha_widget %}
     <div id="recaptcha" class="g-recaptcha" data-sitekey="{{ sitekey }}"></div>
 {% endblock %}
+
+{% block color_widget %}
+    {% spaceless %}
+        <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>
+            <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
+            <span class="input-group-addon"><i></i></span>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block textarea_widget %}
+    {% spaceless %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+        {% set reInitMethods = [] %}
+        {% if attr['maxlength'] is defined %}
+            {% set reInitMethods = reInitMethods|merge(['"charactersLeft"']) %}
+        {% endif %}
+        {% if 'js-rich-editor' in attr.class %}
+            {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
+        {% endif %}
+
+        <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %}{% if attr['type'] is defined and 'js-rich-editor' in attr.class %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
+        {% if attr['maxlength'] is defined %}
+            <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block wysiwyg_widget %}
+    {% spaceless %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
+        {% if attr['maxlength'] is defined %}
+            {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
+        {% endif %}
+        <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
+    {% endspaceless %}
+{% endblock wysiwyg_widget %}
