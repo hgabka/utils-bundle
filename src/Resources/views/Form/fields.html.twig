@@ -37,9 +37,9 @@
 
             document.addEventListener( "DOMContentLoaded", cb, false);
             {% if kumaPagePartEvents is not empty %}
-                if (typeof kunstmaanbundles !== 'undefined') {
+                if (typeof hgabkautils !== 'undefined') {
                     {% for event in kumaPagePartEvents %}
-                        kunstmaanbundles.pagepartEditor.subscribeToEvent('{{ event }}', cb);
+                        hgabkautils.pagepartEditor.subscribeToEvent('{{ event }}', cb);
                     {% endfor %}
                 }
             {% endif %}
