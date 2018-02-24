@@ -1,0 +1,82 @@
+{% extends base_template %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/hgabkautils/css/hg_utils.css') }}">
+{% endblock %}
+
+{% block body_attributes -%}
+    class="sonata-bc skin-black fixed app
+    {% if app.request.cookies.get('sonata_sidebar_hide') -%}
+        sidebar-collapse
+    {%- endif -%}"
+{%- endblock -%}
+{% block breadcrumb %}{% endblock %}
+
+{% block sonata_wrapper %}
+
+    <!-- Main Content -->
+    <main role="main" id="app__main" style="padding-top:50px;min-height:500px" class="container-fluid app__main app__main--has-sidebar">
+
+        <div class="row">
+
+
+            <!-- App Sidebar -->
+            <aside id="app__sidebar" class="col-md-3 app__sidebar">
+                {% block admin_sidebar %}
+                {% endblock %}
+            </aside>
+
+
+            <!-- App Content - with sidebar -->
+            <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
+
+                <!-- App Sidebar Toggle -->
+                <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
+                        <span class="app__sidebar-toggle__show-icon">
+                            <i class="fa fa-caret-right"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                    <span class="app__sidebar-toggle__hide-icon">
+                            <i class="fa fa-caret-left"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                </button>
+                <ul class="breadcrumb app__content__breadcrumb"></ul>
+                {% block notice %}
+                    {% include '@SonataCore/FlashMessage/render.html.twig' %}
+                {% endblock notice %}
+
+                <!-- App Content - General Messages -->
+                {% block messages %}{% endblock %}
+
+
+                <!-- App Content - Header -->
+                {% block header %}
+                    <header class="app__content__header">
+                        <div class="row">
+                            {% block admin_title %}
+                                <div class="col-sm-6 col-md-8">
+                                    <h1 class="app__content__header__title">
+                                        {% block admin_content_title %}{% endblock %}
+                                    </h1>
+                                </div>
+                            {% endblock %}
+
+                            {% block extra_actions_header %}{% endblock %}
+                        </div>
+                    </header>
+                {% endblock %}
+
+
+                <!-- App Content - Content -->
+                {% block admin_content %}{% endblock %}
+
+            </div>
+        </div>
+
+    </main>
+    {% block admin_javascripts %}
+        <script src="{{ asset('bundles/hgabkautils/jstree/dist/jstree.min.js') }}"></script>
+        <script src="{{ asset('bundles/hgabkautils/js/hg_utils.js') }}"></script>
+    {% endblock %}
+{% endblock %}
