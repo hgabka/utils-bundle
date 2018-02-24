@@ -145,3 +145,5 @@
         <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
     {% endspaceless %}
 {% endblock wysiwyg_widget %}
+
+
