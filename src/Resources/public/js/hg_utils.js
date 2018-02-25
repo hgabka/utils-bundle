@@ -217,94 +217,6 @@ hgabkautils.sidebartree = (function($, window, undefined) {
 
 })(jQuery, window);
 
-hgabkautils.app = (function($, window, undefined) {
-
-    var init, appScroll,
-        $mainActions = $('#page-main-actions-top');
-
-
-    // General App init
-    init = function() {
-        cargobay.toggle.init();
-        cargobay.scrollToTop.init();
-
-        appScroll();
-
-        hgabkautils.sidebartoggle.init();
-        hgabkautils.sidebartree.init();
-        hgabkautils.sidebarsearchfocus.init();
-        /*       kunstmaanbundles.urlchoosertree.init();
-               kunstmaanbundles.sidebarsearchfocus.init();
-               kunstmaanbundles.filter.init();
-               kunstmaanbundles.sortableTable.init();
-               kunstmaanbundles.checkIfEdited.init();
-               kunstmaanbundles.preventDoubleClick.init();
-               kunstmaanbundles.datepicker.init();*/
-        hgabkautils.autoCollapseButtons.init();
-        hgabkautils.autoCollapseTabs.init();
-        /*    kunstmaanbundles.richEditor.init();
-            kunstmaanbundles.ajaxModal.init();
-            kunstmaanbundles.advancedSelect.init();
-
-            kunstmaanbundles.pageEditor.init();
-            kunstmaanbundles.pagepartEditor.init();
-
-            kunstmaanbundles.slugChooser.init();
-            kunstmaanbundles.urlChooser.init();
-            kunstmaanbundles.mediaChooser.init();
-            kunstmaanbundles.iconChooser.init();
-            kunstmaanbundles.bulkActions.init();
-            kunstmaanbundles.nestedForm.init();
-            kunstmaanbundles.appLoading.init();
-            kunstmaanbundles.tooltip.init();
-            kunstmaanbundles.colorpicker.init();
-            kunstmaanbundles.charactersLeft.init();
-            kunstmaanbundles.rangeslider.init();
-            kunstmaanbundles.googleOAuth.init();
-            kunstmaanbundles.appNodeVersionLock.init();
-            kunstmaanbundles.appEntityVersionLock.init()*/
-    };
-
-
-    // On Scroll
-    appScroll = function() {
-        if($mainActions) {
-            var _onScroll, _requestTick, _update,
-                latestKnownScrollY = 0,
-                ticking = false;
-
-            _onScroll = function() {
-                latestKnownScrollY = window.pageYOffset;
-                _requestTick();
-            };
-
-            _requestTick = function() {
-                if(!ticking) {
-                    window.requestAnimationFrame(_update);
-                }
-
-                ticking = true;
-            };
-
-            _update = function() {
-                ticking = false;
-                var currentScrollY = latestKnownScrollY;
-
-                hgabkautils.mainActions.updateScroll(currentScrollY, $mainActions);
-            };
-
-            window.onscroll = function(e) {
-                _onScroll();
-            };
-        }
-    };
-
-
-    return {
-        init: init
-    };
-
-})(jQuery, window);
 
 hgabkautils.sidebarsearchfocus = (function(window, undefined) {
 
@@ -516,6 +428,374 @@ hgabkautils.mainActions = (function(window, undefined) {
     };
 
 })(window);
+
+hgabkautils.urlChooser = (function (window, undefined) {
+
+    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser;
+
+    var itemUrl, itemId, itemTitle, itemThumbPath, replacedUrl, $body = $('body');
+
+
+    init = function () {
+        urlChooser();
+        adaptUrlChooser();
+    };
+
+    // URL-Chooser
+    urlChooser = function () {
+
+        // Link Chooser select
+        $body.on('click', '.js-url-chooser-link-select', function (e) {
+            e.preventDefault();
+
+            var $this = $(this),
+                slug = $this.data('slug'),
+                id = $this.data('id'),
+                replaceUrl = $this.closest('nav').data('replace-url');
+
+            // Store values
+            itemUrl = (slug ? slug : '');
+            itemId = id;
+
+            // Replace URL
+            $.ajax({
+                       url: replaceUrl,
+                       type: 'GET',
+                       data: {'text': itemUrl},
+                       success: function (response) {
+                           replacedUrl = response.text;
+
+                           if (typeof selectionText == 'undefined' || selectionText.length == 0) {
+                               selectionText = 'Selection';
+                           }
+                           // Update preview
+                           $('#url-chooser__selection-preview').text(selectionText + ': ' + replacedUrl);
+                       }
+                   });
+        });
+
+        // Media Chooser select
+        $body.on('click', '.js-url-chooser-media-select', function (e) {
+            e.preventDefault();
+
+            var $this = $(this),
+                path = $this.data('path'),
+                thumbPath = $this.data('thumb-path'),
+                id = $this.data('id'),
+                title = $this.data('title'),
+                cke = $this.data('cke'),
+                replaceUrl = $this.closest('.thumbnail-wrapper').data('replace-url');
+
+            // Store values
+            itemUrl = path;
+            itemId = id;
+            itemTitle = title;
+            itemThumbPath = thumbPath;
+
+            // Save
+            if (!cke) {
+                var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
+
+                if (isMediaChooser) {
+                    saveMediaChooserModal(false);
+                } else {
+                    // Replace URL
+                    $.ajax({
+                               url: replaceUrl,
+                               type: 'GET',
+                               data: {'text': itemUrl},
+                               success: function (response) {
+                                   replacedUrl = response.text;
+                               }
+                           }).done(function () {
+                        saveUrlChooserModal(false);
+                    });
+                }
+
+            } else {
+                saveMediaChooserModal(true);
+            }
+        });
+
+
+        // Cancel
+        $('#cancel-url-chooser-modal').on('click', function () {
+            var cke = $(this).data('cke');
+
+            if (!cke) {
+                var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                    parentModalId = $parentModal.attr('id');
+
+                parent.$('#' + parentModalId).modal('hide');
+
+            } else {
+                window.close();
+            }
+        });
+
+
+        // OK
+        $(document).on('click', '#save-url-chooser-modal', function () {
+            var cke = $(this).data('cke');
+
+            saveUrlChooserModal(cke);
+        });
+    };
+
+
+    // Save for URL-chooser
+    saveUrlChooserModal = function (cke) {
+        if (!cke) {
+            var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                linkedInputId = $parentModal.data('linked-input-id'),
+                parentModalId = $parentModal.attr('id');
+
+            // Set val
+            parent.$('#' + linkedInputId).val(itemUrl).change();
+
+            // Set proper URL
+            parent.$('#' + linkedInputId).parent().find('.js-urlchooser-value').val(replacedUrl);
+
+            // Close modal
+            parent.$('#' + parentModalId).modal('hide');
+
+        } else {
+            var funcNum = getUrlParam('CKEditorFuncNum');
+
+            // Set val
+            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+
+            // Close window
+            window.close();
+        }
+    };
+
+
+    // Save for Media-chooser
+    saveMediaChooserModal = function (cke) {
+        if (!cke) {
+            var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                linkedInputId = $parentModal.data('linked-input-id'),
+                parentModalId = $parentModal.attr('id');
+
+            // Set val
+            parent.$('#' + linkedInputId).val(itemId).change();
+
+            // Update preview
+            var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
+                $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
+                $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
+
+            $mediaChooser.addClass('media-chooser--choosen');
+            $previewTitle.html(itemTitle);
+
+            if (itemThumbPath === "") {
+                var $parent = $previewTitle.parent();
+                $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+            }
+            else {
+                $previewImg.attr('src', itemThumbPath);
+            }
+
+            // Close modal
+            parent.$('#' + parentModalId).modal('hide');
+
+        } else {
+            var funcNum = getUrlParam('CKEditorFuncNum');
+
+            // Set val
+            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+
+            // Close window
+            window.close();
+        }
+    };
+
+
+    // Get Url Parameters
+    getUrlParam = function (paramName) {
+        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i'),
+            match = window.location.search.match(reParam);
+
+        return (match && match.length > 1) ? match[1] : '';
+    };
+
+    // Adapt the url chooser according to the selected link type.
+    adaptUrlChooser = function () {
+        $body.on('click', '.js-change-link-type', function (e) {
+                     e.preventDefault();
+                     var $form = $(this).closest('form'),
+                         $urlChooser = $(this).parents('.urlchooser-wrapper'),
+                         $urlChooserName = $urlChooser.data('chooser-name');
+
+                     var values = {};
+
+                     $.each($form.serializeArray(), function (i, field) {
+                         // Only submit required values.
+                         if (field.name.indexOf('link_type') != -1 || field.name.indexOf('link_url') != -1) {
+                             if (field.name.indexOf($urlChooserName) != -1 && field.name.indexOf('link_url') == -1) {
+                                 values[field.name] = field.value;
+                             }
+                         }
+                         else {
+                             // Main sequence can not be submitted.
+                             if (field.name.indexOf('sequence') == -1) {
+                                 values[field.name] = field.value;
+                             }
+                         }
+                     });
+
+
+                     // Add the selected li value.
+                     values[$(this).data('name')] = $(this).data('value');
+
+                     $.ajax({
+                                url: $form.attr('action'),
+                                type: $form.attr('method'),
+                                data: values,
+                                success: function (html) {
+                                    $urlChooser.replaceWith(
+                                        $(html).find('#' + $urlChooser.attr('id'))
+                                    );
+                                }
+                            });
+                 }
+        );
+    };
+
+    return {
+        init: init
+    };
+
+})
+(window);
+hgabkautils.mediaChooser = (function(window, undefined) {
+
+    var init, initDelBtn;
+
+    var $body = $('body');
+
+    init = function() {
+        // Save and update preview can be found in url-chooser.js
+
+        initDelBtn();
+    };
+
+
+    // Del btn
+    initDelBtn = function() {
+        $body.on('click', '.js-media-chooser-del-preview-btn', function(e) {
+            var $this = $(this),
+                linkedID = $this.data('linked-id'),
+                $widget = $('#' + linkedID + '-widget'),
+                $input = $('#' + linkedID);
+
+            $this.parent('.media-chooser__preview').find('.media-chooser__preview__img').attr({'src': '', 'srcset': '', 'alt': ''});
+
+            $(".media-thumbnail__icon").remove();
+
+            $widget.removeClass('media-chooser--choosen');
+            $input.val('');
+        });
+    };
+
+
+    return {
+        init: init
+    };
+
+})(window);
+
+hgabkautils.app = (function($, window, undefined) {
+
+    var init, appScroll,
+        $mainActions = $('#page-main-actions-top');
+
+
+    // General App init
+    init = function() {
+        cargobay.toggle.init();
+        cargobay.scrollToTop.init();
+
+        appScroll();
+
+        hgabkautils.sidebartoggle.init();
+        hgabkautils.sidebartree.init();
+        hgabkautils.sidebarsearchfocus.init();
+        /*       kunstmaanbundles.urlchoosertree.init();
+               kunstmaanbundles.sidebarsearchfocus.init();
+               kunstmaanbundles.filter.init();
+               kunstmaanbundles.sortableTable.init();
+               kunstmaanbundles.checkIfEdited.init();
+               kunstmaanbundles.preventDoubleClick.init();
+               kunstmaanbundles.datepicker.init();*/
+        hgabkautils.autoCollapseButtons.init();
+        hgabkautils.autoCollapseTabs.init();
+        hgabkautils.urlChooser.init();
+        /*    kunstmaanbundles.richEditor.init();
+            kunstmaanbundles.ajaxModal.init();
+            kunstmaanbundles.advancedSelect.init();
+
+            kunstmaanbundles.pageEditor.init();
+            kunstmaanbundles.pagepartEditor.init();
+
+            kunstmaanbundles.slugChooser.init();
+            kunstmaanbundles.urlChooser.init();
+            kunstmaanbundles.mediaChooser.init();
+            kunstmaanbundles.iconChooser.init();
+            kunstmaanbundles.bulkActions.init();
+            kunstmaanbundles.nestedForm.init();
+            kunstmaanbundles.appLoading.init();
+            kunstmaanbundles.tooltip.init();
+            kunstmaanbundles.colorpicker.init();
+            kunstmaanbundles.charactersLeft.init();
+            kunstmaanbundles.rangeslider.init();
+            kunstmaanbundles.googleOAuth.init();
+            kunstmaanbundles.appNodeVersionLock.init();
+            kunstmaanbundles.appEntityVersionLock.init()*/
+    };
+
+
+    // On Scroll
+    appScroll = function() {
+        if($mainActions) {
+            var _onScroll, _requestTick, _update,
+                latestKnownScrollY = 0,
+                ticking = false;
+
+            _onScroll = function() {
+                latestKnownScrollY = window.pageYOffset;
+                _requestTick();
+            };
+
+            _requestTick = function() {
+                if(!ticking) {
+                    window.requestAnimationFrame(_update);
+                }
+
+                ticking = true;
+            };
+
+            _update = function() {
+                ticking = false;
+                var currentScrollY = latestKnownScrollY;
+
+                hgabkautils.mainActions.updateScroll(currentScrollY, $mainActions);
+            };
+
+            window.onscroll = function(e) {
+                _onScroll();
+            };
+        }
+    };
+
+
+    return {
+        init: init
+    };
+
+})(jQuery, window);
+
 
 $(function() {
     hgabkautils.app.init();
