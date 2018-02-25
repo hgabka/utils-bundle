@@ -726,3 +726,11 @@ div.pagination {
     font-size: 0;
     line-height: 0;
 }
+.app__content__breadcrumb.breadcrumb {
+    padding: 0 0 0 3em;
+    margin-bottom: 19px;
+    list-style: none;
+    background-color: white;
+    border-radius: 3px;
+    min-height:15px;
+}

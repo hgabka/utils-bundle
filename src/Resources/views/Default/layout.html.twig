@@ -41,7 +41,10 @@
                             <i class="fa fa-list-ul"></i>
                         </span>
                 </button>
-                <ul class="breadcrumb app__content__breadcrumb"></ul>
+                {% block admin_breadcrumb %}
+                    <ul class="breadcrumb app__content__breadcrumb"></ul>
+                {% endblock %}
+
                 {% block notice %}
                     {% include '@SonataCore/FlashMessage/render.html.twig' %}
                 {% endblock notice %}
