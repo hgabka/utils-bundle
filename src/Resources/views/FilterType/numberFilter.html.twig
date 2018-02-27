@@ -1,0 +1,16 @@
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" id="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="eq" {% if data.comparator is defined and data.comparator == "eq" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.numequals' | trans }}</option>
+        <option value="neq" {% if data.comparator is defined and data.comparator == "neq" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.numnotequals' | trans }}</option>
+        <option value="lt" {% if data.comparator is defined and data.comparator == "lt" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.lowerthan' | trans }}</option>
+        <option value="lte" {% if data.comparator is defined and data.comparator == "lte" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.lowerthanorequal' | trans }}</option>
+        <option value="gt" {% if data.comparator is defined and data.comparator == "gt" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.greaterthan' | trans }}</option>
+        <option value="gte" {% if data.comparator is defined and data.comparator == "gte" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.greaterthanorequal' | trans }}</option>
+        <option value="isnull" {% if data.comparator is defined and data.comparator == "isnull" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.empty' | trans }}</option>
+        <option value="isnotnull" {% if data.comparator is defined and data.comparator == "isnotnull" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.notempty' | trans }}</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <input type="text" name="{{nameprefix}}value{{namesuffix}}" id="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} class="form-control">
+</div>

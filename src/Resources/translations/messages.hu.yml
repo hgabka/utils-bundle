@@ -10,6 +10,65 @@ kuma_admin:
         clear:
             label:          Törlés
 
+    form:
+        cancel: Mégse
+        delete: Törlés
+        deletesure: Biztos benne?
+        edit: Szerkesztés
+        add: Hozzáad
+        'add.%subject%': 'Új felvitel'
+        save: Mentés
+        publish: Publikál
+        unpublish: Publikálás visszavonása
+        saveasdraft: Mentés piszkozatként
+        name: Név
+        type: Típus
+        error: Hiba
+        warning: Figyelmeztetés
+        headsup: Figyelmeztetés
+        forgot:
+            password: Elfelejtett jelszó
+        permissions: Jogosultságok
+        properties: Tulajdonságok
+        createdat: Létrehozva
+        updatedat: Frissítve
+        actions: Műveletek
+        addfilter: Szűrés hozzáadása
+        choosetypefilter: Válasszon szűrési lehetőséget
+        versions: Verziók
+        button:
+            dropdown:
+                more: Továbbiak
+            filter:
+                clear: Töröl
+                filter: Szűrés
+
+kuma_admin_list:
+    form:
+        export_to: Exportálás
+        save: Mentés
+        cancel: Mégsem
+    filter:
+        contains: tartalmazza ezt
+        doesnotcontain: nem tartalmazza ezt
+        equals: megegyezik ezzel
+        notequals: nem egyezik meg ezzel
+        startswith: így kezdődik
+        endswith: így végződik
+        lowerthan: kevesebb mint
+        lowerthanorequal: kevesebb mint vagy egyenlő
+        greaterthan: több mint
+        greaterthanorequal: több mint vagy egyenlő
+        empty: üres
+        notempty: nem üres
+        numequals: egyenlő ezzel
+        numnotequals: nem egyenlő ezzel
+        datebefore: ezelőtt
+        dateafter: ezután
+        'true': igen
+        'false': nem
+
+
 wt_kuma_extension:
     locales:
         hu: magyar

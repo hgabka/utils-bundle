@@ -72,10 +72,13 @@ fieldset {
     transition: color 0.3s ease;
 }
 
-
 .toggle-item {
     height: 0;
     overflow: hidden;
+}
+
+.toggle-item--active {
+    height: auto;
 }
 
 .app__sidebar__search-toggle-item {
@@ -733,4 +736,97 @@ div.pagination {
     background-color: white;
     border-radius: 3px;
     min-height:15px;
+}
+.app__filter {
+    margin-bottom: 2rem;
+    border-top: 1px solid #dddddd;
+}
+
+.app__filter .toggle-item--active {
+    overflow: visible;
+}
+.btn--flat-top {
+    border-radius: 0 0 3px 3px;
+    border-top: 0;
+}
+.toggle-btn--active .toggle-btn__icon--show {
+    display: none;
+}
+.btn__icon {
+    color: #999999;
+}
+.toggle-btn__icon--show {
+    display: inline-block;
+}
+.toggle-btn--active .toggle-btn__icon--hide {
+    display: inline-block;
+}
+.btn__icon {
+    color: #999999;
+}
+.toggle-btn__icon--hide {
+    display: none;
+}
+.app__filter__line {
+    padding: .5em 0;
+}
+.app__filter__content {
+    border: 1px solid #dddddd;
+    border-top: 0;
+}
+.form__fieldset--padded-full {
+    padding: 1em;
+}
+.app__filter__line .form-group {
+    max-width: none;
+}
+.form-group {
+    position: relative;
+    max-width: 40rem;
+}
+.form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.form-inline .form-control, .form-inline .fos_user_change_password .form-group > input[type="text"], .fos_user_change_password .form-inline .form-group > input[type="text"], .form-inline .fos_user_change_password input[type="password"], .fos_user_change_password .form-inline input[type="password"] {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+.dropdown-menu__item--has-submenu::before, .form-group::before, .date-time-group::before, .date-time-group #form_main_date::before, .date-time-group > div::before, .dropdown-menu__item--has-submenu::after, .form-group::after, .date-time-group::after, .date-time-group #form_main_date::after, .date-time-group > div::after, .clearfix::before, .clearfix::after {
+    content: '';
+    display: table;
+}
+.dropdown-menu__item--has-submenu::after, .form-group::after, .date-time-group::after, .date-time-group #form_main_date::after, .date-time-group > div::after, .clearfix::after {
+    clear: both;
+}
+.dropdown-menu__item--has-submenu::before, .form-group::before, .date-time-group::before, .date-time-group #form_main_date::before, .date-time-group > div::before, .dropdown-menu__item--has-submenu::after, .form-group::after, .date-time-group::after, .date-time-group #form_main_date::after, .date-time-group > div::after, .clearfix::before, .clearfix::after {
+    content: '';
+    display: table;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    min-width: 0;
+}
+.btn--no-border {
+    border: 0;
+}
+.btn--no-hor-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+.app__filter .toggle-item--active {
+    overflow: visible;
+}
+.btn-default:hover:not(.active) {
+    background: white;
+    border-color: #dddddd;
 }

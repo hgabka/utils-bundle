@@ -1,0 +1,10 @@
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>{{ 'kuma_admin_list.filter.datebefore' | trans }}</option>
+        <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>{{ 'kuma_admin_list.filter.dateafter' | trans }}</option>
+    </select>
+</div>
+
+<div class="form-group js-datepicker" data-locale="{{ app.request.locale }}">
+    <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" data-date-format="YYYY-MM-DD HH:mm" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %}>
+</div>

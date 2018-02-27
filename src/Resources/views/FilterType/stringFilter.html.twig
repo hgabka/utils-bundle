@@ -1,0 +1,14 @@
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" data-sonata-select2="false" class="form-control">
+        <option value="contains" {% if data.comparator is defined and data.comparator == "contains" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.contains' | trans }}</option>
+        <option value="doesnotcontain" {% if data.comparator is defined and data.comparator == "doesnotcontain" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.doesnotcontain' | trans }}</option>
+        <option value="equals" {% if data.comparator is defined and data.comparator == "equals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.equals' | trans }}</option>
+        <option value="notequals" {% if data.comparator is defined and data.comparator == "notequals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.notequals' | trans }}</option>
+        <option value="startswith" {% if data.comparator is defined and data.comparator == "startswith" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.startswith' | trans }}</option>
+        <option value="endswith" {% if data.comparator is defined and data.comparator == "endswith" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.endswith' | trans }}</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <input type="text" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} class="form-control">
+</div>

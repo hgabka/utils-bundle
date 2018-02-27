@@ -1,5 +1,118 @@
-var hgabkautils = {};
-hgabkautils.sidebartoggle = (function(window, undefined) {
+var hgutils = {};
+hgutils.datepicker = (function($, window, undefined) {
+
+    var init, reInit, _setDefaultDate, _initDatepicker;
+
+    var _today = window.moment(),
+        _tomorrow = window.moment(_today).add(1, 'days');
+
+    var defaultFormat = 'DD-MM-YYYY',
+        defaultCollapse = true,
+        defaultKeepOpen = false,
+        defaultMinDate = false,
+        defaultShowDefaultDate = false,
+        defaultLocale = 'en',
+        defaultStepping = 1;
+
+
+    init = function() {
+        $('.js-datepicker').each(function() {
+            _initDatepicker($(this));
+        });
+    };
+
+    reInit = function(el) {
+        if (el) {
+            _initDatepicker($(el));
+        } else {
+            $('.js-datepicker').each(function() {
+                if (!$(this).hasClass('datepicker--enabled')) {
+                    _initDatepicker($(this));
+                }
+            });
+        }
+    };
+
+    _setDefaultDate = function(elMinDate) {
+        if(elMinDate === 'tomorrow') {
+            return _tomorrow;
+        } else {
+            return _today;
+        }
+    };
+
+
+    _initDatepicker = function($el) {
+        // Get Settings
+        var elFormat = $el.data('format'),
+            elCollapse = $el.data('collapse'),
+            elKeepOpen = $el.data('keep-open'),
+            elMinDate = $el.data('min-date'),
+            elShowDefaultDate = $el.data('default-date'),
+            elLocale = $el.data('locale'),
+            elOptions = $el.data('options'),
+            elStepping = $el.data('stepping');
+
+
+        // Set Settings
+        var format = (elFormat !== undefined) ? elFormat : defaultFormat,
+            collapse = (elCollapse !== undefined) ? elCollapse : defaultCollapse,
+            keepOpen = (elKeepOpen !== undefined) ? elKeepOpen : defaultKeepOpen,
+            minDate = (elMinDate === 'tomorrow') ? _tomorrow : (elMinDate === 'today') ? _today : defaultMinDate,
+            locale = (elLocale !== undefined) ? elLocale : defaultLocale,
+            options = (elOptions !== undefined) ? elOptions : {},
+            defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate,
+            stepping = (elStepping !== undefined) ? elStepping : defaultStepping;
+
+
+        // Setup
+        var $input = $el.find('input'),
+            $addon = $el.find('.input-group-addon');
+
+        var defOptions = {
+            format: format,
+            collapse: collapse,
+            keepOpen: keepOpen,
+            minDate: minDate,
+            defaultDate: defaultDate,
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'auto'
+            },
+            widgetParent: $el,
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-arrow-left',
+                next: 'fa fa-arrow-right',
+                today: 'fa fa-crosshairs',
+                clear: 'fa fa-trash-o'
+            },
+            stepping: stepping,
+            locale: locale
+        };
+
+        options = $.extend(defOptions, options);
+        $input.datetimepicker(options);
+
+        $el.addClass('datepicker--enabled');
+
+        $addon.on('click', function() {
+            $input.focus();
+        });
+    };
+
+
+    return {
+        init: init,
+        reInit: reInit
+    };
+
+})(jQuery, window);
+
+hgutils.sidebartoggle = (function(window, undefined) {
 
     var init,
         toggle;
@@ -34,7 +147,7 @@ hgabkautils.sidebartoggle = (function(window, undefined) {
     };
 
 })(window);
-hgabkautils.sidebartree = (function($, window, undefined) {
+hgutils.sidebartree = (function($, window, undefined) {
 
     var init,
         canBeMoved,
@@ -218,7 +331,7 @@ hgabkautils.sidebartree = (function($, window, undefined) {
 })(jQuery, window);
 
 
-hgabkautils.sidebarsearchfocus = (function(window, undefined) {
+hgutils.sidebarsearchfocus = (function(window, undefined) {
 
     var init,
         focus;
@@ -244,7 +357,7 @@ hgabkautils.sidebarsearchfocus = (function(window, undefined) {
 
 })(window);
 
-hgabkautils.autoCollapseButtons = (function ($, window, undefined) {
+hgutils.autoCollapseButtons = (function ($, window, undefined) {
 
     var init, createMoreDropdown,
         buttonsVisible,
@@ -292,7 +405,7 @@ hgabkautils.autoCollapseButtons = (function ($, window, undefined) {
 
 })(jQuery, window);
 
-hgabkautils.autoCollapseTabs = (function($, window, undefined) {
+hgutils.autoCollapseTabs = (function($, window, undefined) {
 
     var $tabs, $btnMore, $dropdown,
         init, dropdownItems, tabsHeight, children, singleTabHeight, initTabLogic, replaceUrlParam, doCheck;
@@ -408,7 +521,7 @@ hgabkautils.autoCollapseTabs = (function($, window, undefined) {
 
 })(jQuery, window);
 
-hgabkautils.mainActions = (function(window, undefined) {
+hgutils.mainActions = (function(window, undefined) {
 
     var updateScroll;
 
@@ -429,7 +542,7 @@ hgabkautils.mainActions = (function(window, undefined) {
 
 })(window);
 
-hgabkautils.urlChooser = (function (window, undefined) {
+hgutils.urlChooser = (function (window, undefined) {
 
     var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser;
 
@@ -669,7 +782,7 @@ hgabkautils.urlChooser = (function (window, undefined) {
 
 })
 (window);
-hgabkautils.mediaChooser = (function(window, undefined) {
+hgutils.mediaChooser = (function(window, undefined) {
 
     var init, initDelBtn;
 
@@ -706,7 +819,192 @@ hgabkautils.mediaChooser = (function(window, undefined) {
 
 })(window);
 
-hgabkautils.app = (function($, window, undefined) {
+
+hgutils.filter = (function($, window, undefined) {
+
+    var init,
+        _getElements, _calculateUniqueFilterId,
+        clearAllFilters, createFilter, updateOptions, removeFilterLine;
+
+    var $appFilter = $('#app__filter'),
+        $clearAllFiltersBtn, $applyAllFiltersBtn,
+        $addFirstFilterSelect, $addFilterBtn, $removeFilterBtn,
+        $filterDummyLine, $filterHolder, $filterSelect;
+
+    var $body = $('body');
+
+
+    init = function() {
+        if($appFilter) {
+            _getElements();
+
+            $addFirstFilterSelect.on('change', function() {
+                createFilter($(this), true);
+            });
+
+            $addFilterBtn.on('click', function() {
+                createFilter($(this), false);
+            });
+
+            $clearAllFiltersBtn.on('click', function() {
+                clearAllFilters();
+            });
+
+            // event handlers for dynamic added elements
+            $('body').on('click', '.js-remove-filter-btn', function() {
+                removeFilterLine($(this));
+            });
+
+            $('body').on('change', '.js-filter-select:not(#add-first-filter)', function() {
+                updateOptions($(this));
+            });
+        }
+    };
+
+
+
+    _getElements = function() {
+        $clearAllFiltersBtn = $('#clear-all-filters');
+        $applyAllFiltersBtn = $('#apply-all-filters');
+
+        $addFirstFilterSelect = $('#add-first-filter');
+        $addFilterBtn = $('#add-filter');
+
+        $filterDummyLine = $('#filter-dummy-line');
+        $filterHolder = $('#filter-holder');
+        $filterSelect = $('.js-filter-select');
+
+        $removeFilterBtn = $('.js-remove-filter-btn');
+    };
+
+
+    createFilter = function($this, first) {
+        var uniqueid = _calculateUniqueFilterId(),
+            newFilterLine = $('<div class="js-filter-line app__filter__line">').append($filterDummyLine.html());
+        // Append new line
+        if(first) {
+            var currentLine = $this.parents('.js-filter-line');
+
+            // Set new val to select
+            newFilterLine.find('.js-filter-dummy').val(currentLine.find('.js-filter-select').val());
+
+            // Append
+            $filterHolder.append(newFilterLine);
+            $addFilterBtn.removeClass('hidden');
+        } else {
+
+            // Append
+            $filterHolder.append(newFilterLine);
+        }
+
+        // Set unique id
+        newFilterLine.find('.js-unique-filter-id').val(uniqueid);
+
+        // Update options
+        updateOptions(newFilterLine.find('.js-filter-dummy'));
+
+        // Show
+        if(first) {
+            newFilterLine.removeClass('hidden');
+            currentLine.addClass('hidden');
+            currentLine.find('select').val('');
+
+        } else {
+            newFilterLine.removeClass('hidden');
+        }
+    };
+
+
+
+    _calculateUniqueFilterId = function() {
+        var result = 1;
+
+        $('.js-unique-filter-id').each(function() {
+            var value = parseInt($(this).val(), 10);
+
+            if(result <= value){
+                result = value + 1;
+            }
+        });
+
+        return result;
+    };
+
+
+
+    updateOptions = function(el) {
+        var $el = $(el),
+            val = $el.val().replace('.',  '_'),
+            uniqueid = $el.parents('.js-filter-line').find('.js-unique-filter-id').val();
+
+        // copy options from hidden filter dummy
+        $el.parents('.js-filter-line').find('.js-filter-options').html($('#filterdummyoptions_'+ val).html());
+
+        $el.parents('.js-filter-line').find('input, select').each(function(){
+            var fieldName = $(this).attr('name');
+
+            if (fieldName.substr(0, 7) != 'filter_') {
+                $(this).attr('name', 'filter_' + $(this).attr('name'));
+            }
+        });
+
+        $el.parents('.js-filter-line').find('.js-filter-options').find('input:not(.js-unique-filter-id), select').each(function() {
+            var name = $(this).attr('name'),
+                bracketPos = name.indexOf('[');
+
+            if (bracketPos !== -1) {
+                var arrayName = name.substr(0, bracketPos),
+                    arrayIndex = name.substr(bracketPos);
+
+                $(this).attr('name', arrayName + '_' + uniqueid + arrayIndex);
+
+            } else {
+                $(this).attr('name', $(this).attr('name') + '_' + uniqueid);
+            }
+
+            if($(this).hasClass('datepick')){
+                $(this).datepicker(new Date());
+            }
+        });
+
+        hgutils.datepicker.init();
+    };
+
+
+
+    removeFilterLine = function($el) {
+        if($filterHolder.children('.js-filter-line').size() === 2 ){
+            $('#first-filter-line option:first').attr('selected', 'selected');
+            $('#first-filter-line').removeClass('hidden');
+            $addFilterBtn.addClass('hidden');
+        }
+
+        $el.parents('.js-filter-line').remove();
+    };
+
+
+
+    clearAllFilters = function() {
+        // Set Loading
+   //     hgutils.appLoading.addLoading();
+
+        // Remove all filters
+        $('.app__filter__line').remove();
+
+        // Submit
+        $applyAllFiltersBtn.trigger('click');
+    };
+
+
+
+    return {
+        init: init
+    };
+
+})(jQuery, window);
+
+
+hgutils.app = (function($, window, undefined) {
 
     var init, appScroll,
         $mainActions = $('#page-main-actions-top');
@@ -714,14 +1012,16 @@ hgabkautils.app = (function($, window, undefined) {
 
     // General App init
     init = function() {
+        console.log(7);
         cargobay.toggle.init();
         cargobay.scrollToTop.init();
 
         appScroll();
 
-        hgabkautils.sidebartoggle.init();
-        hgabkautils.sidebartree.init();
-        hgabkautils.sidebarsearchfocus.init();
+        hgutils.sidebartoggle.init();
+        hgutils.sidebartree.init();
+        hgutils.sidebarsearchfocus.init();
+        hgutils.filter.init();
         /*       kunstmaanbundles.urlchoosertree.init();
                kunstmaanbundles.sidebarsearchfocus.init();
                kunstmaanbundles.filter.init();
@@ -729,9 +1029,9 @@ hgabkautils.app = (function($, window, undefined) {
                kunstmaanbundles.checkIfEdited.init();
                kunstmaanbundles.preventDoubleClick.init();
                kunstmaanbundles.datepicker.init();*/
-        hgabkautils.autoCollapseButtons.init();
-        hgabkautils.autoCollapseTabs.init();
-        hgabkautils.urlChooser.init();
+        hgutils.autoCollapseButtons.init();
+        hgutils.autoCollapseTabs.init();
+        hgutils.urlChooser.init();
         /*    kunstmaanbundles.richEditor.init();
             kunstmaanbundles.ajaxModal.init();
             kunstmaanbundles.advancedSelect.init();
@@ -780,7 +1080,7 @@ hgabkautils.app = (function($, window, undefined) {
                 ticking = false;
                 var currentScrollY = latestKnownScrollY;
 
-                hgabkautils.mainActions.updateScroll(currentScrollY, $mainActions);
+                hgutils.mainActions.updateScroll(currentScrollY, $mainActions);
             };
 
             window.onscroll = function(e) {
@@ -798,7 +1098,8 @@ hgabkautils.app = (function($, window, undefined) {
 
 
 $(function() {
-    hgabkautils.app.init();
+    hgutils.app.init();
+
     $(".js-sortable-link").on("click",function() {
         var href = $(this).data('order-url');
         window.location.href = href;
