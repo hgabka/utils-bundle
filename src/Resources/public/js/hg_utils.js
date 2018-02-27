@@ -11,7 +11,7 @@ hgutils.datepicker = (function($, window, undefined) {
         defaultKeepOpen = false,
         defaultMinDate = false,
         defaultShowDefaultDate = false,
-        defaultLocale = 'en',
+        defaultLocale = 'hu',
         defaultStepping = 1;
 
 
@@ -1012,7 +1012,6 @@ hgutils.app = (function($, window, undefined) {
 
     // General App init
     init = function() {
-        console.log(7);
         cargobay.toggle.init();
         cargobay.scrollToTop.init();
 
@@ -1029,6 +1028,7 @@ hgutils.app = (function($, window, undefined) {
                kunstmaanbundles.checkIfEdited.init();
                kunstmaanbundles.preventDoubleClick.init();
                kunstmaanbundles.datepicker.init();*/
+        hgutils.datepicker.init();
         hgutils.autoCollapseButtons.init();
         hgutils.autoCollapseTabs.init();
         hgutils.urlChooser.init();
