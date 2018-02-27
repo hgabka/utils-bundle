@@ -5,9 +5,9 @@
     </select>
 </div>
 
-<div class="form-group js-datepicker date" data-locale="{{ app.request.locale }}">
+<div class="form-group js-datepicker date" data-locale="{{ app.request.locale }}" data-with-time="false" data-format="YYYY-MM-DD" >
     <div class='input-group date' id='datetimepicker1'>
-        <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}" data-date-format="YYYY-MM-DD"{% if data.value is defined %} value="{{data.value}}"{% endif %}{% if datePicker_startDate is defined %} data-startDate="{{datePicker_startDate}}"{% endif %}>
+        <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}"{% if data.value is defined %} value="{{data.value}}"{% endif %}{% if datePicker_startDate is defined %} data-startDate="{{datePicker_startDate}}"{% endif %}>
         <span class="input-group-addon">
             <span class="fa fa-calendar-o"></span>
         </span>

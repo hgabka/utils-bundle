@@ -12,7 +12,8 @@ hgutils.datepicker = (function($, window, undefined) {
         defaultMinDate = false,
         defaultShowDefaultDate = false,
         defaultLocale = 'hu',
-        defaultStepping = 1;
+        defaultStepping = 1,
+		defaultWithTime = true;
 
 
     init = function() {
@@ -52,6 +53,7 @@ hgutils.datepicker = (function($, window, undefined) {
             elLocale = $el.data('locale'),
             elOptions = $el.data('options'),
             elStepping = $el.data('stepping');
+            elWithTime = $el.data('with-time');
 
 
         // Set Settings
@@ -62,8 +64,8 @@ hgutils.datepicker = (function($, window, undefined) {
             locale = (elLocale !== undefined) ? elLocale : defaultLocale,
             options = (elOptions !== undefined) ? elOptions : {},
             defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate,
-            stepping = (elStepping !== undefined) ? elStepping : defaultStepping;
-
+            stepping = (elStepping !== undefined) ? elStepping : defaultStepping,
+            withTime = (elWithTime !== undefined) ? elWithTime : defaultWithTime;
 
         // Setup
         var $input = $el.find('input'),
@@ -91,7 +93,8 @@ hgutils.datepicker = (function($, window, undefined) {
                 clear: 'fa fa-trash-o'
             },
             stepping: stepping,
-            locale: locale
+            language: locale,
+			pickTime: withTime
         };
 
         options = $.extend(defOptions, options);
