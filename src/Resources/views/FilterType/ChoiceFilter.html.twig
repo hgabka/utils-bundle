@@ -1,12 +1,12 @@
 <div class="form-group">
-    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+    <select data-sonata-select2="false" name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
         <option value="equals" {% if data.comparator is defined and data.comparator == "equals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.equals' | trans }}</option>
         <option value="notequals" {% if data.comparator is defined and data.comparator == "notequals" %} selected="selected" {% endif %} >{{ 'kuma_admin_list.filter.notequals' | trans }}</option>
     </select>
 </div>
 
 <div class="form-group">
-    <select name="{{nameprefix}}value{{namesuffix}}" class="form-control">
+    <select data-sonata-select2="false" name="{{nameprefix}}value{{namesuffix}}" class="form-control">
     {% for key,option in options %}
         {% if option is iterable %}
             <optgroup label="{{ key | trans }}">
