@@ -127,26 +127,11 @@ class HgabkaUtils
         return $this->container->getParameter('kernel.project_dir').'/web';
     }
 
-    public static function slugify($text, $subst = '-')
+    public function slugify($text, $default = '', $replace = ["'"], $delimiter = '-')
     {
-        setlocale(LC_ALL, 'hu_HU.utf-8');
-        $subst = substr($subst, 0, 1);
-        // replace all non letters or digits by -
-        $text = preg_replace('~[^\\pL0-9]+~u', $subst, $text); // substitutes anything but letters, numbers and '_' with separator
-        $text = trim($text, '-');
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text); // TRANSLIT does the whole job
-        $text = strtolower($text);
-        $text = preg_replace('~[^-a-z0-9_'.$subst.']+~', '', $text); // keep only letters, numbers, '_' and separator  $text = preg_replace('~[^\\pL0-9_]+~u', '-', $text); // substitutes anything but letters, numbers and '_' with separator
-        $text = trim($text, '-');
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text); // TRANSLIT does the whole job
-        $text = strtolower($text);
-        $text = preg_replace('~[^-a-z0-9_'.$subst.']+~', '', $text); // keep only letters, numbers, '_' and separator
+        $slugifier = new Slugifier();
 
-        if (empty($text)) {
-            return '';
-        }
-
-        return $text;
+        return $slugifier->slugify($text, $default, $replace, $delimiter);
     }
 
     public function entityToArray($entity, $maxLevel = 2, $currentLevel = 0)

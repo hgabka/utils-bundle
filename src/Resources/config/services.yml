@@ -1,4 +1,26 @@
+parameters:
+    hgabka_utils.slugifier.class: 'Hgabka\UtilsBundle\Helper\Slugifier'
+    hgabka_utils.shell.class: 'Hgabka\UtilsBundle\Helper\Shell\Shell'
+    hgabka_utils.cipher.class: 'Hgabka\UtilsBundle\Helper\Cipher\UrlSafeCipher'
+    hgabka_utils.cipher.secret: ''
+
 services:
+    hgabka_utils.shell:
+        class: '%hgabka_utils.shell.class%'
+
+    hgabka_utils.cipher:
+        class: '%hgabka_utils.cipher.class%'
+        arguments: ['%kunstmaan_utilities.cipher.secret%']
+
+    hgabka_utils.slugifier:
+        class: '%hgabka_utils.slugifier.class%'
+
+    hgabka_utils.twig.extension:
+        class: Hgabka\UtilsBundle\Twig\UtilitiesTwigExtension
+        arguments: ['@hgabka_utils.slugifier']
+        tags:
+            - { name: twig.extension }
+
     hgabka_utils.form.type.autocomplete_entity_type:
         class: Hgabka\UtilsBundle\Form\Type\EntityAutocompleteType
         arguments:  ['@doctrine']
@@ -69,5 +91,10 @@ services:
         tags:
             - { name: twig.extension }
 
+    hgabka_utils.clone.helper:
+        class: Hgabka\UtilsBundle\Helper\CloneHelper
+        arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+
     Hgabka\UtilsBundle\Helper\HgabkaUtils: "@hgabka_utils.hgabka_utils"
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"
+    Hgabka\UtilsBundle\Helper\Slugifier: '@hgabka_utils.slugifier'
