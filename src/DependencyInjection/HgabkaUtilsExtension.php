@@ -32,6 +32,21 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $requiredLocales = explode('|', $container->getParameter('requiredlocales'));
+        $container->setParameter('hgabka_utils.admin_locales', $requiredLocales);
+        $container->setParameter('hgabka_utils.default_admin_locale', $container->getParameter('defaultlocale'));
+
+        $container->setParameter('hgabka_utils.session_security.ip_check', false);
+        $container->setParameter('hgabka_utils.session_security.user_agent_check', false);
+
+
+        $container->setParameter('hgabka_utils.google_signin.enabled', false);
+        $container->setParameter('hgabka_utils.google_signin.client_id', null);
+        $container->setParameter('hgabka_utils.google_signin.client_secret', null);
+        $container->setParameter('hgabka_utils.google_signin.hosted_domains', []);
+
+
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 

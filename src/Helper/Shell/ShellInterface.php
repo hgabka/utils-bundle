@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
+namespace Hgabka\UtilsBundle\Helper\Shell;
 
 /**
  * Shell interface, classes which extends this interface will make it possible to execute shell commands in the background.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
+namespace Hgabka\UtilsBundle\Helper\Shell;
 
 /**
  * A wrapper class which makes it possible to execute shell commands in the background.
