@@ -52,6 +52,7 @@ services:
     hgabka_utils.hgabka_utils:
         class: Hgabka\UtilsBundle\Helper\HgabkaUtils
         arguments:  ["@service_container"]
+        public: true
 
     hgabka_utils.breadcrumb_manager:
         class: Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager

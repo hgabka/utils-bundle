@@ -5,6 +5,7 @@ namespace Hgabka\UtilsBundle\DependencyInjection;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
+use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Symfony\Component\Config\FileLocator;
@@ -80,6 +81,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [IfElse::FUNCTION_NAME, IfElse::class]);
             $definition->addMethodCall('addCustomStringFunction', [IfNull::FUNCTION_NAME, IfNull::class]);
             $definition->addMethodCall('addCustomStringFunction', [Repeat::FUNCTION_NAME, Repeat::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Instr::FUNCTION_NAME, Instr::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
