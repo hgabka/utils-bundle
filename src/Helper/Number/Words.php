@@ -34,7 +34,7 @@ class Words
             $locale = 'en_US';
         }
 
-        $classname = "Hgabka\KunstmaanExtensionBundle\Helper\Words\Words_${locale}";
+        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_${locale}";
 
         if (!class_exists($classname)) {
             return $this->raiseError("Unable to include the Numbers/Words/lang.${locale}.php file");
@@ -99,7 +99,7 @@ class Words
     {
         $ret = $num;
 
-        $classname = "Hgabka\KunstmaanExtensionBundle\Helper\Words\Words_${locale}";
+        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_${locale}";
 
         if (!class_exists($classname)) {
             return $this->raiseError("Unable to include the Numbers/Words/lang.${locale}.php file");
