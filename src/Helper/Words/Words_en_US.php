@@ -326,6 +326,7 @@ class Words_en_US extends Words
             break;
         case 0:
             return;
+
             break;
         }
 

@@ -175,6 +175,7 @@ class Words_en_100 extends Words
             break;
         case 0:
             return;
+
             break;
         }
 

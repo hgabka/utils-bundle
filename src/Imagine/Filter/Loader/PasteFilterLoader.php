@@ -3,7 +3,6 @@
 namespace Hgabka\UtilsBundle\Imagine\Filter\Loader;
 
 use Hgabka\UtilsBundle\Imagine\Filter\Paste;
-use Imagine\Image\Color;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;

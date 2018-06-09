@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;

@@ -244,6 +244,7 @@ class Words_en_GB extends Words
             break;
         case 0:
             return;
+
             break;
         }
 

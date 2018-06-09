@@ -181,6 +181,7 @@ class Words_id extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

@@ -400,11 +400,11 @@ class HgabkaUtils
     public function getPhpCli()
     {
         $path = getenv('PATH') ? getenv('PATH') : getenv('Path');
-        $suffixes = DIRECTORY_SEPARATOR === '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
+        $suffixes = \DIRECTORY_SEPARATOR === '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
         foreach (['php5', 'php'] as $phpCli) {
             foreach ($suffixes as $suffix) {
                 foreach (explode(PATH_SEPARATOR, $path) as $dir) {
-                    if (is_file($file = $dir.DIRECTORY_SEPARATOR.$phpCli.$suffix) && is_executable($file)) {
+                    if (is_file($file = $dir.\DIRECTORY_SEPARATOR.$phpCli.$suffix) && is_executable($file)) {
                         return $file;
                     }
                 }
@@ -577,6 +577,7 @@ class HgabkaUtils
                 array_shift($args);
 
                 return call_user_func_array([$this, 'arrayDeepMerge'], $args);
+
                 break;
         }
     }

@@ -241,6 +241,7 @@ class Words_nl extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

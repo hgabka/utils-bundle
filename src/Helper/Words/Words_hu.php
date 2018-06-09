@@ -259,6 +259,7 @@ class Words_hu extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

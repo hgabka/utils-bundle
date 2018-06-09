@@ -166,6 +166,7 @@ class Words_lt extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

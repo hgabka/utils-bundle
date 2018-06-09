@@ -267,6 +267,7 @@ class Words_et extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

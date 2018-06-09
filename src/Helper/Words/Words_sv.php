@@ -191,6 +191,7 @@ class Words_sv extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

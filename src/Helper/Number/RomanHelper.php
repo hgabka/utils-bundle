@@ -30,7 +30,7 @@ class RomanHelper
     public function parse($roman)
     {
         //checking for zero values
-        if (in_array($roman, $this->romanZero)) {
+        if (in_array($roman, $this->romanZero, true)) {
             return 0;
         }
 
@@ -44,13 +44,13 @@ class RomanHelper
         $values = $this->romanValues;
         $result = 0;
         //iterating through characters LTR
-        for ($i = 0, $length = strlen($roman); $i < $length; $i++) {
+        for ($i = 0, $length = strlen($roman); $i < $length; ++$i) {
             //getting value of current char
             $value = $values[$roman[$i]];
             //getting value of next char - null if there is no next char
             $nextvalue = !isset($roman[$i + 1]) ? null : $values[$roman[$i + 1]];
             //adding/subtracting value from result based on $nextvalue
-            $result += (!is_null($nextvalue) && $nextvalue > $value) ? -$value : $value;
+            $result += (null !== $nextvalue && $nextvalue > $value) ? -$value : $value;
         }
 
         return $result;
@@ -65,6 +65,7 @@ class RomanHelper
                 if ($integer >= $arb) {
                     $integer -= $arb;
                     $return .= $rom;
+
                     break;
                 }
             }

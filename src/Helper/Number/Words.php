@@ -58,22 +58,26 @@ class Words
         // We are a language driver
         case 'TT':
             return trim($this->_toWords($num));
+
             break;
         // We are a language driver with custom options
         case 'TF':
             return trim($this->_toWords($num, $options));
+
             break;
         // We are the parent class
         case 'FT':
             @$obj = new $classname();
 
             return trim($obj->_toWords($num));
+
             break;
         // We are the parent class and should pass driver options
         case 'FF':
             @$obj = new $classname();
 
             return trim($obj->_toWords($num, $options));
+
             break;
         }
     }
@@ -183,7 +187,7 @@ class Words
             $locale = [$locale];
         }
 
-        $dname = __DIR__.DIRECTORY_SEPARATOR.'Words'.DIRECTORY_SEPARATOR;
+        $dname = __DIR__.\DIRECTORY_SEPARATOR.'Words'.\DIRECTORY_SEPARATOR;
 
         $dh = opendir($dname);
 

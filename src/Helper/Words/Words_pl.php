@@ -250,6 +250,7 @@ class Words_pl extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 
@@ -488,6 +489,7 @@ class Words_pl extends Words
                 break;
             case 0:
                 return $lev;
+
                 break;
         }
 

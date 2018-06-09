@@ -194,6 +194,7 @@ class Words_cs extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

@@ -200,6 +200,7 @@ class Words_dk extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

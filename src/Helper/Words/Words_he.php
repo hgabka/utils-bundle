@@ -345,6 +345,7 @@ class Words_he extends Words
                 break;
             case 0:
                 return;
+
                 break;
         }
 

@@ -102,6 +102,7 @@ class AclChangeset
 
     /**
      * @param mixed $id
+     *
      * @return AclChangeset
      */
     public function setId($id)
@@ -212,11 +213,11 @@ class AclChangeset
      */
     public function setRef($entity)
     {
-		if (method_exists($entity, 'getId')) {
+        if (method_exists($entity, 'getId')) {
             $this->setRefId($entity->getId());
             $this->setRefEntityName(ClassLookup::getClass($entity));
         }
-		
+
         return $this;
     }
 

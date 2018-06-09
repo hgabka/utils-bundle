@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: User
- * Date: 2018.02.28.
- * Time: 12:20
- */
 
 namespace Hgabka\UtilsBundle\Twig\Extension;
 
