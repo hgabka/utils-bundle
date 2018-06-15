@@ -37,6 +37,7 @@ services:
 
     hgabka_utils.form.type.plain_widget:
         class: Hgabka\UtilsBundle\Form\Type\StaticControlType
+        arguments: ['@templating']
         tags:
             - { name: form.type }
 
