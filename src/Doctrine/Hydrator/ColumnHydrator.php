@@ -18,5 +18,4 @@ class ColumnHydrator extends AbstractHydrator
     {
         return $this->_stmt->fetchAll(PDO::FETCH_COLUMN);
     }
-
 }

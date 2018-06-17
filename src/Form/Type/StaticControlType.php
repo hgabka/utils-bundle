@@ -2,9 +2,9 @@
 
 namespace Hgabka\UtilsBundle\Form\Type;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +16,7 @@ class StaticControlType extends AbstractType
 
     /**
      * StaticControlType constructor.
+     *
      * @param TemplateRegistryInterface $twig
      */
     public function __construct(EngineInterface $templating)
@@ -47,7 +48,7 @@ class StaticControlType extends AbstractType
         if (!empty($options['template'])) {
             $val = $this->templating->render($options['template'], [
                 'value' => $value,
-                'options' => $options
+                'options' => $options,
             ]);
         } else {
             $val = !empty($options['html']) ? str_replace('%value%', $value, $options['html']) : $value;
