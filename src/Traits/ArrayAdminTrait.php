@@ -25,4 +25,9 @@ trait ArrayAdminTrait
 
         return parent::getTemplate($name);
     }
+
+    public function getUrlsafeIdentifier($entity)
+    {
+        return is_array($entity) ? $entity['id'] : parent::getUrlsafeIdentifier($entity);
+    }
 }
