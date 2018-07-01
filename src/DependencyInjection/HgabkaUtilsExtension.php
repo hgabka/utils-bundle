@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\DependencyInjection;
 
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
+use Hgabka\UtilsBundle\DQL\Date;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
@@ -82,6 +83,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [IfNull::FUNCTION_NAME, IfNull::class]);
             $definition->addMethodCall('addCustomStringFunction', [Repeat::FUNCTION_NAME, Repeat::class]);
             $definition->addMethodCall('addCustomStringFunction', [Instr::FUNCTION_NAME, Instr::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Date::FUNCTION_NAME, Date::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
