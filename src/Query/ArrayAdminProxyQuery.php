@@ -103,7 +103,8 @@ class ArrayAdminProxyQuery extends BaseQuery
     {
         foreach ($query = $this->getFixedQueryBuilder($this->queryBuilder)->getDQLPart('select') as $select) {
             foreach ($select->getParts() as $selectPart) {
-                if (strpos(strtoupper($selectPart), 'AS '.$field) || strpos(strtoupper($selectPart), 'AS HIDDEN '.$field)) {
+                if (strpos(strtoupper($selectPart), 'AS '.strtoupper($field)) ||
+                    strpos(strtoupper($selectPart), 'AS HIDDEN '.strtoupper($field))) {
                     return true;
                 }
             }
