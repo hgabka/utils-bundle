@@ -78,7 +78,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function getLocaleChoices($prefix = 'hgabka.locales.'): array
+    public function getLocaleChoices($prefix = 'wt_kuma_extension.locales.'): array
     {
         $locales = $this->getAvailableLocales();
 

@@ -2,29 +2,29 @@
 
 namespace Hgabka\UtilsBundle\Form\Type;
 
-use Hgabka\UtilsBundle\Helper\KumaUtils;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocaleType extends AbstractType
 {
-    /** @var KumaUtils */
-    protected $kumaUtils;
+    /** @var HgabkaUtils */
+    protected $hgabkaUtils;
 
     /**
      * LocaleType constructor.
      *
-     * @param KumaUtils $kumaUtils
+     * @param HgabkaUtils $hgabkaUtils
      */
-    public function __construct(KumaUtils $kumaUtils)
+    public function __construct(HgabkaUtils $hgabkaUtils)
     {
-        $this->kumaUtils = $kumaUtils;
+        $this->hgabkaUtils = $hgabkaUtils;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $cultures = $this->kumaUtils->getLocaleChoices();
+        $cultures = $this->hgabkaUtils->getLocaleChoices();
 
         $resolver
             ->setDefaults([
