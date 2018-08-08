@@ -239,7 +239,7 @@ richeditor.richEditor = (function (window, undefined) {
         editorConfig = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['hgUtilsDefault'];
 
         // Load the data from data attrs, but don't override the ones in the config if they're set.
-        for (key in dataAttrConfiguration) {
+        for (var key in dataAttrConfiguration) {
             if (editorConfig[key] === undefined) {
                 editorConfig[key] = dataAttrConfiguration[key];
             }
