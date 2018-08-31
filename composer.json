@@ -17,7 +17,7 @@
         "php" : "~7.2",
         "symfony/framework-bundle": "^4.1",
         "symfony/acl-bundle": "^1.0",
-        "liip/imagine-bundle": "^1.8"
+        "liip/imagine-bundle": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
