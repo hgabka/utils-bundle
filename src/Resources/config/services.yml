@@ -105,12 +105,6 @@ services:
         class: Hgabka\UtilsBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
-    hgabka_utils.doctrine_mapping.listener:
-        class: Hgabka\UtilsBundle\EventListener\MappingListener
-        arguments: ['%fos_user.model.user.class%']
-        tags:
-            - { name: doctrine.event_listener, event: loadClassMetadata }
-
     hgabka_utils.form.helper:
         class: Hgabka\UtilsBundle\Helper\FormHelper
 
