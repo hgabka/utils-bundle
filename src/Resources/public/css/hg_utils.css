@@ -345,6 +345,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 .modal-open .modal {
     overflow-x: hidden;
     overflow-y: auto;
+    z-index: 9999;
 }
 .modal-backdrop {
     position: absolute;
