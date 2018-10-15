@@ -3,8 +3,8 @@
 namespace Hgabka\UtilsBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
-use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\Lexer;
+use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
 class Round extends FunctionNode
@@ -33,6 +33,6 @@ class Round extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return 'ROUND(' . $this->arithmeticExpression->dispatch($sqlWalker).(null !== $this->decimals ? ', '.$this->decimals->dispatch($sqlWalker) : '') . ')';
+        return 'ROUND('.$this->arithmeticExpression->dispatch($sqlWalker).(null !== $this->decimals ? ', '.$this->decimals->dispatch($sqlWalker) : '').')';
     }
 }

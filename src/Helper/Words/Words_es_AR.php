@@ -147,9 +147,9 @@ class Words_es_AR extends Words
      *
      * @param float $num   An float between -infinity and infinity inclusive :)
      *                     that should be converted to a words representation
-     * @param int   $power The power of ten for the rest of the number to the right.
+     * @param int   $power the power of ten for the rest of the number to the right.
      *                     For example toWords(12,3) should give "doce mil".
-     *                     Optional, defaults to 0.
+     *                     Optional, defaults to 0
      *
      * @return string The corresponding word representation
      *
@@ -176,7 +176,7 @@ class Words_es_AR extends Words
         $num = $num_tmp[0];
         $dec = (@$num_tmp[1]) ? $num_tmp[1] : '';
 
-        if (strlen($num) > 6) {
+        if (\strlen($num) > 6) {
             $current_power = 6;
             // check for highest power
             if (isset($this->_exponent[$power])) {
@@ -194,9 +194,9 @@ class Words_es_AR extends Words
             }
         } elseif (0 === $num || '' === $num) {
             return ' '.$this->_digits[0];
-            $current_power = strlen($num);
+            $current_power = \strlen($num);
         } else {
-            $current_power = strlen($num);
+            $current_power = \strlen($num);
         }
 
         // See if we need "thousands"
@@ -348,7 +348,7 @@ class Words_es_AR extends Words
                 $lev = $this->_exponent[$power];
             }
 
-            if (!isset($lev) || !is_array($lev)) {
+            if (!isset($lev) || !\is_array($lev)) {
                 return null;
             }
 
@@ -398,7 +398,7 @@ class Words_es_AR extends Words
 
         $lev = (1 === $decimal) ? 0 : 1;
         if ($lev > 0) {
-            if (count($curr_names[0]) > 1) {
+            if (\count($curr_names[0]) > 1) {
                 $ret = $curr_names[0][$lev];
             } else {
                 $ret = $curr_names[0][0].'s';
@@ -418,7 +418,7 @@ class Words_es_AR extends Words
 
             $lev = (1 === $fraction) ? 0 : 1;
             if ($lev > 0) {
-                if (count($curr_names[1]) > 1) {
+                if (\count($curr_names[1]) > 1) {
                     $ret .= $this->_sep.$curr_names[1][$lev];
                 } else {
                     $ret .= $this->_sep.$curr_names[1][0].'s';

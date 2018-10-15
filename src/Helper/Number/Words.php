@@ -42,16 +42,16 @@ class Words
 
         $methods = get_class_methods($classname);
 
-        if (!in_array('_toWords', $methods, true) && !in_array('_towords', $methods, true)) {
+        if (!\in_array('_toWords', $methods, true) && !\in_array('_towords', $methods, true)) {
             return $this->raiseError("Unable to find _toWords method in '$classname' class");
         }
 
-        if (!is_int($num)) {
+        if (!\is_int($num)) {
             // cast (sanitize) to int without losing precision
             $num = preg_replace('/^[^\d]*?(-?)[ \t\n]*?(\d+)([^\d].*?)?$/', '$1$2', $num);
         }
 
-        $truth_table = ($classname === get_class($this)) ? 'T' : 'F';
+        $truth_table = ($classname === \get_class($this)) ? 'T' : 'F';
         $truth_table .= (empty($options)) ? 'T' : 'F';
 
         switch ($truth_table) {
@@ -107,14 +107,14 @@ class Words
 
         $methods = get_class_methods($classname);
 
-        if (!in_array('toCurrencyWords', $methods, true) && !in_array('tocurrencywords', $methods, true)) {
+        if (!\in_array('toCurrencyWords', $methods, true) && !\in_array('tocurrencywords', $methods, true)) {
             return $this->raiseError("Unable to find toCurrencyWords method in '$classname' class");
         }
 
         @$obj = new $classname();
 
         // round if a float is passed, use Math_BigInteger otherwise
-        if (is_float($num)) {
+        if (\is_float($num)) {
             $num = round($num, 2);
         }
 
@@ -124,7 +124,7 @@ class Words
 
         $currency = explode('.', $num, 2);
 
-        $len = strlen($currency[1]);
+        $len = \strlen($currency[1]);
 
         if (1 === $len) {
             // add leading zero
@@ -139,7 +139,7 @@ class Words
             if ($round_digit >= 5) {
                 // round up without losing precision
 
-                $int = new BigInteger(implode($currency));
+                $int = new BigInteger(implode('', $currency));
                 $int = $int->add(new BigInteger(1));
                 $int_str = $int->toString();
 
@@ -175,7 +175,7 @@ class Words
      *
      * @param mixed $locale string/array of strings $locale
      *                      Optional searched language name abbreviation.
-     *                      Default: all available locales.
+     *                      Default: all available locales
      *
      * @return array   The available locales (optionaly only the requested ones)
      * @return mixed[]
@@ -183,7 +183,7 @@ class Words
     protected function getLocales($locale = null)
     {
         $ret = [];
-        if (isset($locale) && is_string($locale)) {
+        if (isset($locale) && \is_string($locale)) {
             $locale = [$locale];
         }
 
@@ -195,7 +195,7 @@ class Words
             while ($fname = readdir($dh)) {
                 if (preg_match('#^Words_\.([a-z_]+)\.php$#i', $fname, $matches)) {
                     if (is_file($dname.$fname) && is_readable($dname.$fname) &&
-                        (!isset($locale) || in_array($matches[1], $locale, true))) {
+                        (!isset($locale) || \in_array($matches[1], $locale, true))) {
                         $ret[] = $matches[1];
                     }
                 }

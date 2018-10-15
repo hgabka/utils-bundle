@@ -1,6 +1,5 @@
 <?php
 
-
 class CKEditor
 {
     /**
@@ -195,7 +194,7 @@ class CKEditor
      *
      * @param $className (string) If set, replace all textareas with class className in the page.
      *
-     * Example 1: replace all &lt;textarea&gt; elements in the page.
+     * Example 1: replace all &lt;textarea&gt; elements in the page
      * @code
      * $CKEditor = new CKEditor();
      * $CKEditor->replaceAll();

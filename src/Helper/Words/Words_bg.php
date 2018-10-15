@@ -278,10 +278,10 @@ class Words_bg extends Words
      */
     public function _splitNumber($num)
     {
-        if (is_string($num)) {
+        if (\is_string($num)) {
             $ret = [];
 
-            $strlen = strlen($num);
+            $strlen = \strlen($num);
             $first = substr($num, 0, $strlen % 3);
 
             preg_match_all('/\d{3}/', substr($num, $strlen % 3, $strlen), $m);
@@ -302,7 +302,7 @@ class Words_bg extends Words
      * in Bulgarian language.
      *
      * @param int  $num    an integer between 1 and 999 inclusive
-     * @param int  $gender An integer which represents the gender of
+     * @param int  $gender an integer which represents the gender of
      *                     the current digits group.
      *                     0 - neuter
      *                     1 - masculine
@@ -372,7 +372,7 @@ class Words_bg extends Words
         }
 
         // put "and" where needed
-        if (count($ret) > 1) {
+        if (\count($ret) > 1) {
             if ($e) {
                 $ret[4] = $this->_and;
             } else {
@@ -382,7 +382,7 @@ class Words_bg extends Words
 
         // put "and" optionally in the case this is the last non-empty group
         if ($last) {
-            if (!$s || 1 === count($ret)) {
+            if (!$s || 1 === \count($ret)) {
                 $ret[0] = $this->_and;
             }
             $this->_last_and = true;
@@ -426,7 +426,7 @@ class Words_bg extends Words
         }
 
         // if the absolute value is greater than 9.99*10^302, return infinity
-        if (strlen($num) > 306) {
+        if (\strlen($num) > 306) {
             return $ret_minus.$this->_infinity;
         }
 
@@ -436,7 +436,7 @@ class Words_bg extends Words
         // split $num to groups of three-digit numbers
         $num_groups = $this->_splitNumber($num);
 
-        $sizeof_numgroups = count($num_groups);
+        $sizeof_numgroups = \count($num_groups);
 
         // go through the groups in reverse order, so that the last group could be determined
         for ($i = $sizeof_numgroups - 1, $j = 1; $i >= 0; $i--, $j++) {

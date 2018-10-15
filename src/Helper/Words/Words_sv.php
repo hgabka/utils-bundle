@@ -114,8 +114,8 @@ class Words_sv extends Words
      *
      * @param int $num       An integer between -infinity and infinity inclusive :)
      *                       that need to be converted to words
-     * @param int $power     The power of ten for the rest of the number to the right.
-     *                       Optional, defaults to 0.
+     * @param int $power     the power of ten for the rest of the number to the right.
+     *                       Optional, defaults to 0
      * @param int $powsuffix The power name to be added to the end of the return string.
      *                       Used internally. Optional, defaults to ''.
      *
@@ -140,8 +140,8 @@ class Words_sv extends Words
         $num = trim($num);
         $num = preg_replace('/^0+/', '', $num);
 
-        if (strlen($num) > 3) {
-            $maxp = strlen($num) - 1;
+        if (\strlen($num) > 3) {
+            $maxp = \strlen($num) - 1;
             $curp = $maxp;
 
             for ($p = $maxp; $p > 0; --$p) { // power
@@ -152,7 +152,7 @@ class Words_sv extends Words
                     $snum = preg_replace('/^0+/', '', $snum);
 
                     if ('' !== $snum) {
-                        $cursuffix = $this->_exponent[$power][count($this->_exponent[$power]) - 1];
+                        $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
                             $cursuffix .= $this->_sep.$powsuffix;
                         }
@@ -176,7 +176,7 @@ class Words_sv extends Words
 
         $h = $t = $d = 0;
 
-        switch (strlen($num)) {
+        switch (\strlen($num)) {
             case 3:
                 $h = (int) substr($num, -3, 1);
 
@@ -279,7 +279,7 @@ class Words_sv extends Words
                 $lev = $this->_exponent[$power];
             }
 
-            if (!isset($lev) || !is_array($lev)) {
+            if (!isset($lev) || !\is_array($lev)) {
                 return null;
             }
 

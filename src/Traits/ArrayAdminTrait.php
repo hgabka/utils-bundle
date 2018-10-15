@@ -28,6 +28,6 @@ trait ArrayAdminTrait
 
     public function getUrlsafeIdentifier($entity)
     {
-        return is_array($entity) ? $entity['id'] : parent::getUrlsafeIdentifier($entity);
+        return \is_array($entity) ? $entity['id'] : parent::getUrlsafeIdentifier($entity);
     }
 }

@@ -45,7 +45,7 @@ class HgabkaUtils
     {
         $availableLocales = $this->getAvailableLocales();
 
-        if (!empty($baseLocale) && in_array($baseLocale, $availableLocales, true)) {
+        if (!empty($baseLocale) && \in_array($baseLocale, $availableLocales, true)) {
             return $baseLocale;
         }
 
@@ -55,7 +55,7 @@ class HgabkaUtils
 
         $locale = $request ? $request->getLocale() : null;
 
-        if (!empty($locale) && in_array($locale, $availableLocales, true)) {
+        if (!empty($locale) && \in_array($locale, $availableLocales, true)) {
             return $locale;
         }
 
@@ -143,7 +143,7 @@ class HgabkaUtils
 
         /** @var EntityManager $em */
         $em = $doctrine->getManager();
-        $md = $em->getClassMetadata(get_class($entity));
+        $md = $em->getClassMetadata(\get_class($entity));
 
         $result = [];
         if ($md) {
@@ -196,7 +196,7 @@ class HgabkaUtils
                 $search = preg_replace_callback($pattern, function ($matches) use ($replacement) {
                     preg_match("/('::'\.)?([a-z]*)\('\\\\([0-9]{1})'\)/", $replacement, $match);
 
-                    return ('' === $match[1] ? '' : '::').call_user_func($match[2], $matches[$match[3]]);
+                    return ('' === $match[1] ? '' : '::').\call_user_func($match[2], $matches[$match[3]]);
                 }, $search);
             } else {
                 $search = preg_replace($pattern, $replacement, $search);
@@ -315,7 +315,7 @@ class HgabkaUtils
      */
     public function addIncludePath($path, $position = 'front')
     {
-        if (is_array($path)) {
+        if (\is_array($path)) {
             foreach ('front' === $position ? array_reverse($path) : $path as $p) {
                 $this->addIncludePath($p, $position);
             }
@@ -439,14 +439,14 @@ class HgabkaUtils
             $end = strpos($name, ']', $pos);
             if ($end === $pos + 1) {
                 // reached a []
-                if (!is_array($array)) {
+                if (!\is_array($array)) {
                     return $default;
                 }
 
                 break;
             } elseif (!isset($array[substr($name, $pos + 1, $end - $pos - 1)])) {
                 return $default;
-            } elseif (is_array($array)) {
+            } elseif (\is_array($array)) {
                 $array = $array[substr($name, $pos + 1, $end - $pos - 1)];
                 $offset = $end;
             } else {
@@ -471,8 +471,8 @@ class HgabkaUtils
      */
     public function isUTF8($string)
     {
-        for ($idx = 0, $strlen = strlen($string); $idx < $strlen; ++$idx) {
-            $byte = ord($string[$idx]);
+        for ($idx = 0, $strlen = \strlen($string); $idx < $strlen; ++$idx) {
+            $byte = \ord($string[$idx]);
 
             if ($byte & 0x80) {
                 if (0xC0 === ($byte & 0xE0)) {
@@ -493,7 +493,7 @@ class HgabkaUtils
                 }
 
                 while ($bytes_remaining--) {
-                    if (0x80 !== (ord($string[++$idx]) & 0xC0)) {
+                    if (0x80 !== (\ord($string[++$idx]) & 0xC0)) {
                         return false;
                     }
                 }
@@ -514,7 +514,7 @@ class HgabkaUtils
     {
         static $isEmpty = true;
         foreach ($array as $value) {
-            $isEmpty = (is_array($value)) ? $this->isArrayValuesEmpty($value) : (0 === strlen($value));
+            $isEmpty = (\is_array($value)) ? $this->isArrayValuesEmpty($value) : (0 === \strlen($value));
             if (!$isEmpty) {
                 break;
             }
@@ -544,19 +544,19 @@ class HgabkaUtils
      */
     public function arrayDeepMerge()
     {
-        switch (func_num_args()) {
+        switch (\func_num_args()) {
             case 0:
                 return false;
             case 1:
                 return func_get_arg(0);
             case 2:
-                $args = func_get_args();
+                $args = \func_get_args();
                 $args[2] = [];
-                if (is_array($args[0]) && is_array($args[1])) {
+                if (\is_array($args[0]) && \is_array($args[1])) {
                     foreach (array_unique(array_merge(array_keys($args[0]), array_keys($args[1]))) as $key) {
                         $isKey0 = array_key_exists($key, $args[0]);
                         $isKey1 = array_key_exists($key, $args[1]);
-                        if ($isKey0 && $isKey1 && is_array($args[0][$key]) && is_array($args[1][$key])) {
+                        if ($isKey0 && $isKey1 && \is_array($args[0][$key]) && \is_array($args[1][$key])) {
                             $args[2][$key] = $this->arrayDeepMerge($args[0][$key], $args[1][$key]);
                         } elseif ($isKey0 && $isKey1) {
                             $args[2][$key] = $args[1][$key];
@@ -572,11 +572,11 @@ class HgabkaUtils
 
                 return $args[1];
             default:
-                $args = func_get_args();
+                $args = \func_get_args();
                 $args[1] = $this->arrayDeepMerge($args[0], $args[1]);
                 array_shift($args);
 
-                return call_user_func_array([$this, 'arrayDeepMerge'], $args);
+                return \call_user_func_array([$this, 'arrayDeepMerge'], $args);
 
                 break;
         }
@@ -591,7 +591,7 @@ class HgabkaUtils
      */
     public function stripslashesDeep($value)
     {
-        return is_array($value) ? array_map([$this, 'stripslashesDeep'], $value) : stripslashes($value);
+        return \is_array($value) ? array_map([$this, 'stripslashesDeep'], $value) : stripslashes($value);
     }
 
     /**
@@ -603,7 +603,7 @@ class HgabkaUtils
      */
     public function stripComments($source)
     {
-        if (!function_exists('token_get_all')) {
+        if (!\function_exists('token_get_all')) {
             return $source;
         }
 
@@ -638,7 +638,7 @@ class HgabkaUtils
     {
         if ('/' === $path[0] || '\\' === $path[0] ||
             (
-                strlen($path) > 3 && ctype_alpha($path[0]) &&
+                \strlen($path) > 3 && ctype_alpha($path[0]) &&
                 ':' === $path[1] &&
                 ('\\' === $path[2] || '/' === $path[2])
             )
@@ -692,7 +692,7 @@ class HgabkaUtils
         $ignore = ['.', '..', 'CVS', '.svn'];
 
         while (false !== ($file = readdir($fp))) {
-            if (!in_array($file, $ignore, true)) {
+            if (!\in_array($file, $ignore, true)) {
                 if (is_link($directory.'/'.$file)) {
                     // delete symlink
                     unlink($directory.'/'.$file);
@@ -746,7 +746,7 @@ class HgabkaUtils
     public function Roman2Int($roman)
     {
         //checking for zero values
-        if (in_array($roman, $this->roman_zero, true)) {
+        if (\in_array($roman, $this->roman_zero, true)) {
             return 0;
         }
 
@@ -758,7 +758,7 @@ class HgabkaUtils
         $values = $this->roman_values;
         $result = 0;
         //iterating through characters LTR
-        for ($i = 0, $length = strlen($roman); $i < $length; ++$i) {
+        for ($i = 0, $length = \strlen($roman); $i < $length; ++$i) {
             //getting value of current char
             $value = $values[$roman[$i]];
             //getting value of next char - null if there is no next char
@@ -790,7 +790,7 @@ class HgabkaUtils
 
     public function isSlug($slug)
     {
-        return preg_match('|^[a-zA-Z0-9_-]+$|', $slug) && strlen($slug) >= 3;
+        return preg_match('|^[a-zA-Z0-9_-]+$|', $slug) && \strlen($slug) >= 3;
     }
 
     public function mbUcfirst($str, $encoding = 'UTF-8', $lower_str_end = false)
@@ -809,7 +809,7 @@ class HgabkaUtils
 
     public function stripNewlines($string)
     {
-        if (!is_string($string)) {
+        if (!\is_string($string)) {
             return $string;
         }
 
@@ -955,7 +955,7 @@ class HgabkaUtils
         } else {
             sort($items);
             $prev = false;
-            for ($i = count($items) - 1; $i >= 0; --$i) {
+            for ($i = \count($items) - 1; $i >= 0; --$i) {
                 $newitems = $items;
                 $arr = array_splice($newitems, $i, 1);
                 $tmp = $arr[0];
@@ -1028,12 +1028,12 @@ class HgabkaUtils
      */
     public function mergeClasses($currentClass, $newClasses, $returnAsString = false)
     {
-        if (!is_array($currentClass)) {
+        if (!\is_array($currentClass)) {
             $currentClass = array_filter(array_map('trim', explode(' ', $currentClass)));
         }
 
         if (!empty($newClasses)) {
-            if (!is_array($newClasses)) {
+            if (!\is_array($newClasses)) {
                 $newClasses = array_filter(array_map('trim', explode(' ', $newClasses)));
             }
 
@@ -1042,7 +1042,7 @@ class HgabkaUtils
             }
         }
 
-        $currentClass = !is_array($currentClass) ? (array) $currentClass : $currentClass;
+        $currentClass = !\is_array($currentClass) ? (array) $currentClass : $currentClass;
         $currentClass = array_unique($currentClass);
 
         return $returnAsString ? implode(' ', $currentClass) : $currentClass;
@@ -1245,7 +1245,7 @@ class HgabkaUtils
                     $truncated .= $char;
 
                     ++$max;
-                } while ($char && !in_array($char, $endChars, true));
+                } while ($char && !\in_array($char, $endChars, true));
             } else {
                 $truncated .= '&hellip;';
             }
@@ -1261,7 +1261,7 @@ class HgabkaUtils
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($params));
+        curl_setopt($ch, CURLOPT_POST, \count($params));
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -1340,7 +1340,7 @@ class HgabkaUtils
 
     public function getObjectProperty($object, $property, $default = null)
     {
-        if (!is_object($object) || !property_exists($object, $property)) {
+        if (!\is_object($object) || !property_exists($object, $property)) {
             return $default;
         }
 

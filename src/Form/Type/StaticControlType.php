@@ -44,7 +44,7 @@ class StaticControlType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $isDate = false;
-        $value = is_string($view->vars['value']) ? $view->vars['value'] : '';
+        $value = \is_string($view->vars['value']) ? $view->vars['value'] : '';
         if (!empty($options['template'])) {
             $val = $this->templating->render($options['template'], [
                 'value' => $value,

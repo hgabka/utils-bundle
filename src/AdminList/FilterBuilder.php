@@ -100,7 +100,7 @@ class FilterBuilder
         $this->currentParameters = $request->query->all();
         unset($this->currentParameters['pagesize'], $this->currentParameters['folderId']);
 
-        if (0 === count($this->currentParameters)) {
+        if (0 === \count($this->currentParameters)) {
             if (!$request->query->has('filter')) {
                 if ($request->getSession()->has($filterBuilderName)) {
                     $savedQuery = $request->getSession()->get($filterBuilderName);

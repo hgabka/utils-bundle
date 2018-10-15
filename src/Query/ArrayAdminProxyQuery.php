@@ -2,32 +2,18 @@
 
 namespace Hgabka\UtilsBundle\Query;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
-use Doctrine\Common\Collections\Criteria;
 
 class ArrayAdminProxyQuery extends BaseQuery
 {
-
     /**
      * The map of query hints.
      *
      * @var array<string,mixed>
      */
     private $hints = [];
-
-    /**
-     * This method alters the query to return a clean set of object with a working
-     * set of Object.
-     *
-     * @param QueryBuilder $queryBuilder
-     *
-     * @return QueryBuilder
-     */
-    protected function getFixedQueryBuilder(QueryBuilder $queryBuilder)
-    {
-        return $queryBuilder;
-    }
 
     public function execute(array $params = [], $hydrationMode = null)
     {
@@ -41,7 +27,7 @@ class ArrayAdminProxyQuery extends BaseQuery
             $sortBy = $this->getSortBy();
             if (false === strpos($sortBy, '.')) { // add the current alias
                 if (!$this->isCustomField($sortBy)) {
-                    $sortBy = $rootAlias . '.' . $sortBy;
+                    $sortBy = $rootAlias.'.'.$sortBy;
                 }
             }
             $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
@@ -71,7 +57,7 @@ class ArrayAdminProxyQuery extends BaseQuery
 
         foreach ($identifierFields as $identifierField) {
             $order = $rootAlias.'.'.$identifierField;
-            if (!in_array($order, $existingOrders)) {
+            if (!\in_array($order, $existingOrders, true)) {
                 $queryBuilder->addOrderBy(
                     $order,
                     $this->getSortOrder() // reusing the sort order is the most natural way to go
@@ -93,10 +79,23 @@ class ArrayAdminProxyQuery extends BaseQuery
         if ($this->isCustomField($fieldMapping['fieldName'])) {
             $this->sortBy = $fieldMapping['fieldName'];
         } else {
-            $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
+            $this->sortBy = $alias.'.'.$fieldMapping['fieldName'];
         }
 
         return $this;
+    }
+
+    /**
+     * This method alters the query to return a clean set of object with a working
+     * set of Object.
+     *
+     * @param QueryBuilder $queryBuilder
+     *
+     * @return QueryBuilder
+     */
+    protected function getFixedQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        return $queryBuilder;
     }
 
     protected function isCustomField($field)

@@ -37,7 +37,7 @@ class LocaleType extends AbstractType
             if (!empty($locales)) {
                 $result = [];
                 foreach ($data as $label => $key) {
-                    if (in_array($key, $locales, true)) {
+                    if (\in_array($key, $locales, true)) {
                         $result[$label] = $key;
                     }
                 }
