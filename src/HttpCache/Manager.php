@@ -44,7 +44,7 @@ class Manager
         if ($this->filesystem->exists($cacheDir) && is_dir($cacheDir)) {
             $this->filesystem->remove(new \FilesystemIterator($cacheDir));
         }
-        if (defined('apc_clear_cache')) {
+        if (\defined('apc_clear_cache')) {
             apc_clear_cache();
             apc_clear_cache('user');
             apc_clear_cache('opcode');

@@ -64,7 +64,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
         if ($bc instanceof BreadcrumbInterface) {
             $bcs = $bc->getBreadcrumb($this->getUser());
 
-            if (!is_array($bcs)) {
+            if (!\is_array($bcs)) {
                 $bcs = [$bcs];
             }
 
@@ -177,7 +177,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      */
     public function trim($count)
     {
-        $this->breadCrumbs = array_slice($this->getBreadcrumbs(), 0, -$count);
+        $this->breadCrumbs = \array_slice($this->getBreadcrumbs(), 0, -$count);
 
         return $this;
     }
@@ -204,20 +204,20 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
 
     public function count()
     {
-        return count($this->getBreadcrumbs());
+        return \count($this->getBreadcrumbs());
     }
 
     public function isEmpty()
     {
         $bc = $this->getBreadcrumbs();
 
-        return count($bc) === ($this->addHomepage ? 0 : 1);
+        return \count($bc) === ($this->addHomepage ? 0 : 1);
     }
 
     protected function getUser()
     {
         $user = $this->tokenStorage->getToken()->getUser();
 
-        return is_object($user) ? $user : null;
+        return \is_object($user) ? $user : null;
     }
 }

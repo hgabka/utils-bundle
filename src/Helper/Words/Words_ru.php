@@ -397,8 +397,8 @@ class Words_ru extends Words
      *
      * @param int   $num     An integer between -infinity and infinity inclusive :)
      *                       that need to be converted to words
-     * @param int   $gender  Gender of string, 0=neutral, 1=male, 2=female.
-     *                       Optional, defaults to 1.
+     * @param int   $gender  gender of string, 0=neutral, 1=male, 2=female.
+     *                       Optional, defaults to 1
      * @param mixed $options
      *
      * @return string The corresponding word representation
@@ -426,8 +426,8 @@ class Words_ru extends Words
      *                    that need to be converted to words
      * @param int &$case  A variable passed by reference which is set to case
      *                    of the word associated with the number
-     * @param int $gender Gender of string, 0=neutral, 1=male, 2=female.
-     *                    Optional, defaults to 1.
+     * @param int $gender gender of string, 0=neutral, 1=male, 2=female.
+     *                    Optional, defaults to 1
      *
      * @return string The corresponding word representation
      *
@@ -446,7 +446,7 @@ class Words_ru extends Words
             $num = substr($num, 1);
         }
 
-        while (strlen($num) % 3) {
+        while (\strlen($num) % 3) {
             $num = '0'.$num;
         }
 
@@ -455,7 +455,7 @@ class Words_ru extends Words
         } else {
             $power = 0;
 
-            while ($power < strlen($num)) {
+            while ($power < \strlen($num)) {
                 if (!$power) {
                     $groupgender = $gender;
                 } elseif (3 === $power) {

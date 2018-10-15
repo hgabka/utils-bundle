@@ -77,7 +77,7 @@ class RecaptchaValidator extends ConstraintValidator
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }
         // discard spam submissions
-        if (null === $response || 0 === strlen($response)) {
+        if (null === $response || 0 === \strlen($response)) {
             return false;
         }
         $result = $this->kumaUtils->curlPost(self::RECAPTCHA_VERIFY_SERVER.'/recaptcha/api/siteverify', [

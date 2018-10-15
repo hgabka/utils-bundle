@@ -36,7 +36,7 @@ class ObjectAutocompleteItemViewTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if (!empty($value)) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $obj = $this->repository->find($value);
                 if (!$obj) {
                     return;
@@ -59,7 +59,7 @@ class ObjectAutocompleteItemViewTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $value['id'];
         }
 

@@ -43,13 +43,13 @@ class UrlSafeCipher extends Cipher
     {
         $pos = 0;
         $result = '';
-        while ($pos < strlen($hexString)) {
+        while ($pos < \strlen($hexString)) {
             if (false !== strpos(" \t\n\r", $hexString[$pos])) {
                 ++$pos;
             } else {
                 $code = hexdec(substr($hexString, $pos, 2));
                 $pos = $pos + 2;
-                $result .= chr($code);
+                $result .= \chr($code);
             }
         }
 

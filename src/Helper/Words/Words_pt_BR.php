@@ -269,7 +269,7 @@ class Words_pt_BR extends Words
          * In Brazilian Portuguese the last chunck must be separated under
          * special conditions.
          */
-        if ((count($ret) > 2 + $neg)
+        if ((\count($ret) > 2 + $neg)
             && $this->_mustSeparate($chunks)) {
             $ret[1 + $neg] = trim($this->_sep.$ret[1 + $neg]);
         }
@@ -307,7 +307,7 @@ class Words_pt_BR extends Words
             return [$this->_contractions[$chunk % 10]];
         }
 
-        $i = strlen($chunk) - 1;
+        $i = \strlen($chunk) - 1;
         $n = (int) $chunk[0];
         $word = $this->_words[$i][$n];
 
@@ -435,7 +435,7 @@ class Words_pt_BR extends Words
             }
 
             // Have we got decimal?
-            if (count($ret)) {
+            if (\count($ret)) {
                 $ret[] = trim($this->_sep);
             } else {
                 $nodec = true;

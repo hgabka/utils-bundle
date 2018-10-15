@@ -43,7 +43,7 @@ abstract class ConstantsChoiceList extends ArrayChoiceList implements \IteratorA
 
     protected function getAllConstants()
     {
-        $refl = new \ReflectionClass(get_called_class());
+        $refl = new \ReflectionClass(\get_called_class());
 
         return $refl->getConstants();
     }

@@ -155,7 +155,7 @@ class FormWidget implements FormWidgetInterface
     {
         // Get fully qualified class name of form if not provided as string
         if ($type instanceof AbstractType) {
-            $type = get_class($type);
+            $type = \get_class($type);
         }
         $this->types[$name] = $type;
         $this->data[$name] = $data;

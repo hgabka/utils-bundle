@@ -238,9 +238,9 @@ class Words_fr extends Words
      */
     public function _splitNumber($num)
     {
-        if (is_string($num)) {
+        if (\is_string($num)) {
             $ret = [];
-            $strlen = strlen($num);
+            $strlen = \strlen($num);
             $first = substr($num, 0, $strlen % 3);
 
             preg_match_all('/\d{3}/', substr($num, $strlen % 3, $strlen), $m);
@@ -261,9 +261,9 @@ class Words_fr extends Words
      * in French language.
      *
      * @param int  $num  an integer between 1 and 999 inclusive
-     * @param bool $last A flag, that determines if it is the last group of digits -
+     * @param bool $last a flag, that determines if it is the last group of digits -
      *                   this is used to accord the plural suffix of the "hundreds".
-     *                   Example: 200 = "deux cents", but 200000 = "deux cent mille".
+     *                   Example: 200 = "deux cents", but 200000 = "deux cent mille"
      *
      * @return string the words for the given number
      *
@@ -381,7 +381,7 @@ class Words_fr extends Words
         }
 
         // if the absolute value is greater than 9.99*10^302, return infinity
-        if (strlen($num) > 306) {
+        if (\strlen($num) > 306) {
             return $ret.$this->_infinity;
         }
 
@@ -391,7 +391,7 @@ class Words_fr extends Words
         // split $num to groups of three-digit numbers
         $num_groups = $this->_splitNumber($num);
 
-        $sizeof_numgroups = count($num_groups);
+        $sizeof_numgroups = \count($num_groups);
 
         foreach ($num_groups as $i => $number) {
             // what is the corresponding exponent for the current group
