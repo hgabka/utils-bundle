@@ -10,6 +10,7 @@ use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Repeat;
+use Hgabka\UtilsBundle\DQL\Round;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
