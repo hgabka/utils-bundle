@@ -84,6 +84,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Repeat::FUNCTION_NAME, Repeat::class]);
             $definition->addMethodCall('addCustomStringFunction', [Instr::FUNCTION_NAME, Instr::class]);
             $definition->addMethodCall('addCustomStringFunction', [Date::FUNCTION_NAME, Date::class]);
+            $definition->addMethodCall('addCustomNumericFunction', [Round::FUNCTION_NAME, Round::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
