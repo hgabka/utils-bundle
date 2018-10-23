@@ -7,7 +7,7 @@ parameters:
     hgabka_utils.acl.native.helper.class: 'Hgabka\UtilsBundle\Helper\Security\Acl\AclNativeHelper'
     hgabka_utils.security.acl.permission.map.class: 'Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap'
     hgabka_utils.clone.listener.class: 'Hgabka\UtilsBundle\EventListener\CloneListener'
-
+    hgabka_utils.domain_configuration.class: 'Hgabka\UtilsBundle\Helper\DomainConfiguration'
 
 services:
     hgabka_utils.roman:
@@ -105,6 +105,12 @@ services:
         class: Hgabka\UtilsBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
+    hgabka_utils.doctrine_mapping.listener:
+        class: Hgabka\UtilsBundle\EventListener\MappingListener
+        arguments: ['%fos_user.model.user.class%']
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
     hgabka_utils.form.helper:
         class: Hgabka\UtilsBundle\Helper\FormHelper
 
@@ -171,6 +177,26 @@ services:
         arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
         public: true
 
+    hgabka_utils.logger.processor.user:
+        class: Hgabka\UtilsBundle\Helper\UserProcessor
+        arguments: [ '@service_container' ]
+        tags:
+        - { name: monolog.processor, method: processRecord }
+        - { name: hgabka_utils.logger.processor, method: processRecord }
+
+    hgabka_utils.logger.handler:
+        class: Monolog\Handler\RotatingFileHandler
+        arguments: ['%kernel.logs_dir%/hgabka_utils_%kernel.environment%.log', 10]
+
+    hgabka_utils.logger:
+        class: Symfony\Bridge\Monolog\Logger
+        arguments: [hgabka_utils]
+        calls:
+        - [pushHandler, ['@hgabka_utils.logger.handler']]
+
+    hgabka_utils.domain_configuration:
+        class: '%hgabka_utils.domain_configuration.class%'
+        arguments: ['@service_container']
 
     Hgabka\UtilsBundle\Helper\HgabkaUtils: "@hgabka_utils.hgabka_utils"
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper;
+namespace Hgabka\UtilsBundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
