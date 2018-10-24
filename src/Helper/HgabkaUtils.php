@@ -72,6 +72,18 @@ class HgabkaUtils
         return explode('|', $this->container->getParameter('requiredlocales'));
     }
 
+    public function getBackendLocale()
+    {
+        return $this->container->get('session')->get('hgabka_utils.backend_locale', $this->getDefaultLocale());
+    }
+
+    public function setBackendLocale($backendLocale)
+    {
+        if (in_array($backendLocale, $this->getAvailableLocales())) {
+            $this->container->get('session')->set('hgabka_utils.backend_locale', $this->getDefaultLocale());
+        }
+    }
+
     /**
      * @param bool   $frontend
      * @param string $prefix
