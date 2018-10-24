@@ -72,18 +72,24 @@ class HgabkaUtils
         return explode('|', $this->container->getParameter('requiredlocales'));
     }
 
-    public function getBackendLocale()
+    /**
+     * @return string
+     */
+    public function getAdminLocale()
     {
-        return $this->container->get('session')->get('hgabka_utils.backend_locale', $this->getDefaultLocale());
+        return $this->container->get('session')->get('hgabka_utils.admin_locale', $this->container->getParameter('hgabka_utils.default_admin_locale'));
     }
 
-    public function setBackendLocale($backendLocale)
+    /**
+     * @param string $adminLocale
+     */
+    public function setAdminLocale($adminLocale)
     {
-        if (in_array($backendLocale, $this->getAvailableLocales())) {
-            $this->container->get('session')->set('hgabka_utils.backend_locale', $this->getDefaultLocale());
+        if (in_array($adminLocale, $this->container->getParameter('hgabka_utils.admin_locales'))) {
+            $this->container->get('session')->set('hgabka_utils.admin_locale', $adminLocale);
         }
     }
-
+    
     /**
      * @param bool   $frontend
      * @param string $prefix
