@@ -8,7 +8,7 @@ parameters:
     hgabka_utils.security.acl.permission.map.class: 'Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap'
     hgabka_utils.clone.listener.class: 'Hgabka\UtilsBundle\EventListener\CloneListener'
     hgabka_utils.domain_configuration.class: 'Hgabka\UtilsBundle\Helper\DomainConfiguration'
-    hgabka_utils.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
+    hgabka_utils.service.export.class: Hgabka\UtilsBundle\Service\ExportService
 
 
 services:
