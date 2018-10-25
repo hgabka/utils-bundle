@@ -8,8 +8,25 @@ parameters:
     hgabka_utils.security.acl.permission.map.class: 'Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap'
     hgabka_utils.clone.listener.class: 'Hgabka\UtilsBundle\EventListener\CloneListener'
     hgabka_utils.domain_configuration.class: 'Hgabka\UtilsBundle\Helper\DomainConfiguration'
+    hgabka_utils.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
+
 
 services:
+    hgabka_utils.adminlist_factory:
+        class: Hgabka\UtilsBundle\AdminList\AdminListFactory
+
+    hgabka_utils.service.export:
+        class:  '%hgabka_utils.service.export.class%'
+        calls:
+            -  [ setRenderer, [ '@templating' ] ]
+            -  [ setTranslator, [ '@translator' ] ]
+
+    hgabka_utils.adminlist_twig.extension:
+        class: Hgabka\UtilsBundle\Twig\AdminListTwigExtension
+        tags:
+            -  { name: twig.extension }
+        arguments:
+            -  '@service_container'
     hgabka_utils.roman:
         class: Hgabka\UtilsBundle\Helper\Number\RomanHelper
 

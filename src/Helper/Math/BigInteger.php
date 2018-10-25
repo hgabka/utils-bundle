@@ -778,7 +778,7 @@ class BigInteger
         $divisor->value = [MATH_BIGINTEGER_MAX10];
         $result = '';
         while (\count($temp->value)) {
-            list($temp, $mod) = $temp->divide($divisor);
+            [$temp, $mod] = $temp->divide($divisor);
             $result = str_pad(isset($mod->value[0]) ? $mod->value[0] : '', MATH_BIGINTEGER_MAX10_LEN, '0', STR_PAD_LEFT).$result;
         }
         $result = ltrim($result, '0');
@@ -1056,7 +1056,7 @@ class BigInteger
                 $quotient = new self();
                 $remainder = new self();
 
-                list($quotient->value, $remainder->value) = gmp_div_qr($this->value, $y->value);
+                [$quotient->value, $remainder->value] = gmp_div_qr($this->value, $y->value);
 
                 if (gmp_sign($remainder->value) < 0) {
                     $remainder->value = gmp_add($remainder->value, gmp_abs($y->value));
@@ -1078,7 +1078,7 @@ class BigInteger
         }
 
         if (1 === \count($y->value)) {
-            list($q, $r) = $this->_divide_digit($this->value, $y->value[0]);
+            [$q, $r] = $this->_divide_digit($this->value, $y->value[0]);
             $quotient = new self();
             $remainder = new self();
             $quotient->value = $q;
@@ -1290,7 +1290,7 @@ class BigInteger
         }
 
         if ($this->compare(new self()) < 0 || $this->compare($n) > 0) {
-            list(, $temp) = $this->divide($n);
+            [, $temp] = $this->divide($n);
 
             return $temp->modPow($e, $n);
         }
@@ -1351,7 +1351,7 @@ class BigInteger
         }
 
         if ($e->value === [1]) {
-            list(, $temp) = $this->divide($n);
+            [, $temp] = $this->divide($n);
 
             return $this->_normalize($temp);
         }
@@ -1359,7 +1359,7 @@ class BigInteger
         if ($e->value === [2]) {
             $temp = new self();
             $temp->value = $this->_square($this->value);
-            list(, $temp) = $temp->divide($n);
+            [, $temp] = $temp->divide($n);
 
             return $this->_normalize($temp);
         }
@@ -1402,7 +1402,7 @@ class BigInteger
         $temp = $temp->multiply($y2);
 
         $result = $result->add($temp);
-        list(, $result) = $result->divide($n);
+        [, $result] = $result->divide($n);
 
         return $this->_normalize($result);
     }
@@ -2120,7 +2120,7 @@ class BigInteger
         $random_max = new self(\chr(1).str_repeat("\0", $size), 256);
         $random = $this->_random_number_helper($size);
 
-        list($max_multiple) = $random_max->divide($max);
+        [$max_multiple] = $random_max->divide($max);
         $max_multiple = $max_multiple->multiply($max);
 
         while ($random->compare($max_multiple) >= 0) {
@@ -2129,10 +2129,10 @@ class BigInteger
             $random = $random->bitwise_leftShift(8);
             $random = $random->add($this->_random_number_helper(1));
             $random_max = $random_max->bitwise_leftShift(8);
-            list($max_multiple) = $random_max->divide($max);
+            [$max_multiple] = $random_max->divide($max);
             $max_multiple = $max_multiple->multiply($max);
         }
-        list(, $random) = $random->divide($max);
+        [, $random] = $random->divide($max);
 
         return $this->_normalize($random->add($min));
     }
@@ -2358,7 +2358,7 @@ class BigInteger
         // see HAC 4.4.1 "Random search for probable primes"
         if (MATH_BIGINTEGER_MODE !== MATH_BIGINTEGER_MODE_INTERNAL) {
             foreach ($primes as $prime) {
-                list(, $r) = $this->divide($prime);
+                [, $r] = $this->divide($prime);
                 if ($r->equals($zero)) {
                     return $this->equals($prime);
                 }
@@ -2366,7 +2366,7 @@ class BigInteger
         } else {
             $value = $this->value;
             foreach ($primes as $prime) {
-                list(, $r) = $this->_divide_digit($value, $prime);
+                [, $r] = $this->_divide_digit($value, $prime);
                 if (!$r) {
                     return 1 === \count($value) && $value[0] === $prime;
                 }
@@ -2899,7 +2899,7 @@ class BigInteger
                 $lhs->value = $x;
                 $rhs = new self();
                 $rhs->value = $n;
-                list(, $temp) = $lhs->divide($rhs);
+                [, $temp] = $lhs->divide($rhs);
 
                 return $temp->value;
             case MATH_BIGINTEGER_NONE:
@@ -3032,7 +3032,7 @@ class BigInteger
             $rhs = new self();
             $lhs->value = $n;
             $rhs->value = $m;
-            list(, $temp) = $lhs->divide($rhs);
+            [, $temp] = $lhs->divide($rhs);
 
             return $temp->value;
         }
@@ -3055,7 +3055,7 @@ class BigInteger
             $rhs = new self();
             $rhs->value = $m;
 
-            list($u, $m1) = $lhs->divide($rhs);
+            [$u, $m1] = $lhs->divide($rhs);
             $u = $u->value;
             $m1 = $m1->value;
 
@@ -3130,7 +3130,7 @@ class BigInteger
             $rhs = new self();
             $lhs->value = $x;
             $rhs->value = $n;
-            list(, $temp) = $lhs->divide($rhs);
+            [, $temp] = $lhs->divide($rhs);
 
             return $temp->value;
         }
@@ -3144,7 +3144,7 @@ class BigInteger
             $lhs_value[] = 1;
             $rhs = new self();
             $rhs->value = $n;
-            list($temp) = $lhs->divide($rhs); // m.length
+            [$temp] = $lhs->divide($rhs); // m.length
             $cache[MATH_BIGINTEGER_DATA][] = $temp->value;
         }
 
@@ -3376,7 +3376,7 @@ class BigInteger
         $rhs = new self();
         $rhs->value = $n;
 
-        list(, $temp) = $lhs->divide($rhs);
+        [, $temp] = $lhs->divide($rhs);
 
         return $temp->value;
     }

@@ -1,0 +1,67 @@
+{% set tabFields = adminlistconfigurator.getTabFields() %}
+{% if tabFields is empty %}
+    {{ form_rest(form) }}
+{% else %}
+    {% set tabStarted = false %}
+    {% set i=0 %}
+    {% set firstTab = -1 %}
+    {% set hasError = {} %}
+    {% for key, widgets in tabFields %}
+        {% if widgets is iterable %}
+            {% for widget in widgets %}
+                {% if form[widget] is defined and not form[widget].vars.valid %}
+                    {% set hasError = hasError|merge({('i'~i) : true}) %}
+                    {% if firstTab == -1 %}
+                        {% set firstTab = i %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% set i=i+1 %}
+        {% endif %}
+    {% endfor %}
+    {% if firstTab < 0 %}
+        {% set firstTab = 0 %}
+    {% endif %}
+    {% set i=0 %}
+    {% for key, widgets in tabFields %}
+        {% if widgets is iterable %}
+            {% if not tabStarted %}
+            <ul class="nav nav-tabs" role="tablist">
+            {% set tabStarted = true %}
+            {% endif %}
+            <li class="{% if i==firstTab %}active {% endif %}{% if hasError['i'~i] is defined %} error{% endif %}">
+                <a data-toggle="tab" role="tab" href="#formtab-{{key|slugify}}">{{ key | trans }}
+                </a>
+            </li>
+            {% set i=i+1 %}
+        {% endif %}
+    {% endfor %}
+    {% if tabStarted %}
+        </ul>
+    {% endif %}
+
+    {% if tabStarted %}
+    <div class="tab-content panel panel-default form-properties tab-content-custom">
+    {% endif %}
+    {% set i=0 %}
+    {% for key, widgets in tabFields %}
+        {% if widgets is iterable %}
+            <div id="formtab-{{key|slugify}}" class="tab-pane{% if i==firstTab %} fade in active{% endif %} panel-body">
+            {% for widget in widgets %}
+                {% if form[widget] is defined %}
+                    {{ form_row(form[widget]) }}
+                {% endif %}
+            {% endfor %}
+                {% set i=i+1 %}
+            </div>
+        {% elseif form[widgets] is defined %}
+            {{ form_row(form[widgets]) }}
+        {% endif %} 
+
+    {% endfor %}
+    {% if tabStarted %}
+        </div>
+    {% endif %}
+    {{ form_rest(form) }}
+{% endif %}
+

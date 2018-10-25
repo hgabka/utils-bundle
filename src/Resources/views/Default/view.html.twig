@@ -1,0 +1,39 @@
+{% extends '@HgabkaUtils/Default/layout.html.twig' %}
+
+{% block admin_page_title %}
+    <div class="col-sm-6 col-md-8">
+        <h1 class="app__content__header__title">
+            {% set title = adminlistconfigurator.getViewTitle() %}
+            {% if title is not empty %}
+                {{ title | trans({'%entity%' : adminlistconfigurator.getEntityNameSingular() | trans }) }}
+            {% elseif adminmenu.current %}
+                {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+            {% else %}
+                {{ adminlistconfigurator.getEntityName() }}
+            {% endif %}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <table class="table">
+
+    {% for key, value in fields %}
+        <tr>
+            <td>
+                {{ key }}
+            </td>
+            <td>
+                {% if value.timezone is defined %}
+                    {{ value|date() }}
+                {% elseif value.id is defined %}
+                    OBJECT
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
