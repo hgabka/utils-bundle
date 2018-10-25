@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgabka\AdminListBundle\AdminList\Configurator;
+namespace Hgabka\UtilsBundle\AdminList\Configurator;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;

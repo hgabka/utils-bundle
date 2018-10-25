@@ -70,9 +70,9 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
         public: true
 
-    hgabka_utils.hgabka_utils:
-        class: Hgabka\UtilsBundle\Helper\HgabkaUtils
+    Hgabka\UtilsBundle\Helper\HgabkaUtils:
         arguments:  ["@service_container"]
+        alias:
         public: true
 
     hgabka_utils.breadcrumb_manager:
@@ -164,8 +164,8 @@ services:
         tags:
             -  { name: 'twig.extension' }
 
-    hgabka_utils.acl.helper:
-        class: '%hgabka_utils.acl.helper.class%'
+    Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper:
+        public: true
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
     hgabka_utils.acl.native.helper:
@@ -215,9 +215,11 @@ services:
         class: '%hgabka_utils.domain_configuration.class%'
         arguments: ['@service_container']
 
-    Hgabka\UtilsBundle\Helper\HgabkaUtils: "@hgabka_utils.hgabka_utils"
+    hgabka_utils.hgabka_utils:
+        alias: Hgabka\UtilsBundle\Helper\HgabkaUtils
+    hgabka_utils.acl.helper:
+        alias: Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"
     Hgabka\UtilsBundle\Helper\Slugifier: '@hgabka_utils.slugifier'
-    Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper: "@hgabka_utils.acl.helper"
     Hgabka\UtilsBundle\Helper\Number\RomanHelper: '@hgabka_utils.roman'
     Hgabka\UtilsBundle\Datagrid\ArrayDatagridBuilder: '@hgabka.utils.array.datagrid.builder'
