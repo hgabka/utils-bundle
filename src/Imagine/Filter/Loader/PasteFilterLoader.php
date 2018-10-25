@@ -30,7 +30,7 @@ class PasteFilterLoader implements LoaderInterface
      */
     public function load(ImageInterface $image, array $options = [])
     {
-        list($width, $height) = $options['size'];
+        [$width, $height] = $options['size'];
 
         $filter = new Paste(
             $this->imagine,

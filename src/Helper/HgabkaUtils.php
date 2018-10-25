@@ -85,7 +85,7 @@ class HgabkaUtils
      */
     public function setAdminLocale($adminLocale)
     {
-        if (in_array($adminLocale, $this->container->getParameter('hgabka_utils.admin_locales'))) {
+        if (\in_array($adminLocale, $this->container->getParameter('hgabka_utils.admin_locales'), true)) {
             $this->container->get('session')->set('hgabka_utils.admin_locale', $adminLocale);
         }
     }

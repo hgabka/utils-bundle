@@ -31,7 +31,7 @@ class FitFilterLoader implements LoaderInterface
      */
     public function load(ImageInterface $image, array $options = [])
     {
-        list($width, $height) = $options['size'];
+        [$width, $height] = $options['size'];
 
         $fitFilter = new Fit($width, $height);
 

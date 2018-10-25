@@ -16,7 +16,7 @@ class FillFilterLoader implements LoaderInterface
      */
     public function load(ImageInterface $image, array $options = [])
     {
-        list($width, $height) = $options['size'];
+        [$width, $height] = $options['size'];
 
         $filter = new Fill($width, $height, $options['position'] ?? 'center');
 

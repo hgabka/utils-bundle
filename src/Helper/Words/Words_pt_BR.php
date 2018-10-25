@@ -337,7 +337,7 @@ class Words_pt_BR extends Words
          */
         reset($chunks);
         do {
-            list(, $chunk) = each($chunks);
+            [, $chunk] = each($chunks);
         } while ('000' === $chunk);
 
         if (($chunk < 100) || !($chunk % 100)) {
