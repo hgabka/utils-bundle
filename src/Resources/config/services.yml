@@ -12,8 +12,8 @@ parameters:
 
 
 services:
-    hgabka_utils.adminlist_factory:
-        class: Hgabka\UtilsBundle\AdminList\AdminListFactory
+    Hgabka\UtilsBundle\AdminList\AdminListFactory:
+        public: true
 
     hgabka_utils.service.export:
         class:  '%hgabka_utils.service.export.class%'
@@ -215,10 +215,15 @@ services:
         class: '%hgabka_utils.domain_configuration.class%'
         arguments: ['@service_container']
 
+    hgabka_utils.adminlist_factory:
+        alias: Hgabka\UtilsBundle\AdminList\AdminListFactory
+        
     hgabka_utils.hgabka_utils:
         alias: Hgabka\UtilsBundle\Helper\HgabkaUtils
+
     hgabka_utils.acl.helper:
         alias: Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper
+
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"
     Hgabka\UtilsBundle\Helper\Slugifier: '@hgabka_utils.slugifier'
     Hgabka\UtilsBundle\Helper\Number\RomanHelper: '@hgabka_utils.roman'
