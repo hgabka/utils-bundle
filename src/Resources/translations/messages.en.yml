@@ -42,7 +42,7 @@ kuma_admin_list:
         'false': 'false'
 
     list:
-        title: %entity% list
+        title: '%entity% list'
         edit: Edit
         delete: Delete
         view: View
