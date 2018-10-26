@@ -11,6 +11,9 @@ use Doctrine\ORM\QueryBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use InvalidArgumentException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
@@ -23,6 +26,11 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  */
 class AclHelper
 {
+    /** @var ObjectIdentityRetrievalStrategy */
+    protected $oiaStrategy;
+
+    /** @var MutableAclProviderInterface */
+    protected $aclProvider;
     /**
      * @var EntityManager
      */
@@ -50,12 +58,14 @@ class AclHelper
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, ObjectIdentityRetrievalStrategy $oiaStrategy, MutableAclProviderInterface $aclProvider)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->quoteStrategy = $em->getConfiguration()->getQuoteStrategy();
         $this->roleHierarchy = $rh;
+        $this->oiaStrategy = $oiaStrategy;
+        $this->aclProvider = $aclProvider;
     }
 
     /**
@@ -150,6 +160,33 @@ class AclHelper
     public function getTokenStorage()
     {
         return $this->tokenStorage;
+    }
+
+    /**
+     * @param $originalNode
+     * @param $nodeNewPage
+     */
+    public function updateAcl($originalNode, $nodeNewPage)
+    {
+        // @var MutableAclProviderInterface $aclProvider
+        $aclProvider = $this->aclProvider;
+        // @var ObjectIdentityRetrievalStrategyInterface $strategy
+        $strategy = $this->oiaStrategy;
+        $originalIdentity = $strategy->getObjectIdentity($originalNode);
+        $originalAcl = $aclProvider->findAcl($originalIdentity);
+
+        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
+        $newAcl = $aclProvider->createAcl($newIdentity);
+
+        $aces = $originalAcl->getObjectAces();
+        // @var EntryInterface $ace
+        foreach ($aces as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
+            }
+        }
+        $aclProvider->updateAcl($newAcl);
     }
 
     /**

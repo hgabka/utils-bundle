@@ -1,0 +1,232 @@
+{% set adminmenu = get_admin_menu() %}
+{% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
+
+<!DOCTYPE html>
+<html class="{{ extraclasshtml }}" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title></title>
+</head>
+
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('HgabkaMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
+
+<!-- Body block -->
+{% block body %}
+
+    <!-- Header -->
+    <header class="app__header" role="banner">
+
+        <!-- App Header -->
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+
+                <!-- Header -->
+                <div class="navbar-header">
+
+                    <!--Header - Toggle -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <!-- Header - Brand -->
+                    <a class="navbar-brand app__header__brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
+                        {% if admin_logo is defined %}
+                            <img class="app__header__brand__img" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+                        {% else %}
+                            {{ websitetitle | trans }}
+                        {% endif %}
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse app__nav__container" id="main-nav-bar">
+
+                    <!-- Navigation - Left -->
+                    <ul class="nav navbar-nav">
+                        {% for menuitem in adminmenu.topchildren %}
+
+                            {% set topchildren = menuitem.topchildren %}
+                            {% if topchildren | length > 0 %}
+                                <!-- Navigation Item - with sub-items -->
+                                <li class="dropdown{% if menuitem.active %} active{% endif %}">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        {{ menuitem.label | trans }}
+                                        <i class="fa fa-caret-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {% for topchild in topchildren %}
+                                            {% set nestedtopchildren = topchild.topchildren %}
+                                            {% if nestedtopchildren | length > 0 %}
+                                                <li class="dropdown-menu__item--has-submenu{% if topchild.active %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                                                    <a href="#" class="dropdown-toggle dropdown-toggle dropdown-toggle--submenu" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        {{ topchild.label | trans }}
+                                                        <i class="fa fa-caret-right"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu--submenu">
+                                                        {% for nestedtopchild in nestedtopchildren %}
+                                                            <li class="{% if nestedtopchild.active %}active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                                                                <a href="{{ path(nestedtopchild.route, nestedtopchild.routeparams) }}">
+                                                                    {{ nestedtopchild.label | trans }}
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% else %}
+                                                {% if topchild.route %}
+                                                    <li class="{% if topchild.active %}active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                                                        <a href="{{ path(topchild.route, topchild.routeparams) }}">
+                                                            {{ topchild.label | trans }}
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <!-- Navigation Item - without sub-items -->
+                                <li class="{% if menuitem.active %} active{% endif %}">
+                                    <a href="{{ path(menuitem.route, menuitem.routeparams) }}">
+                                        {{ menuitem.label | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Navigation - Right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% set actions = get_admin_panel_actions() %}
+                        {% for action in actions %}
+                            {% include action.template with {'action': action} %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <!-- Nav settings -->
+    {% if lowestTopChild is not defined %}
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild.navigationChildren %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
+    {% endif %}
+
+    {% if page is defined %}
+        {%  set hideSidebar = hideSidebarInNodeEditAdmin(page) %}
+    {%  else  %}
+        {%  set hideSidebar = false %}
+    {%  endif %}
+
+
+    <!-- Main Content -->
+    <main role="main" id="app__main" class="container-fluid app__main{% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
+
+        <div class="row">
+
+            {% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %}
+
+            <!-- App Sidebar -->
+            <aside id="app__sidebar" class="col-md-3 app__sidebar">
+                {% block sidebar %}
+                    {% include "@HgabkaUtils/Default/sidebar.html.twig" %}
+                {% endblock %}
+            </aside>
+
+
+            <!-- App Content - with sidebar -->
+            <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
+
+                <!-- App Sidebar Toggle -->
+                <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
+                        <span class="app__sidebar-toggle__show-icon">
+                            <i class="fa fa-caret-right"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                    <span class="app__sidebar-toggle__hide-icon">
+                            <i class="fa fa-caret-left"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                </button>
+                {% else %}
+
+                <!-- App Content - full width -->
+                <div id="app__content" class="col-md-12 col--padded app__content">
+                    {% endif %}
+
+
+                    <!-- App Content - General Messages -->
+                    {% block messages %}{% endblock %}
+
+
+                    <!-- App Content - Header -->
+                    {% block header %}
+                        <header class="app__content__header">
+                            <div class="row">
+                                {% block admin_page_title %}
+                                    <div class="col-sm-6 col-md-8">
+                                        {% if adminmenu.current %}
+                                            <h1 class="app__content__header__title">
+                                                {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                                            </h1>
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block extra_actions_header %}{% endblock %}
+                            </div>
+                        </header>
+                    {% endblock %}
+
+
+                    <!-- App Content - Content -->
+                    {% block content %}{% endblock %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    {% block footer %}
+        <footer role="contentinfo" class="app__footer container-fluid">
+            {# <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
+                 <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_dark.svg" alt="Kunstmaan" />
+             </a> #}
+        </footer>
+    {% endblock %}
+{% endblock %}
+
+
+{% block admin_javascripts %}
+    <script src="{{ asset('bundles/hgabkautils/picturefill/dist/picturefill.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/plupload/js/plupload.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/velocity/velocity.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/cargobay/src/toggle/js/jquery.toggle.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/jstree/dist/jstree.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkautils/js/hg_utils.js') }}"></script>
+    {% if mediabundleisactive %}
+    <script src="{{ asset('bundles/hgabkamedia/js/hg_media.js') }}"></script>
+    {% endif %}
+{% endblock %}
+
+
+
+<!-- JS - Extra -->
+{% block extrajavascript %}{% endblock %}
+</body>
+</html>
