@@ -26,6 +26,11 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  */
 class AclHelper
 {
+    /** @var ObjectIdentityRetrievalStrategy */
+    protected $oiaStrategy;
+
+    /** @var MutableAclProviderInterface */
+    protected $aclProvider;
     /**
      * @var EntityManager
      */
@@ -45,12 +50,6 @@ class AclHelper
      * @var RoleHierarchyInterface
      */
     private $roleHierarchy;
-
-    /** @var ObjectIdentityRetrievalStrategy */
-    protected $oiaStrategy;
-
-    /** @var MutableAclProviderInterface */
-    protected $aclProvider;
 
     /**
      * Constructor.
@@ -164,6 +163,33 @@ class AclHelper
     }
 
     /**
+     * @param $originalNode
+     * @param $nodeNewPage
+     */
+    public function updateAcl($originalNode, $nodeNewPage)
+    {
+        // @var MutableAclProviderInterface $aclProvider
+        $aclProvider = $this->aclProvider;
+        // @var ObjectIdentityRetrievalStrategyInterface $strategy
+        $strategy = $this->oiaStrategy;
+        $originalIdentity = $strategy->getObjectIdentity($originalNode);
+        $originalAcl = $aclProvider->findAcl($originalIdentity);
+
+        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
+        $newAcl = $aclProvider->createAcl($newIdentity);
+
+        $aces = $originalAcl->getObjectAces();
+        // @var EntryInterface $ace
+        foreach ($aces as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
+            }
+        }
+        $aclProvider->updateAcl($newAcl);
+    }
+
+    /**
      * Clone specified query with parameters.
      *
      * @param Query $query
@@ -245,33 +271,5 @@ AND e.mask & {$mask} > 0
 SELECTQUERY;
 
         return $selectQuery;
-    }
-
-
-    /**
-     * @param $originalNode
-     * @param $nodeNewPage
-     */
-    public function updateAcl($originalNode, $nodeNewPage)
-    {
-        // @var MutableAclProviderInterface $aclProvider
-        $aclProvider = $this->aclProvider;
-        // @var ObjectIdentityRetrievalStrategyInterface $strategy
-        $strategy = $this->oiaStrategy;
-        $originalIdentity = $strategy->getObjectIdentity($originalNode);
-        $originalAcl = $aclProvider->findAcl($originalIdentity);
-
-        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
-        $newAcl = $aclProvider->createAcl($newIdentity);
-
-        $aces = $originalAcl->getObjectAces();
-        // @var EntryInterface $ace
-        foreach ($aces as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
-            }
-        }
-        $aclProvider->updateAcl($newAcl);
     }
 }

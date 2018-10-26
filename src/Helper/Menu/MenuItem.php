@@ -182,7 +182,7 @@ class MenuItem
      *
      * @return MenuItem
      */
-    public function setParent(MenuItem $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
