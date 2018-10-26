@@ -1,9 +1,28 @@
 {% extends base_template %}
+{% set adminmenu = get_admin_menu() %}
+{% if lowestTopChild is not defined %}
+    {% set lowestTopChild = adminmenu.lowestTopChild %}
+    {% if lowestTopChild %}
+        {% set navigationChildren = lowestTopChild.navigationChildren %}
+    {% endif %}
+{% endif %}
+
+{% if page is defined %}
+    {%  set hideSidebar = hideSidebarInNodeEditAdmin(page) %}
+{%  else  %}
+    {%  set hideSidebar = false %}
+{%  endif %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/hgabkautils/css/hg_utils.css') }}">
 {% endblock %}
-
+{% block javascripts %}
+{{ parent() }}
+<script>
+    MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}'
+</script>
+{% endblock %}
 {% block body_attributes -%}
     class="sonata-bc skin-black fixed app
     {% if app.request.cookies.get('sonata_sidebar_hide') -%}
@@ -16,7 +35,7 @@
 {% block sonata_wrapper %}
 
     <!-- Main Content -->
-    <main role="main" id="app__main" style="padding-top:50px;min-height:500px" class="container-fluid app__main app__main--has-sidebar">
+    <main role="main" id="app__main" style="padding-top:50px;min-height:500px" class="container-fluid app__main app__main--has-sidebar {% block wrapper_classes %}{% endblock %}">
 
         <div class="row">
 
@@ -24,6 +43,7 @@
             <!-- App Sidebar -->
             <aside id="app__sidebar" class="col-md-3 app__sidebar">
                 {% block admin_sidebar %}
+                    {% include "HgabkaUtilsBundle:Default:sidebar.html.twig" %}
                 {% endblock %}
             </aside>
 
@@ -86,6 +106,10 @@
         <script src="{{ asset('bundles/hgabkautils/cargobay/src/toggle/js/jquery.toggle.min.js') }}"></script>
         <script src="{{ asset('bundles/hgabkautils/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.min.js') }}"></script>
         <script src="{{ asset('bundles/hgabkautils/jstree/dist/jstree.min.js') }}"></script>
+        <script src="{{ asset('bundles/hgabkautils/jquery-typewatch/jquery.typewatch.js') }}"></script>
         <script src="{{ asset('bundles/hgabkautils/js/hg_utils.js') }}"></script>
+        {% if mediabundleisactive %}
+        <script src="{{ asset('bundles/hgabkamedia/js/hg_media.js') }}"></script>
+        {% endif %}
     {% endblock %}
 {% endblock %}

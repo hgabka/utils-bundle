@@ -11,7 +11,7 @@
                     <div id="first-filter-line" class="js-filter-line app__filter__line {% if filter.currentfilters|length >0 %} hidden{% endif %}">
                         <div class="form-group">
                             <select id="add-first-filter" class="form-control js-filter-select">
-                                <option>{{ "form.choosetypefilter"|trans }}</option>
+                                <option>{{ "kuma_admin.form.choosetypefilter"|trans }}</option>
                                 {% for columnname, value in filter.filterdefinitions %}
                                     {% if value['filtername'] is defined %}
                                     {% set filtername = value['filtername'] %}
@@ -66,7 +66,7 @@
                     <!-- Add filter -->
                     <button type="button" id="add-filter" class="js-create-filter-btn btn btn-default btn--no-border btn--no-hor-padding" data-first="false">
                         <i class="fa fa-plus-circle btn__icon"></i>
-                        {{ "form.addfilter"|trans }}
+                        {{ "kuma_admin.form.addfilter"|trans }}
                     </button>
                 </fieldset>
 
@@ -83,10 +83,10 @@
                 <!-- Form Actions -->
                 <div class="form-actions form-actions--padded">
                     <button type="button" id="clear-all-filters" class="btn btn-default btn--raise-on-hover form-actions__btn">
-                        {{ 'form.button.filter.clear'|trans }}
+                        {{ 'kuma_admin.form.button.filter.clear'|trans }}
                     </button>
                     <button type="submit" name="filter" value="filter" id="apply-all-filters" class="btn btn-primary btn--raise-on-hover form-actions__btn">
-                        {{ 'form.button.filter.filter'|trans }}
+                        {{ 'kuma_admin.form.button.filter.filter'|trans }}
                     </button>
                 </div>
             </form>
@@ -97,7 +97,7 @@
 
     <!-- Toggle Button -->
     <button type="button" class="js-toggle-btn btn btn-default btn--flat-top toggle-button app__filter__toggle{% if filter.currentfilters|length >0 %} toggle-btn--active{% endif %}" data-target="#app__filter">
-        {{ 'form.button.filter.filter'|trans }}
+        {{ 'kuma_admin.form.button.filter.filter'|trans }}
         <i class="fa fa-chevron-down btn__icon toggle-btn__icon--show"></i>
         <i class="fa fa-chevron-up btn__icon toggle-btn__icon--hide"></i>
     </button>

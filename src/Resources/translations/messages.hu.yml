@@ -1,4 +1,16 @@
 kuma_admin:
+    pages:
+        title: Oldalak
+    media:
+        title: Médiatár
+    search:
+        search: Keresés
+    pagepart:
+        link:
+            internal: Aloldal
+            external: Külső link
+            email: Email cím
+
     settings:
         cache:
             menu_label:     Cache törlése
@@ -67,6 +79,31 @@ kuma_admin_list:
         dateafter: ezután
         'true': igen
         'false': nem
+    list:
+        title: "%entity% lista"
+        edit: Szerkesztés
+        delete: Törlés
+        view: Megtekintés
+        pager: '%from% - %to% a(z) %count% elemből'
+        pagesize: elem oldalanként
+        no_item: Nincs megjelenítendő elem
+    new:
+        title: "Új %entity% hozzáadása"
+    edit:
+        title: "%entity% szerkesztése"
+    view:
+        title: "%entity% adatai"
+
+    pagerfanta:
+        prev_message: '&larr; Előző'
+        next_message: 'Következő &rarr;'
+
+    messages:
+        add_success: Az elem sikeresen létrehozásra került
+        add_error: Az elem létrehozása nem sikerült, mert az űrlap hibás adatokat tartalmaz
+        edit_success: Az elem sikeresen megváltoztatásra került
+        edit_error: Az elem megváltoztatása nem sikerült, mert az űrlap hibás adatokat tartalmaz
+        delete_success: Az elem sikeresen törlésre került
 
 
 wt_kuma_extension:
@@ -108,3 +145,7 @@ user_edit:
         username: Felhasználónév
         email: E-mail cím
         password: Jelszó
+
+kuma_js:
+    auto_collapse:
+        more_button_label: Továbbiak

@@ -11,12 +11,14 @@ use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Hgabka\UtilsBundle\DQL\Round;
+use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -100,6 +102,16 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         ];
 
         $container->setParameter('liip_imagine.filter_sets', $filterSets);
+
+        $definition = $container->getDefinition(MenuBuilder::class);
+
+        if ($definition) {
+            foreach ($container->findTaggedServiceIds('hgabka_utils.menu.adaptor') as $id => $attributes) {
+                $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+
+                $definition->addMethodCall('addAdaptMenu', [new Reference($id), $priority]);
+            }
+        }
     }
 
     protected function configureTwigBundle(ContainerBuilder $container)

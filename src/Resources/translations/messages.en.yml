@@ -1,4 +1,10 @@
 kuma_admin:
+    pages:
+        title: Pages
+    media:
+        title: Média
+    search:
+        search: Search
     settings:
         cache:
             menu_label:     Clear cache
@@ -9,6 +15,57 @@ kuma_admin:
         'info.raw':         Clear the cache by hand
         clear:
             label:          Clear
+
+kuma_admin_list:
+    form:
+        export_to: Export to
+        save: Save
+        cancel: Cancel
+    filter:
+        contains: contains
+        doesnotcontain: doesn't contain
+        equals: equals
+        notequals: not equals
+        startswith: starts with
+        endswith: ends with
+        lowerthan: lower than
+        lowerthanorequal: lower than or equal
+        greaterthan: greater than
+        greaterthanorequal: greater than or equal
+        empty: empty
+        notempty: not empty
+        numequals: equals
+        numnotequals: not equals
+        datebefore: before
+        dateafter: after
+        'true': 'true'
+        'false': 'false'
+
+    list:
+        title: %entity% list
+        edit: Edit
+        delete: Delete
+        view: View
+        pager: '%from% - %to% items of %count%'
+        pagesize: items per page
+        no_item: No items to show
+    new:
+        title: 'New %entity%'
+    edit:
+        title: 'Edit %entity%'
+    view:
+        title: 'View %entity%'
+
+    pagerfanta:
+        prev_message: '&larr; Previous'
+        next_message: 'Next &rarr;'
+
+    messages:
+        add_success: The item was created successfully
+        add_error: The item could not be created as the form contains errors
+        edit_success: The item was updated successfully
+        edit_error: The item could not be updated as the form contains errors
+        delete_success: The item was deleted successfully
 
 wt_kuma_extension:
     locales:
@@ -49,3 +106,7 @@ user_edit:
         username: Username
         email: E-mail address
         password: Password
+
+kuma_js:
+    auto_collapse:
+        more_button_label: More
