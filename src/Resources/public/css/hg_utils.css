@@ -1413,3 +1413,7 @@ select.input-sm, .input-group-sm > select.form-control, .input-group-sm > select
 .form-group--no-max-width {
     max-width: none;
 }
+
+.app {
+    background: #f6f7f9;
+}

@@ -12,6 +12,9 @@
 {%  else  %}
     {%  set hideSidebar = false %}
 {%  endif %}
+            {% block body_attributes -%}
+                {{ parent() }} data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('HgabkaNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('HgabkaMediaBundle_chooser', {'type': 'image'}) }}{% endif %}"
+            {%- endblock -%}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -23,12 +26,7 @@
     MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}'
 </script>
 {% endblock %}
-{% block body_attributes -%}
-    class="sonata-bc skin-black fixed app
-    {% if app.request.cookies.get('sonata_sidebar_hide') -%}
-        sidebar-collapse
-    {%- endif -%}"
-{%- endblock -%}
+
 
 {% block breadcrumb %}{% endblock %}
 
