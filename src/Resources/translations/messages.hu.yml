@@ -55,6 +55,51 @@ kuma_admin:
                 clear: Töröl
                 filter: Szűrés
 
+permissions:
+    you_made_changes: Módosítottad az engedélyeket.
+    apply_recursively: Minden módosítás legyen érvényes az aloldalakra?
+    review_changes: Változtatások megtekintése
+    changes: Engedélyek módosítása
+    permissions_added: Engedély hozzáadása
+    permissions_removed: Engedély eltávolítása
+    role_name: Jogosultság
+    VIEW: Megtekintés
+    EDIT: Szerkesztés
+    DELETE: Törlés
+    PUBLISH: Publikálás
+    UNPUBLISH: Publikálás visszavonása
+
+settings:
+    groups: Csoportok
+    group:
+        name: Csoport neve
+        edit: Csoport szerkesztése
+        add: Csoport hozzáadása
+        roles: Csoport szerepkörök
+        roles_placeholder: Válassz egy jogosultságot...
+    users: Felhasználók
+    user:
+        username: Felhasználónév
+        password: Jelszó
+        repeatedpassword: Megismételt jelszó
+        adminlang: Felhasználó nyelve az admin felületen
+        email: E-mail cím
+        enabled: Engedélyezett
+        roles: Felhasználó szerepkörei
+        roles_placeholder: Válassz ki a jogosultság csoportokat...
+        add: Felhasználó hozzáadása
+        edit: Felhasználó szerkesztése
+    roles: Jogosultságok
+    role:
+        role: Jogosultság
+        add: Jogosultság hozzáadása
+        edit: Jogosultság szerkesztése
+        name: Név
+        permission_manager: Engedélykezelő
+        admin: Adminisztrátor
+        super_admin: Szuperadminisztrátor
+        anonymous: Vendég felhasználó
+
 kuma_admin_list:
     form:
         export_to: Exportálás

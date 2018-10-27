@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\EventListener;
 
 use Hgabka\UtilsBundle\Entity\DeepCloneInterface;
-use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Hgabka\UtilsBundle\Event\DeepCloneAndSaveEvent;
 
 /**
  * This listener will make sure the id isn't copied for AbstractEntities.

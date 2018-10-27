@@ -133,9 +133,12 @@ services:
         tags:
             - { name: twig.extension }
 
-    hgabka_utils.clone.helper:
-        class: Hgabka\UtilsBundle\Helper\CloneHelper
+    Hgabka\UtilsBundle\Helper\CloneHelper:
+        public: true
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+
+    hgabka_utils.clone.helper:
+        alias: Hgabka\UtilsBundle\Helper\CloneHelper
 
     hgabka_utils.doctrine_mapping.listener:
         class: Hgabka\UtilsBundle\EventListener\MappingListener
