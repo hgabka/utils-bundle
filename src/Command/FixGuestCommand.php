@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -30,9 +30,9 @@ class FixGuestCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:fix:guest')
+        $this->setName('hgabka:fix:guest')
             ->setDescription('Remove the ROLE_GUEST dependency.')
-            ->setHelp('The <info>kuma:fix:guest</info> command can be used to remove the ROLE_GUEST dependency.');
+            ->setHelp('The <info>hgabka:fix:guest</info> command can be used to remove the ROLE_GUEST dependency.');
     }
 
     /**

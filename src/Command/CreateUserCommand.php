@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\Group;
+use Hgabka\UtilsBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,7 +22,7 @@ class CreateUserCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:user:create')
+        $this->setName('hgabka:user:create')
             ->setDescription('Create a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
@@ -35,7 +35,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kuma:user:create</info> command creates a user:
+The <info>hgabka:user:create</info> command creates a user:
 
   <info>php bin/console kuma:user:create matthieu --group=Users</info>
 

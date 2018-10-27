@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -25,9 +25,9 @@ class UpdateAclCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:acl:update')
+        $this->setName('hgabka:acl:update')
             ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp('The <info>kuma:update:acl</info> will update ACL entries for the nodes of the current project'.
+            ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project'.
                 'with given role and permissions');
     }
 
