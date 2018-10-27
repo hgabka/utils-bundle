@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -19,9 +19,9 @@ class FixAdminLocaleCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:fix:admin-locale')
+        $this->setName('hgabka:fix:admin-locale')
             ->setDescription('Set the admin locale for all users to the default admin locale.')
-            ->setHelp('The <info>kuma:fix:admin-locale</info> command can be used to set the admin locale for all users to the default admin locale.');
+            ->setHelp('The <info>hgabka:fix:admin-locale</info> command can be used to set the admin locale for all users to the default admin locale.');
     }
 
     /**

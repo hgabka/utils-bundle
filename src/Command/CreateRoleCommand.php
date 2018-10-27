@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\Role;
+use Hgabka\UtilsBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,14 +19,14 @@ class CreateRoleCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('kuma:role:create')
+        $this->setName('hgabka:role:create')
             ->setDescription('Create a role.')
             ->setDefinition([
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kuma:role:create</info> command creates a role:
+The <info>hgabka:role:create</info> command creates a role:
 
   <info>php bin/console kuma:role:create ROLE_ADMIN</info>
 

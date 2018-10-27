@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Entity\Role;
+use Hgabka\UtilsBundle\Entity\Group;
+use Hgabka\UtilsBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -16,9 +16,9 @@ class FixUserPasswordCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('kuma:fix:user-password')
+        $this->setName('hgabka:fix:user-password')
             ->setDescription('Set the password changed value to true for all users.')
-            ->setHelp('The <info>kuma:fix:user-password</info> command can be used to set password changed for all users to true.');
+            ->setHelp('The <info>hgabkaa:fix:user-password</info> command can be used to set password changed for all users to true.');
     }
 
     /**
