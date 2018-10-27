@@ -679,7 +679,7 @@ hgutils.urlChooser = (function (window, undefined) {
             var funcNum = getUrlParam('CKEditorFuncNum');
 
             // Set val
-            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+            window.opener.CKEDITOR.tools.callFunction(funcNum, replacedUrl);
 
             // Close window
             window.close();
@@ -730,8 +730,8 @@ hgutils.urlChooser = (function (window, undefined) {
 
     // Get Url Parameters
     getUrlParam = function (paramName) {
-        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i'),
-            match = window.location.search.match(reParam);
+        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i');
+        var match = window.location.search.match(reParam);
 
         return (match && match.length > 1) ? match[1] : '';
     };
@@ -2323,6 +2323,7 @@ hgutils.richEditor = (function (window, undefined) {
                     c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : k.test(b) && a.setValue("");
 
                     var nodeTranslationPtrn = new RegExp(/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/g);
+                    var match;
                     while (match = nodeTranslationPtrn.exec(b)) {
                         // Node translation found, so set protocol to other.
                         if (match[3]) {
