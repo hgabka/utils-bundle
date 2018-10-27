@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Helper\Security\Acl\Permission;
 
 use Doctrine\ORM\EntityManager;
 use Hgabka\UtilsBundle\Entity\AclChangeset;
+use Hgabka\UtilsBundle\Entity\EntityInterface;
 use Hgabka\UtilsBundle\Entity\Role;
 use Hgabka\UtilsBundle\Helper\Shell\Shell;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -114,7 +115,7 @@ class PermissionAdmin
      * @param AbstractEntity         $resource      The object which has the permissions
      * @param PermissionMapInterface $permissionMap The permission map to use
      */
-    public function initialize(AbstractEntity $resource, PermissionMapInterface $permissionMap)
+    public function initialize(EntityInterface $resource, PermissionMapInterface $permissionMap)
     {
         $this->resource = $resource;
         $this->permissionMap = $permissionMap;
@@ -157,10 +158,11 @@ class PermissionAdmin
      */
     public function getPermission($role)
     {
-        if ($role instanceof RoleInterface) {
+        if ($role instanceof BaseRole) {
             $role = $role->getRole();
         }
-        if (isset($this->permissions[$role])) {
+
+        if (\is_string($role) && isset($this->permissions[$role])) {
             return $this->permissions[$role];
         }
 
@@ -231,7 +233,7 @@ class PermissionAdmin
             $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
-            $cmd = 'php '.$this->kernel->getRootDir().'/console kuma:acl:apply';
+            $cmd = 'php '.$this->kernel->getRootDir().'/console hgabka:acl:apply';
             $cmd .= ' --env='.$this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);
@@ -269,7 +271,7 @@ class PermissionAdmin
      * @param array          $changeset The changeset
      * @param bool           $recursive The recursive
      */
-    public function applyAclChangeset(AbstractEntity $entity, $changeset, $recursive = true)
+    public function applyAclChangeset(EntityInterface $entity, $changeset, $recursive = true)
     {
         if ($recursive) {
             if (!method_exists($entity, 'getChildren')) {

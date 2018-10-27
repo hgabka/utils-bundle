@@ -51,7 +51,7 @@ class HgabkaUtils
 
         $requestStack = $this->container->get('request_stack');
 
-        $request = $requestStack->getMasterRequest();
+        $request = $requestStack->getCurrentRequest();
 
         $locale = $request ? $request->getLocale() : null;
 
@@ -1448,5 +1448,12 @@ class HgabkaUtils
         }
 
         return $context->getHost().':'.$port;
+    }
+
+    public function getIntlLocale($culture, $locale = null)
+    {
+        $locale = $this->getCurrentLocale($locale);
+
+        return \Locale::getDisplayName($culture, $locale);
     }
 }
