@@ -265,6 +265,7 @@ richeditor.richEditor = (function (window, undefined) {
                     c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : k.test(b) && a.setValue("");
 
                     var nodeTranslationPtrn = new RegExp(/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/g);
+                    var match;
                     while (match = nodeTranslationPtrn.exec(b)) {
                         // Node translation found, so set protocol to other.
                         if (match[3]) {
