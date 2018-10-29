@@ -25,19 +25,14 @@ class WysiwygType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'contents_css' => null,
-                'extra_allowed_content' => null,
+                'config' => null,
             ])
         ;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['contentscss'] = empty($options['contents_css'])
-            ? null
-            : (\is_string($options['contents_css']) ? [$options['contents_css']] : $options['contents_css'])
-        ;
-        $view->vars['extraallowedcontent'] = $options['extra_allowed_content'] ?? null;
+        $view->vars['customconfig'] = $options['config'] ?? null;
     }
 
     /**
