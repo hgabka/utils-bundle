@@ -2062,7 +2062,7 @@ hgutils.richEditor = (function (window, undefined) {
     var editor; // Holds the editor var when overriding the dialog's onOk method.
 
     var _ckEditorConfigs = {
-        'kumaDefault': {
+        'hgUtilsDefault': {
             skin: 'bootstrapck',
             startupFocus: false,
             bodyClass: 'CKEditor',
@@ -2118,8 +2118,8 @@ hgutils.richEditor = (function (window, undefined) {
     _collectEditorConfigs = function (customConfigs) {
         for (var key in customConfigs) {
             // Do not allow overriding of the fallback config.
-            if (key === 'kumaDefault') {
-                throw new Error('kumaDefault is a reserved name for the default ckeditor configuration. Please choose another name.');
+            if (key === 'hgUtilsDefault') {
+                throw new Error('hgUtilsDefault is a reserved name for the default ckeditor configuration. Please choose another name.');
             } else {
                 // v3.3.0 breaking: Thse whole config is now configurable, instead of just the toolbar.
                 // This means we require an object instead of an array.
