@@ -1421,3 +1421,11 @@ select.input-sm, .input-group-sm > select.form-control, .input-group-sm > select
 	height: 100%;
 	min-height: calc(100vh - 45px);
 }
+
+.region__actions__max:hover {
+    background: #00b1b2;
+}
+
+.region__actions__min:hover {
+    background: #fab100;
+}
