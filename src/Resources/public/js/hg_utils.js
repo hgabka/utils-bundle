@@ -1149,7 +1149,7 @@ hgutils.app = (function($, window, undefined) {
         hgutils.datepicker.init();
         hgutils.autoCollapseButtons.init();
         hgutils.autoCollapseTabs.init();
-        hgutils.urlChooser.init();
+      //  hgutils.urlChooser.init();
         hgutils.richEditor.init();
             hgutils.ajaxModal.init();
             hgutils.advancedSelect.init();
