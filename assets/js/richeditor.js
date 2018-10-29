@@ -62,7 +62,7 @@ richeditor.richEditor = (function (window, undefined) {
         for (var key in customConfigs) {
             // Do not allow overriding of the fallback config.
             if (key === 'hgUtilsDefault') {
-                throw new Error('hgUtilsDefault is a reserved name for the default Kunstmaan ckeditor configuration. Please choose another name.');
+                throw new Error('hgUtilsDefault is a reserved name for the default ckeditor configuration. Please choose another name.');
             } else {
                 // v3.3.0 breaking: Thse whole config is now configurable, instead of just the toolbar.
                 // This means we require an object instead of an array.
@@ -234,13 +234,15 @@ richeditor.richEditor = (function (window, undefined) {
             'filebrowserImageBrowseLinkUrl': $body.data('image-browse-url'),
             'enterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_BR : CKEDITOR.ENTER_P,
             'shiftEnterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_P : CKEDITOR.ENTER_BR,
+			'contentsCss': $el.data('contents-css'),
+			'extraAllowedContent': $el.data('extra-allowed-content')
         }
 
         editorConfig = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['hgUtilsDefault'];
 
         // Load the data from data attrs, but don't override the ones in the config if they're set.
         for (var key in dataAttrConfiguration) {
-            if (editorConfig[key] === undefined) {
+            if (editorConfig[key] === undefined || (('contentsCss' === key || 'extraAllowedContent' === key) &&  undefined !== dataAttrConfiguration[key])) {
                 editorConfig[key] = dataAttrConfiguration[key];
             }
         }
