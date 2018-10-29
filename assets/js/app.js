@@ -1,6 +1,8 @@
 var hgabkautils = hgabkautils || {};
 var richeditor = require('./richeditor.js').richeditor;
+var urlChooser = require('./urlChooser.js').urlChooser;
 require('../css/ajax-modal.css');
+
 hgabkautils.app = (function($, window, undefined) {
 
     var init;
@@ -9,6 +11,7 @@ hgabkautils.app = (function($, window, undefined) {
     // General App init
     init = function() {
          richeditor.richEditor.init();
+         urlChooser.urlChooser.init();
     };
 
 
