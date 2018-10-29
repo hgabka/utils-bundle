@@ -233,18 +233,20 @@ richeditor.richEditor = (function (window, undefined) {
             'filebrowserImageBrowseUrl': $body.data('image-browse-url'),
             'filebrowserImageBrowseLinkUrl': $body.data('image-browse-url'),
             'enterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_BR : CKEDITOR.ENTER_P,
-            'shiftEnterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_P : CKEDITOR.ENTER_BR,
-			'contentsCss': $el.data('contents-css'),
-			'extraAllowedContent': $el.data('extra-allowed-content')
+            'shiftEnterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_P : CKEDITOR.ENTER_BR
         }
 
         editorConfig = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['hgUtilsDefault'];
 
         // Load the data from data attrs, but don't override the ones in the config if they're set.
         for (var key in dataAttrConfiguration) {
-            if (editorConfig[key] === undefined || (('contentsCss' === key || 'extraAllowedContent' === key) &&  undefined !== dataAttrConfiguration[key])) {
+            if (editorConfig[key] === undefined) {
                 editorConfig[key] = dataAttrConfiguration[key];
             }
+        }
+
+        if ($el.data('custom-config') !== undefined) {
+            $.extend(editorConfig, $el.data('custom-config'));
         }
 
         // Place CK
