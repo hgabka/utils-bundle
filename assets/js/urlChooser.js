@@ -8,6 +8,7 @@ urlChooser.urlChooser = (function (window, undefined) {
 
 
     init = function () {
+        $body = $('body');
         urlChooser();
         adaptUrlChooser();
     };
