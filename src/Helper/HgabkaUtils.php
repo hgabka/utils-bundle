@@ -96,11 +96,16 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function getLocaleChoices($prefix = 'wt_kuma_extension.locales.'): array
+    public function getLocaleChoices(): array
     {
         $locales = $this->getAvailableLocales();
 
-        return $this->prefixArrayElements($locales, $prefix);
+        $result = [];
+        foreach ($locales as $locale) {
+            $result[$locale] = $this->getIntlLocale($locale);
+        }
+
+        return $result;
     }
 
     /**
