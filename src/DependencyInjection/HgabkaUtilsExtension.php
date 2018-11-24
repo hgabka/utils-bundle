@@ -39,6 +39,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $config = $this->processConfiguration($configuration, $configs);
 
         $requiredLocales = explode('|', $container->getParameter('requiredlocales'));
+        $container->setParameter('hgabka_utils.available_locales', $requiredLocales);
         $container->setParameter('hgabka_utils.admin_locales', $requiredLocales);
         $container->setParameter('hgabka_utils.default_admin_locale', $container->getParameter('defaultlocale'));
 
