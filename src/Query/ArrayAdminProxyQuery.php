@@ -75,10 +75,10 @@ class ArrayAdminProxyQuery extends BaseQuery
 
     public function setSortBy($parentAssociationMappings, $fieldMapping)
     {
-        $alias = $this->entityJoin($parentAssociationMappings);
         if ($this->isCustomField($fieldMapping['fieldName'])) {
             $this->sortBy = $fieldMapping['fieldName'];
         } else {
+            $alias = $this->entityJoin($parentAssociationMappings);
             $this->sortBy = $alias.'.'.$fieldMapping['fieldName'];
         }
 
