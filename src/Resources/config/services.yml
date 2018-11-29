@@ -259,3 +259,8 @@ services:
         arguments: ['@hgabka_utils.hgabka_utils']
         tags:
         -  { name: 'twig.extension' }
+
+    Hgabka\UtilsBundle\Datagrid\CustomDatagridBuilder:
+        public: true
+        arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
+        autowire: false
