@@ -7,9 +7,10 @@ require('../css/alertify.default.css');
 import alertify from './alertify.js';
 window.alertify = alertify;
 
-import {myAlert, myConfirm} from './alertFuncs.js';
+import {myAlert, myConfirm, myLinkConfirm} from './alertFuncs.js';
 window.myAlert = myAlert;
 window.myConfirm = myConfirm;
+window.myLinkConfirm = myLinkConfirm;
 
 hgabkautils.app = (function($, window, undefined) {
 
