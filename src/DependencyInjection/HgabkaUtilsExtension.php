@@ -5,11 +5,13 @@ namespace Hgabka\UtilsBundle\DependencyInjection;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
+use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\Date;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Rand;
+use Hgabka\UtilsBundle\DQL\Regexp;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Hgabka\UtilsBundle\DQL\Round;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
@@ -85,6 +87,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomHydrationMode', $keyValueHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $columnHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $countHydrator);
+            $definition->addMethodCall('addCustomStringFunction', [Cast::FUNCTION_NAME, Cast::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Rand::FUNCTION_NAME, Rand::class]);
             $definition->addMethodCall('addCustomStringFunction', [IfElse::FUNCTION_NAME, IfElse::class]);
             $definition->addMethodCall('addCustomStringFunction', [IfNull::FUNCTION_NAME, IfNull::class]);
@@ -92,6 +95,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Instr::FUNCTION_NAME, Instr::class]);
             $definition->addMethodCall('addCustomStringFunction', [Date::FUNCTION_NAME, Date::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Round::FUNCTION_NAME, Round::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Regexp::FUNCTION_NAME, Regexp::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');

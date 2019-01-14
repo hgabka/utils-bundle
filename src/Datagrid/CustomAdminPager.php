@@ -11,11 +11,11 @@ class CustomAdminPager extends Pager
 {
     public function computeNbResult()
     {
-        /* @var $countQuery Query */
+        // @var $countQuery Query
         $countQuery = clone $this->getQuery();
         $countQuery->setParameters($this->getQuery()->getParameters());
         $countQuery = $countQuery->getQuery();
-        
+
         $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, CountSqlWalker::class);
 
         return $countQuery->getResult(CountHydrator::HYDRATOR_NAME);
