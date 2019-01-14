@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hgabka\UtilsBundle\Doctrine\Hydrator;
 
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
@@ -11,10 +10,10 @@ class CountHydrator extends AbstractHydrator
     const FIELD = 'count';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function hydrateAllData()
     {
-        return (int)$this->_stmt->fetchColumn(0);
+        return (int) $this->_stmt->fetchColumn(0);
     }
 }

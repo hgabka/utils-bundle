@@ -3,15 +3,11 @@
 namespace Hgabka\UtilsBundle\Datagrid;
 
 use Doctrine\ORM\Query;
-use Sonata\AdminBundle\Datagrid\Datagrid;
-use Sonata\AdminBundle\Admin\FieldDescriptionCollection;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Sonata\AdminBundle\Filter\FilterInterface;
+use Sonata\AdminBundle\Datagrid\Datagrid;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 
 class ArrayDatagrid extends Datagrid
 {
@@ -33,7 +29,7 @@ class ArrayDatagrid extends Datagrid
         }
 
         foreach ($this->getFilters() as $name => $filter) {
-            list($type, $options) = $filter->getRenderSettings();
+            [$type, $options] = $filter->getRenderSettings();
 
             $this->formBuilder->add($filter->getFormName(), $type, $options);
         }
@@ -73,7 +69,7 @@ class ArrayDatagrid extends Datagrid
             }
 
             if ($this->values['_sort_by']->isSortable()) {
-                $fieldMap =  $this->values['_sort_by']->getSortFieldMapping();
+                $fieldMap = $this->values['_sort_by']->getSortFieldMapping();
                 if (!$fieldMap) {
                     $fieldMap = ['fieldName' => $this->values['_sort_by']->getFieldName()];
                 }
