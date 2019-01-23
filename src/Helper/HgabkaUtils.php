@@ -59,7 +59,7 @@ class HgabkaUtils
             return $locale;
         }
 
-        return $baseLocale;
+        return $baseLocale ?? $this->container->getParameter('defaultlocale');
     }
 
     /**
