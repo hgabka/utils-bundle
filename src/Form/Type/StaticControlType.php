@@ -31,6 +31,7 @@ class StaticControlType extends AbstractType
           'disabled' => true,
           'html' => false,
           'template' => false,
+          'template_vars' => [],
           'format' => '%s',
           'date_format' => null,
         ]);
@@ -46,10 +47,10 @@ class StaticControlType extends AbstractType
         $isDate = false;
         $value = \is_string($view->vars['value']) ? $view->vars['value'] : '';
         if (!empty($options['template'])) {
-            $val = $this->templating->render($options['template'], [
+            $val = $this->templating->render($options['template'], , array_merge([
                 'value' => $value,
                 'options' => $options,
-            ]);
+            ], $options['template_vars']));
         } else {
             $val = !empty($options['html']) ? str_replace('%value%', $value, $options['html']) : $value;
         }
