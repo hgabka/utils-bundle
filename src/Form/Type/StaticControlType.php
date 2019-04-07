@@ -47,7 +47,7 @@ class StaticControlType extends AbstractType
         $isDate = false;
         $value = \is_string($view->vars['value']) ? $view->vars['value'] : '';
         if (!empty($options['template'])) {
-            $val = $this->templating->render($options['template'], , array_merge([
+            $val = $this->templating->render($options['template'], array_merge([
                 'value' => $value,
                 'options' => $options,
             ], $options['template_vars']));
