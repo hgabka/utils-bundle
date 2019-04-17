@@ -3,11 +3,15 @@
     var on = (function () {
         if (document.addEventListener) {
             return function (el, event, fn) {
-                el.addEventListener(event, fn, false);
+                if (el) {
+                    el.addEventListener(event, fn, false);
+                }
             };
         } else if (document.attachEvent) {
             return function (el, event, fn) {
-                el.attachEvent('on' + event, fn);
+                if (el) {
+                    el.attachEvent('on' + event, fn);
+                }
             };
         }
     }());
@@ -61,10 +65,18 @@
             var btnCancel = document.getElementById('alertifyButtonCancel');
             var titleEl = document.getElementById('alertifyTitle');
             var input = document.getElementById('alertifyInput');
-            titleEl.innerHTML = parent.message;
-            btnOK.innerHTML = parent.settings.ok;
-            btnCancel.innerHTML = parent.settings.cancel;
-            input.value = parent.value || '';
+            if (titleEl) {
+                titleEl.innerHTML = parent.message;
+            }
+            if (btnOk) {
+                btnOK.innerHTML = parent.settings.ok;
+            }
+            if (btnCancel) {
+                btnCancel.innerHTML = parent.settings.cancel;
+            }
+            if (input) {
+                input.value = parent.value || '';
+            }
         }
 
         function handleTransitionEvent(event) {
