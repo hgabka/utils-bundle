@@ -4,8 +4,6 @@ var urlChooser = require('./urlChooser.js').urlChooser;
 require('../css/ajax-modal.css');
 require('../css/alertify.core.css');
 require('../css/alertify.default.css');
-import alertify from './alertify.js';
-window.alertify = alertify;
 import ResponsiveHelper from './responsiveHelper.js';
 window.ResponsiveHelper = ResponsiveHelper;
 

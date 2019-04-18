@@ -1,3 +1,5 @@
+import alertify from './alertify.js';
+window.alertify = alertify;
 export function myAlert(text, okfunc, title) {
     var alert = alertify.alert(text);
     if (typeof okfunc == 'function') {

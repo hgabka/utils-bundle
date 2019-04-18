@@ -68,7 +68,7 @@
             if (titleEl) {
                 titleEl.innerHTML = parent.message;
             }
-            if (btnOk) {
+            if (btnOK) {
                 btnOK.innerHTML = parent.settings.ok;
             }
             if (btnCancel) {
