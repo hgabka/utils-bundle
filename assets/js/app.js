@@ -6,6 +6,8 @@ require('../css/alertify.core.css');
 require('../css/alertify.default.css');
 import alertify from './alertify.js';
 window.alertify = alertify;
+import ResponsiveHelper from './responsiveHelper.js';
+window.ResponsiveHelper = ResponsiveHelper;
 
 import {myAlert, myConfirm, myLinkConfirm} from './alertFuncs.js';
 window.myAlert = myAlert;
