@@ -3,8 +3,9 @@
 namespace Hgabka\UtilsBundle\Twig\Extension;
 
 use Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager;
+use Twig\Extension\GlobalsInterface;
 
-class BreadcrumbTwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class BreadcrumbTwigExtension extends \Twig_Extension implements GlobalsInterface
 {
     /**
      * @var BreadcrumbManager
