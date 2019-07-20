@@ -45,7 +45,7 @@ class LongblobType extends Type
     {
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */

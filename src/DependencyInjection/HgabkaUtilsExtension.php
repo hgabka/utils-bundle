@@ -14,6 +14,7 @@ use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Regexp;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Hgabka\UtilsBundle\DQL\Round;
+use Hgabka\UtilsBundle\DQL\Substr;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -96,6 +97,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Date::FUNCTION_NAME, Date::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Round::FUNCTION_NAME, Round::class]);
             $definition->addMethodCall('addCustomStringFunction', [Regexp::FUNCTION_NAME, Regexp::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Substr::FUNCTION_NAME, Substr::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
