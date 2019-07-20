@@ -40,7 +40,7 @@ class LongblobType extends Type
 
         return (string) $value;
     }
-    
+
     public function requiresSQLCommentHint(AbstractPlatform $platform)
     {
         return true;

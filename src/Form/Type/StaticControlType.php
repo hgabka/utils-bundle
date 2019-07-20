@@ -31,7 +31,7 @@ class StaticControlType extends AbstractType
           'disabled' => true,
           'html' => false,
           'template' => false,
-          'template_vars' => [],  
+          'template_vars' => [],
           'format' => '%s',
           'date_format' => null,
         ]);

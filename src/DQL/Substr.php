@@ -47,5 +47,4 @@ class Substr extends FunctionNode
         $this->for = $parser->ArithmeticPrimary();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
-
 }
