@@ -10,7 +10,7 @@
                     <!-- Start Filter -->
                     <div id="first-filter-line" class="js-filter-line app__filter__line {% if filter.currentfilters|length >0 %} hidden{% endif %}">
                         <div class="form-group">
-                            <select id="add-first-filter" class="form-control js-filter-select">
+                            <select data-sonata-select2="false" id="add-first-filter" class="form-control js-filter-select">
                                 <option>{{ "kuma_admin.form.choosetypefilter"|trans }}</option>
                                 {% for columnname, value in filter.filterdefinitions %}
                                     {% if value['filtername'] is defined %}
@@ -28,7 +28,7 @@
                     {% for columnname, value in filter.currentfilters %}
                         <div class="js-filter-line app__filter__line">
                             <div class="form-group">
-                                <select class="js-filter-select js-filter-dummy form-control" name="filter_columnname[]">
+                                <select data-sonata-select2="false" class="js-filter-select js-filter-dummy form-control" name="filter_columnname[]">
                                     {% for defcolumnname, defvalue in filter.filterdefinitions %}
                                     {% if defvalue['filtername'] is defined %}
                                         {% set filtername = defvalue['filtername'] %}
@@ -107,7 +107,7 @@
     <!-- Dummy Stuff -->
     <div id="filter-dummy-line" class="hidden">
         <div class="form-group">
-            <select name="columnname[]" class="js-filter-select js-filter-dummy form-control">
+            <select data-sonata-select2="false" name="columnname[]" class="js-filter-select js-filter-dummy form-control">
             {% for columnname, value in filter.filterdefinitions %}
                 {% if value['filtername'] is defined %}
                     {% set filtername = value['filtername'] %}
