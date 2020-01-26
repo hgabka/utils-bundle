@@ -98,7 +98,9 @@ urlChooser.urlChooser = (function (window, undefined) {
                 var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                     parentModalId = $parentModal.attr('id');
 
-                parent.$('#' + parentModalId).modal('hide');
+                window.parent.$('#' + parentModalId).modal('hide');
+                window.parent.$('#' + parentModalId).removeClass('show');
+                window.parent.$('.modal-backdrop').remove();
 
             } else {
                 window.close();
@@ -123,13 +125,15 @@ urlChooser.urlChooser = (function (window, undefined) {
                 parentModalId = $parentModal.attr('id');
 
             // Set val
-            parent.$('#' + linkedInputId).val(itemUrl).change();
+            window.parent.$('#' + linkedInputId).val(itemUrl).change();
 
             // Set proper URL
-            parent.$('#' + linkedInputId).parent().find('.js-urlchooser-value').val(replacedUrl);
+            window.parent.$('#' + linkedInputId).parent().find('.js-urlchooser-value').val(replacedUrl);
 
             // Close modal
-            parent.$('#' + parentModalId).modal('hide');
+            window.parent.$('#' + parentModalId).modal('hide');
+            window.parent.$('#' + parentModalId).removeClass('show');
+            window.parent.$('.modal-backdrop').remove();
 
         } else {
             var funcNum = getUrlParam('CKEditorFuncNum');
@@ -151,12 +155,12 @@ urlChooser.urlChooser = (function (window, undefined) {
                 parentModalId = $parentModal.attr('id');
 
             // Set val
-            parent.$('#' + linkedInputId).val(itemId).change();
+            window.parent.$('#' + linkedInputId).val(itemId).change();
 
             // Update preview
-            var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
-                $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
-                $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
+            var $mediaChooser = window.parent.$('#' + linkedInputId + '-widget'),
+                $previewImg = window.parent.$('#' + linkedInputId + '__preview__img'),
+                $previewTitle = window.parent.$('#' + linkedInputId + '__preview__title');
 
             $mediaChooser.addClass('media-chooser--choosen');
             $previewTitle.html(itemTitle);
@@ -170,7 +174,9 @@ urlChooser.urlChooser = (function (window, undefined) {
             }
 
             // Close modal
-            parent.$('#' + parentModalId).modal('hide');
+            window.parent.$('#' + parentModalId).modal('hide');
+            window.parent.$('#' + parentModalId).removeClass('show');
+            window.parent.$('.modal-backdrop').remove();
 
         } else {
             var funcNum = getUrlParam('CKEditorFuncNum');
