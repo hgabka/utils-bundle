@@ -283,7 +283,7 @@
                         {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}
                         {% if form.vars.allow_add %}
                             data-prototype="{{ form_widget(form.vars.prototype)|e }}"
-                            data-add-button-label="{{ attr['nested_add_button_label']|default('form.add')|trans }}"
+                            data-add-button-label="{{ attr['nested_add_button_label']|default('kuma_admin.form.add')|trans }}"
                         {% endif %}
                         data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
 
