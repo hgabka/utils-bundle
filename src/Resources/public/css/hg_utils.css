@@ -1491,6 +1491,4 @@ select.input-sm, .input-group-sm > select.form-control, .input-group-sm > select
     top: .8rem;
     left: 1.2rem;
 }
-.nested-form__item__view .checkbox label, .nested-form__item__view .radio label {
-    margin-left: 0;
-}
+

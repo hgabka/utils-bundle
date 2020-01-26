@@ -1,3 +1,5 @@
+var richeditor = require('./richeditor.js').richeditor;
+var iCheck  = require('./iCheck.js');
 var nestedform = {};
 
 nestedform.nestedForm = (function(window, undefined) {
@@ -162,7 +164,17 @@ nestedform.nestedForm = (function(window, undefined) {
 
         showOrHideActions($form);
 
-
+        // Init new rich editors
+        richeditor.richEditor.init();
+        nestedform.nestedForm.init();
+        if (typeof Admin !== 'undefined') {
+            Admin.setup_select2($newItem);
+            Admin.setup_icheck($newItem);
+            Admin.setup_checkbox_range_selection($newItem);
+            Admin.setup_form_tabs_for_errors($newItem);
+            Admin.setup_inline_form_errors($newItem);
+            Admin.setup_collection_counter($newItem);
+        }
 
         // Update sortkeys
         if(sortable) {
