@@ -1499,3 +1499,7 @@ select.input-sm, .input-group-sm > select.form-control, .input-group-sm > select
     background: #d9534f;
 }
 
+.nested-form__item__header__actions__action:hover {
+	z-index: 1;
+	color: #fff;
+}
