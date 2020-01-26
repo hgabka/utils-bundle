@@ -1492,3 +1492,10 @@ select.input-sm, .input-group-sm > select.form-control, .input-group-sm > select
     left: 1.2rem;
 }
 
+.btn--raise-on-hover:hover:not(.active) {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04), 0 3px 4px rgba(0, 0, 0, 0.04);
+}
+.nested-form__item__header__actions__action--del:hover {
+    background: #d9534f;
+}
+
