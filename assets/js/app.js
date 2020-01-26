@@ -1,6 +1,7 @@
 var hgabkautils = hgabkautils || {};
 var richeditor = require('./richeditor.js').richeditor;
 var urlChooser = require('./urlChooser.js').urlChooser;
+var nestedform = require('./nested-form.js').nestedform;
 require('../css/ajax-modal.css');
 require('../css/alertify.core.css');
 require('../css/alertify.default.css');
@@ -21,6 +22,7 @@ hgabkautils.app = (function($, window, undefined) {
     init = function() {
          richeditor.richEditor.init();
          urlChooser.urlChooser.init();
+         nestedform.nestedForm.init();
     };
 
 
