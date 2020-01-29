@@ -577,8 +577,8 @@ class HgabkaUtils
                 $args[2] = [];
                 if (\is_array($args[0]) && \is_array($args[1])) {
                     foreach (array_unique(array_merge(array_keys($args[0]), array_keys($args[1]))) as $key) {
-                        $isKey0 = array_key_exists($key, $args[0]);
-                        $isKey1 = array_key_exists($key, $args[1]);
+                        $isKey0 = \array_key_exists($key, $args[0]);
+                        $isKey1 = \array_key_exists($key, $args[1]);
                         if ($isKey0 && $isKey1 && \is_array($args[0][$key]) && \is_array($args[1][$key])) {
                             $args[2][$key] = $this->arrayDeepMerge($args[0][$key], $args[1][$key]);
                         } elseif ($isKey0 && $isKey1) {

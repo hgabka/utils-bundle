@@ -97,9 +97,9 @@ class AclNativeHelper
 
         if (\is_object($user)) {
             $inString .= ' OR s.identifier = "'.str_replace(
-                    '\\',
-                    '\\\\',
-                    \get_class($user)
+                '\\',
+                '\\\\',
+                \get_class($user)
                 ).'-'.$user->getUserName().'"';
         }
 

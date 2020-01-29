@@ -15,8 +15,8 @@ class ObjectAutocompleteItemType extends AbstractType
         $builder
             ->addViewTransformer(
                 new ObjectAutocompleteItemViewTransformer(
-                $options['repository'],
-                $options['to_string_callback']
+                    $options['repository'],
+                    $options['to_string_callback']
             ),
                 true
             )

@@ -34,6 +34,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 /**
  * Adds global event, will hide "Target" tab in Link dialog in all instances.
+ *
+ * @param mixed $CKEditor
  */
 function CKEditorHideLinkTargetTab(&$CKEditor)
 {
@@ -52,6 +54,8 @@ function CKEditorHideLinkTargetTab(&$CKEditor)
 
 /**
  * Adds global event, will notify about opened dialog.
+ *
+ * @param mixed $CKEditor
  */
 function CKEditorNotifyAboutOpenedDialog(&$CKEditor)
 {

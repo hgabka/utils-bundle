@@ -239,7 +239,7 @@ class Words_pt_BR extends Words
         // Looping through the chunks
         foreach ($chunks as $index => $chunk) {
             // Testing Range
-            if (!array_key_exists($index, $this->_exponent)) {
+            if (!\array_key_exists($index, $this->_exponent)) {
                 return Numbers_Words::raiseError('Number out of range.');
             }
 

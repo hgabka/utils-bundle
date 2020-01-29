@@ -36,8 +36,8 @@ class ObjectAutocompleteType extends AbstractType
             ->addEventSubscriber(new MergeDoctrineCollectionListener())
             ->addViewTransformer(
                 new ObjectAutocompleteViewTransformer(
-                $repo,
-                $options['to_string_callback']
+                    $repo,
+                    $options['to_string_callback']
             ),
                 true
             )

@@ -80,11 +80,11 @@ if (!empty($_FILES)) {
     }
 
     // Read binary input stream and append it to temp file
-    if (!$in = @fopen($_FILES['file']['tmp_name'], 'rb')) {
+    if (!$in = @fopen($_FILES['file']['tmp_name'], 'r')) {
         die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
     }
 } else {
-    if (!$in = @fopen('php://input', 'rb')) {
+    if (!$in = @fopen('php://input', 'r')) {
         die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
     }
 }
