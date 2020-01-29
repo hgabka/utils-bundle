@@ -2,9 +2,12 @@ var hgabkautils = hgabkautils || {};
 var richeditor = require('./richeditor.js').richeditor;
 var urlChooser = require('./urlChooser.js').urlChooser;
 var nestedform = require('./nested-form.js').nestedform;
+var colorPicker = require('./colorpicker.js').colorPicker;
+
 require('../css/ajax-modal.css');
 require('../css/alertify.core.css');
 require('../css/alertify.default.css');
+require('../css/colorpicker.css');
 import ResponsiveHelper from './responsiveHelper.js';
 window.ResponsiveHelper = ResponsiveHelper;
 
@@ -23,6 +26,7 @@ hgabkautils.app = (function($, window, undefined) {
          richeditor.richEditor.init();
          urlChooser.urlChooser.init();
          nestedform.nestedForm.init();
+         colorPicker.colorpicker.init();
     };
 
 
