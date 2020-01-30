@@ -1158,7 +1158,7 @@ hgutils.app = (function($, window, undefined) {
             hgutils.pagepartEditor.init();
             hgutils.appLoading.init();
         hgutils.slugChooser.init();
-        hgutils.nestedForm.init();
+
         hgutils.colorpicker.init();
         hgutils.tooltip.init();
 
