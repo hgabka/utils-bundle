@@ -105,15 +105,17 @@ nestedform.nestedForm = (function(window, undefined) {
 
     // Add "New" button
     addNewBtn = function($form) {
-        var newBtnLabel =  $form.data('add-button-label');
-        var html = newButtonHtml.replace('%label%', newBtnLabel === undefined ? 'Add' : newBtnLabel);
-        var $newBtn = $(html);
+        if ($form.find('.js-nested-form__add-btn').length === 0) {
+            var newBtnLabel = $form.data('add-button-label');
+            var html = newButtonHtml.replace('%label%', newBtnLabel === undefined ? 'Add' : newBtnLabel);
+            var $newBtn = $(html);
 
-        $form.append($newBtn);
+            $form.append($newBtn);
 
-        $newBtn.on('click', function() {
-            addNewItem($form);
-        });
+            $newBtn.on('click', function () {
+                addNewItem($form);
+            });
+        }
     };
 
 

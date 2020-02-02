@@ -1134,9 +1134,9 @@ hgutils.app = (function($, window, undefined) {
 
         appScroll();
 
-        hgutils.sidebartoggle.init();
-        hgutils.sidebartree.init();
-        hgutils.sidebarsearchfocus.init();
+ //       hgutils.sidebartoggle.init();
+  //      hgutils.sidebartree.init();
+    //    hgutils.sidebarsearchfocus.init();
         hgutils.filter.init();
         hgutils.urlchoosertree.init();
         hgutils.checkIfEdited.init();
@@ -1146,9 +1146,9 @@ hgutils.app = (function($, window, undefined) {
                kunstmaanbundles.checkIfEdited.init();
                kunstmaanbundles.preventDoubleClick.init();
                kunstmaanbundles.datepicker.init();*/
-        hgutils.datepicker.init();
-        hgutils.autoCollapseButtons.init();
-        hgutils.autoCollapseTabs.init();
+       // hgutils.datepicker.init();
+    //    hgutils.autoCollapseButtons.init();
+     //   hgutils.autoCollapseTabs.init();
       //  hgutils.urlChooser.init();
         hgutils.richEditor.init();
             hgutils.ajaxModal.init();
@@ -1158,7 +1158,7 @@ hgutils.app = (function($, window, undefined) {
             hgutils.pagepartEditor.init();
             hgutils.appLoading.init();
         hgutils.slugChooser.init();
-
+        hgutils.nestedForm.init();
         hgutils.colorpicker.init();
         hgutils.tooltip.init();
 

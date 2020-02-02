@@ -1,0 +1,170 @@
+/* ==========================================================================
+   JsTree
+
+   Custom theme for jsTree v3.0
+   ========================================================================== */
+/* General
+   ========================================================================== */
+.jstree-node,
+.jstree-children,
+.jstree-container-ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none; }
+
+/* Container List
+   ========================================================================== */
+.jstree-container-ul > .jstree-node {
+    margin-left: 0; }
+
+/* Node
+   ========================================================================== */
+.jstree-node {
+    min-width: 2.3rem;
+    min-height: 2.3rem;
+    margin-left: 2.3rem;
+    line-height: 2.3rem;
+    white-space: nowrap; }
+
+/* Anchor
+   ========================================================================== */
+.jstree-anchor {
+    display: inline-block;
+    padding: 0 .4em 0 0;
+    margin: 0;
+    height: 2.3rem;
+    font-size: 1.3rem;
+    line-height: 2.3rem;
+    color: #333333;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    -webkit-transition: background-color 0.15s ease;
+    -o-transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease; }
+.jstree-anchor:hover, .jstree-anchor:focus {
+    text-decoration: none;
+    color: #333333;
+    outline: 0; }
+.jstree-anchor.active, .jstree-anchor.active:hover {
+    color: #2997ce; }
+
+.jstree-node--offline .jstree-anchor {
+    color: #999999; }
+
+/* Icon
+   ========================================================================== */
+.jstree-icon, .jstree-icon:empty {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.3rem;
+    color: #555555;
+    line-height: 2.3rem;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top; }
+
+.jstree-node,
+.jstree-icon {
+    background-image: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg"); }
+
+.jstree-node {
+    background-position: -292px -3px;
+    background-repeat: repeat-y; }
+
+.jstree-last {
+    background: transparent; }
+
+.jstree-themeicon-custom {
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 0; }
+
+.jstree-ocl {
+    cursor: pointer; }
+
+.jstree-leaf > .jstree-ocl {
+    cursor: default; }
+
+.jstree-open > .jstree-ocl {
+    background-position: -132px -3px; }
+
+.jstree-closed > .jstree-ocl {
+    background-position: -100px -3px; }
+
+.jstree-leaf > .jstree-ocl {
+    background-position: -68px -3px; }
+
+/* Open/Close Tree
+   ========================================================================== */
+.jstree .jstree-open > .jstree-children {
+    display: block; }
+
+.jstree .jstree-closed > .jstree-children,
+.jstree .jstree-leaf > .jstree-children {
+    display: none; }
+
+/* States
+   ========================================================================== */
+.jstree-hovered {
+    background: #f0f2f5; }
+
+/* Search
+   ========================================================================== */
+.jstree-search {
+    color: #2997ce;
+    font-weight: bold; }
+
+/* Drag-and-drop styles
+   ========================================================================== */
+#jstree-dnd {
+    line-height: 16px;
+    margin: 0;
+    padding: 4px; }
+#jstree-dnd .jstree-icon, #jstree-dnd .jstree-copy {
+    display: inline-block;
+    text-decoration: none;
+    margin: 0 2px 0 0;
+    padding: 0;
+    width: 16px;
+    height: 16px; }
+#jstree-dnd .jstree-ok, #jstree-dnd .jstree-er {
+    background: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg") no-repeat; }
+#jstree-dnd .jstree-ok {
+    background-position: -9px -71px; }
+#jstree-dnd .jstree-er {
+    background-position: -39px -71px; }
+#jstree-dnd .jstree-copy {
+    margin: 0 2px 0 2px; }
+
+#jstree-dndi {
+    background: transparent;
+    width: 16px;
+    height: 16px; }
+
+.jstree-anchor > .jstree-undetermined {
+    background-position: -196px -4px; }
+
+.jstree-anchor > .jstree-undetermined:hover {
+    background-position: -196px -36px; }
+
+#jstree-marker {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border-right: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+}
