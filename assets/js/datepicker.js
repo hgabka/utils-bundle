@@ -19,7 +19,8 @@ datePicker.datepicker = (function($, window, undefined) {
         defaultShowDefaultDate = false,
         defaultLocale = 'hu',
         defaultStepping = 1,
-        defaultWithTime = true;
+        defaultWithTime = true,
+        defaultWithDate = true;
 
 
     init = function() {
@@ -59,6 +60,7 @@ datePicker.datepicker = (function($, window, undefined) {
             elLocale = $el.data('locale'),
             elOptions = $el.data('options'),
             elStepping = $el.data('stepping'),
+        elWithDate = $el.data('with-date'),
         elWithTime = $el.data('with-time');
 
 
@@ -71,7 +73,8 @@ datePicker.datepicker = (function($, window, undefined) {
             options = (elOptions !== undefined) ? elOptions : {},
             defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate,
             stepping = (elStepping !== undefined) ? elStepping : defaultStepping,
-            withTime = (elWithTime !== undefined) ? elWithTime : defaultWithTime;
+            withTime = (elWithTime !== undefined) ? elWithTime : defaultWithTime,
+            withDate = (elWithDate !== undefined) ? elWithDate : defaultWithDate;
 
         // Setup
         var $input = $el.find('input'),
@@ -100,7 +103,8 @@ datePicker.datepicker = (function($, window, undefined) {
             },
             stepping: stepping,
             language: locale,
-            pickTime: withTime
+            pickTime: withTime,
+            pickDate: withDate
         };
 
         options = $.extend(defOptions, options);

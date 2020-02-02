@@ -98,9 +98,8 @@ pageEditor.pageEditor = (function(window, undefined) {
 
         if($('#unpublish-later__check')) {
             var check = document.getElementById('unpublish-later__check');
-
             _toggle(check);
-
+            
             $(check).on('change', function() {
                 _toggle(this);
             });
