@@ -1129,17 +1129,17 @@ hgutils.app = (function($, window, undefined) {
 
     // General App init
     init = function() {
-        cargobay.toggle.init();
-        cargobay.scrollToTop.init();
+      //  cargobay.toggle.init();
+      //  cargobay.scrollToTop.init();
 
-        appScroll();
+      //  appScroll();
 
  //       hgutils.sidebartoggle.init();
   //      hgutils.sidebartree.init();
     //    hgutils.sidebarsearchfocus.init();
    //     hgutils.filter.init();
      //   hgutils.urlchoosertree.init();
-        hgutils.checkIfEdited.init();
+       // hgutils.checkIfEdited.init();
         /*       kunstmaanbundles.sidebarsearchfocus.init();
                kunstmaanbundles.filter.init();
                kunstmaanbundles.sortableTable.init();
@@ -1150,17 +1150,17 @@ hgutils.app = (function($, window, undefined) {
     //    hgutils.autoCollapseButtons.init();
      //   hgutils.autoCollapseTabs.init();
       //  hgutils.urlChooser.init();
-        hgutils.richEditor.init();
-            hgutils.ajaxModal.init();
-            hgutils.advancedSelect.init();
+       // hgutils.richEditor.init();
+     //       hgutils.ajaxModal.init();
+        //    hgutils.advancedSelect.init();
 
-            hgutils.pageEditor.init();
-            hgutils.pagepartEditor.init();
-            hgutils.appLoading.init();
-        hgutils.slugChooser.init();
-        hgutils.nestedForm.init();
-        hgutils.colorpicker.init();
-        hgutils.tooltip.init();
+        //    hgutils.pageEditor.init();
+       //     hgutils.pagepartEditor.init();
+      //      hgutils.appLoading.init();
+      //  hgutils.slugChooser.init();
+     //   hgutils.nestedForm.init();
+     //   hgutils.colorpicker.init();
+       // hgutils.tooltip.init();
 
   /*          kunstmaanbundles.slugChooser.init();
             kunstmaanbundles.urlChooser.init();

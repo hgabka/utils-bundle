@@ -1,5 +1,6 @@
 var richeditor = require('./richeditor.js').richeditor;
 var colorPicker = require('./colorpicker.js').colorPicker;
+var tooltip = require('./tooltip.js').tooltip;
 var iCheck  = require('./iCheck.js');
 var nestedform = {};
 
@@ -171,6 +172,8 @@ nestedform.nestedForm = (function(window, undefined) {
         richeditor.richEditor.init();
         nestedform.nestedForm.init();
         colorPicker.colorpicker.init();
+        tooltip.tooltip.init();
+        
         if (typeof Admin !== 'undefined') {
             Admin.setup_select2($newItem);
             Admin.setup_icheck($newItem);
