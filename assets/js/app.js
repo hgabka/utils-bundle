@@ -8,7 +8,10 @@ var sidebarTree = require('./sidebartree.js').sidebarTree;
 var sidebarSearchFocus = require('./sidebarsearchfocus.js').sidebarSearchFocus;
 var autoCollapseButtons = require('./autocollapsebuttons.js').autoCollapseButtons;
 var autoCollapseTabs = require('./autocollapsetabs.js').autoCollapseTabs;
+var charactersLeft = require('./charactersleft.js').charactersLeft;
+var urlChooserTree = require('./urlchoosertree.js').urlChooserTree;
 import datePicker from './datepicker.js';
+import filter from './filter.js';
 
 require('../css/ajax-modal.css');
 require('../css/alertify.core.css');
@@ -36,8 +39,11 @@ hgabkautils.app = (function($, window, undefined) {
          sidebarSearchFocus.sidebarsearchfocus.init();
          autoCollapseButtons.autoCollapseButtons.init();
          autoCollapseTabs.autoCollapseTabs.init();
+         charactersLeft.charactersLeft.init();
+         filter.filter.init();
          richeditor.richEditor.init();
          urlChooser.urlChooser.init();
+         urlChooserTree.urlchoosertree.init();
          nestedform.nestedForm.init();
          colorPicker.colorpicker.init();
          datePicker.datepicker.init();

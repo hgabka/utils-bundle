@@ -1137,8 +1137,8 @@ hgutils.app = (function($, window, undefined) {
  //       hgutils.sidebartoggle.init();
   //      hgutils.sidebartree.init();
     //    hgutils.sidebarsearchfocus.init();
-        hgutils.filter.init();
-        hgutils.urlchoosertree.init();
+   //     hgutils.filter.init();
+     //   hgutils.urlchoosertree.init();
         hgutils.checkIfEdited.init();
         /*       kunstmaanbundles.sidebarsearchfocus.init();
                kunstmaanbundles.filter.init();
