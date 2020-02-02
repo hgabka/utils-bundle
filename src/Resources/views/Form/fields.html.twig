@@ -329,7 +329,7 @@
             {% else %}
                 {% if attr['info_text'] is defined %}
                     {# Info text #}
-                    <div class="input-group" data-reinit-js='["tooltip"]'>
+                    <div class="input-group info-texted" data-reinit-js='["tooltip"]'>
                         {{ form_widget(form) }}
                         <span class="input-group-addon">
                         <strong class="input-group-addon--tooltip" data-html="true" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
