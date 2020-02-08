@@ -241,6 +241,7 @@ services:
 
     hgabka_utils.acl.helper:
         alias: Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper
+        public: true
 
 
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"
