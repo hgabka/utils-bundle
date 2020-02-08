@@ -7,7 +7,7 @@
             </h5>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" id="apply-recursive" name="applyRecursive" value="1">
+                    <input type="checkbox" id="apply-recursive" name="applyRecursive" value="1" data-sonata-icheck="false">
                     {{ "permissions.apply_recursively"|trans|raw }}
                     (<a href="#permission-changes-modal" data-toggle="modal">
                         {{ "permissions.review_changes"|trans|raw }}
@@ -56,7 +56,7 @@
                         {% set permission = permissionadmin.getPermission(role) %}
                         {% for permissionName in permissionadmin.getPossiblePermissions() %}
                         <td>
-                            <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} class="js-permission-checkbox" data-role="{{ role.getRole() }}" data-permission="{{ permissionName }}" data-original-value="{% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %}">
+                            <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} class="js-permission-checkbox" data-role="{{ role.getRole() }}" data-permission="{{ permissionName }}" data-original-value="{% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %}" data-sonata-icheck="false">
                         </td>
                         {% endfor %}
                     </tr>
