@@ -21,6 +21,7 @@ var appEntityVersionLock = require('./appentityversionlock.js').appEntityVersion
 var appNodeVersionLock = require('./appnodeversionlock.js').appNodeVersionLock;
 var iconChooser = require('./iconchooser.js').iconChooser;
 var preventDoubleClick = require('./preventdoubleclick.js').preventDoubleClick;
+var bulkmove = require('./bulkmove.js').bulkmove;
 //var advancedSelect = require('./advancedselect.js').advancedSelect;
 
 import datePicker from './datepicker.js';
@@ -80,6 +81,7 @@ hgabkautils.app = (function($, window, undefined) {
          appEntityVersionLock.appEntityVersionLock.init();
          appNodeVersionLock.appNodeVersionLock.init();
          iconChooser.iconChooser.init();
+         bulkmove.bulkMove.init();
     };
 
     appScroll = function() {
