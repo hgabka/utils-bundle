@@ -1,0 +1,169 @@
+@import 'alertify_variables';
+
+.alertify {
+    font-family: sans-serif;
+    color: #02070b;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    border-radius: 10px
+}
+
+.alertify-content {
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    background: $alertify-background;
+    color: #02070b;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.alertify-body {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: $alertify-box-shadow;
+}
+
+.alertify-title {
+    margin: 0 0 1em;
+    padding: 15px;
+    font-family: Arial;
+    color: $alertify-text-color;
+    font-size: $alertify-font-size;
+    line-height: 18px;
+}
+
+.alertify-input {
+    background: rgba(250, 250, 250, .8);
+    font-size: 100%;
+    line-height: 1.5;
+    outline: 0;
+    border: none;
+    border-top: 1px solid #eaeaea;
+    width: 100%;
+    padding: 1em;
+    margin: 0;
+    box-sizing: border-box
+}
+
+.alertify-buttons {
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+.alertify-buttons:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 1px solid #eaeaea
+}
+
+.alertify--alert .alertify-buttons:after {
+    display: none
+}
+
+.alertify-button {
+    display: inline;
+    box-sizing: border-box;
+    -webkit-transition: background-color .3s ease-out;
+    -moz-transition: background-color .3s ease-out;
+    transition: background-color .3s ease-out;
+    margin-bottom: 10px;
+    @if $alertify-button-background != false {
+        background-image: url($alertify-button-background);
+        background-repeat: no-repeat;
+    } @else {
+        background-color: $alertify-button-background-color;
+        border: none;
+        border-radius: $alertify-button-border-radius;
+        &:hover {
+            background-color: $alertify-button-hover-background-color;
+        }
+    }
+    font-family: $alertify-button-font;
+    font-size: $alertify-button-font-size;
+    font-weight: $alertify-button-font-weight;
+    color: $alertify-button-text-color;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+    width: 111px !important;
+    height: 40px;
+    &:hover {
+        font-size: $alertify-button-hover-font-size;
+    }
+}
+@if $alertify-button-background == false {
+    .alertify-button-cancel {
+        background-color: $alertify-button-cancel-background-color;
+        border: none;
+        border-radius: $alertify-button-border-radius;
+        color: $alertify-button-cancel-text-color;
+        &:hover {
+            background-color: $alertify-button-cancel-hover-background-color;
+        }
+    }
+}
+
+.alertify--alert .alertify-button {
+    width: 100%
+}
+
+.alertify-header {
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: $alertify-header-background-color;
+    font-size: $alertify-header-font-size;
+    height: $alertify-header-height;
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: 300;
+    color: $alertify-header-color;
+    text-align: left;
+    padding-left: $alertify-header-padding-left;
+    padding-top: $alertify-header-padding-top;
+    position: relative;
+    * {
+        font-family: $alertify-button-font !important
+    }
+}
+
+.alertify-close-x {
+    display: block;
+    background-color: $alertify-close-button-background-color;
+    border: 1px solid $alertify-close-button-border-color;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 31px;
+    height: 31px;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    &:hover {
+      background-color: $alertify-close-button-hover-background-color;
+        border: 1px solid $alertify-close-button-hover-border-color;
+        &::before {
+            color: $alertify-close-button-hover-color;
+        }
+    }
+}
+
+span#alertify-title-text {
+    line-height: 30px
+}
+
+.alertify-close-x::before {
+    content: "X";
+    font-size: $alertify-close-button-font-size;
+    color: $alertify-close-button-color;
+    position: absolute;
+    top: $alertify-close-button-top;
+    right: $alertify-close-button-right;
+}
