@@ -29,8 +29,6 @@ import pageEditor from './pageeditor.js';
 import filter from './filter.js';
 
 require('../css/ajax-modal.css');
-require('../css/alertify.core.css');
-require('../css/alertify.default.css');
 require('../css/colorpicker.css');
 require('../css/bootstrap-datetimepicker.css');
 require('../css/jstree.css');

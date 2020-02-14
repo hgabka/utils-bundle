@@ -1,3 +1,5 @@
+require('../css/alertify.core.css');
+require('../css/alertify.default.css');
 import alertify from './alertify.js';
 window.alertify = alertify;
 export function myAlert(text, okfunc, title) {
