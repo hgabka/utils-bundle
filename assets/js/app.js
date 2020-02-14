@@ -43,6 +43,7 @@ window.CKEDITOR_BASEPATH = '/build/ckeditor/';
 require('ckeditor/ckeditor.js');
 require('ckeditor/lang/hu.js');
 require('ckeditor/lang/en.js');
+require('./ckeditor/styles.js');
 
 import {myAlert, myConfirm, myLinkConfirm} from './alertFuncs.js';
 window.myAlert = myAlert;
