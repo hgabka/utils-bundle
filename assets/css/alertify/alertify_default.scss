@@ -95,16 +95,19 @@
     border: none;
     width: 111px !important;
     height: 40px;
+
     &:hover {
         font-size: $alertify-button-hover-font-size;
     }
 }
+
 @if $alertify-button-background == false {
     .alertify-button-cancel {
         background-color: $alertify-button-cancel-background-color;
         border: none;
         border-radius: $alertify-button-border-radius;
         color: $alertify-button-cancel-text-color;
+
         &:hover {
             background-color: $alertify-button-cancel-hover-background-color;
         }
@@ -121,6 +124,7 @@
     background-color: $alertify-header-background-color;
     font-size: $alertify-header-font-size;
     height: $alertify-header-height;
+    line-height: $alertify-header-line-height;
     margin: 0;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -130,6 +134,8 @@
     padding-left: $alertify-header-padding-left;
     padding-top: $alertify-header-padding-top;
     position: relative;
+
+
     * {
         font-family: $alertify-button-font !important
     }
@@ -144,11 +150,27 @@
     width: 31px;
     height: 31px;
     position: absolute;
-    right: 10px;
-    top: 8px;
+    right: $alertify-close-button-right;
+    top: $alertify-close-button-top;
+
+    &::before {
+        content: "X";
+        font-size: $alertify-close-button-font-size;
+        color: $alertify-close-button-color;
+        line-height: $alertify-close-button-line-height;
+        left: 1px;
+        position: absolute;
+        right: 0;
+        position: absolute;
+        text-align: center;
+        display: block;
+        width: 100%;
+    }
+
     &:hover {
-      background-color: $alertify-close-button-hover-background-color;
+        background-color: $alertify-close-button-hover-background-color;
         border: 1px solid $alertify-close-button-hover-border-color;
+
         &::before {
             color: $alertify-close-button-hover-color;
         }
@@ -157,13 +179,4 @@
 
 span#alertify-title-text {
     line-height: 30px
-}
-
-.alertify-close-x::before {
-    content: "X";
-    font-size: $alertify-close-button-font-size;
-    color: $alertify-close-button-color;
-    position: absolute;
-    top: $alertify-close-button-top;
-    right: $alertify-close-button-right;
 }

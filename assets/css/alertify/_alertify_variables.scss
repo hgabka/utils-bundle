@@ -1,9 +1,13 @@
-$alertify-text-color: #000 !default;
+$alertify-box-shadow: 5px 10px 13px 1px #222 !default;
+
 $alertify-header-background-color: #1e3062 !default;
 $alertify-header-color: #fff !default;
 $alertify-header-font-size: 20px !default;
 $alertify-header-padding-left: 15px !default;
 $alertify-header-padding-top: 8px !default;
+$alertify-header-height: 47px !default;
+$alertify-header-line-height: 32px !default;
+
 $alertify-close-button-background-color: #8194A7 !default;
 $alertify-close-button-border-color: #7b8ea1 !default;
 $alertify-close-button-color: #fff !default;
@@ -15,20 +19,22 @@ $alertify-close-button-hover-color: darken($alertify-close-button-color, 15%) !d
 $alertify-close-button-font-size: 18px !default;
 $alertify-close-button-top: 7px !default;
 $alertify-close-button-right: 8px !default;
+$alertify-close-button-line-height: 30px !default;
+
 $alertify-text-color: #000 !default;
 $alertify-font-size: 16px !default;
 $alertify-background: rgba(255, 255, 255, .95) !default;
-$alertify-header-height: 47px !default;
+
 $alertify-button-background: '../../images/alertify/button-alert.png' !default;
 $alertify-button-background-color: #1e3062 !default;
-$alertify-button-hover-background-color: darken($alertify-button-background-color,15%) !default;
-$alertify-button-cancel-background-color: #f00 !default;
-$alertify-button-cancel-hover-background-color: darken($alertify-button-cancel-background-color,15%) !default;
+$alertify-button-hover-background-color: darken($alertify-button-background-color, 10%) !default;
 $alertify-button-font: "Arial", sans-serif !default;
 $alertify-button-font-weight: 300 !default;
 $alertify-button-font-size: 16px !default;
 $alertify-button-hover-font-size: 16px !default;
 $alertify-button-text-color: #fff !default;
-$alertify-button-cancel-text-color: #fff !default;
-$alertify-box-shadow:  2px 4px 10px 5px #222 !default;
 $alertify-button-border-radius: 4px !default;
+
+$alertify-button-cancel-background-color: #f00 !default;
+$alertify-button-cancel-hover-background-color: darken($alertify-button-cancel-background-color, 15%) !default;
+$alertify-button-cancel-text-color: #fff !default;
