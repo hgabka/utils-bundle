@@ -39,6 +39,11 @@ require('../css/extra.css');
 import ResponsiveHelper from './responsiveHelper.js';
 window.ResponsiveHelper = ResponsiveHelper;
 
+window.CKEDITOR_BASEPATH = '/build/ckeditor/';
+require('ckeditor/ckeditor.js');
+require('ckeditor/lang/hu.js');
+require('ckeditor/lang/en.js');
+
 import {myAlert, myConfirm, myLinkConfirm} from './alertFuncs.js';
 window.myAlert = myAlert;
 window.myConfirm = myConfirm;

@@ -13,8 +13,10 @@ richeditor.richEditor = (function (window, undefined) {
             filebrowserImageWindowWidth: 970,
             filebrowserImageUploadUrl: '',
             allowedContent: true,
-            extraPlugins: 'listblock,indent,indentblock,indentlist,panel,button,letterspacing,richcombo,floatpanel,simplebutton,panelbutton,lineheight,dialog,dialogui,lineutils,clipboard,widget,widgetcommon',
+            extraPlugins: 'basicstyles,showblocks,save,newpage,preview,div,justify,font,print,scayt,colorbutton,smiley,specialchar,pagebreak,find,selectall,removeformat,forms,templates,listblock,indent,indentblock,indentlist,panel,button,letterspacing,richcombo,floatpanel,simplebutton,panelbutton,lineheight,dialog,dialogui,lineutils,clipboard,widget,widgetcommon',
             extraAllowedContent: '*[*](*){*}',
+            removeButtons: '',
+            removeDialogTabs: 'image:advanced;link:advanced',
             toolbar: [
                 {name: 'basicstyles', items: ['Source', '-', 'Save', 'NewPage', 'Preview', '-', 'Templates']},
                 {name: 'lists', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt']},
