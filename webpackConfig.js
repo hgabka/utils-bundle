@@ -1,4 +1,8 @@
-let filesToCopy = [
+var Encore = require('@symfony/webpack-encore');
+var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+Encore
+.addPlugin(new CopyWebpackPlugin([
     {from: 'vendor/hgabka/utils-bundle/assets/js/ckeditor/styles.js', to: 'ckeditor/styles.js'},
     {from: 'node_modules/ckeditor/plugins', to: 'ckeditor/plugins'},
     {from: 'vendor/hgabka/utils-bundle/assets/js/ckeditor/config.js', to: 'ckeditor/config.js'},
@@ -12,8 +16,8 @@ let filesToCopy = [
     {from: 'vendor/hgabka/utils-bundle/assets/js/ckeditor/skins/bootstrapck', to: 'ckeditor/skins/bootstrapck'},
     {from: 'vendor/hgabka/utils-bundle/assets/js/ckeditor/skins/office2003', to: 'ckeditor/skins/office2003'},
     {from: 'vendor/hgabka/utils-bundle/assets/js/ckeditor/skins/v2', to: 'ckeditor/skins/v2'}
-];
-
-module.exports = {
-    filesToCopy: filesToCopy,
-};
+]))
+.addEntry('hgabkautils', [
+    './vendor/hgabka/utils-bundle/assets/js/app.js'
+])
+.addEntry('js/hgabkautilsadmin', './vendor/hgabka/utils-bundle/assets/js/admin.js')

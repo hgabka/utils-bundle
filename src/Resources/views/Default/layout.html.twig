@@ -18,7 +18,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/hgabkautils/css/hg_utils.css') }}">
+    {{ encore_entry_link_tags('js/hgabkautilsadmin') }}
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
