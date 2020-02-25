@@ -1,6 +1,6 @@
 {
   "name": "hgabka-utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "utils assets for hgabka-utils bundle",
   "author": "Gabe",
   "license": "ISC",
@@ -19,6 +19,6 @@
   "main": "assets/js/app",
   "style": "assets/css/hg_utils.css",
   "scripts": {
-    "postinstall": "cp -r assets/js/ckeditor $INIT_CWD/public"
+    "postinstall": "cp -r assets/js/ckeditor $INIT_CWD/public && cp -r $INIT_CWD/node_modules/ckeditor/plugins/* $INIT_CWD/public/ckeditor/plugins/"
   }
 }
