@@ -34,7 +34,7 @@ require('../css/bootstrap-datetimepicker.css');
 require('../css/jstree.css');
 require('../css/select2.css');
 require('../css/extra.css');
-require('../css/hg_utils.css');
+require('../css/hg_utils.scss');
 
 import ResponsiveHelper from './responsiveHelper.js';
 window.ResponsiveHelper = ResponsiveHelper;
