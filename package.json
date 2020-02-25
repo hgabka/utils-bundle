@@ -1,6 +1,6 @@
 {
   "name": "hgabka-utils",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "utils assets for hgabka-utils bundle",
   "author": "Gabe",
   "license": "ISC",
@@ -17,5 +17,8 @@
     "popper.js": "^1.16.1"
   },
   "main": "assets/js/app",
-  "style": "assets/css/hg_utils.css"
+  "style": "assets/css/hg_utils.css",
+  "scripts": {
+    "postinstall": "cp -r assets/js/ckeditor $INIT_CWD/public"
+  }
 }
