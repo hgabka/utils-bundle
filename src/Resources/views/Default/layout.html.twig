@@ -16,10 +16,7 @@
                 {{ parent() }} data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('HgabkaNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('HgabkaMediaBundle_chooser', {'type': 'image'}) }}{% endif %}"
             {%- endblock -%}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('js/hgabkautilsadmin') }}
-{% endblock %}
+
 {% block javascripts %}
 {{ parent() }}
 <script>
