@@ -16,5 +16,6 @@
     "moment-with-locales-es6": "^1.0.1",
     "popper.js": "^1.16.1"
   },
-  "main": "assets/js/app"
+  "main": "assets/js/app",
+  "style": "assets/css/hg_utils.css"
 }
