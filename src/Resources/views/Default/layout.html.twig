@@ -28,7 +28,7 @@
 {% block breadcrumb %}{% endblock %}
 
 {% block sonata_wrapper %}
-
+<div id="utils-wrapper">
     <!-- Main Content -->
     <main role="main" id="app__main" style="padding-top:50px;min-height:500px" class="container-fluid app__main app__main--has-sidebar {% block wrapper_classes %}{% endblock %}">
 
@@ -94,6 +94,7 @@
         </div>
 
     </main>
+</div>    
   {#  {% block admin_javascripts %}
         <script src="{{ asset('bundles/hgabkautils/picturefill/dist/picturefill.min.js') }}"></script>
         <script src="{{ asset('bundles/hgabkautils/plupload/js/plupload.full.min.js') }}"></script>
