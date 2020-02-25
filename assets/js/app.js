@@ -37,7 +37,7 @@ require('../css/extra.css');
 import ResponsiveHelper from './responsiveHelper.js';
 window.ResponsiveHelper = ResponsiveHelper;
 
-window.CKEDITOR_BASEPATH = '/build/ckeditor/';
+window.CKEDITOR_BASEPATH = '/ckeditor/';
 require('ckeditor/ckeditor.js');
 require('ckeditor/lang/hu.js');
 require('ckeditor/lang/en.js');
