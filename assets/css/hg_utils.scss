@@ -1314,6 +1314,14 @@
         overflow: auto;
         padding-bottom: 2em;
     }
+    
+    .app__sidebar .app__sidebar__navigation {
+        visibility: hidden;
+    }
+    
+    .app__sidebar.app__sidebar--tree-ready .app__sidebar__navigation {
+        visibility: visible;
+    }
 
     .app__sidebar--static {
         position: relative;
