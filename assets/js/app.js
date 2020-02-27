@@ -28,7 +28,7 @@ import pagepartEditor from './pageparteditor.js';
 import pageEditor from './pageeditor.js';
 import filter from './filter.js';
 
-require('../css/ajax-modal.css');
+require('../css/ajax-modal.scss');
 require('../css/colorpicker.css');
 require('../css/bootstrap-datetimepicker.css');
 require('../css/jstree.css');
