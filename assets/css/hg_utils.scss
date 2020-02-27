@@ -1,3 +1,12 @@
+.sonata-bc .app__content__breadcrumb {
+    padding: 0 0 0 3em;
+    margin-bottom: 35px;
+    list-style: none;
+    background-color: white;
+    border-radius: 3px;
+    float: none;
+}
+
 #utils-wrapper {
 
     dt, dd {
@@ -293,6 +302,10 @@
     .page-main-actions {
         float: right;
         margin: -1rem 0 1rem;
+
+        &.page-main-actions--no-tabs {
+            float: none;
+        }
     }
 
     .page-main-tabs {
