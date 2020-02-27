@@ -50,6 +50,12 @@
     float: none;
 }
 
+#utils-wrapper {
+    .page-main-actions.page-main-actions--no-tabs {
+        float: none;
+    }
+}
+
 @media (min-width: 992px) {
     .modal-dialog.modal-lg {
         width: 90vw;
