@@ -4,10 +4,12 @@ cargobayScrollToTop.scrollToTop = (function($, window, undefined) {
 
     var init,
         duration,
-        defaultDuration = 300,
-        $hook = $('.js-scroll-to-top');
+        defaultDuration,
+        $hook;
 
     init = function() {
+        defaultDuration = 300;
+        $hook = $('.js-scroll-to-top');
         $hook.on('click', function(e) {
             e.preventDefault();
 
