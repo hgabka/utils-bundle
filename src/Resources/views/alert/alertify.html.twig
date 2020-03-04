@@ -1,7 +1,7 @@
 <div id="alertifyCover" class="alertify-cover alertify-hidden"></div>
-<section id="alertifyDialog" data-ok="OK" data-cancel="Mégsem" data-focus="OK" class="alertify alertify-close" aria-labelledby="alertifyTitle" aria-hidden="true">
+<section id="alertifyDialog" data-ok="{{ okButtonText | default('OK')}}" data-cancel="{{ cancelButtonText | default('Mégsem')}}" data-focus="OK" class="alertify alertify-close" aria-labelledby="alertifyTitle" aria-hidden="true">
     <div class="alertify-body">
-        <div class="alertify-header"><span id="alertify-title-text">Rendszerüzenet</span>
+        <div class="alertify-header"><span id="alertify-title-text">{{ title | default('Rendszerüzenet')}}</span>
             <span class="alertify-close-x"></span>
         </div>
         <div class="alertify-content">
@@ -15,4 +15,3 @@
         </div>
     </div>
 </section>
-
