@@ -1,5 +1,6 @@
 import alertify from './alertify.js';
 window.alertify = alertify;
+
 export function myAlert(text, okfunc, title) {
     var alert = alertify.alert(text);
     if (typeof okfunc == 'function') {
@@ -20,7 +21,7 @@ export function myAlert(text, okfunc, title) {
     });
 }
 
-export function myConfirm(text, okfunc, cancelfunc) {
+export function myConfirm(text, okfunc, cancelfunc, title) {
     var alert = alertify.confirm(text);
     if (typeof okfunc == 'function') {
         alert.ok = okfunc;
@@ -36,6 +37,10 @@ export function myConfirm(text, okfunc, cancelfunc) {
             return false;
         }
     }
+    if (typeof title !== 'undefined') {
+        $('#alertify-title-text').html(title);
+    }
+    
     alert.show();
     jQuery('span.alertify-close-x').off('click');
     jQuery('span.alertify-close-x').on('click', function () {
