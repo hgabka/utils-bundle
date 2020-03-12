@@ -5,7 +5,7 @@
                 {% set label = breadcrumb.label | trans(breadcrumb.i18nParams) %}
 
                 <li>
-                    {% if loop.last %}
+                    {% if loop.last and not breadcrumb.forceLink %}
                         {{ label }}
                     {% else %}
                         <a href="{{ path(breadcrumb.route, breadcrumb.routeParams) }}">{{ label }}</a>
