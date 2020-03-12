@@ -11,6 +11,7 @@ class Breadcrumb
     protected $routeParams;
     protected $label;
     protected $i18nParams;
+    protected $forceLink = false;
 
     public function __construct($route, $routeParams = [], $label = null, array $i18nParams = [])
     {
@@ -84,6 +85,25 @@ class Breadcrumb
     public function setI18nParams(array $i18nParams)
     {
         $this->i18nParams = $i18nParams;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForceLink(): bool
+    {
+        return $this->forceLink;
+    }
+
+    /**
+     * @param bool $forceLink
+     * @return Breadcrumb
+     */
+    public function setForceLink(bool $forceLink): Breadcrumb
+    {
+        $this->forceLink = $forceLink;
 
         return $this;
     }
