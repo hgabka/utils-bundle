@@ -2,8 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Helper;
 
-use Behat\Transliterator\Transliterator;
-
 /**
  * Slugifier is a helper to slugify a certain string.
  */
