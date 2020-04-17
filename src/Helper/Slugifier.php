@@ -1,6 +1,7 @@
 <?php
 
 namespace Hgabka\UtilsBundle\Helper;
+
 use Behat\Transliterator\Transliterator;
 
 /**
