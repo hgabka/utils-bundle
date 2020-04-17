@@ -1,6 +1,7 @@
 <?php
 
 namespace Hgabka\UtilsBundle\Helper;
+use Behat\Transliterator\Transliterator;
 
 /**
  * Slugifier is a helper to slugify a certain string.
@@ -24,6 +25,10 @@ class Slugifier implements SlugifierInterface
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text); // TRANSLIT does the whole job
         $text = strtolower($text);
         $text = preg_replace('~[^-a-z0-9_'.$subst.']+~', '', $text); // keep only letters, numbers, '_' and separator
+
+        if (empty($text)) {
+            $text =  Transliterator::transliterate($text, $delimiter);
+        }
 
         if (empty($text)) {
             return empty($default) ? '' : $default;
