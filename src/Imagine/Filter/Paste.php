@@ -4,7 +4,6 @@ namespace Hgabka\UtilsBundle\Imagine\Filter;
 
 use Imagine\Filter\FilterInterface;
 use Imagine\Image\Box;
-use Imagine\Image\Color;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
@@ -60,7 +59,7 @@ class Paste implements FilterInterface
             return $image;
         }
 
-        $background = new Color(
+        $background = $image->palette()->color(
             $this->color,
             $this->transparency
         );
