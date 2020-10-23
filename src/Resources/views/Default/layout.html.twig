@@ -26,6 +26,15 @@
 
 
 {% block breadcrumb %}{% endblock %}
+{% block sonata_top_nav_menu_user_block %}
+    {% set locales = get_backend_locales() %}
+    {% set route = app.request.attributes.get('_route') %}
+
+    {% if locales|length > 0 %}
+        {% include '@HgabkaUtils/AdminPanel/_language_chooser.html.twig' %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
 
 {% block sonata_wrapper %}
 <div id="utils-wrapper">
