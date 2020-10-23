@@ -2,15 +2,15 @@
 
 namespace Hgabka\UtilsBundle\Traits;
 
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Prezent\Doctrine\Translatable\Entity\TranslatableTrait as BaseTranslatableTrait;
+use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
+use Hgabka\Doctrine\Translatable\Entity\TranslatableTrait as BaseTranslatableTrait;
 
 trait TranslatableTrait
 {
     use BaseTranslatableTrait;
 
     /**
-     * @Prezent\CurrentLocale
+     * @Hgabka\CurrentLocale
      */
     private $currentLocale;
 
