@@ -99,9 +99,10 @@ class Breadcrumb
 
     /**
      * @param bool $forceLink
+     *
      * @return Breadcrumb
      */
-    public function setForceLink(bool $forceLink): Breadcrumb
+    public function setForceLink(bool $forceLink): self
     {
         $this->forceLink = $forceLink;
 
