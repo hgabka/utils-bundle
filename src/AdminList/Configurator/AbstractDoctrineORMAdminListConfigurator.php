@@ -10,7 +10,7 @@ use Hgabka\UtilsBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Hgabka\UtilsBundle\AdminList\SortableInterface;
 use Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Traversable;
 
@@ -96,7 +96,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     public function getPagerfanta()
     {
         if (null === $this->pagerfanta) {
-            $adapter = new DoctrineORMAdapter($this->getQuery());
+            $adapter = new QueryAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setNormalizeOutOfRangePages(true);
             $this->pagerfanta->setMaxPerPage($this->getPagesize());
