@@ -1,3 +1,13 @@
 .input-group.info-texted {
     width: 100%;
 }
+
+.langversion-dropdown {
+    display: inline-block !important;
+    margin-right: 5px;
+}
+
+.langversion-dropdown span {
+    display: inline-block !important;
+    margin-right: 5px;
+}
