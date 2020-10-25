@@ -18,6 +18,7 @@ urlChooser.urlChooser = (function (window, undefined) {
 
         // Link Chooser select
         $body.on('click', '.js-url-chooser-link-select', function (e) {
+            e.stopImmediatePropagation();
             e.preventDefault();
 
             var $this = $(this),

@@ -2,12 +2,50 @@ kuma_admin:
     pages:
         title: Pages
     media:
-        title: Média
+        title: Media
     search:
         search: Search
     settings:
         cache:
             menu_label:     Clear cache
+    pagepart:
+        link:
+            internal: CMS page
+            external: External link
+            email: Email address
+    form:
+        cancel: Cancel
+        delete: Delete
+        deletesure: Are you sure?
+        edit: Edit
+        add: Add
+        'add.%subject%': 'Új felvitel'
+        save: Save
+        publish: Publish
+        unpublish: Unpublish
+        saveasdraft: Save as draft
+        name: Name
+        type: Type
+        error: Error
+        warning: Warning
+        headsup: Warning
+        forgot:
+            password: Forgotten password
+        permissions: Permissions
+        properties: Properties
+        createdat: Created
+        updatedat: Updated
+        actions: Actions
+        addfilter: Add filter
+        choosetypefilter: Choose filter tye
+        versions: Versions
+        button:
+            dropdown:
+                more: More
+            filter:
+                clear: Reset
+                filter: Filter
+
     cache:
         flash:
             cache_purged:   Cache has been purged!
