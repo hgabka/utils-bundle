@@ -1,17 +1,17 @@
 kuma_admin:
-    back: Back to dashboard
+    back: Zurück zum Dashboard
     pages:
-        title: Pages
+        title: Seiten
     media:
-        title: Media
+        title: Medien
     search:
-        search: Search
+        search: Suche
     settings:
         cache:
             menu_label:     Clear cache
     pagepart:
         link:
-            internal: CMS page
+            internal: CMS seite
             external: External link
             email: Email address
     form:

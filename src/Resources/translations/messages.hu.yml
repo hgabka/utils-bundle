@@ -1,4 +1,5 @@
 kuma_admin:
+    back: Vissza a vezérlőpulthoz
     pages:
         title: Oldalak
     media:

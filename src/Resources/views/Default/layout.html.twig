@@ -58,7 +58,9 @@
                         </span>
                 </button>
                 {% block admin_breadcrumb %}
-                    <ul class="breadcrumb app__content__breadcrumb"></ul>
+                    <ul class="breadcrumb app__content__breadcrumb">
+                        <li><a style="margin-left:55px;color:#333"href="{{ path('sonata_admin_dashboard') }}">« {{ 'kuma_admin.back'|trans }}</a></li>
+                    </ul>
                 {% endblock %}
 
                 {% block notice %}
