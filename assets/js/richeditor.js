@@ -13,6 +13,8 @@ richeditor.richEditor = (function (window, undefined) {
             filebrowserImageWindowWidth: 970,
             filebrowserImageUploadUrl: '',
             allowedContent: true,
+            entities_latin: false,
+            entities_greek: false,
             extraPlugins: 'basicstyles,showblocks,save,newpage,preview,div,justify,font,print,scayt,colorbutton,smiley,specialchar,pagebreak,find,selectall,removeformat,forms,templates,listblock,indent,indentblock,indentlist,panel,button,letterspacing,richcombo,floatpanel,simplebutton,panelbutton,lineheight,dialog,dialogui,lineutils,clipboard,widget,widgetcommon',
             extraAllowedContent: '*[*](*){*}',
             removeButtons: '',
