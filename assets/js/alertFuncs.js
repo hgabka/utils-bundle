@@ -21,6 +21,34 @@ export function myAlert(text, okfunc, title) {
     });
 }
 
+export function myAlertTimed(text, timeout, okfunc, title) {
+    var alert = alertify.alert(text);
+    if (typeof okfunc == 'function') {
+        alert.ok = okfunc;
+    } else {
+        alert.ok = function () {
+            return false;
+        }
+    }
+    if (typeof title !== 'undefined') {
+        $('#alertify-title-text').html(title);
+    }
+    alert.show();
+    jQuery('span.alertify-close-x').off('click');
+    jQuery('span.alertify-close-x').on('click', function () {
+        alert.close();
+        return false;
+    });
+    if (typeof timeout !== 'undefined') {
+        setTimeout(function () {
+            alert.close();
+            if (typeof okfunc == 'function') {
+                okfunc.call();
+            }
+        }, timeout);
+    }
+}
+
 export function myConfirm(text, okfunc, cancelfunc, title) {
     var alert = alertify.confirm(text);
     if (typeof okfunc == 'function') {
