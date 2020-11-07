@@ -1,0 +1,22 @@
+{% set breadcrumbitems = repo.getPath(object) %}
+{% if breadcrumbitems | length > 0 %}
+    <li>
+        <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
+    </li>
+    {% for breadcrumbitem in breadcrumbitems %}
+        {% if block('breadcrumb_between') is defined %}
+            {{ block('breadcrumb_between') }}
+        {% endif %}
+        <li>
+            {% set params = { (admin.idParameter): breadcrumbitem.id } %}
+            {% if loop.last %}
+                <span>{{ admin.toString(breadcrumbitem) }}</span>
+            {% else %}
+                <a href="{{ admin.generateUrl('list', urlParams is defined ? urlParams|merge(params) : params ) }}">
+                    {{ admin.toString(breadcrumbitem) }}
+                </a>
+            {% endif %}
+        </li>
+
+    {% endfor %}
+{% endif %}

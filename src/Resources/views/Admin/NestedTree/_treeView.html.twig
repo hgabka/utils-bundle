@@ -1,0 +1,16 @@
+<li id="node-{{ treeNode.id }}" class="{% if treeNode.id in parentIds %}jstree-open{% endif %}" data-jstree='{"type":"folder"}'
+    data-page="{{ {'class': 'category', 'children': [{'class' : 'category'}]}|json_encode }}"
+    data-folder-id="{{ treeNode.id }}"
+    rel="page">
+    <a href="{{ admin.generateUrl('list', { (admin.idParameter) : treeNode.id }) }}" class="{% if object is not null and object.id == treeNode.id %}active{% endif %}">
+        {{ admin.toStringInTree(treeNode) }}
+    </a>
+
+    {% if treeNode.__children is not empty %}
+        <ul>
+            {% for treeNode in treeNode.__children %}
+                {% include '@HgabkaUtils/Admin/NestedTree/_treeView.html.twig' %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

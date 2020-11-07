@@ -1,0 +1,113 @@
+{% extends '@HgabkaUtils/Default/layout.html.twig' %}
+
+
+{% block body %}
+    {% set lowestTopChild = repo.getRootFor(object) %}
+
+    {% if lowestTopChild %}
+        {% set navigationChildren = repo.getHierarchy(lowestTopChild) %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block admin_sidebar %}
+    <!-- Search -->
+    <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
+        <i class="fa fa-search"></i>
+    </button>
+
+    <div id="sidebar-search-toggle" class="toggle-item">
+        <div class="toggle-item__content">
+            <div class="app__sidebar__search-toggle-item">
+                <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tree -->
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ admin.generateUrl('reorder') }}" data-moving-confirmation="Biztosan áthelyezi?">
+        <ul>
+            {% set parentIds = repo.getParentIds(object) %}
+            {% set rootCategory = repo.getRootFor(object) %}
+            {% set tree = repo.getHierarchy(rootCategory, true) %}
+            {% for treeNode in tree %}
+                {% include '@HgabkaUtils/Admin/NestedTree/_treeView.html.twig' %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block breadcrumb %}
+    {% include '@HgabkaUtils/Admin/NestedTree/_breadcrumbs.html.twig' %}
+{% endblock %}
+
+{% block header %}
+    <header class="app__content__header">
+        <div class="row">
+            <div class="col-sm-6 col-md-8">
+                <h1 class="app__content__header__title">
+                    {{ admin.toString(object) }} {% block page_header_addition %}{% endblock %}
+                </h1>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <!-- Main-actions -->
+                <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                    <div class="btn-group">
+                        {% block actions %}
+                            {% if object.canHaveChildren %}
+                                <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
+                                    <span class="large-screen">Alkategória létrehozása</span>
+                                    <span class="small-screen">Új alkategória <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                                </button>
+                            {% endif %}
+                            {% if object.deleteable and admin.hasAccess('delete', object) %}
+                                <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
+                                    <span class="large-screen">Kategória törlése</span>
+                                    <span class="small-screen">Törlés <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                                </button>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block admin_content %}
+    <!-- Main Contnet -->
+    {% form_theme editform '@HgabkaUtils/Form/fields.html.twig' %}
+    {{ form_start(editform, {'method': 'POST', 'action': admin.generateUrl('list', { (admin.idParameter) : object.id, 'uniqid': admin.uniqid })}) }}
+
+    <!-- Scroll-actions -->
+    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+        <div class="btn-group">
+            {{ block('actions') }}
+            <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
+                <i class="fa fa-caret-up"></i>
+            </button>
+        </div>
+    </div>
+
+    <fieldset class="form__fieldset--padded nested-tree-form">
+        {{ form_widget(editform) }}
+
+        <div class="form-actions form-actions--padded">
+            <button class="btn btn-primary btn--raise-on-hover" type="submit">
+                Mentés
+            </button>
+            <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ admin.generateUrl('list', { (admin.idParameter) : object.id }) }}'" type="reset">
+                Mégsem
+            </button>
+        </div>
+    </fieldset>
+
+    {{ form_end(editform) }}
+
+    <!-- Modals -->
+
+    {% include '@HgabkaUtils/Admin/NestedTree/_addsub-modal.html.twig' %}
+    {% include '@HgabkaUtils/Admin/NestedTree/_delete-modal.html.twig' %}
+{% endblock %}

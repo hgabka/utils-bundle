@@ -1399,7 +1399,7 @@
         padding-top: 1em;
     }
 
-    #pageadminform .required:after {
+    #pageadminform .required:after, .nested-tree-form .required:after {
         content: '';
     }
 

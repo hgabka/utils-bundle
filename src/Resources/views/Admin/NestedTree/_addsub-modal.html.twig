@@ -1,0 +1,35 @@
+<div id="addsub-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    Alkategória hozzáadása
+                </h3>
+            </div>
+
+            {% form_theme subform '@HgabkaUtils/Form/fields.html.twig' %}
+            {{ form_start(subform, {'method': 'POST', 'action': admin.generateUrl('subcreate', { 'uniqid': admin.uniqid }), 'attr': {'id': 'addsub-modal-form'}}) }}
+
+            <!-- Body -->
+            <div class="modal-body">
+                {{ form_widget(subform) }}
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button type="submit" class="js-add-app-loading--forms btn btn-primary btn--raise-on-hover">
+                    Mentés
+                </button>
+                <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                    Mégsem
+                </button>
+            </div>
+            {{ form_end(subform) }}
+        </div>
+    </div>
+</div>
