@@ -7,6 +7,10 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class NestedTreeAdmin extends AbstractAdmin
 {
+    protected $accessMapping = [
+        'reorder' => 'REORDER',
+    ];
+
     public function toStringInTree($node)
     {
         if (isset($node['name'])) {

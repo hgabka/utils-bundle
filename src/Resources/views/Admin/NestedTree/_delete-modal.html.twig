@@ -15,7 +15,7 @@
             <!-- Body -->
             <div class="modal-body">
                 <p>
-                    {{ 'Biztosan törli a(z) "'~admin.toString(object)~'" kategóriát?' }}
+                    {{ 'kuma_admin.nested_admin.delete_confirm'|trans({'%name%' : admin.toString(object)}) }}
                 </p>
             </div>
 

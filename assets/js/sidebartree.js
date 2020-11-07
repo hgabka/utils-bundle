@@ -23,6 +23,9 @@ sidebarTree.sidebartree = (function($, window, undefined) {
     };
 
     canBeMoved = function (node, parent) {
+        if (undefined !== $sidebarNavContainer.data('reorder') && false === $sidebarNavContainer.data('reorder')) {
+            return false;
+        }
         if (!node.data.page || !node.data.page.class || !parent.data.page || !parent.data.page.children) {
             return false;
         }

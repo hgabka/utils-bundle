@@ -27,7 +27,7 @@
     </div>
 
     <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ admin.generateUrl('reorder') }}" data-moving-confirmation="Biztosan áthelyezi?">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation"{% if not admin.hasAccess('reorder') %} data-reorder="false"{% endif%} data-reorder-url="{{ admin.generateUrl('reorder') }}" data-moving-confirmation="{{ 'kuma_admin.nested_admin.move_confirm'|trans }}">
         <ul>
             {% set parentIds = repo.getParentIds(object) %}
             {% set rootCategory = repo.getRootFor(object) %}

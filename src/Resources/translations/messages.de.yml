@@ -1,4 +1,7 @@
 kuma_admin:
+    nested_admin:
+        delete_confirm: 'Are you sure you want to delete item "%name%"?'
+        move_confirm: 'Are you sure you want to move the item?'
     back: Zurück zum Dashboard
     pages:
         title: Seiten

@@ -4,7 +4,6 @@ namespace Hgabka\UtilsBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\UtilsBundle\Entity\NestedEntityInterface;
-use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Exception\ModelManagerException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,16 +59,15 @@ class NestedTreeCRUDController extends CRUDController
                 return new RedirectResponse(
                     $this->admin->generateUrl('list', [$this->admin->getIdParameter() => $folderId])
                 );
-            } else {
-                $this->addFlash(
+            }
+            $this->addFlash(
                     'sonata_flash_error',
                     $this->trans('kuma_admin_list.messages.edit_error')
                 );
 
-                return new RedirectResponse(
+            return new RedirectResponse(
                     $this->admin->generateUrl('list', [$this->admin->getIdParameter() => $folderId])
                 );
-            }
         }
 
         return $this->render(
@@ -86,9 +84,10 @@ class NestedTreeCRUDController extends CRUDController
 
     public function reorderAction(Request $request)
     {
-        $this->admin->checkAccess('edit');
+        $this->admin->checkAccess('reorder');
         $folders = [];
         $nodeIds = $request->get('nodes');
+        $changeParents = $request->get('parent');
 
         $em = $this->getDoctrine()->getManager();
         $class = $this->admin->getClass();
@@ -98,6 +97,19 @@ class NestedTreeCRUDController extends CRUDController
             // @var Folder $folder
             $folder = $repository->find($id);
             $folders[] = $folder;
+        }
+
+        if (!empty($changeParents)) {
+            foreach ($folders as $id => $folder) {
+                $newParentId = isset($changeParents[$folder->getId()]) ? $changeParents[$folder->getId()] : null;
+                if ($newParentId) {
+                    $parent = $repository->find($newParentId);
+                    if ($parent) {
+                        $folder->setParent($parent);
+                    }
+                }
+            }
+            $em->flush();
         }
 
         foreach ($folders as $id => $folder) {
@@ -142,27 +154,28 @@ class NestedTreeCRUDController extends CRUDController
                 $redirect = $this->admin->generateUrl('list');
 
                 return new RedirectResponse(
-                    $this->admin->generateUrl('list',
-                        [
-                            $this->admin->getIdParameter() => $newObject->getId(),
-                        ]
-                    )
-                );
-            } else {
-                $this->addFlash(
-                    'sonata_flash_error',
-                    $this->trans('kuma_admin_list.messages.add_error')
-                );
-                $redirect = $this->admin->generateUrl('list');
-
-                return new RedirectResponse(
-                    $this->admin->generateUrl('list',
+                    $this->admin->generateUrl(
+                        'list',
                         [
                             $this->admin->getIdParameter() => $newObject->getId(),
                         ]
                     )
                 );
             }
+            $this->addFlash(
+                    'sonata_flash_error',
+                    $this->trans('kuma_admin_list.messages.add_error')
+                );
+            $redirect = $this->admin->generateUrl('list');
+
+            return new RedirectResponse(
+                    $this->admin->generateUrl(
+                        'list',
+                        [
+                            $this->admin->getIdParameter() => $newObject->getId(),
+                        ]
+                    )
+                );
         }
 
         return $this->render(
@@ -203,10 +216,12 @@ class NestedTreeCRUDController extends CRUDController
             );
 
             return new RedirectResponse(
-                $this->admin->generateUrl('list',
+                $this->admin->generateUrl(
+                    'list',
                     [
                         $this->admin->getIdParameter() => $id,
-                    ])
+                    ]
+                )
             );
         }
 
@@ -233,17 +248,19 @@ class NestedTreeCRUDController extends CRUDController
 
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('kuma_admin_list.messages.delete_error'),
+                $this->trans('kuma_admin_list.messages.delete_error')
             );
         }
 
         return new RedirectResponse(
-            $this->admin->generateUrl('list',
+            $this->admin->generateUrl(
+                'list',
                 empty($id)
                     ? []
                     : [
                     $this->admin->getIdParameter() => $id,
-                ])
+                ]
+            )
         );
     }
 }

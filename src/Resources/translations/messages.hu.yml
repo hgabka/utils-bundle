@@ -1,4 +1,7 @@
 kuma_admin:
+    nested_admin:
+        delete_confirm: 'Biztosan törli a(z) "%name%" elemet?'
+        move_confirm: 'Biztosan áthelyezi az elemet?'
     back: Vissza a vezérlőpulthoz
     pages:
         title: Oldalak

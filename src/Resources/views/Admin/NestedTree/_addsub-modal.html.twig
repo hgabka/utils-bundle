@@ -16,7 +16,7 @@
             {{ form_start(subform, {'method': 'POST', 'action': admin.generateUrl('subcreate', { 'uniqid': admin.uniqid }), 'attr': {'id': 'addsub-modal-form'}}) }}
 
             <!-- Body -->
-            <div class="modal-body">
+            <div class="modal-body nested-tree-form">
                 {{ form_widget(subform) }}
             </div>
 
