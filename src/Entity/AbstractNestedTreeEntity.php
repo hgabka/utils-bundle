@@ -50,7 +50,30 @@ abstract class AbstractNestedTreeEntity implements NestedEntityInterface, Entity
      */
     public function isDeleteable()
     {
+        return !$this->isRoot();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRoot()
+    {
         return null === $this->getParent();
+    }
+
+    /**
+     * @return AbstractNestedTreeEntity[]
+     */
+    public function getParents()
+    {
+        $parent = $this->getParent();
+        $parents = [];
+        while (null !== $parent) {
+            $parents[] = $parent;
+            $parent = $parent->getParent();
+        }
+
+        return array_reverse($parents);
     }
 
     abstract public function getParent();
