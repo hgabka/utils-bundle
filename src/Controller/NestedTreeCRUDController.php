@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\UtilsBundle\Entity\NestedEntityInterface;
+use Hgabka\UtilsBundle\Entity\NestedTreeEntityInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Exception\ModelManagerException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -193,7 +193,7 @@ class NestedTreeCRUDController extends CRUDController
     {
         $request = $this->getRequest();
         $id = $request->get($this->admin->getIdParameter());
-        /** @var NestedEntityInterface $object */
+        /** @var NestedTreeEntityInterface $object */
         $object = $this->admin->getObject($id);
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

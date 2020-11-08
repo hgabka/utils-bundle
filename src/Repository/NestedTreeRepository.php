@@ -5,7 +5,7 @@ namespace Hgabka\UtilsBundle\Repository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository as BaseTreeRepository;
-use Hgabka\UtilsBundle\Entity\NestedEntityInterface;
+use Hgabka\UtilsBundle\Entity\NestedTreeEntityInterface;
 
 class NestedTreeRepository extends BaseTreeRepository
 {
@@ -24,7 +24,7 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @throws \Exception
      */
-    public function save(NestedEntityInterface $object)
+    public function save(NestedTreeEntityInterface $object)
     {
         $em = $this->getEntityManager();
         $parent = $object->getParent();
@@ -65,7 +65,7 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @return QueryBuilder
      */
-    public function selectTreeQueryBuilder(NestedEntityInterface $ignoreSubtree = null)
+    public function selectTreeQueryBuilder(NestedTreeEntityInterface $ignoreSubtree = null)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('f');
@@ -87,7 +87,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return $qb;
     }
 
-    public function getParentIds(NestedEntityInterface $object)
+    public function getParentIds(NestedTreeEntityInterface $object)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->getPathQueryBuilder($object)
@@ -100,7 +100,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return $ids;
     }
 
-    public function getRootFor(NestedEntityInterface $object)
+    public function getRootFor(NestedTreeEntityInterface $object)
     {
         $ids = $this->getParentIds($object);
 
@@ -113,7 +113,7 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @return array|string
      */
-    public function getHierarchy(NestedEntityInterface $root = null, $includeNode = false)
+    public function getHierarchy(NestedTreeEntityInterface $root = null, $includeNode = false)
     {
         return $this->childrenHierarchy($root, false, [], $includeNode);
     }
@@ -179,7 +179,7 @@ class NestedTreeRepository extends BaseTreeRepository
         ;
 
         foreach ($objects as $cat) {
-            /** @var NestedEntityInterface $cat */
+            /** @var NestedTreeEntityInterface $cat */
             if (!$cat->getParent()) {
                 continue;
             }
@@ -195,10 +195,10 @@ class NestedTreeRepository extends BaseTreeRepository
     }
 
     /**
-     * @param NestedEntityInterface $object
-     * @param                       $parent
+     * @param NestedTreeEntityInterface $object
+     * @param                           $parent
      */
-    private function persistInOrderedTree(NestedEntityInterface $object, $parent)
+    private function persistInOrderedTree(NestedTreeEntityInterface $object, $parent)
     {
         // Find where to insert the new item
         $children = $parent->getChildren(true);
@@ -211,9 +211,9 @@ class NestedTreeRepository extends BaseTreeRepository
     }
 
     /**
-     * @param NestedEntityInterface $object
+     * @param NestedTreeEntityInterface $object
      */
-    private function deleteChildren(NestedEntityInterface $object)
+    private function deleteChildren(NestedTreeEntityInterface $object)
     {
         $em = $this->getEntityManager();
 

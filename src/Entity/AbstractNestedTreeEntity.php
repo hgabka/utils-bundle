@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractNestedTreeEntity implements NestedEntityInterface, EntityInterface
+abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, EntityInterface
 {
     /**
      * @ORM\Id
