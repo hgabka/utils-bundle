@@ -265,3 +265,15 @@ services:
         public: true
         arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
         autowire: false
+
+    hgabka_utils.asset.tag_renderer:
+        class: Hgabka\UtilsBundle\Asset\TagRenderer
+        arguments: ['@webpack_encore.entrypoint_lookup_collection', '@assets.packages', []]
+        tags:
+            - { name: kernel.reset, method: reset }
+
+    hgabka_utils.advanced_entry_files.twig.extension:
+        class: Hgabka\UtilsBundle\Twig\Extension\AdvancedEntryFilesTwigExtension
+        arguments: ['@hgabka_utils.asset.tag_renderer']
+        tags:
+            -  { name: 'twig.extension' }
