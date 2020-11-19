@@ -51,8 +51,9 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.session_security.user_agent_check', false);
 
         $container->setParameter('hgabka_utils.google_signin.enabled', false);
-        $container->setParameter('hgabka_utils.google_signin.client_id', null);
-        $container->setParameter('hgabka_utils.google_signin.client_secret', null);
+        $container->setParameter('hgabka_utils.google_signin.client_id', $config['google']['client_id'] ?? null);
+        $container->setParameter('hgabka_utils.google_signin.client_secret', $config['google']['client_secret'] ?? null);
+        $container->setParameter('hgabka_utils.google_api_key', $config['google']['api_key'] ?? null);
         $container->setParameter('hgabka_utils.google_signin.hosted_domains', []);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -63,6 +64,11 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
 
         $recaptchaValidatorDefinition = $container->getDefinition('hgabka_utils.validator.recaptcha');
         $recaptchaValidatorDefinition->replaceArgument(2, $config['recaptcha']['secret'] ?? null);
+
+        $googleDriveDownloaderDefinition = $container->getDefinition('hgabka_utils.google_drive_downloader');
+        $googleDriveDownloaderDefinition->replaceArgument(1, $config['google']['api_key'] ?? null);
+        $googleDriveDownloaderDefinition->replaceArgument(2, $config['google']['client_id'] ?? null);
+        $googleDriveDownloaderDefinition->replaceArgument(3, $config['google']['client_secret'] ?? null);
     }
 
     /**

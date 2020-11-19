@@ -57,7 +57,7 @@ class TagRenderer extends BaseTagRenderer
                 $attributes['integrity'] = $integrityHashes[$filename];
             }
             $oldAttributes = $attributes;
-            
+
             $attributes['rel'] = 'preload';
             $attributes['as'] = 'style';
 
@@ -65,7 +65,7 @@ class TagRenderer extends BaseTagRenderer
                 '<link %s>',
                 $this->convertArrayToAttributes($attributes)
             );
-            
+
             $scriptTags[] = sprintf(
                 '<link %s>',
                 $this->convertArrayToAttributes($oldAttributes)

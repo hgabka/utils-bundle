@@ -277,3 +277,11 @@ services:
         arguments: ['@hgabka_utils.asset.tag_renderer']
         tags:
             -  { name: 'twig.extension' }
+
+    hgabka_utils.google_drive_downloader:
+        class: Hgabka\UtilsBundle\Google\DriveDownloader
+        autowire: true
+        arguments: ['@hgabka_utils.hgabka_utils', '', '', '']
+
+    Hgabka\UtilsBundle\Google\DriveDownloader:
+        alias: hgabka_utils.google_drive_downloader

@@ -27,6 +27,14 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('site_key')->end()
                     ->scalarNode('secret')->end()
                 ->end()
+                ->end()
+                ->arrayNode('google')
+                ->children()
+                    ->scalarNode('api_key')->end()
+                    ->scalarNode('client_id')->end()
+                    ->scalarNode('client_secret')->end()
+                ->end()
+            ->end()
             ->end()
         ;
 
