@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class HgabkaUtils
@@ -1460,5 +1461,49 @@ class HgabkaUtils
         $locale = $this->getCurrentLocale($locale);
 
         return \Locale::getDisplayName($culture, $locale);
+    }
+
+
+    /**
+     * Generates a HTTP Content-Disposition field-value.
+     *
+     * @param string $disposition      One of "inline" or "attachment"
+     * @param string $filename         A unicode string
+     * @param string $filenameFallback A string containing only ASCII characters that
+     *                                 is semantically equivalent to $filename. If the filename is already ASCII,
+     *                                 it can be omitted, or just copied from $filename
+     *
+     * @return string A string suitable for use as a Content-Disposition field-value
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @see RFC 6266
+     */
+    public function makeUtf8Disposition(string $disposition, string $filename, string $filenameFallback = ''): string
+    {
+        if (!\in_array($disposition, [HeaderUtils::DISPOSITION_ATTACHMENT, HeaderUtils::DISPOSITION_INLINE])) {
+            throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".', HeaderUtils::DISPOSITION_ATTACHMENT, HeaderUtils::DISPOSITION_INLINE));
+        }
+
+        if ('' === $filenameFallback) {
+            $filenameFallback = $filename;
+        }
+
+        // percent characters aren't safe in fallback.
+        if (false !== strpos($filenameFallback, '%')) {
+            throw new \InvalidArgumentException('The filename fallback cannot contain the "%" character.');
+        }
+
+        // path separators aren't allowed in either.
+        if (false !== strpos($filename, '/') || false !== strpos($filename, '\\') || false !== strpos($filenameFallback, '/') || false !== strpos($filenameFallback, '\\')) {
+            throw new \InvalidArgumentException('The filename and the fallback cannot contain the "/" and "\\" characters.');
+        }
+
+        $params = ['filename' => $filenameFallback];
+        if ($filename !== $filenameFallback) {
+            $params['filename*'] = "utf-8''".rawurlencode($filename);
+        }
+
+        return $disposition.'; '.HeaderUtils::toString($params, ';');
     }
 }

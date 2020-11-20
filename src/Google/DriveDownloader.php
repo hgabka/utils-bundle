@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Google;
 
 use Google\Client;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Throwable;
@@ -56,12 +57,13 @@ class DriveDownloader
         $service = new \Google_Service_Drive($client);
 
         try {
-            $file = $service->files->get($fileId, ['fields' => 'size,originalFilename,mimeType,webContentLink,exportLinks,name,fileExtension']);
+            $file = $service->files->get($fileId, ['fields' => 'size,originalFilename,mimeType,webContentLink,exportLinks,name,fileExtension,fullFileExtension']);
             $mimeType = $file->getMimeType();
             $extension = $file->getFileExtension();
             $fileName = null !== $forcedFileName ? ($forcedFileName.'.'.$extension) : $file->getOriginalFilename();
             $size = $file->getSize();
         } catch (Throwable $e) {
+
             $file = null;
             $content = '';
             $error = $e->getMessage();
@@ -84,6 +86,11 @@ class DriveDownloader
             }
         }
 
+        if (!empty($error)) {
+            $errorArray = json_decode($error, true);
+            $error = null === $errorArray ? $error : $errorArray;
+        }
+
         return [
             'error' => $error ?? (empty($content) ? 'empty' : null),
             'content' => $content ?? '',
@@ -94,7 +101,7 @@ class DriveDownloader
         ];
     }
 
-    public function createDownloadResponse($fileId, $token, $forcedFileName = null)
+    public function createDownloadResponse($fileId, $token, $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT, $forcedFileName = null)
     {
         [
             'content' => $content,
@@ -108,13 +115,9 @@ class DriveDownloader
         }
 
         $response = new Response($content);
+        $disposition = $this->utils->makeUtf8Disposition($disposition, $fileName);
 
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName
-        );
-
-        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Content-Disposition', $disposition.'; '. HeaderUtils::toString(['filename' => $fileName], ';'));
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', $mimeType);
         $response->headers->set('Content-length', $size);
