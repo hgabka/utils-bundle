@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Validator\Constraints;
 
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
@@ -25,8 +26,8 @@ class RecaptchaValidator extends ConstraintValidator
      */
     protected $requestStack;
 
-    /** @var KumaUtils */
-    protected $kumaUtils;
+    /** @var HgabkaUtils */
+    protected $hgabkaUtils;
 
     /**
      * RecaptchaValidator constructor.
@@ -34,11 +35,11 @@ class RecaptchaValidator extends ConstraintValidator
      * @param RequestStack $requestStack
      * @param string       $secret
      */
-    public function __construct(RequestStack $requestStack, KumaUtils $kumaUtils, $secret)
+    public function __construct(RequestStack $requestStack, HgabkaUtils $hgabkaUtils, $secret)
     {
         $this->secret = $secret;
         $this->requestStack = $requestStack;
-        $this->kumaUtils = $kumaUtils;
+        $this->hgabkaUtils = $hgabkaUtils;
     }
 
     /**
@@ -80,7 +81,7 @@ class RecaptchaValidator extends ConstraintValidator
         if (null === $response || 0 === \strlen($response)) {
             return false;
         }
-        $result = $this->kumaUtils->curlPost(self::RECAPTCHA_VERIFY_SERVER.'/recaptcha/api/siteverify', [
+        $result = $this->hgabkaUtils->curlPost(self::RECAPTCHA_VERIFY_SERVER.'/recaptcha/api/siteverify', [
             'secret' => $privateKey,
             'remoteip' => $remoteip,
             'response' => $response,
