@@ -1,3 +1,6 @@
+hg_utils:
+    recaptcha:
+        message: Jelölje be, hogy Ön nem robot
 kuma_admin:
     nested_admin:
         delete_confirm: 'Biztosan törli a(z) "%name%" elemet?'
