@@ -8,18 +8,26 @@ use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupCollection;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 use Symfony\WebpackEncoreBundle\Asset\IntegrityDataProviderInterface;
 use Symfony\WebpackEncoreBundle\Asset\TagRenderer as BaseTagRenderer;
+use Symfony\WebpackEncoreBundle\Event\RenderAssetTagEvent;
 
 class TagRenderer extends BaseTagRenderer
 {
     private $entrypointLookupCollection;
-    private $defaultAttributes;
-    private $renderedFiles = [];
     private $packages;
+    private $defaultAttributes;
+    private $defaultScriptAttributes;
+    private $defaultLinkAttributes;
+    private $eventDispatcher;
+
+    private $renderedFiles = [];
 
     public function __construct(
         $entrypointLookupCollection,
         Packages $packages,
-        array $defaultAttributes = []
+        array $defaultAttributes = [],
+        array $defaultScriptAttributes = [],
+        array $defaultLinkAttributes = [],
+        EventDispatcherInterface $eventDispatcher = null
     ) {
         if ($entrypointLookupCollection instanceof EntrypointLookupInterface) {
             @trigger_error(sprintf('The "$entrypointLookupCollection" argument in method "%s()" must be an instance of EntrypointLookupCollection.', __METHOD__), E_USER_DEPRECATED);
@@ -37,25 +45,39 @@ class TagRenderer extends BaseTagRenderer
 
         $this->packages = $packages;
         $this->defaultAttributes = $defaultAttributes;
+        $this->defaultScriptAttributes = $defaultScriptAttributes;
+        $this->defaultLinkAttributes = $defaultLinkAttributes;
+        $this->eventDispatcher = $eventDispatcher;
 
         $this->reset();
     }
 
-    public function renderWebpackLinkTags(string $entryName, string $packageName = null, string $entrypointName = '_default'): string
+    public function renderWebpackLinkTags(string $entryName, string $packageName = null, string $entrypointName = null, array $extraAttributes = []): string
     {
+        $entrypointName = $entrypointName ?: '_default';
         $scriptTags = [];
         $entryPointLookup = $this->getEntrypointLookup($entrypointName);
         $integrityHashes = ($entryPointLookup instanceof IntegrityDataProviderInterface) ? $entryPointLookup->getIntegrityData() : [];
 
-        foreach ($entryPointLookup->getCssFiles($entryName) as $fileKey => $filename) {
-            $path = $this->getAssetPath($filename, $packageName);
-            $attributes = $this->defaultAttributes;
+        foreach ($entryPointLookup->getCssFiles($entryName) as $filename) {
+            $attributes = [];
             $attributes['rel'] = 'stylesheet';
-            $attributes['href'] = $path;
+            $attributes['href'] = $this->getAssetPath($filename, $packageName);
+            $attributes = array_merge($attributes, $this->defaultAttributes, $this->defaultLinkAttributes, $extraAttributes);
 
             if (isset($integrityHashes[$filename])) {
                 $attributes['integrity'] = $integrityHashes[$filename];
             }
+
+            $event = new RenderAssetTagEvent(
+                RenderAssetTagEvent::TYPE_LINK,
+                $attributes['href'],
+                $attributes
+            );
+            if (null !== $this->eventDispatcher) {
+                $this->eventDispatcher->dispatch($event);
+            }
+            $attributes = $event->getAttributes();
             $oldAttributes = $attributes;
 
             $attributes['rel'] = 'preload';
