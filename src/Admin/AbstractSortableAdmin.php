@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin;
+namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 
