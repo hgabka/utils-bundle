@@ -19,8 +19,6 @@ class Substr extends FunctionNode
     protected $for;
 
     /**
-     * @param SqlWalker $sqlWalker
-     *
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)
@@ -33,9 +31,6 @@ class Substr extends FunctionNode
         );
     }
 
-    /**
-     * @param Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);

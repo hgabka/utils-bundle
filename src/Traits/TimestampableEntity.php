@@ -30,8 +30,6 @@ trait TimestampableEntity
     /**
      * Sets createdAt.
      *
-     * @param \DateTime $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -53,8 +51,6 @@ trait TimestampableEntity
 
     /**
      * Sets updatedAt.
-     *
-     * @param \DateTime $updatedAt
      *
      * @return $this
      */

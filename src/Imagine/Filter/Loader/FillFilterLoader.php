@@ -9,9 +9,6 @@ use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;
 class FillFilterLoader implements LoaderInterface
 {
     /**
-     * @param ImageInterface $image
-     * @param array          $options
-     *
      * @return ImageInterface
      */
     public function load(ImageInterface $image, array $options = [])

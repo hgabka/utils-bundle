@@ -14,8 +14,6 @@ class LocaleType extends AbstractType
 
     /**
      * LocaleType constructor.
-     *
-     * @param HgabkaUtils $hgabkaUtils
      */
     public function __construct(HgabkaUtils $hgabkaUtils)
     {

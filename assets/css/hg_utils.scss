@@ -1825,3 +1825,6 @@
         color: #fff;
     }
 }
+.table-sortable tr.ui-sortable-helper {
+    display: table;
+}

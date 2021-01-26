@@ -181,7 +181,7 @@ class Words_hu extends Words
         $chk_gt2000 = true;
 
         // Loads user options
-        extract($options, EXTR_IF_EXISTS);
+        extract($options, \EXTR_IF_EXISTS);
 
         /**
          * Return string.

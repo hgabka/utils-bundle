@@ -28,7 +28,6 @@ class Manager
      * Manager constructor.
      *
      * @param string       $cacheDir
-     * @param Filesystem   $filesystem
      * @param CacheManager $fosHttpCacheManager
      */
     public function __construct($cacheDir, Filesystem $filesystem, CacheManager $fosHttpCacheManager = null)

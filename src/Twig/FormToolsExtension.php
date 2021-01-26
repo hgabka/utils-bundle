@@ -15,9 +15,6 @@ class FormToolsExtension extends \Twig_Extension
      */
     private $formHelper;
 
-    /**
-     * @param FormHelper $formHelper
-     */
     public function __construct(FormHelper $formHelper)
     {
         $this->formHelper = $formHelper;
@@ -38,8 +35,6 @@ class FormToolsExtension extends \Twig_Extension
 
     /**
      * Return if there are error messages.
-     *
-     * @param FormView $formView
      *
      * @return bool
      */

@@ -413,7 +413,7 @@ class Words_ru extends Words
         $gender = 1;
 
         // Loads user options
-        extract($options, EXTR_IF_EXISTS);
+        extract($options, \EXTR_IF_EXISTS);
 
         return $this->_toWordsWithCase($num, $dummy, $gender);
     }
@@ -528,7 +528,7 @@ class Words_ru extends Words
                 $case = 3;
             }
         } else {
-            $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+            $num = str_pad($num, 3, '0', \STR_PAD_LEFT);
 
             $hundreds = (int) $num[0];
             if ($hundreds) {

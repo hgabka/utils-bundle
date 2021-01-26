@@ -28,8 +28,6 @@ class HgabkaUtils
 
     /**
      * KumaUtils constructor.
-     *
-     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -65,8 +63,6 @@ class HgabkaUtils
 
     /**
      * @param bool $frontend
-     *
-     * @return array
      */
     public function getAvailableLocales(): array
     {
@@ -94,8 +90,6 @@ class HgabkaUtils
     /**
      * @param bool   $frontend
      * @param string $prefix
-     *
-     * @return array
      */
     public function getLocaleChoices(): array
     {
@@ -127,25 +121,16 @@ class HgabkaUtils
         return $requestStack->getMasterRequest();
     }
 
-    /**
-     * @return RequestStack
-     */
     public function getRequestStack(): RequestStack
     {
         return $this->container->get('request_stack');
     }
 
-    /**
-     * @return string
-     */
     public function getProjectDir(): string
     {
         return $this->container->getParameter('kernel.project_dir');
     }
 
-    /**
-     * @return string
-     */
     public function getWebDir(): string
     {
         return $this->container->getParameter('kernel.project_dir').'/web';
@@ -347,7 +332,7 @@ class HgabkaUtils
             return;
         }
 
-        $paths = explode(PATH_SEPARATOR, get_include_path());
+        $paths = explode(\PATH_SEPARATOR, get_include_path());
 
         // remove what's already in the include_path
         if (false !== $key = array_search(realpath($path), array_map('realpath', $paths), true)) {
@@ -367,7 +352,7 @@ class HgabkaUtils
                 throw new \InvalidArgumentException(sprintf('Unrecognized position: "%s"', $position));
         }
 
-        return set_include_path(implode(PATH_SEPARATOR, $paths));
+        return set_include_path(implode(\PATH_SEPARATOR, $paths));
     }
 
     /**
@@ -423,11 +408,11 @@ class HgabkaUtils
      */
     public function getPhpCli()
     {
-        $path = getenv('PATH') ? getenv('PATH') : getenv('Path');
-        $suffixes = \DIRECTORY_SEPARATOR === '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
+        $path = getenv('PATH') ?: getenv('Path');
+        $suffixes = \DIRECTORY_SEPARATOR === '\\' ? (getenv('PATHEXT') ? explode(\PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
         foreach (['php5', 'php'] as $phpCli) {
             foreach ($suffixes as $suffix) {
-                foreach (explode(PATH_SEPARATOR, $path) as $dir) {
+                foreach (explode(\PATH_SEPARATOR, $path) as $dir) {
                     if (is_file($file = $dir.\DIRECTORY_SEPARATOR.$phpCli.$suffix) && is_executable($file)) {
                         return $file;
                     }
@@ -631,7 +616,7 @@ class HgabkaUtils
             return $source;
         }
 
-        $ignore = [T_COMMENT => true, T_DOC_COMMENT => true];
+        $ignore = [\T_COMMENT => true, \T_DOC_COMMENT => true];
         $output = '';
 
         foreach (token_get_all($source) as $token) {
@@ -1076,7 +1061,6 @@ class HgabkaUtils
      * Bootstrap osztályok cserélése. Ha pl btn-primary van egy gombon és btn-default-ra akarjuk
      * cserélni, akkor ez leveszi a primaryt előbb.
      *
-     * @param array  $classes
      * @param string $newClass
      *
      * @return array
@@ -1189,7 +1173,6 @@ class HgabkaUtils
     /**
      * Egy tömb minden eleme elé rak egy szöveget.
      *
-     * @param array  $choices
      * @param string $prefix
      *
      * @return array
@@ -1284,10 +1267,10 @@ class HgabkaUtils
     {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, \count($params));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, \CURLOPT_URL, $url);
+        curl_setopt($ch, \CURLOPT_POST, \count($params));
+        curl_setopt($ch, \CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
 
         $result = curl_exec($ch);
 
@@ -1299,8 +1282,8 @@ class HgabkaUtils
     public function curlGet($url, $params)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url.(empty($params) ? '' : ('?'.http_build_query($params))));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, \CURLOPT_URL, $url.(empty($params) ? '' : ('?'.http_build_query($params))));
+        curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
 
         $result = curl_exec($ch);
 
@@ -1463,7 +1446,6 @@ class HgabkaUtils
         return \Locale::getDisplayName($culture, $locale);
     }
 
-
     /**
      * Generates a HTTP Content-Disposition field-value.
      *
@@ -1473,15 +1455,15 @@ class HgabkaUtils
      *                                 is semantically equivalent to $filename. If the filename is already ASCII,
      *                                 it can be omitted, or just copied from $filename
      *
-     * @return string A string suitable for use as a Content-Disposition field-value
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return string A string suitable for use as a Content-Disposition field-value
      *
      * @see RFC 6266
      */
     public function makeUtf8Disposition(string $disposition, string $filename, string $filenameFallback = ''): string
     {
-        if (!\in_array($disposition, [HeaderUtils::DISPOSITION_ATTACHMENT, HeaderUtils::DISPOSITION_INLINE])) {
+        if (!\in_array($disposition, [HeaderUtils::DISPOSITION_ATTACHMENT, HeaderUtils::DISPOSITION_INLINE], true)) {
             throw new \InvalidArgumentException(sprintf('The disposition must be either "%s" or "%s".', HeaderUtils::DISPOSITION_ATTACHMENT, HeaderUtils::DISPOSITION_INLINE));
         }
 

@@ -48,8 +48,6 @@ interface AdminListConfiguratorInterface
     /**
      * Configure the types of items you can add.
      *
-     * @param array $params
-     *
      * @return array
      */
     public function getAddUrlFor(array $params = []);
@@ -224,8 +222,6 @@ interface AdminListConfiguratorInterface
 
     /**
      * Bind request.
-     *
-     * @param Request $request
      */
     public function bindRequest(Request $request);
 

@@ -10,7 +10,6 @@ use Doctrine\ORM\Query\SqlWalker;
 /**
  * Class Repeat.
  *
- *
  * A REPEAT SQL függvény DQL-es megvalósítása
  */
 class Repeat extends FunctionNode
@@ -23,9 +22,6 @@ class Repeat extends FunctionNode
     /** @var int */
     public $repetition;
 
-    /**
-     * @param Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -37,8 +33,6 @@ class Repeat extends FunctionNode
     }
 
     /**
-     * @param SqlWalker $sqlWalker
-     *
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

@@ -90,10 +90,6 @@ class FilterBuilder
         return $this->filterDefinitions;
     }
 
-    /**
-     * @param Request $request
-     * @param array   $defaults
-     */
     public function bindRequest(Request $request, array $defaults = [])
     {
         $filterBuilderName = 'filter_'.$request->get('_route');

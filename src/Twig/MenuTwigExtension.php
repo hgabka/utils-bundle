@@ -18,10 +18,6 @@ class MenuTwigExtension extends \Twig_Extension
      */
     protected $adminPanel;
 
-    /**
-     * @param MenuBuilder $menuBuilder
-     * @param AdminPanel  $adminPanel
-     */
     public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
     {
         $this->menuBuilder = $menuBuilder;

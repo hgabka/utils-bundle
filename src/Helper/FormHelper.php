@@ -13,8 +13,6 @@ class FormHelper
     /**
      * Return if there are error messages.
      *
-     * @param FormView $formView
-     *
      * @return bool
      */
     public function hasRecursiveErrorMessages(FormView $formView)

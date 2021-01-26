@@ -46,9 +46,6 @@ class NestedTreeRepository extends BaseTreeRepository
         }
     }
 
-    /**
-     * @param Category $category
-     */
     public function delete(Category $category)
     {
         $em = $this->getEntityManager();
@@ -195,8 +192,7 @@ class NestedTreeRepository extends BaseTreeRepository
     }
 
     /**
-     * @param NestedTreeEntityInterface $object
-     * @param                           $parent
+     * @param $parent
      */
     private function persistInOrderedTree(NestedTreeEntityInterface $object, $parent)
     {
@@ -210,9 +206,6 @@ class NestedTreeRepository extends BaseTreeRepository
         }
     }
 
-    /**
-     * @param NestedTreeEntityInterface $object
-     */
     private function deleteChildren(NestedTreeEntityInterface $object)
     {
         $em = $this->getEntityManager();

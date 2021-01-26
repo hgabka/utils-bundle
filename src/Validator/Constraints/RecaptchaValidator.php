@@ -32,8 +32,7 @@ class RecaptchaValidator extends ConstraintValidator
     /**
      * RecaptchaValidator constructor.
      *
-     * @param RequestStack $requestStack
-     * @param string       $secret
+     * @param string $secret
      */
     public function __construct(RequestStack $requestStack, HgabkaUtils $hgabkaUtils, $secret)
     {

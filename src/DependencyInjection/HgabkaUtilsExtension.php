@@ -81,9 +81,6 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $this->configureTwigBundle($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $keyValueHydrator = [KeyValueHydrator::HYDRATOR_NAME, KeyValueHydrator::class];

@@ -16,9 +16,6 @@ class AdminListTwigExtension extends \Twig_Extension
      */
     protected $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -50,11 +47,10 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param \Twig_Environment $env
-     * @param AdminList         $view      The view to render
-     * @param string            $basepath  The base path
-     * @param array             $urlparams Additional url params
-     * @param array             $addparams Add params
+     * @param AdminList $view      The view to render
+     * @param string    $basepath  The base path
+     * @param array     $urlparams Additional url params
+     * @param array     $addparams Add params
      *
      * @return string The html markup
      */

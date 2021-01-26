@@ -14,9 +14,6 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
      */
     private $hgabkaUtils;
 
-    /**
-     * @param HgabkaUtils $hgabkaUtils
-     */
     public function __construct(HgabkaUtils $hgabkaUtils)
     {
         $this->hgabkaUtils = $hgabkaUtils;
@@ -40,10 +37,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     /**
      * Render locale switcher widget.
      *
-     * @param \Twig_Environment $env
-     * @param array             $locales    The locales
-     * @param string            $route      The route
-     * @param array             $parameters The route parameters
+     * @param array  $locales    The locales
+     * @param string $route      The route
+     * @param array  $parameters The route parameters
      *
      * @return string
      */

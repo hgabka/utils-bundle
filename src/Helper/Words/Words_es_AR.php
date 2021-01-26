@@ -215,7 +215,7 @@ class Words_es_AR extends Words
         // cientos: doscientos, trescientos, etc...
         switch ($h) {
             case 1:
-                if ((0 === $d) and (0 === $t)) { // is it's '100' use 'cien'
+                if ((0 === $d) && (0 === $t)) { // is it's '100' use 'cien'
                     $ret .= $this->_sep.'cien';
                 } else {
                     $ret .= $this->_sep.'ciento';
@@ -278,7 +278,7 @@ class Words_es_AR extends Words
                 if (0 === $d) {
                     $ret .= $this->_sep.'veinte';
                 } else {
-                    if (($power > 0) and (1 === $d)) {
+                    if (($power > 0) && (1 === $d)) {
                         $ret .= $this->_sep.'veintiún';
                     } else {
                         $ret .= $this->_sep.'veinti'.$this->_digits[$d];
@@ -325,17 +325,17 @@ class Words_es_AR extends Words
         }
 
         // add digits only if it is a multiple of 10 and not 1x or 2x
-        if ((1 !== $t) and (2 !== $t) and ($d > 0)) {
+        if ((1 !== $t) && (2 !== $t) && ($d > 0)) {
             // don't add 'y' for numbers below 10
             if (0 !== $t) {
                 // use 'un' instead of 'uno' when there is a suffix ('mil', 'millones', etc...)
-                if (($power > 0) and (1 === $d)) {
+                if (($power > 0) && (1 === $d)) {
                     $ret .= $this->_sep.' y un';
                 } else {
                     $ret .= $this->_sep.'y '.$this->_digits[$d];
                 }
             } else {
-                if (($power > 0) and (1 === $d)) {
+                if (($power > 0) && (1 === $d)) {
                     $ret .= $this->_sep.'un';
                 } else {
                     $ret .= $this->_sep.$this->_digits[$d];
@@ -353,7 +353,7 @@ class Words_es_AR extends Words
             }
 
             // if it's only one use the singular suffix
-            if ((1 === $d) and (0 === $t) and (0 === $h)) {
+            if ((1 === $d) && (0 === $t) && (0 === $h)) {
                 $suffix = $lev[0];
             } else {
                 $suffix = $lev[1];

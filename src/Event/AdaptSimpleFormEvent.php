@@ -37,8 +37,7 @@ class AdaptSimpleFormEvent extends Event
     protected $options = [];
 
     /**
-     * @param Request $request
-     * @param string  $formType
+     * @param string $formType
      * @param $data
      * @param mixed $options
      */
@@ -58,9 +57,6 @@ class AdaptSimpleFormEvent extends Event
         return $this->tabPane;
     }
 
-    /**
-     * @param TabPane $tabPane
-     */
     public function setTabPane(TabPane $tabPane)
     {
         $this->tabPane = $tabPane;
@@ -74,9 +70,6 @@ class AdaptSimpleFormEvent extends Event
         return $this->request;
     }
 
-    /**
-     * @param Request $request
-     */
     public function setRequest(Request $request)
     {
         $this->request = $request;

@@ -49,9 +49,6 @@ class AdminList
         return $this->configurator->getFilterBuilder();
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $this->configurator->bindRequest($request);
@@ -178,8 +175,6 @@ class AdminList
     }
 
     /**
-     * @param array $params
-     *
      * @return array
      */
     public function getAddUrlFor(array $params)

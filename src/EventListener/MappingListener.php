@@ -27,8 +27,6 @@ class MappingListener
 
     /**
      * Called when class meta data is fetched.
-     *
-     * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {

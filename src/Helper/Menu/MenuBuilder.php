@@ -48,8 +48,7 @@ class MenuBuilder
     /**
      * Add menu adaptor.
      *
-     * @param MenuAdaptorInterface $adaptor
-     * @param mixed                $priority
+     * @param mixed $priority
      */
     public function addAdaptMenu(MenuAdaptorInterface $adaptor, $priority = 0)
     {

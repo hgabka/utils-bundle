@@ -24,9 +24,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     /** @var string */
     protected $defaultLocale;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

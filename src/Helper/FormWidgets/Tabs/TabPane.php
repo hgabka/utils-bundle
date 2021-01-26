@@ -80,9 +80,6 @@ class TabPane
         return $this->form;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $this->form->handleRequest($request);
@@ -125,8 +122,6 @@ class TabPane
     }
 
     /**
-     * @param TabInterface $tab
-     *
      * @return TabPane
      */
     public function removeTab(TabInterface $tab)
@@ -247,8 +242,6 @@ class TabPane
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)
@@ -262,8 +255,6 @@ class TabPane
     }
 
     /**
-     * @param TabInterface $tab
-     *
      * @return string
      */
     private function generateIdentifier(TabInterface $tab)

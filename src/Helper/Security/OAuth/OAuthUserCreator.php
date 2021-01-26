@@ -21,10 +21,8 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     /**
      * OAuthUserCreator constructor.
      *
-     * @param EntityManagerInterface   $em
-     * @param                          $hostedDomains
-     * @param                          $userClass
-     * @param OAuthUserFinderInterface $userFinder
+     * @param $hostedDomains
+     * @param $userClass
      */
     public function __construct(EntityManagerInterface $em, $hostedDomains, $userClass, OAuthUserFinderInterface $userFinder)
     {

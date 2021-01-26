@@ -44,9 +44,6 @@ class ListWidget extends FormWidget
         }
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         foreach ($this->widgets as $widget) {
@@ -65,8 +62,6 @@ class ListWidget extends FormWidget
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
@@ -89,8 +84,6 @@ class ListWidget extends FormWidget
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)

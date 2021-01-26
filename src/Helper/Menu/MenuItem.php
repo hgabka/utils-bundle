@@ -79,8 +79,6 @@ class MenuItem
 
     /**
      * Construct the MenuItem.
-     *
-     * @param MenuBuilder $menu
      */
     public function __construct(MenuBuilder $menu)
     {
@@ -228,8 +226,6 @@ class MenuItem
     /**
      * Set route parameters.
      *
-     * @param array $routeParams
-     *
      * @return MenuItem
      */
     public function setRouteParams(array $routeParams = [])
@@ -255,8 +251,6 @@ class MenuItem
 
     /**
      * Warning: the adaptChildren method on the menuadaptors will not be called anymore for this menuitem.
-     *
-     * @param array $children
      *
      * @return MenuItem
      */

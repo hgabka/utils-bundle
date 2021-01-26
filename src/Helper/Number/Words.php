@@ -51,7 +51,7 @@ class Words
             $num = preg_replace('/^[^\d]*?(-?)[ \t\n]*?(\d+)([^\d].*?)?$/', '$1$2', $num);
         }
 
-        $truth_table = ($classname === \get_class($this)) ? 'T' : 'F';
+        $truth_table = ($classname === static::class) ? 'T' : 'F';
         $truth_table .= (empty($options)) ? 'T' : 'F';
 
         switch ($truth_table) {

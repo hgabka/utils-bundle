@@ -38,7 +38,7 @@ class ObjectAutocompleteType extends AbstractType
                 new ObjectAutocompleteViewTransformer(
                     $repo,
                     $options['to_string_callback']
-            ),
+                ),
                 true
             )
         ;

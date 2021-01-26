@@ -269,7 +269,7 @@ class Words_tr extends Words
             }
 
             // if it's only one use the singular suffix
-            if ((1 === $d) and (0 === $t) and (0 === $h)) {
+            if ((1 === $d) && (0 === $t) && (0 === $h)) {
                 $suffix = $lev[0];
             } else {
                 $suffix = $lev[1];

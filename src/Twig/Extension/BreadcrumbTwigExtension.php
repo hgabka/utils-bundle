@@ -14,8 +14,6 @@ class BreadcrumbTwigExtension extends \Twig_Extension implements GlobalsInterfac
 
     /**
      * PublicTwigExtension constructor.
-     *
-     * @param BreadcrumbManager $manager
      */
     public function __construct(BreadcrumbManager $manager)
     {

@@ -26,10 +26,9 @@ class DriveDownloader
     /**
      * DriveDownloader constructor.
      *
-     * @param HgabkaUtils $utils
-     * @param mixed       $apiKey
-     * @param mixed       $clientId
-     * @param mixed       $clientSecret
+     * @param mixed $apiKey
+     * @param mixed $clientId
+     * @param mixed $clientSecret
      */
     public function __construct(HgabkaUtils $utils, $apiKey, $clientId, $clientSecret)
     {
@@ -52,7 +51,7 @@ class DriveDownloader
         $client->setAccessToken($token);
 
         $headers = ['Referer' => $this->utils->getHost()];
-        $guzzleClient = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false], 'headers' => $headers]);
+        $guzzleClient = new \GuzzleHttp\Client(['curl' => [\CURLOPT_SSL_VERIFYPEER => false], 'headers' => $headers]);
         $client->setHttpClient($guzzleClient);
         $service = new \Google_Service_Drive($client);
 
@@ -63,7 +62,6 @@ class DriveDownloader
             $fileName = null !== $forcedFileName ? ($forcedFileName.'.'.$extension) : $file->getOriginalFilename();
             $size = $file->getSize();
         } catch (Throwable $e) {
-
             $file = null;
             $content = '';
             $error = $e->getMessage();
@@ -117,7 +115,7 @@ class DriveDownloader
         $response = new Response($content);
         $disposition = $this->utils->makeUtf8Disposition($disposition, $fileName);
 
-        $response->headers->set('Content-Disposition', $disposition.'; '. HeaderUtils::toString(['filename' => $fileName], ';'));
+        $response->headers->set('Content-Disposition', $disposition.'; '.HeaderUtils::toString(['filename' => $fileName], ';'));
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', $mimeType);
         $response->headers->set('Content-length', $size);

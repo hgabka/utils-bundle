@@ -28,17 +28,12 @@ class UserProcessor
      */
     private $record = [];
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
     /**
-     * @param array $record
-     *
      * @return array
      */
     public function processRecord(array $record)

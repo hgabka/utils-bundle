@@ -15,8 +15,6 @@ class FitFilterLoader implements LoaderInterface
 
     /**
      * FitFilterLoader constructor.
-     *
-     * @param ImagineInterface $imagine
      */
     public function __construct(ImagineInterface $imagine)
     {
@@ -24,9 +22,6 @@ class FitFilterLoader implements LoaderInterface
     }
 
     /**
-     * @param ImageInterface $image
-     * @param array          $options
-     *
      * @return mixed
      */
     public function load(ImageInterface $image, array $options = [])

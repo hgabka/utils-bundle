@@ -83,8 +83,6 @@ class PermissionDefinition
     /**
      * Set permissions.
      *
-     * @param array $permissions
-     *
      * @throws InvalidArgumentException
      */
     public function setPermissions(array $permissions)

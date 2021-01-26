@@ -100,7 +100,7 @@ class AclNativeHelper
                 '\\',
                 '\\\\',
                 \get_class($user)
-                ).'-'.$user->getUserName().'"';
+            ).'-'.$user->getUserName().'"';
         }
 
         $joinTableQuery = <<<SELECTQUERY

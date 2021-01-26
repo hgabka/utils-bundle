@@ -234,7 +234,6 @@ class Words_bg extends Words
     /**
      * The class constructor, used for calling the _initDigits method.
      *
-     *
      * @author Kouber Saparev <kouber@php.net>
      *
      * @see function _initDigits
@@ -247,7 +246,6 @@ class Words_bg extends Words
     /**
      * Fills the _digits array for masculine and feminine genders with
      * corresponding references to neuter words (when they're the same).
-     *
      *
      * @author Kouber Saparev <kouber@php.net>
      */

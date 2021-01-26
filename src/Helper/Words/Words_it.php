@@ -145,7 +145,7 @@ class Words_it extends Words
         // centinaia: duecento, trecento, etc...
         switch ($h) {
             case 1:
-                if ((0 === $d) and (0 === $t)) { // is it's '100' use 'cien'
+                if ((0 === $d) && (0 === $t)) { // is it's '100' use 'cien'
                     $ret .= $this->_sep.'cento';
                 } else {
                     $ret .= $this->_sep.'cento';
@@ -340,17 +340,17 @@ class Words_it extends Words
         }
 
         // add digits only if it is a multiple of 10 and not 1x or 2x
-        if ((1 !== $t) and (2 !== $t) and ($d > 0)) {
+        if ((1 !== $t) && (2 !== $t) && ($d > 0)) {
             // don't add 'e' for numbers below 10
             if (0 !== $t) {
                 // use 'un' instead of 'uno' when there is a suffix ('mila', 'milloni', etc...)
-                if (($power > 0) and (1 === $d)) {
+                if (($power > 0) && (1 === $d)) {
                     $ret .= $this->_sep.' e un';
                 } else {
                     $ret .= $this->_sep.''.$this->_digits[$d];
                 }
             } else {
-                if (($power > 0) and (1 === $d)) {
+                if (($power > 0) && (1 === $d)) {
                     $ret .= $this->_sep.'un ';
                 } else {
                     $ret .= $this->_sep.$this->_digits[$d];
@@ -368,7 +368,7 @@ class Words_it extends Words
             }
 
             // if it's only one use the singular suffix
-            if ((1 === $d) and (0 === $t) and (0 === $h)) {
+            if ((1 === $d) && (0 === $t) && (0 === $h)) {
                 $suffix = $lev[0];
             } else {
                 $suffix = $lev[1];

@@ -73,16 +73,10 @@ class FormWidget implements FormWidgetInterface
         $builder->setData($data);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function persist(EntityManager $em)
     {
         foreach ($this->data as $item) {
@@ -91,8 +85,6 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
@@ -181,8 +173,6 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)

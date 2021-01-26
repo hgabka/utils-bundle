@@ -24,10 +24,9 @@ class TabsTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment $env
-     * @param TabPane           $tabPane  The tab pane
-     * @param array             $options  The extra options
-     * @param string            $template The template
+     * @param TabPane $tabPane  The tab pane
+     * @param array   $options  The extra options
+     * @param string  $template The template
      *
      * @return string
      */

@@ -118,8 +118,6 @@ class AclHelper
     /**
      * Returns valid IDs for a specific entity with ACL restrictions for current user applied.
      *
-     * @param PermissionDefinition $permissionDef
-     *
      * @throws InvalidArgumentException
      *
      * @return array
@@ -191,8 +189,6 @@ class AclHelper
     /**
      * Clone specified query with parameters.
      *
-     * @param Query $query
-     *
      * @return Query
      */
     protected function cloneQuery(Query $query)
@@ -212,8 +208,6 @@ class AclHelper
      * http://www.scribd.com/doc/14683263/Efficient-Pagination-Using-MySQL
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0.
-     *
-     * @param Query $query
      *
      * @return string
      */
@@ -251,7 +245,7 @@ class AclHelper
                 '\\',
                 '\\\\',
                 \get_class($user)
-                ).'-'.$user->getUserName().'"';
+            ).'-'.$user->getUserName().'"';
         }
 
         $selectQuery = <<<SELECTQUERY

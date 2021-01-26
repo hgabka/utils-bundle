@@ -40,9 +40,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     private $useDistinctCount = true;
 
-    /**
-     * @param Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -103,9 +100,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         return $this->pagerfanta;
     }
 
-    /**
-     * @param array $params
-     */
     public function adaptQueryBuilder(
         QueryBuilder $queryBuilder,
         // @noinspection PhpUnusedParameterInspection

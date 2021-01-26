@@ -87,25 +87,17 @@ class Tab implements TabInterface
         $this->widget->buildForm($builder);
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         $this->widget->bindRequest($request);
     }
 
-    /**
-     * @param EntityManager $em
-     */
     public function persist(EntityManager $em)
     {
         $this->widget->persist($em);
     }
 
     /**
-     * @param FormView $formView
-     *
      * @return array
      */
     public function getFormErrors(FormView $formView)
@@ -150,8 +142,6 @@ class Tab implements TabInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function getExtraParams(Request $request)

@@ -211,8 +211,6 @@ class PermissionAdmin
     /**
      * Handle form entry of permission changes.
      *
-     * @param Request $request
-     *
      * @return bool
      */
     public function bindRequest(Request $request)

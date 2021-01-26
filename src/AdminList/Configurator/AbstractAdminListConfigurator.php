@@ -196,8 +196,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Configure the types of items you can add.
      *
-     * @param array $params
-     *
      * @return array
      */
     public function getAddUrlFor(array $params = [])
@@ -296,10 +294,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException(
-            'You need to implement the getAdminType method in '.
-            \get_class($this).' or '.\get_class($entity)
-        );
+        throw new InvalidArgumentException('You need to implement the getAdminType method in '.static::class.' or '.\get_class($entity));
     }
 
     /**
@@ -491,8 +486,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param ItemActionInterface $itemAction
-     *
      * @return AbstractAdminListConfigurator
      */
     public function addItemAction(ItemActionInterface $itemAction)
@@ -519,8 +512,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param ListActionInterface $listAction
-     *
      * @return AdminListConfiguratorInterface
      */
     public function addListAction(ListActionInterface $listAction)
@@ -547,8 +538,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param BulkActionInterface $bulkAction
-     *
      * @return AdminListConfiguratorInterface
      */
     public function addBulkAction(BulkActionInterface $bulkAction)
@@ -760,8 +749,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param FilterBuilder $filterBuilder
-     *
      * @return AbstractAdminListConfigurator
      */
     public function setFilterBuilder(FilterBuilder $filterBuilder)
@@ -773,8 +760,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
     /**
      * Bind current request.
-     *
-     * @param Request $request
      */
     public function bindRequest(Request $request)
     {

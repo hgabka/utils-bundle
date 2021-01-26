@@ -11,8 +11,6 @@ trait BreadcrumbTrait
 
     /**
      * @required
-     *
-     * @param BreadcrumbManager $breadcrumbManager
      */
     public function setBreadcrumbManager(BreadcrumbManager $breadcrumbManager)
     {

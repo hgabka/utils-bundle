@@ -10,16 +10,12 @@ use Doctrine\ORM\Query\SqlWalker;
 /**
  * Class Rand.
  *
- *
  * A RAND SQL függvény DQL-es megvalósítása
  */
 class Rand extends FunctionNode
 {
     const FUNCTION_NAME = 'RAND';
 
-    /**
-     * @param Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -28,8 +24,6 @@ class Rand extends FunctionNode
     }
 
     /**
-     * @param SqlWalker $sqlWalker
-     *
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

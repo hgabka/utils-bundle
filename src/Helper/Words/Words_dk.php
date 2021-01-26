@@ -356,7 +356,7 @@ class Words_dk extends Words
         }
         $curr_names = $this->_currency_names[$int_curr];
 
-        if (('' !== $decimal) and (0 !== $decimal)) {
+        if (('' !== $decimal) && (0 !== $decimal)) {
             $ret = trim($this->_toWords($decimal));
             $lev = (1 === $decimal) ? 0 : 1;
             if ($lev > 0) {
@@ -369,12 +369,12 @@ class Words_dk extends Words
                 $ret .= $this->_sep.$curr_names[0][0];
             }
 
-            if ((false !== $fraction) and (0 !== $fraction)) {
+            if ((false !== $fraction) && (0 !== $fraction)) {
                 $ret .= $this->_sep.'og';
             }
         }
 
-        if ((false !== $fraction) and (0 !== $fraction)) {
+        if ((false !== $fraction) && (0 !== $fraction)) {
             if ($convert_fraction) {
                 $ret .= $this->_sep.trim($this->_toWords($fraction));
             } else {

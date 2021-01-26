@@ -106,9 +106,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this->pagerfanta;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->where('1=1');
@@ -192,8 +189,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * Set permission definition.
      *
-     * @param PermissionDefinition $permissionDef
-     *
      * @return AbstractDoctrineORMAdminListConfigurator
      */
     public function setPermissionDefinition(PermissionDefinition $permissionDef)
@@ -233,9 +228,6 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $orderBy;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {

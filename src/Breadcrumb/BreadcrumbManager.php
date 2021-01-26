@@ -26,8 +26,6 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
 
     /**
      * BreadcrumbManager constructor.
-     *
-     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack)
     {

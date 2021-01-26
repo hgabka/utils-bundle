@@ -218,9 +218,7 @@ EOT
             $question->setMultiselect(true);
             $question->setValidator(function ($groups) {
                 if ('' === $groups) {
-                    throw new \RuntimeException(
-                        'Group(s) must be of type integer and can not be empty'
-                    );
+                    throw new \RuntimeException('Group(s) must be of type integer and can not be empty');
                 }
 
                 return $groups;

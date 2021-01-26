@@ -17,8 +17,6 @@ class Cast extends FunctionNode
     protected $second;
 
     /**
-     * @param SqlWalker $sqlWalker
-     *
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)
@@ -30,9 +28,6 @@ class Cast extends FunctionNode
         );
     }
 
-    /**
-     * @param Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);

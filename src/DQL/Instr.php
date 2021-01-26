@@ -14,9 +14,6 @@ class Instr extends FunctionNode
     public $str;
     public $substr;
 
-    /**
-     * @param Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -28,8 +25,6 @@ class Instr extends FunctionNode
     }
 
     /**
-     * @param SqlWalker $sqlWalker
-     *
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

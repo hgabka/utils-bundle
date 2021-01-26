@@ -14,7 +14,7 @@ class Slugifier implements SlugifierInterface
         if (!empty($replace)) {
             $text = str_replace($replace, ' ', $text);
         }
-        setlocale(LC_ALL, 'hu_HU.utf-8');
+        setlocale(\LC_ALL, 'hu_HU.utf-8');
         $subst = substr($delimiter, 0, 1);
         // replace all non letters or digits by -
         $text = preg_replace('~[^\\pL0-9]+~u', $subst, $text); // substitutes anything but letters, numbers and '_' with separator

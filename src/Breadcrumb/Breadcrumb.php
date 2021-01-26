@@ -78,8 +78,6 @@ class Breadcrumb
     }
 
     /**
-     * @param array $i18nParams
-     *
      * @return $this
      */
     public function setI18nParams(array $i18nParams)
@@ -89,17 +87,12 @@ class Breadcrumb
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isForceLink(): bool
     {
         return $this->forceLink;
     }
 
     /**
-     * @param bool $forceLink
-     *
      * @return Breadcrumb
      */
     public function setForceLink(bool $forceLink): self

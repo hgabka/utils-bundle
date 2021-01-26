@@ -22,8 +22,6 @@ class KeyValueHydrator extends AbstractHydrator
     /**
      * Hydrates a row.
      *
-     * @param array $row
-     * @param array $result
      * @SuppressWarnings(PMD.ElseExpression)
      *
      * @return bool

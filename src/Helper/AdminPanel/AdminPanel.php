@@ -22,8 +22,7 @@ class AdminPanel
     /**
      * Add admin panel adaptor.
      *
-     * @param AdminPanelAdaptorInterface $adaptor
-     * @param mixed                      $priority
+     * @param mixed $priority
      */
     public function addAdminPanelAdaptor(AdminPanelAdaptorInterface $adaptor, $priority = 0)
     {

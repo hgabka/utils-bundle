@@ -26,10 +26,9 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     /**
      * Renders the permission admin widget.
      *
-     * @param \Twig_Environment $env
-     * @param PermissionAdmin   $permissionAdmin The permission admin
-     * @param FormView          $form            The form
-     * @param array             $parameters      Extra parameters
+     * @param PermissionAdmin $permissionAdmin The permission admin
+     * @param FormView        $form            The form
+     * @param array           $parameters      Extra parameters
      *
      * @return string
      */

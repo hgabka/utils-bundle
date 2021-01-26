@@ -15,7 +15,6 @@ class OAuthUserFinder implements OAuthUserFinderInterface
     /**
      * OAuthUserCreator constructor.
      *
-     * @param EntityManagerInterface $em
      * @param $userClass
      */
     public function __construct(EntityManagerInterface $em, $userClass)

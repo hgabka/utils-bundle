@@ -61,13 +61,13 @@ class NestedTreeCRUDController extends CRUDController
                 );
             }
             $this->addFlash(
-                    'sonata_flash_error',
-                    $this->trans('kuma_admin_list.messages.edit_error')
-                );
+                'sonata_flash_error',
+                $this->trans('kuma_admin_list.messages.edit_error')
+            );
 
             return new RedirectResponse(
-                    $this->admin->generateUrl('list', [$this->admin->getIdParameter() => $folderId])
-                );
+                $this->admin->generateUrl('list', [$this->admin->getIdParameter() => $folderId])
+            );
         }
 
         return $this->render(
@@ -163,19 +163,19 @@ class NestedTreeCRUDController extends CRUDController
                 );
             }
             $this->addFlash(
-                    'sonata_flash_error',
-                    $this->trans('kuma_admin_list.messages.add_error')
-                );
+                'sonata_flash_error',
+                $this->trans('kuma_admin_list.messages.add_error')
+            );
             $redirect = $this->admin->generateUrl('list');
 
             return new RedirectResponse(
-                    $this->admin->generateUrl(
+                $this->admin->generateUrl(
                         'list',
                         [
                             $this->admin->getIdParameter() => $newObject->getId(),
                         ]
                     )
-                );
+            );
         }
 
         return $this->render(

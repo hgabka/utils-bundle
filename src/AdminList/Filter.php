@@ -42,9 +42,6 @@ class Filter
         $this->uniqueId = $uniqueId;
     }
 
-    /**
-     * @param Request $request
-     */
     public function bindRequest(Request $request)
     {
         // @var FilterTypeInterface $type
