@@ -1825,6 +1825,10 @@
         color: #fff;
     }
 }
-.table-sortable tr.ui-sortable-helper {
-    display: table;
+.table-sortable tr {
+    cursor: move;
+
+    &.ui-sortable-helper {
+        display: table;
+    }
 }
