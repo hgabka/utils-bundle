@@ -1827,10 +1827,11 @@
 }
 .table-sortable tr {
     &.ui-sortable-handle {
-         cursor: move;
+        cursor: move;
     }
     
     &.ui-sortable-helper {
         display: table;
+        cursor: move;
     }
 }
