@@ -1826,9 +1826,8 @@
     }
 }
 .table-sortable tr {
-    cursor: move;
-
     &.ui-sortable-helper {
+        cursor: move;
         display: table;
     }
 }
