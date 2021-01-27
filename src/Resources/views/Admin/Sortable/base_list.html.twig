@@ -16,7 +16,7 @@
                     {% block list_header %}{% endblock %}
 
                     {% if admin.datagrid.results|length > 0 %}
-                        <table {% if admin.hasAccess('list') %}data-url="{{ admin.generateUrl('sorting') }}" {% endif %}class="table table-bordered table-striped table-hover sonata-ba-list table-sortable">
+                        <table data-direction="{{ admin.descending is same as(true) ? 'desc' : 'asc' }}" {% if admin.hasAccess('list') %}data-url="{{ admin.generateUrl('sorting') }}" {% endif %}class="table table-bordered table-striped table-hover sonata-ba-list table-sortable">
                             {% block table_header %}
                                 <thead>
                                 <tr class="sonata-ba-list-field-header">

@@ -11,15 +11,17 @@ class SortableAdminHandler {
     init() {
         let $table = $(this.selector);
         let $form = $(this.formSelector);
+        let desc = 'desc' === $table.data('direction') ? true : false;
 
         if ($table.length > 0) {
             $(this.selector + ' tbody').sortable({
                 stop: (event, ui) => {
                     if ($form.length) {
-                        let realIndex = 0;
-                        $(this.selector + ' tbody tr').each((index, element) => {
+                        let $rows = $(this.selector + ' tbody tr');
+                        let realIndex = desc ? $rows.length - 1 : 0;
+                        $rows.each((index, element) => {
                             let $input = $form.find('input[name="positions['+$(element).data('id')+']"]');
-                            $input.val(realIndex++);
+                            $input.val(desc ? realIndex-- : realIndex++);
                         });
 
                         $.ajax({
