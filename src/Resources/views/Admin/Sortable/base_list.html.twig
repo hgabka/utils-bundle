@@ -1,5 +1,7 @@
 {% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
 
+{% set sortPossible = admin.datagrid.results|length > 1 and not admin.filtered %}
+
 {% block list_table %}
     <div class="col-xs-12 col-md-12">
         {% set batchactions = admin.batchactions %}
@@ -16,7 +18,7 @@
                     {% block list_header %}{% endblock %}
 
                     {% if admin.datagrid.results|length > 0 %}
-                        <table data-direction="{{ admin.descending is same as(true) ? 'desc' : 'asc' }}" {% if admin.hasAccess('list') %}data-url="{{ admin.generateUrl('sorting') }}" {% endif %}class="table table-bordered table-striped table-hover sonata-ba-list table-sortable">
+                        <table data-direction="{{ admin.descending is same as(true) ? 'desc' : 'asc' }}" {% if admin.hasAccess('list') %}data-url="{{ admin.generateUrl('sorting') }}" {% endif %}class="table table-bordered table-striped table-hover sonata-ba-list{% if sortPossible%} table-sortable{% endif %}">
                             {% block table_header %}
                                 <thead>
                                 <tr class="sonata-ba-list-field-header">
@@ -219,7 +221,7 @@
         </form>
         {% endif %}
     </div>
-    {% if admin.datagrid.results|length > 0 %}
+    {% if sortPossible %}
         <form id="positions-form">
             {% for object in admin.datagrid.results %}
                 <input type="hidden" name="positions[{{ object.id }}]" value="{{ attribute(object, admin.sortField) }}" />

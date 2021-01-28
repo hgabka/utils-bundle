@@ -81,6 +81,15 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return $this;
     }
 
+    public function isFiltered()
+    {
+        $filters = $this->getFilterPersister()->get($this->getCode());
+
+        unset($filters['_sort_by'], $filters['_sort_order'], $filters['_per_page']);
+
+        return !empty($filters);
+    }
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('sorting');
