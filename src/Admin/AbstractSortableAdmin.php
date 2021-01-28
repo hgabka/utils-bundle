@@ -85,7 +85,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
     {
         $filters = $this->getFilterPersister()->get($this->getCode());
 
-        unset($filters['_sort_by'], $filters['_sort_order'], $filters['_per_page']);
+        unset($filters['_sort_by'], $filters['_sort_order'], $filters['_per_page'], $filters['_page']);
 
         return !empty($filters);
     }
