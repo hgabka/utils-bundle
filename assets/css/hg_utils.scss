@@ -1835,3 +1835,17 @@
         cursor: move;
     }
 }
+
+.sonata-ba-field {
+    .urlchooser {
+        .input-group-btn.show {
+            display: table-cell !important;
+        }
+        .input-group.urlchooser-widget {
+            width: 500px;
+        }
+        .js-urlchooser-value.form-control {
+            width: 500px;
+        }
+    }
+}
