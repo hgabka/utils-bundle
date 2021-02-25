@@ -1872,3 +1872,36 @@
     }
 }
 
+.sonata-collection-row {
+    .fa.fa-minus-circle {
+        color: red;
+        font-size: 20px;
+        margin-top: -5px;
+
+        &::before {
+            content: "\f1f8";
+        }
+    }
+}
+
+.sonata-collection-add {
+    span {
+        color: #333;
+        text-decoration: none !important;
+        padding-left: 8px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 16px;
+        vertical-align: 1px;
+    }
+
+    &:hover {
+        text-decoration: none !important;
+    }
+
+    .fa.fa-plus-circle {
+        color: green;
+        font-size: 20px;
+    }
+}
+
