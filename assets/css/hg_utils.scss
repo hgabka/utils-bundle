@@ -1850,6 +1850,25 @@
     }
 }
 
-.sortable-collection .sonata-collection-row {
-    cursor: move;
+.sortable-collection {
+    .sonata-collection-row {
+        cursor: move;
+
+        span.row-number {
+            float: left;
+            margin-left: -30px;
+            margin-top: 5px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3384BE;
+            border: 1px solid #3384BE;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            line-height: 17px;
+        }
+    }
 }
+
