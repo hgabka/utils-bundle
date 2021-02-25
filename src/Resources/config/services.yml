@@ -67,6 +67,17 @@ services:
         tags:
             - { name: form.type }
 
+    hgabka_utils.form.type.dynamic_collection_type:
+        class: Hgabka\UtilsBundle\Form\Type\DynamicCollectionType
+        arguments:  ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.form.type.dynamic_element_type:
+        class: Hgabka\UtilsBundle\Form\Type\DynamicElementType
+        tags:
+            - { name: form.type }
+
     hgabka_utils.form.type.plain_widget:
         class: Hgabka\UtilsBundle\Form\Type\StaticControlType
         arguments: ['@templating']
