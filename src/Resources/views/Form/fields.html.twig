@@ -406,5 +406,26 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block dynamic_collection_widget %}
+    <div class="dynamic-collection collection-{{ form.vars.name }}"
+    {% if prototype is defined and not prototype.rendered %}
+        data-prototype="{{ form_widget(prototype)|e('html_attr') }}"
+        data-entities="{{ entities|json_encode|e('html_attr') }}"
+    {% endif %}
+    >
+    {{ form_widget(form.text) }}
+    {% for child in form.elements %}
+        {{ block('dynamic_element_widget') }}
+    {% endfor %}
+    </div>
+{% endblock %}
 
-
+{% block dynamic_element_widget %}
+    <div class="dynamic-collection-box">
+        {% set child = child is defined ? child : form %}
+        {{ form_widget(child.id) }}
+        {{ form_widget(child.name) }}
+        <span class="collection-name">{{ child.name.vars.value }}</span>
+        <span class="fa fa-times delete-collection-box"></span>
+    </div>
+{% endblock %}
