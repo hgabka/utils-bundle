@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Type;
+namespace Hgabka\UtilsBundle\Form\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\PersistentCollection;
