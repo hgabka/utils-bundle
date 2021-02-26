@@ -61,7 +61,7 @@ class SortableCollectionHandler
                 }
             } else {
                 if (!$moveUp.length) {
-                    $container.prepend($('<span class="move-up"><i class="fa fa-sort-up"></i></span>'));
+                    $container.prepend($('<span class="collection-move move-up"><i class="fa fa-sort-up"></i></span>'));
                 }
             }
 
@@ -71,7 +71,7 @@ class SortableCollectionHandler
                 }
             } else {
                 if (!$moveDown.length) {
-                    $container.prepend($('<span class="move-down"><i class="fa fa-sort-down"></i></span>'));
+                    $container.prepend($('<span class="collection-move move-down"><i class="fa fa-sort-down"></i></span>'));
                 }
             }
 
