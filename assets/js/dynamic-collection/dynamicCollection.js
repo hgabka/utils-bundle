@@ -76,10 +76,26 @@ class DynamicCollectionHandler {
 
         if (!exists) {
             let prototype = $collectionContainer.data('prototype');
-            let newWidget = prototype.replace(/__name__/g, counter);
+            let prototypeName = $collectionContainer.data('prototype-name');
+
+            let regexp = new RegExp(prototypeName, 'g');
+            let newWidget = prototype.replace(regexp, counter);
 
             newWidget = newWidget.replace(/__entityid__/g, id);
             newWidget = newWidget.replace(/__entityname__/g, name);
+
+
+            let $parentCollectionHolder = $collectionContainer.closest('.sonata-collection-row').closest('[data-prototype');
+
+            if ($parentCollectionHolder.length) {
+                let parentProtoName = $parentCollectionHolder.data('prototype_name') || '__name__';
+                let modifiedId = $input.attr('id').replace($parentCollectionHolder.attr('id') + '_', '');
+                let parts = modifiedId.split('_');
+
+                let newRegExp = new RegExp(parentProtoName, 'g');
+                newWidget = newWidget.replace(newRegExp, parts[0]);
+            }
+
             $collectionContainer.append($(newWidget));
             counter++;
             $collectionContainer.data('counter', counter);
