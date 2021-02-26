@@ -3,6 +3,21 @@
 require('jquery-ui-sortable');
 let ajaxModal = require('../ajaxmodal.js').ajaxModal;
 
+$.fn.swapWith = function(that) {
+    var $this = this;
+    var $that = $(that);
+
+    // create temporary placeholder
+    var $temp = $("<div>");
+
+    // 3-step swap
+    $this.before($temp);
+    $that.before($this);
+    $temp.after($that).remove();
+
+    return $this;
+}
+
 class SortableCollectionHandler
 {
     constructor(options) {
@@ -13,6 +28,8 @@ class SortableCollectionHandler
             formHolderSelector: '.sonata-ba-form'
         }, options);
         this.reOrder = this.reOrder.bind(this);
+        this.moveDown = this.moveDown.bind(this);
+        this.moveUp = this.moveDown.bind(this);
     }
 
     reOrder() {
@@ -27,9 +44,30 @@ class SortableCollectionHandler
                 $container.prepend($span);
             }
             $span.html(i);
+            let $moveUp = $container.find('.move-up');
+            let $moveDown = $container.find('.move-down');
+            if (i === 1) {
+                if ($moveUp.length) {
+                    $moveUp.remove();
+                }
+            } else {
+                if (!$moveUp.length) {
+                    $container.prepend($('<span class="move-up">up</span>'));
+                }
+            }
+
+            if (i === $rows.length) {
+                if ($moveDown.length) {
+                    $moveDown.remove();
+                }
+            } else {
+                if (!$moveDown.length) {
+                    $container.prepend($('<span class="move-down">down</span>'));
+                }
+            }
 
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
-        })
+        });
     }
 
     init() {
@@ -73,6 +111,33 @@ class SortableCollectionHandler
 
                 setTimeout(this.reOrder, 200);
             });
+
+            $collectionHolder.on('click', '.move-down', e => {
+                let $target = $(e.currentTarget);
+                this.moveDown($target.closest(this.options.rowSelector));
+            });
+
+            $collectionHolder.on('click', '.move-up', e => {
+                let $target = $(e.currentTarget);
+                this.moveUp($target.closest(this.options.rowSelector));
+            });
+
+            this.reOrder();
+        }
+    }
+
+    moveDown($box) {
+        let $next = $box.next(this.options.rowSelector);
+        if ($next.length) {
+            $box.swapWith($next);
+
+            this.reOrder();
+        }
+    }
+    moveUp($box) {
+        let $prev = $box.prev(this.options.rowSelector);
+        if ($prev.length) {
+            $box.swapWith($prev);
 
             this.reOrder();
         }
