@@ -42,11 +42,9 @@ class DynamicCollectionType extends AbstractType
             ->add('elements', FormType::class)
             ->addModelTransformer(new CallbackTransformer(
                 function ($value) {
-                    dump($value);
                     return null;
                 },
                 function ($data) {
-                    dump('trans', $data);
                     return $data['elements'] ?? new ArrayCollection();
                 }
             ))
@@ -98,7 +96,7 @@ class DynamicCollectionType extends AbstractType
 
                 /** @var PersistentCollection $formData */
                 $formData = $form->getData();
-                dump($data);
+
                 if (null === $data) {
                     $data = [];
                 }
@@ -148,6 +146,7 @@ class DynamicCollectionType extends AbstractType
                 $event->setData(['elements' => $formData]);
             })
         ;
+
 
         if ($options['allow_add'] && $options['prototype']) {
             $prototypeOptions = array_replace([
