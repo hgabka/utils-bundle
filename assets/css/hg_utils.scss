@@ -1905,3 +1905,21 @@
     }
 }
 
+.dynamic-collection {
+    .dynamic-collection-box {
+        display: inline-block;
+        padding: 5px 10px 5px 5px;
+        border: 1px solid  #ccc;
+        margin-top: 5px;
+        background: #eee;
+        margin-right: 10px;
+
+        span.delete-collection-box {
+            float: right;
+            color: red;
+            cursor: pointer;
+                line-height: 20px;
+                margin-left: 10px;
+        }
+    }
+}
