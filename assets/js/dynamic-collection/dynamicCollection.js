@@ -11,42 +11,54 @@ class DynamicCollectionHandler {
             deleteLinkSelector: '.delete-collection-box',
         }, options);
 
-        this.addWidget = this.addWidget.bind(this);
+        this.addBox = this.addBox.bind(this);
+        this.initContainer = this.initContainer.bind(this);
     }
 
     init() {
         let $container = $(this.options.containerSelector);
 
-        $container.each((index, element) => {
-            let $collectionContainer = $(element);
-            let $boxes = $collectionContainer.find(this.options.boxSelector);
-            let counter = $collectionContainer.data('counter') || $boxes.length;
-
-            let $input = $collectionContainer.find(this.options.inputSelector);
-            $input.typeahead({
-                source: $collectionContainer.data('entities'),
-                onSelect: (data) => this.addWidget($collectionContainer, $input, counter, data.value, data.text),
+        if ($container.length) {
+            $container.each((index, element) => {
+               this.initContainer($(element));
             });
-
-            $input.keypress((event) => {
-                let keycode = (event.keyCode ? event.keyCode : event.which);
-                if(keycode === 13){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    if ($input.val().length) {
-                        this.addWidget($collectionContainer, $input, counter, '', $input.val());
-                    }
-                }
-            });
-
-            $collectionContainer.on('click', this.options.deleteLinkSelector, event => {
-                event.preventDefault();
-                $(event.currentTarget).closest(this.options.boxSelector).remove();
-            })
-        });
+        }
     }
 
-    addWidget($collectionContainer, $input, counter, id, name) {
+    initContainer($collectionContainer) {
+        if ($collectionContainer.data('dynamic_collection:initialized')) {
+            return;
+        }
+
+        let $boxes = $collectionContainer.find(this.options.boxSelector);
+        let counter = $collectionContainer.data('counter') || $boxes.length;
+
+        let $input = $collectionContainer.find(this.options.inputSelector);
+        $input.typeahead({
+            source: $collectionContainer.data('entities'),
+            onSelect: (data) => this.addBox($collectionContainer, $input, counter, data.value, data.text),
+        });
+
+        $input.keypress((event) => {
+            let keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode === 13) {
+                event.preventDefault();
+                event.stopPropagation();
+                if ($input.val().length) {
+                    this.addBox($collectionContainer, $input, counter, '', $input.val());
+                }
+            }
+        });
+
+        $collectionContainer.on('click', this.options.deleteLinkSelector, event => {
+            event.preventDefault();
+            $(event.currentTarget).closest(this.options.boxSelector).remove();
+        });
+
+        $collectionContainer.data('dynamic_collection:initialized', true);
+    }
+
+    addBox($collectionContainer, $input, counter, id, name) {
         let $boxes = $collectionContainer.find(this.options.boxSelector);
         let exists = false;
 
@@ -69,7 +81,6 @@ class DynamicCollectionHandler {
         }
 
         $input.val('');
-
     }
 }
 
