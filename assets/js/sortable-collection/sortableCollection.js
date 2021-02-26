@@ -3,16 +3,25 @@
 require('jquery-ui-sortable');
 let ajaxModal = require('../ajaxmodal.js').ajaxModal;
 
-$.fn.swapWith = function(that) {
+$.fn.swapWith = function(that, animate) {
     var $this = this;
     var $that = $(that);
 
     // create temporary placeholder
     var $temp = $("<div>");
 
-    // 3-step swap
-    $this.before($temp);
-    $that.before($this);
+    if ('undefined' !== typeof animate && animate) {
+        $this.hide();
+        $that.hide();
+        $this.before($temp);
+        $that.before($this);
+        $this.fadeIn({duration: 'slow', easing: 'linear'});
+        $that.fadeIn({duration: 'slow', easing: 'linear'});
+    } else {
+        // 3-step swap
+        $this.before($temp);
+        $that.before($this);
+    }
     $temp.after($that).remove();
 
     return $this;
@@ -29,7 +38,7 @@ class SortableCollectionHandler
         }, options);
         this.reOrder = this.reOrder.bind(this);
         this.moveDown = this.moveDown.bind(this);
-        this.moveUp = this.moveDown.bind(this);
+        this.moveUp = this.moveUp.bind(this);
     }
 
     reOrder() {
@@ -52,7 +61,7 @@ class SortableCollectionHandler
                 }
             } else {
                 if (!$moveUp.length) {
-                    $container.prepend($('<span class="move-up">up</span>'));
+                    $container.prepend($('<span class="move-up"><i class="fa fa-sort-up"></i></span>'));
                 }
             }
 
@@ -62,7 +71,7 @@ class SortableCollectionHandler
                 }
             } else {
                 if (!$moveDown.length) {
-                    $container.prepend($('<span class="move-down">down</span>'));
+                    $container.prepend($('<span class="move-down"><i class="fa fa-sort-down"></i></span>'));
                 }
             }
 
@@ -129,7 +138,7 @@ class SortableCollectionHandler
     moveDown($box) {
         let $next = $box.next(this.options.rowSelector);
         if ($next.length) {
-            $box.swapWith($next);
+            $box.swapWith($next, true);
 
             this.reOrder();
         }
@@ -137,7 +146,7 @@ class SortableCollectionHandler
     moveUp($box) {
         let $prev = $box.prev(this.options.rowSelector);
         if ($prev.length) {
-            $prev.swapWith($box);
+            $prev.swapWith($box, true);
 
             this.reOrder();
         }
