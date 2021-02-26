@@ -1853,11 +1853,20 @@
 .sortable-collection {
     .sonata-collection-row {
         cursor: move;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 30px 20px 20px 20px;
+        margin-bottom: 20px;
+
+        &.ui-sortable-helper {
+            background: #eee;
+            opacity: 0.8;
+        }
 
         span.row-number {
-            float: left;
-            margin-left: -30px;
-            margin-top: 5px;
+            position: absolute;
+            top: -20px;
+            left: -73px;
             display: block;
             width: 20px;
             height: 20px;
@@ -1868,6 +1877,67 @@
             font-weight: bold;
             text-align: center;
             line-height: 17px;
+        }
+
+        span.collection-move {
+            font-size: 20px;
+            display: inline-block;
+            border: 1px solid #aaa;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 10px;
+            text-align: center;
+            background-color: #3384be;
+            color: #fff;
+            position: absolute;
+            cursor: pointer;
+            top: -20px;
+
+            &.move-down {
+                i {
+                    vertical-align: 2px;
+                }
+            }
+
+            &.move-up {
+                i {
+                    vertical-align: 0;
+                    margin-top: 4px;
+                }
+            }
+            &.move-down {
+                i {
+                    vertical-align: 0;
+                    margin-top: -20px;
+                }
+            }
+        }
+
+        &.has-up {
+            &.has-down {
+                span.collection-move.move-up {
+                    right: 40px;
+                }
+
+                span.collection-move.move-down {
+                    right: 15px;
+                }
+            }
+
+            &:not(.has-down) {
+                span.collection-move.move-up {
+                    right: 15px;
+                }
+            }
+        }
+
+        &.has-down {
+            &:not(.has-up) {
+                span.collection-move.move-down {
+                    right: 15px;
+                }
+            }
         }
     }
 }
