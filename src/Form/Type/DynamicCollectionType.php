@@ -182,6 +182,7 @@ class DynamicCollectionType extends AbstractType
         if ($form->getConfig()->hasAttribute('prototype')) {
             $prototype = $form->getConfig()->getAttribute('prototype');
             $view->vars['prototype'] = $prototype->createView($form->get('elements')->createView($view));
+            $view->vars['prototype_name'] = $options['prototype_name'] ?? '__name__';
         }
 
         $entities =
