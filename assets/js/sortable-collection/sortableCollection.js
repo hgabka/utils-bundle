@@ -137,7 +137,7 @@ class SortableCollectionHandler
     moveUp($box) {
         let $prev = $box.prev(this.options.rowSelector);
         if ($prev.length) {
-            $box.swapWith($prev);
+            $prev.swapWith($box);
 
             this.reOrder();
         }
