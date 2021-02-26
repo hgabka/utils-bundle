@@ -13,14 +13,19 @@ class DynamicCollectionHandler {
 
         this.addBox = this.addBox.bind(this);
         this.initContainer = this.initContainer.bind(this);
+        this.initCollection = this.initCollection.bind(this);
     }
 
     init() {
         let $container = $(this.options.containerSelector);
+        this.initCollection($container);
+    }
+
+    initCollection($container) {
 
         if ($container.length) {
             $container.each((index, element) => {
-               this.initContainer($(element));
+                this.initContainer($(element));
             });
         }
     }
