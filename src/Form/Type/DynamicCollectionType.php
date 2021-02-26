@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Form\Type;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\PersistentCollection;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
@@ -41,9 +42,12 @@ class DynamicCollectionType extends AbstractType
             ->add('elements', FormType::class)
             ->addModelTransformer(new CallbackTransformer(
                 function ($value) {
+                    dump($value);
+                    return null;
                 },
                 function ($data) {
-                    return $data['elements'] ?? $data;
+                    dump('trans', $data);
+                    return $data['elements'] ?? new ArrayCollection();
                 }
             ))
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -67,7 +71,6 @@ class DynamicCollectionType extends AbstractType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form = $event->getForm();
                 $data = $event->getData();
-
                 if (null === $data || '' === $data) {
                     $data = ['elements' => []];
                 }
@@ -81,7 +84,7 @@ class DynamicCollectionType extends AbstractType
                     if (!$form->get('elements')->has((string) $name)) {
                         $form->get('elements')->add($name, DynamicElementType::class, [
                             'data' => [
-                                'id' => '',
+                                'id' => $value['id'] ?? '',
                                 'name' => $value['name'],
                             ],
                         ])
@@ -95,17 +98,19 @@ class DynamicCollectionType extends AbstractType
 
                 /** @var PersistentCollection $formData */
                 $formData = $form->getData();
-
+                dump($data);
                 if (null === $data) {
                     $data = [];
                 }
 
-                foreach ($formData as $key => $child) {
-                    if (empty($data['elements'][$key]) || null === $data['elements'][$key]['id']) {
-                        unset($formData[$key]);
-                    }
+                if (!empty($formData)) {
+                    foreach ($formData as $key => $child) {
+                        if (empty($data['elements'][$key]) || null === $data['elements'][$key]['id']) {
+                            unset($formData[$key]);
+                        }
 
-                    unset($data['elements'][$key]);
+                        unset($data['elements'][$key]);
+                    }
                 }
 
                 if (!empty($data['elements'])) {
@@ -129,6 +134,10 @@ class DynamicCollectionType extends AbstractType
 
                             $this->entityManager->persist($entity);
                             $this->entityManager->flush($entity);
+                        }
+
+                        if (empty($formData)) {
+                            $formData = new ArrayCollection();
                         }
 
                         if (!$formData->contains($entity)) {
