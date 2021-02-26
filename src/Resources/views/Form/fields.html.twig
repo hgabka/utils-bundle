@@ -410,8 +410,9 @@
     <div class="dynamic-collection collection-{{ form.vars.name }}"
     {% if prototype is defined and not prototype.rendered %}
         data-prototype="{{ form_widget(prototype)|e('html_attr') }}"
-        data-entities="{{ entities|json_encode|e('html_attr') }}"
+        data-prototype-name="{{ prototype_name }}"
     {% endif %}
+         data-entities="{{ entities|json_encode|e('html_attr') }}"
     >
     {{ form_widget(form.text) }}
     {% for child in form.elements %}
@@ -429,3 +430,4 @@
         <span class="fa fa-times delete-collection-box"></span>
     </div>
 {% endblock %}
+
