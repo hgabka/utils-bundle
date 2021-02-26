@@ -59,20 +59,24 @@ class SortableCollectionHandler
                 if ($moveUp.length) {
                     $moveUp.remove();
                 }
+                $element.removeClass('has-up');
             } else {
                 if (!$moveUp.length) {
                     $container.prepend($('<span class="collection-move move-up"><i class="fa fa-sort-up"></i></span>'));
                 }
+                $element.addClass('has-up');
             }
 
             if (i === $rows.length) {
                 if ($moveDown.length) {
                     $moveDown.remove();
                 }
+                $element.removeClass('has-down');
             } else {
                 if (!$moveDown.length) {
                     $container.prepend($('<span class="collection-move move-down"><i class="fa fa-sort-down"></i></span>'));
                 }
+                $element.addClass('has-down');
             }
 
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
