@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Export;
+namespace Hgabka\UtilsBundle\Export;
 
 class ExportField
 {
