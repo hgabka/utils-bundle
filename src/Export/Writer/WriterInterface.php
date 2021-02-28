@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Export\Writer;
+namespace Hgabka\UtilsBundle\Export\Writer;
 
 interface WriterInterface
 {
