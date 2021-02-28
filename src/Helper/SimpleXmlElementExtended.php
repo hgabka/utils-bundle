@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helper;
+namespace Hgabka\UtilsBundle\Helper;
 
 use SimpleXMLElement;
 
