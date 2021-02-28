@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Export\Writer;
+namespace Hgabka\UtilsBundle\Export\Writer;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
