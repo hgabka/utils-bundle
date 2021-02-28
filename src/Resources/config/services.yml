@@ -296,3 +296,7 @@ services:
 
     Hgabka\UtilsBundle\Google\DriveDownloader:
         alias: hgabka_utils.google_drive_downloader
+
+    Hgabka\UtilsBundle\Export\ExportFieldDescriptor:
+        shared: false
+        autowire: true
