@@ -1489,9 +1489,10 @@ class HgabkaUtils
         return $disposition.'; '.HeaderUtils::toString($params, ';');
     }
     
-    public function sanitizeXML($string)
+    public function sanitizeXML($string, $encoding = 'UTF-8')
     {
         if (!empty($string)) {
+            $string = htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, $encoding);
             // remove EOT+NOREP+EOX|EOT+<char> sequence (FatturaPA)
             $string = preg_replace('/(\x{0004}(?:\x{201A}|\x{FFFD})(?:\x{0003}|\x{0004}).)/u', '', $string);
 
