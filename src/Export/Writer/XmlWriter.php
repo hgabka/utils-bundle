@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Export\Writer;
+namespace Hgabka\UtilsBundle\Export\Writer;
 
-use App\Helper\SimpleXmlElementExtended;
+use Hgabka\UtilsBundle\Helper\SimpleXmlElementExtended;
 
 class XmlWriter implements TypedWriterInterface
 {
