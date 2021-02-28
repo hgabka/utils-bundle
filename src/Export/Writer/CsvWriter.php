@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Export\Writer;
+namespace Hgabka\UtilsBundle\Export\Writer;
 
-use App\Export\Exception\InvalidDataFormatException;
+use Hgabka\UtilsBundle\Export\Exception\InvalidDataFormatException;
+use RuntimeException;
 
 class CsvWriter implements TypedWriterInterface
 {
@@ -79,7 +80,7 @@ class CsvWriter implements TypedWriterInterface
         $this->withBom = $withBom;
 
         if (is_file($filename)) {
-            throw new \RuntimeException(sprintf('The file %s already exist', $filename));
+            throw new RuntimeException(sprintf('The file %s already exist', $filename));
         }
     }
 
