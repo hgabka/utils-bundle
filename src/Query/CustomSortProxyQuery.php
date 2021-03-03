@@ -1,0 +1,92 @@
+<?php
+
+namespace Hgabka\UtilsBundle\Query;
+
+use Doctrine\Common\Collections\Criteria;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
+
+class CustomSortProxyQuery extends BaseQuery
+{
+    /**
+     * The map of query hints.
+     *
+     * @var array<string,mixed>
+     */
+    private $hints = [];
+
+    public function setSortBy($parentAssociationMappings, $fieldMapping)
+    {
+        $alias = $this->entityJoin($parentAssociationMappings);
+        if (is_string($fieldMapping['fieldName'])) {
+            $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
+        } else {
+            $this->sortBy = $fieldMapping['fieldName'];
+        }
+
+        return $this;
+    }
+
+    public function execute(array $params = [], $hydrationMode = null)
+    {
+        // always clone the original queryBuilder
+        $queryBuilder = clone $this->queryBuilder;
+
+        $rootAlias = current($queryBuilder->getRootAliases());
+
+        if ($this->getSortBy()) {
+            $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
+            $queryBuilder->resetDQLPart('orderBy');
+
+            $sortBy = $this->getSortBy();
+            if (is_callable($sortBy)) {
+                call_user_func($sortBy, $queryBuilder, $this->getSortOrder());
+            } else {
+                if (false === strpos($sortBy, '.')) { // add the current alias
+                    $sortBy = $rootAlias . '.' . $sortBy;
+                }
+                $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
+            }
+
+            foreach ($orderByDQLPart as $orderBy) {
+                $queryBuilder->addOrderBy($orderBy);
+            }
+        }
+
+        /* By default, always add a sort on the identifier fields of the first
+         * used entity in the query, because RDBMS do not guarantee a
+         * particular order when no ORDER BY clause is specified, or when
+         * the field used for sorting is not unique.
+         */
+
+        $identifierFields = $queryBuilder
+            ->getEntityManager()
+            ->getMetadataFactory()
+            ->getMetadataFor(current($queryBuilder->getRootEntities()))
+            ->getIdentifierFieldNames();
+
+        $existingOrders = [];
+        /** @var Query\Expr\OrderBy $order */
+        foreach ($queryBuilder->getDQLPart('orderBy') as $order) {
+            foreach ($order->getParts() as $part) {
+                $existingOrders[] = trim(str_replace([Criteria::DESC, Criteria::ASC], '', $part));
+            }
+        }
+
+        foreach ($identifierFields as $identifierField) {
+            $order = $rootAlias . '.' . $identifierField;
+            if (!\in_array($order, $existingOrders, true)) {
+                $queryBuilder->addOrderBy(
+                    $order,
+                    $this->getSortOrder() // reusing the sort order is the most natural way to go
+                );
+            }
+        }
+
+        $query = $this->getFixedQueryBuilder($queryBuilder)->getQuery();
+        foreach ($this->hints as $name => $value) {
+            $query->setHint($name, $value);
+        }
+
+        return $query->execute($params, $hydrationMode);
+    }
+}
