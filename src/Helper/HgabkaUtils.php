@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 
 class HgabkaUtils
 {
@@ -1533,5 +1535,23 @@ class HgabkaUtils
         }
 
         return $string;
+    }
+    
+    /**
+     * @param Response|null $response
+     * @return Response|null
+     */
+    public function setNoCacheResponseHeaders(?Response $response = null)
+    {
+        if (null === $response) {
+            $response = new Response();
+        }
+        
+        $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        $response->headers->set('Expires', 'Thu, 19 Nov 1981 08:52:00 GMT');
+
+        return $response;
     }
 }
