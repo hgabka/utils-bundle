@@ -215,7 +215,7 @@ abstract class EntityExporter
         $options = $field->getOptions();
 
         if (array_key_exists('callback', $options)) {
-            $value = is_callable($options['callback']) ? call_user_func($options['callback'], $column, $field, $entity, $row) : '';
+            $value = is_callable($options['callback']) ? call_user_func($options['callback'], $entity, $column, $field, $row) : '';
             $this->addCellValue($column, (string) $value, $entity, $options['value_callback'] ?? null, $field, $row);
 
             return;
