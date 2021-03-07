@@ -56,7 +56,7 @@ abstract class EntityExporter
         try {
             return $accessor->getValue($object, $field);
         } catch (Throwable $e) {
-            return '';
+            return null;
         }
     }
 
