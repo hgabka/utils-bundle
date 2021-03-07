@@ -43,9 +43,11 @@ class CustomSortProxyQuery extends BaseQuery
             }
 
             if (is_callable($sortBy)) {
-                call_user_func($sortBy, $queryBuilder, $this->getSortOrder());
+                call_user_func($sortBy, $queryBuilder, $this->getSortOrder(), $rootAlias);
+            } elseif (isset($sortBy['field'])) {
+                $queryBuilder->addOrderBy($rootAlias.'.deliveryName', $this->getSortOrder());
             } elseif (isset($sortBy['callback']) && is_callable($sortBy['callback'])) {
-                call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder());
+                call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (is_string($sortBy)) {
                 if (false === strpos($sortBy, '.')) { // add the current alias
                     $sortBy = $rootAlias . '.' . $sortBy;
