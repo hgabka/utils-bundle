@@ -34,21 +34,29 @@ class CustomSortProxyQuery extends BaseQuery
         $rootAlias = current($queryBuilder->getRootAliases());
 
         if ($this->getSortBy()) {
-            $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
-            $queryBuilder->resetDQLPart('orderBy');
-
             $sortBy = $this->getSortBy();
+            $priority = isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
+            $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
+
+            if ('high' === $priority) {
+                $queryBuilder->resetDQLPart('orderBy');
+            }
+
             if (is_callable($sortBy)) {
                 call_user_func($sortBy, $queryBuilder, $this->getSortOrder());
-            } else {
+            } elseif (isset($sortBy['callback']) && is_callable($sortBy['callback'])) {
+                call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder());
+            } elseif (is_string($sortBy)) {
                 if (false === strpos($sortBy, '.')) { // add the current alias
                     $sortBy = $rootAlias . '.' . $sortBy;
                 }
                 $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
             }
 
-            foreach ($orderByDQLPart as $orderBy) {
-                $queryBuilder->addOrderBy($orderBy);
+            if ('high' === $priority) {
+                foreach ($orderByDQLPart as $orderBy) {
+                    $queryBuilder->addOrderBy($orderBy);
+                }
             }
         }
 
