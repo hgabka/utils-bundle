@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 
 abstract class EntityExporter
 {
@@ -52,7 +53,11 @@ abstract class EntityExporter
 
         $accessor = PropertyAccess::createPropertyAccessor();
 
-        return $accessor->getValue($object, $field);
+        try {
+            return $accessor->getValue($object, $field);
+        } catch (Throwable $e) {
+            return '';
+        }
     }
 
     /**
