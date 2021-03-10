@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Left extends FunctionNode
 {
-    const FUNCTION_NAME = 'REPEAT';
+    const FUNCTION_NAME = 'LEFT';
 
     /** @var string */
     public $string;
@@ -33,7 +33,7 @@ class Left extends FunctionNode
     public function getSql(SqlWalker $sqlWalker)
     {
         return
-            'REPEAT('.
+            'LEFT('.
             $this->string->dispatch($sqlWalker).', '.
             $this->offset->dispatch($sqlWalker).
             ')'
