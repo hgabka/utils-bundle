@@ -21,9 +21,9 @@ class Left extends FunctionNode
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        $this->repeatString = $parser->StringPrimary();
+        $this-string = $parser->StringPrimary();
         $parser->match(Lexer::T_COMMA);
-        $this->repetition = $parser->ArithmeticPrimary();
+        $this->offset = $parser->ArithmeticPrimary();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
