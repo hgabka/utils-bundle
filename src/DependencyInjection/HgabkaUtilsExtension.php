@@ -10,6 +10,7 @@ use Hgabka\UtilsBundle\DQL\Date;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
+use Hgabka\UtilsBundle\DQL\Left;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Regexp;
 use Hgabka\UtilsBundle\DQL\Repeat;
@@ -101,6 +102,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomNumericFunction', [Round::FUNCTION_NAME, Round::class]);
             $definition->addMethodCall('addCustomStringFunction', [Regexp::FUNCTION_NAME, Regexp::class]);
             $definition->addMethodCall('addCustomStringFunction', [Substr::FUNCTION_NAME, Substr::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Left::FUNCTION_NAME, Left::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
