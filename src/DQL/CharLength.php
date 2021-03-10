@@ -14,14 +14,11 @@ class CharLength extends FunctionNode
     /** @var string */
     public $string;
 
-    /** @var int */
-    public $offset;
-
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        $this->repeatString = $parser->StringPrimary();
+        $this->string = $parser->StringPrimary();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
