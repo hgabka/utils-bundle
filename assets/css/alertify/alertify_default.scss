@@ -143,9 +143,15 @@
 
 .alertify-close-x {
     display: block;
-    background-color: $alertify-close-button-background-color;
-    border: 1px solid $alertify-close-button-border-color;
-    border-radius: 50%;
+    @if $alertify-close-button-background != false {
+        background-image: url($alertify-close-button-background);
+        background-repeat: no-repeat;
+    } @else {
+
+        background-color: $alertify-close-button-background-color;
+        border: 1px solid $alertify-close-button-border-color;
+        border-radius: 50%;
+    }
     cursor: pointer;
     width: 31px;
     height: 31px;
@@ -154,7 +160,11 @@
     top: $alertify-close-button-top;
 
     &::before {
-        content: "X";
+        @if $alertify-close-button-background != false {
+            content: "";
+        } @else {
+            content: "X";
+        }
         font-size: $alertify-close-button-font-size;
         color: $alertify-close-button-color;
         line-height: $alertify-close-button-line-height;
@@ -167,12 +177,14 @@
         width: 100%;
     }
 
-    &:hover {
-        background-color: $alertify-close-button-hover-background-color;
-        border: 1px solid $alertify-close-button-hover-border-color;
+    @if $alertify-close-button-background == false {
+        &:hover {
+            background-color: $alertify-close-button-hover-background-color;
+            border: 1px solid $alertify-close-button-hover-border-color;
 
-        &::before {
-            color: $alertify-close-button-hover-color;
+            &::before {
+                color: $alertify-close-button-hover-color;
+            }
         }
     }
 }
