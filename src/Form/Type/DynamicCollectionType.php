@@ -38,6 +38,7 @@ class DynamicCollectionType extends AbstractType
         $builder
             ->add('text', TextType::class, [
                 'label' => false,
+                'required' => false,
             ])
             ->add('elements', FormType::class)
             ->addModelTransformer(new CallbackTransformer(
