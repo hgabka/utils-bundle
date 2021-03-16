@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Query;
 
 use Doctrine\Common\Collections\Criteria;
+use function is_array;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
 
 class CustomSortProxyQuery extends BaseQuery
@@ -35,7 +36,7 @@ class CustomSortProxyQuery extends BaseQuery
 
         if ($this->getSortBy()) {
             $sortBy = $this->getSortBy();
-            $priority = isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
+            $priority = is_array($sortBy) && isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
             $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
 
             if ('high' === $priority) {
