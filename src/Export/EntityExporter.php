@@ -255,13 +255,18 @@ abstract class EntityExporter
      */
     protected function addCellValue(&$column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null)
     {
-        $value = is_string($value) || is_callable($callback) ? trim(is_callable($callback) ? $callback($value, $entity, $row) : $value) : $value;
+        $value = is_callable($callback) ? $callback($value, $entity, $row) : $value;
+        if ((null === $field || false !== $field->getOption('trim')) && is_string($value)) {
+            $value = trim($value);
+        }
 
-        $value = null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8'])
+        $value = null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8'] || !is_string($value))
             ? $value
             : mb_convert_encoding($value, $this->encoding, 'UTF-8')
         ;
-        $value = str_replace('%%row%%', $row, $value);
+        if (is_string($value)) {
+            $value = str_replace('%%row%%', $row, $value);
+        }
 
         $this->setCellValue($column++, $value, $field);
     }
