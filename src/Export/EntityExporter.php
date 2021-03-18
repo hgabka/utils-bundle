@@ -260,7 +260,7 @@ abstract class EntityExporter
             $value = trim($value);
         }
 
-        $value = null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8'] || !is_string($value))
+        $value = null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8']) || !is_string($value)
             ? $value
             : mb_convert_encoding($value, $this->encoding, 'UTF-8')
         ;
