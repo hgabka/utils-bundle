@@ -260,7 +260,7 @@ abstract class EntityExporter
             $value = trim($value);
         }
 
-        $value = null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8']) || !is_string($value)
+        $value = $this->isUtf8() || !is_string($value)
             ? $value
             : mb_convert_encoding($value, $this->encoding, 'UTF-8')
         ;
@@ -350,5 +350,13 @@ abstract class EntityExporter
 
         $this->writeHeader();
         $this->writeData();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isUtf8(): bool
+    {
+        return null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8']);
     }
 }
