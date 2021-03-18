@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Export;
 
 class ExportField
 {
-    /** @var string|null */
+    /** @var null|string */
     protected $type;
 
     /** @var array */
@@ -22,17 +22,12 @@ class ExportField
         $this->options = $options;
     }
 
-    /**
-     * @return string|null
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string|null $type
-     *
      * @return ExportField
      */
     public function setType(?string $type): self
@@ -42,17 +37,12 @@ class ExportField
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
-     * @param array $options
-     *
      * @return ExportField
      */
     public function setOptions(array $options): self

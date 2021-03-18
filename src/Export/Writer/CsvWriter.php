@@ -111,7 +111,7 @@ class CsvWriter implements TypedWriterInterface
             stream_filter_append($this->file, 'filterTerminate', \STREAM_FILTER_WRITE, ['terminate' => $this->terminate]);
         }
         if (true === $this->withBom) {
-            fprintf($this->file, \chr(0xEF) . \chr(0xBB) . \chr(0xBF));
+            fprintf($this->file, \chr(0xEF).\chr(0xBB).\chr(0xBF));
         }
     }
 
@@ -143,9 +143,6 @@ class CsvWriter implements TypedWriterInterface
         ++$this->position;
     }
 
-    /**
-     * @param array $data
-     */
     protected function addHeaders(array $data)
     {
         $headers = [];

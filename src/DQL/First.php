@@ -10,7 +10,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 /**
  * FirstFunction ::=
- *     "FIRST" "(" Subselect ")"
+ *     "FIRST" "(" Subselect ")".
  */
 class First extends FunctionNode
 {
@@ -37,6 +37,6 @@ class First extends FunctionNode
      */
     public function getSql(SqlWalker $sqlWalker)
     {
-        return '(' . $this->subselect->dispatch($sqlWalker) . ' LIMIT 1)';
+        return '('.$this->subselect->dispatch($sqlWalker).' LIMIT 1)';
     }
 }

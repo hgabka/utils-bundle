@@ -19,9 +19,6 @@ class ExportFieldDescriptor
 
     /**
      * ExportFieldDescriptor constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param HgabkaUtils         $hgabkaUtils
      */
     public function __construct(TranslatorInterface $translator, HgabkaUtils $hgabkaUtils)
     {
@@ -39,7 +36,7 @@ class ExportFieldDescriptor
     public function add($key, $type = null, $options = []): self
     {
         if (!isset($options['label'])) {
-            $options['label'] = 'label.export.' . str_replace('.', '_', $key);
+            $options['label'] = 'label.export.'.str_replace('.', '_', $key);
         }
         $options['label'] = $this->translator->trans($options['label'], [], 'messages');
         if (!isset($options['key'])) {
@@ -62,12 +59,12 @@ class ExportFieldDescriptor
     /**
      * @param $key
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function get($key)
     {
         if (empty($this->fields[$key])) {
-            throw new InvalidArgumentException('Invalid export key: ' . $key);
+            throw new InvalidArgumentException('Invalid export key: '.$key);
         }
 
         return $this->fields[$key] ?? null;
@@ -107,9 +104,6 @@ class ExportFieldDescriptor
         $this->fields = $newFields;
     }
 
-    /**
-     * @return array
-     */
     public function all(): array
     {
         return $this->fields;
@@ -120,9 +114,6 @@ class ExportFieldDescriptor
         $this->fields = [];
     }
 
-    /**
-     * @return string
-     */
     public function getSchemeAndHttpHost(): string
     {
         return $this->hgabkaUtils->getSchemeAndHttpHost();

@@ -1490,11 +1490,11 @@ class HgabkaUtils
 
         return $disposition.'; '.HeaderUtils::toString($params, ';');
     }
-    
+
     public function sanitizeXML($string, $encoding = 'UTF-8')
     {
         if (!empty($string)) {
-            $string = htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, $encoding);
+            $string = htmlspecialchars($string, \ENT_XML1 | \ENT_COMPAT, $encoding);
             // remove EOT+NOREP+EOX|EOT+<char> sequence (FatturaPA)
             $string = preg_replace('/(\x{0004}(?:\x{201A}|\x{FFFD})(?:\x{0003}|\x{0004}).)/u', '', $string);
 
@@ -1516,16 +1516,16 @@ class HgabkaUtils
 
             $result = '';
             $current = null;
-            $length = strlen($string);
+            $length = \strlen($string);
             for ($i = 0; $i < $length; ++$i) {
-                $current = ord($string[$i]);
+                $current = \ord($string[$i]);
                 if ((0x9 === $current) ||
                     (0xA === $current) ||
                     (0xD === $current) ||
                     (($current >= 0x20) && ($current <= 0xD7FF)) ||
                     (($current >= 0xE000) && ($current <= 0xFFFD)) ||
                     (($current >= 0x10000) && ($current <= 0x10FFFF))) {
-                    $result .= chr($current);
+                    $result .= \chr($current);
                 } else {
                     $ret = null;    // use this to strip invalid character(s)
                     // $ret .= " ";    // use this to replace them with spaces
@@ -1536,17 +1536,16 @@ class HgabkaUtils
 
         return $string;
     }
-    
+
     /**
-     * @param Response|null $response
-     * @return Response|null
+     * @return null|Response
      */
     public function setNoCacheResponseHeaders(?Response $response = null)
     {
         if (null === $response) {
             $response = new Response();
         }
-        
+
         $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');

@@ -3,7 +3,6 @@
 namespace Hgabka\UtilsBundle\Query;
 
 use Doctrine\Common\Collections\Criteria;
-use function is_array;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
 
 class CustomSortProxyQuery extends BaseQuery
@@ -18,8 +17,8 @@ class CustomSortProxyQuery extends BaseQuery
     public function setSortBy($parentAssociationMappings, $fieldMapping)
     {
         $alias = $this->entityJoin($parentAssociationMappings);
-        if (is_string($fieldMapping['fieldName'])) {
-            $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
+        if (\is_string($fieldMapping['fieldName'])) {
+            $this->sortBy = $alias.'.'.$fieldMapping['fieldName'];
         } else {
             $this->sortBy = $fieldMapping['fieldName'];
         }
@@ -36,22 +35,22 @@ class CustomSortProxyQuery extends BaseQuery
 
         if ($this->getSortBy()) {
             $sortBy = $this->getSortBy();
-            $priority = is_array($sortBy) && isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
+            $priority = \is_array($sortBy) && isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
             $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
 
             if ('high' === $priority) {
                 $queryBuilder->resetDQLPart('orderBy');
             }
 
-            if (is_callable($sortBy)) {
-                call_user_func($sortBy, $queryBuilder, $this->getSortOrder(), $rootAlias);
+            if (\is_callable($sortBy)) {
+                \call_user_func($sortBy, $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (isset($sortBy['field'])) {
                 $queryBuilder->addOrderBy($rootAlias.'.deliveryName', $this->getSortOrder());
-            } elseif (isset($sortBy['callback']) && is_callable($sortBy['callback'])) {
-                call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder(), $rootAlias);
-            } elseif (is_string($sortBy)) {
+            } elseif (isset($sortBy['callback']) && \is_callable($sortBy['callback'])) {
+                \call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder(), $rootAlias);
+            } elseif (\is_string($sortBy)) {
                 if (false === strpos($sortBy, '.')) { // add the current alias
-                    $sortBy = $rootAlias . '.' . $sortBy;
+                    $sortBy = $rootAlias.'.'.$sortBy;
                 }
                 $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
             }
@@ -84,7 +83,7 @@ class CustomSortProxyQuery extends BaseQuery
         }
 
         foreach ($identifierFields as $identifierField) {
-            $order = $rootAlias . '.' . $identifierField;
+            $order = $rootAlias.'.'.$identifierField;
             if (!\in_array($order, $existingOrders, true)) {
                 $queryBuilder->addOrderBy(
                     $order,

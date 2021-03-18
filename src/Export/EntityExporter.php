@@ -15,7 +15,7 @@ use Throwable;
 abstract class EntityExporter
 {
     /** @var null string */
-    protected $encoding = null;
+    protected $encoding;
 
     /**
      * @var array
@@ -36,16 +36,13 @@ abstract class EntityExporter
      */
     protected $currentRow = 1;
 
-    /**
-     * @return Generator
-     */
     abstract public function getData(): Generator;
 
     /**
      * @param $object
      * @param $field
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     protected function getObjectFieldValue($object, $field)
     {
@@ -100,9 +97,6 @@ abstract class EntityExporter
         return $this->headers;
     }
 
-    /**
-     * @param array $fields
-     */
     protected function postWriteData(array $fields)
     {
     }
@@ -110,7 +104,6 @@ abstract class EntityExporter
     /**
      * Set column label and make column auto size.
      *
-     * @param string $column
      * @param string $value
      */
     protected function setHeader(string &$column, $value)
@@ -119,9 +112,8 @@ abstract class EntityExporter
     }
 
     /**
-     * @param                  $column
-     * @param                  $value
-     * @param ExportField|null $field
+     * @param $column
+     * @param $value
      *
      * @return mixed
      */
@@ -147,7 +139,7 @@ abstract class EntityExporter
     {
         $i = 0;
         foreach ($this->getHeaders() as $key) {
-            if (is_array($key)) {
+            if (\is_array($key)) {
                 $this->setHeader($i, current($key));
             } else {
                 $field = $this->fieldDescriptor->get($key);
@@ -162,7 +154,7 @@ abstract class EntityExporter
      * @param $object
      * @param $field
      *
-     * @return mixed|string|null
+     * @return null|mixed|string
      */
     protected function getRelationValue($object, $field): ?string
     {
@@ -172,7 +164,7 @@ abstract class EntityExporter
             return '';
         }
 
-        if (!is_object($relation) || count($parts) <= 1) {
+        if (!\is_object($relation) || \count($parts) <= 1) {
             return (string) $relation;
         }
 
@@ -182,8 +174,7 @@ abstract class EntityExporter
     }
 
     /**
-     * @param        $row
-     * @param object $entity
+     * @param $row
      */
     protected function preWriteRow($row, object $entity): bool
     {
@@ -191,18 +182,16 @@ abstract class EntityExporter
     }
 
     /**
-     * @param        $row
-     * @param object $entity
+     * @param $row
      */
     protected function postWriteRow($row, object $entity)
     {
     }
 
     /**
-     * @param object $entity
-     * @param        $field
+     * @param $field
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     protected function getEntityFieldValue(object $entity, $field)
     {
@@ -214,17 +203,14 @@ abstract class EntityExporter
     }
 
     /**
-     * @param             $column
-     * @param ExportField $field
-     * @param object      $entity
-     * @param int         $row
+     * @param $column
      */
     protected function writeColumn(&$column, ExportField $field, object $entity, int $row)
     {
         $options = $field->getOptions();
 
-        if (array_key_exists('callback', $options)) {
-            $value = is_callable($options['callback']) ? call_user_func($options['callback'], $entity, $column, $field, $row) : '';
+        if (\array_key_exists('callback', $options)) {
+            $value = \is_callable($options['callback']) ? \call_user_func($options['callback'], $entity, $column, $field, $row) : '';
             $this->addCellValue($column, (string) $value, $entity, $options['value_callback'] ?? null, $field, $row);
 
             return;
@@ -234,7 +220,7 @@ abstract class EntityExporter
             if (isset($options['property_path'])) {
                 $this->addCellValue($column, $this->getEntityFieldValue($entity, $options['property_path']), $entity, $options['value_callback'] ?? null, $field, $row);
             } else {
-                $method = 'addCellValue' . ucfirst($field->getType());
+                $method = 'addCellValue'.ucfirst($field->getType());
                 if (!method_exists($this, $method)) {
                     throw new InvalidArgumentException('Nincs ilyen metodus: ', $method);
                 }
@@ -247,24 +233,21 @@ abstract class EntityExporter
     }
 
     /**
-     * @param                  $column
-     * @param                  $value
-     * @param object|null      $entity
-     * @param callable|null    $callback
-     * @param ExportField|null $field
+     * @param $column
+     * @param $value
      */
     protected function addCellValue(&$column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null)
     {
-        $value = is_callable($callback) ? $callback($value, $entity, $row) : $value;
-        if ((null === $field || false !== $field->getOption('trim')) && is_string($value)) {
+        $value = \is_callable($callback) ? $callback($value, $entity, $row) : $value;
+        if ((null === $field || false !== $field->getOption('trim')) && \is_string($value)) {
             $value = trim($value);
         }
 
-        $value = $this->isUtf8() || !is_string($value)
+        $value = $this->isUtf8() || !\is_string($value)
             ? $value
             : mb_convert_encoding($value, $this->encoding, 'UTF-8')
         ;
-        if (is_string($value)) {
+        if (\is_string($value)) {
             $value = str_replace('%%row%%', $row, $value);
         }
 
@@ -272,11 +255,8 @@ abstract class EntityExporter
     }
 
     /**
-     * @param                  $column
-     * @param                  $field
-     * @param object|null      $entity
-     * @param callable|null    $callback
-     * @param ExportField|null $exportField
+     * @param $column
+     * @param $field
      */
     protected function addCellValueAuto(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
@@ -288,27 +268,19 @@ abstract class EntityExporter
     }
 
     /**
-     * @param                  $column
-     * @param                  $field
-     * @param object|null      $entity
-     * @param callable|null    $callback
-     * @param ExportField|null $exportField
-     * @param int|null         $row
+     * @param $column
+     * @param $field
      */
     protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         $this->addCellValueAuto($column, $field, $entity, null === $callback ? function ($value) {
-            return $this->trans('general.label.' . ($value ? 'yes' : 'no'));
+            return $this->trans('general.label.'.($value ? 'yes' : 'no'));
         } : $callback, $exportField, $row);
     }
 
     /**
-     * @param                  $column
-     * @param                  $field
-     * @param object|null      $entity
-     * @param callable|null    $callback
-     * @param ExportField|null $exportField
-     * @param int|null         $row
+     * @param $column
+     * @param $field
      */
     protected function addCellValueRelation(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
@@ -325,10 +297,10 @@ abstract class EntityExporter
             if (false === $this->preWriteRow($this->currentRow, $entity)) {
                 continue;
             }
-            
+
             $i = 0;
             foreach ($this->getHeaders() as $key) {
-                if (is_array($key)) {
+                if (\is_array($key)) {
                     $key = key($key);
                 }
                 $field = $this->fieldDescriptor->get($key);
@@ -352,11 +324,8 @@ abstract class EntityExporter
         $this->writeData();
     }
 
-    /**
-     * @return bool
-     */
     protected function isUtf8(): bool
     {
-        return null === $this->encoding || in_array(strtolower($this->encoding), ['utf-8', 'utf8']);
+        return null === $this->encoding || \in_array(strtolower($this->encoding), ['utf-8', 'utf8'], true);
     }
 }

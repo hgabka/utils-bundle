@@ -25,8 +25,6 @@ class DynamicCollectionType extends AbstractType
 
     /**
      * DynamicCollectionType constructor.
-     *
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -148,11 +146,10 @@ class DynamicCollectionType extends AbstractType
             })
         ;
 
-
         if ($options['allow_add'] && $options['prototype']) {
             $prototypeOptions = array_replace([
                 'required' => $options['required'],
-                'label' => $options['prototype_name'] . 'label__',
+                'label' => $options['prototype_name'].'label__',
             ]);
 
             if (null !== $options['prototype_data']) {
@@ -191,7 +188,7 @@ class DynamicCollectionType extends AbstractType
                 ->getRepository($options['class'])
                 ->createQueryBuilder('e')
                 ->select('e.id')
-                ->addSelect('e.' . $options['property'])
+                ->addSelect('e.'.$options['property'])
                 ->getQuery()
                 ->getResult(KeyValueHydrator::HYDRATOR_NAME)
         ;
