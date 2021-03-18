@@ -185,6 +185,15 @@ abstract class EntityExporter
      * @param        $row
      * @param object $entity
      */
+    protected function preWriteRow($row, object $entity): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param        $row
+     * @param object $entity
+     */
     protected function postWriteRow($row, object $entity)
     {
     }
@@ -308,6 +317,10 @@ abstract class EntityExporter
 
         $row = 1;
         foreach ($this->getData() as $entity) {
+            if (false === $this->preWriteRow($this->currentRow, $entity)) {
+                continue;
+            }
+            
             $i = 0;
             foreach ($this->getHeaders() as $key) {
                 if (is_array($key)) {
