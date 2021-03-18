@@ -8,6 +8,7 @@ use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
 use Hgabka\UtilsBundle\DQL\Date;
+use Hgabka\UtilsBundle\DQL\First;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
@@ -105,6 +106,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Substr::FUNCTION_NAME, Substr::class]);
             $definition->addMethodCall('addCustomStringFunction', [Left::FUNCTION_NAME, Left::class]);
             $definition->addMethodCall('addCustomStringFunction', [CharLength::FUNCTION_NAME, CharLength::class]);
+            $definition->addMethodCall('addCustomStringFunction', [First::FUNCTION_NAME, First::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
