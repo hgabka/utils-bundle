@@ -188,7 +188,7 @@
         {% if attr['maxlength'] is defined %}
             {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
         {% endif %}
-        <textarea {{ block('widget_attributes') }}{% if form.vars.customconfig is not empty %} data-custom-config='{{ form.vars.customconfig|json_encode(constant('JSON_FORCE_OBJECT'))|raw }}'{% endif %}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
+        <textarea {{ block('widget_attributes') }}{% if form.vars.customconfig is not empty %} data-custom-config='{{ form.vars.customconfig|json_encode()|raw }}'{% endif %}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
     {% endspaceless %}
 {% endblock wysiwyg_widget %}
 
