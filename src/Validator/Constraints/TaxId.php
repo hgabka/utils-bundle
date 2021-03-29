@@ -6,5 +6,5 @@ use Symfony\Component\Validator\Constraint;
 
 class TaxId extends Constraint
 {
-    public $message = 'hg_utils.validator.tax_id_format_error';
+    public $message = 'hg_utils.tax_id.message';
 }
