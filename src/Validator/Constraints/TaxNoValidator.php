@@ -13,8 +13,6 @@ class TaxNoValidator extends ConstraintValidator
 
     /**
      * TaxNoValidator constructor.
-     *
-     * @param TaxValidator $taxValidator
      */
     public function __construct(TaxValidator $taxValidator)
     {
