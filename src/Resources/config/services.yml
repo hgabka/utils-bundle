@@ -300,3 +300,16 @@ services:
     Hgabka\UtilsBundle\Export\ExportFieldDescriptor:
         shared: false
         autowire: true
+    
+    Hgabka\UtilsBundle\Validator\TaxValidator:
+        autoconfigure: true
+        autowire: true
+
+    Hgabka\UtilsBundle\Validator\Constraints\TaxIdValidator:
+        autoconfigure: true
+        autowire: true
+
+    Hgabka\UtilsBundle\Validator\Constraints\TaxNoValidator:
+        autoconfigure: true
+        autowire: true
+
