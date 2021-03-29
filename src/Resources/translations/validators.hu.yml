@@ -1,3 +1,7 @@
 hg_utils:
     recaptcha:
         message: Jelölje be, hogy Ön nem robot
+    tax_id:
+        message: Az adószám formátuma nem megfelelő
+    tax_no:
+        message: Az adóazonosító formátuma nem megfelelő
