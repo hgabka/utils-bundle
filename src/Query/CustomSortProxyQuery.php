@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Query;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
 
 class CustomSortProxyQuery extends BaseQuery
@@ -26,7 +27,7 @@ class CustomSortProxyQuery extends BaseQuery
         return $this;
     }
 
-    public function execute(array $params = [], $hydrationMode = null)
+    public function getDoctrineQuery(): Query
     {
         // always clone the original queryBuilder
         $queryBuilder = clone $this->queryBuilder;
@@ -45,7 +46,7 @@ class CustomSortProxyQuery extends BaseQuery
             if (\is_callable($sortBy)) {
                 \call_user_func($sortBy, $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (isset($sortBy['field'])) {
-                $queryBuilder->addOrderBy($rootAlias.'.deliveryName', $this->getSortOrder());
+                $queryBuilder->addOrderBy($rootAlias.'.'.$sortBy['field'], $this->getSortOrder());
             } elseif (isset($sortBy['callback']) && \is_callable($sortBy['callback'])) {
                 \call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (\is_string($sortBy)) {
@@ -92,11 +93,6 @@ class CustomSortProxyQuery extends BaseQuery
             }
         }
 
-        $query = $this->getFixedQueryBuilder($queryBuilder)->getQuery();
-        foreach ($this->hints as $name => $value) {
-            $query->setHint($name, $value);
-        }
-
-        return $query->execute($params, $hydrationMode);
+        return $queryBuilder->getQuery();
     }
 }
