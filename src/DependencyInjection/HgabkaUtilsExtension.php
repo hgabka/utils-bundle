@@ -9,6 +9,7 @@ use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
 use Hgabka\UtilsBundle\DQL\Date;
 use Hgabka\UtilsBundle\DQL\First;
+use Hgabka\UtilsBundle\DQL\Format;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
@@ -102,6 +103,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Instr::FUNCTION_NAME, Instr::class]);
             $definition->addMethodCall('addCustomStringFunction', [Date::FUNCTION_NAME, Date::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Round::FUNCTION_NAME, Round::class]);
+            $definition->addMethodCall('addCustomNumericFunction', [Format::FUNCTION_NAME, Format::class]);
             $definition->addMethodCall('addCustomStringFunction', [Regexp::FUNCTION_NAME, Regexp::class]);
             $definition->addMethodCall('addCustomStringFunction', [Substr::FUNCTION_NAME, Substr::class]);
             $definition->addMethodCall('addCustomStringFunction', [Left::FUNCTION_NAME, Left::class]);
