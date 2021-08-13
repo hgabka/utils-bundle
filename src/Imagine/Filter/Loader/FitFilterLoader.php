@@ -27,8 +27,19 @@ class FitFilterLoader implements LoaderInterface
     public function load(ImageInterface $image, array $options = [])
     {
         [$width, $height] = $options['size'];
+        [$insideWidth, $insideHeight] = $options['inside_size'] ?? [null, null];
+        if (0 === (int)$insideWidth || $insideWidth >= $width) {
+            $insideWidth = null;
+        }
+        if (0 === (int)$insideHeight || $insideHeight >= $height) {
+            $insideHeight = null;
+        }
+        if (null === $insideWidth || null === $insideHeight) {
+            $insideWidth = $insideHeight = null;
+        }
+        $mode = !isset($options['mode']) ? Fit::MODE_INSET : $options['mode'];
 
-        $fitFilter = new Fit($width, $height);
+        $fitFilter = new Fit($insideWidth ?? $width, $insideHeight ?? $height, $mode);
 
         $image = $fitFilter->apply($image);
 
