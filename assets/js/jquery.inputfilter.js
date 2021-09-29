@@ -2,7 +2,7 @@
     $.fn.inputFilter = function(inputFilter) {
         return this.on('input keydown keyup mousedown mouseup select contextmenu drop', function() {
             let valid = !(this.validity && !this.validity.valid);
-            if (valid && inputFilter(this.value)) {
+            if (valid && inputFilter(this.value, this)) {
                 this.oldValue = this.value;
                 this.oldSelectionStart = this.selectionStart;
                 this.oldSelectionEnd = this.selectionEnd;
