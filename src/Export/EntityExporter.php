@@ -254,7 +254,7 @@ abstract class EntityExporter
 
         if (\array_key_exists('callback', $options)) {
             $value = \is_callable($options['callback']) ? \call_user_func($options['callback'], $entity, $column, $field, $row) : '';
-            $this->addCellValue($column, (string) $value, $entity, $options['value_callback'] ?? null, $field, $row);
+            $this->addCellValue($column, $value, $entity, $options['value_callback'] ?? null, $field, $row);
 
             return;
         }
@@ -271,7 +271,7 @@ abstract class EntityExporter
                 $this->$method($column, $options['key'], $entity, $options['value_callback'] ?? null, $field, $row);
             }
         } else {
-            $this->addCellValue($column, (string) $options['value'], $entity, $options['value_callback'] ?? null, $field, $row);
+            $this->addCellValue($column, $options['value'], $entity, $options['value_callback'] ?? null, $field, $row);
         }
     }
 
