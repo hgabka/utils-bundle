@@ -11,19 +11,20 @@ class SimpleXmlElementExtended extends SimpleXMLElement
      *
      * @param string $name
      * @param mixed  $value
+     * @param null   $namespace
      *
-     * @return SimpleXMLElement
+     * @return SimpleXmlElementExtended
      */
-    public function addChildWithCDATA($name, $value = null)
+    public function addChildWithCDATA(string $name, $value = null, $namespace = null): self
     {
-        $new_child = $this->addChild($name);
+        $newChild = $this->addChild($name, null, $namespace);
 
-        if (null !== $new_child) {
-            $node = dom_import_simplexml($new_child);
+        if (null !== $newChild) {
+            $node = dom_import_simplexml($newChild);
             $no = $node->ownerDocument;
             $node->appendChild($no->createCDATASection($value));
         }
 
-        return $new_child;
+        return $newChild;
     }
 }
