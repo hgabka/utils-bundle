@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": "^7.3 || ^8.0",
-        "symfony/framework-bundle": "^4.4 || ^5.3 || ^6.0",
+        "symfony/framework-bundle": "5.4.*",
         "symfony/acl-bundle": "^2.0",
         "liip/imagine-bundle": "^2.1",
         "hgabka/doctrine-translatable-bundle": "^1.0",
