@@ -13,10 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NestedTreeCRUDController extends CRUDController
 {
-    public function listAction()
+    public function listAction(Request $request): Response
     {
-        $request = $this->getRequest();
-
         $this->admin->checkAccess('list');
 
         $preResponse = $this->preList($request);
