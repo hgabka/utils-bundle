@@ -22,7 +22,7 @@ class BreadcrumbTwigExtension extends AbstractExtension implements GlobalsInterf
         $this->breadcrumbManager = $manager;
     }
 
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return ['breadcrumb_manager' => $this->breadcrumbManager];
     }
