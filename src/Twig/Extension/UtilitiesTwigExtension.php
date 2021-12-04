@@ -26,7 +26,7 @@ class UtilitiesTwigExtension extends AbstractExtension
      *
      * @return array An array of filters
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('slugify', [$this, 'slugify']),
@@ -38,7 +38,7 @@ class UtilitiesTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function slugify($text)
+    public function slugify($text): ?string
     {
         return $this->slugifier->slugify($text, '');
     }
