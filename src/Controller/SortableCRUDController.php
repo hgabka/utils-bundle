@@ -5,12 +5,13 @@ namespace Hgabka\UtilsBundle\Controller;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\HttpFoundation\Request;
 
 class SortableCRUDController extends CRUDController
 {
-    public function sortingAction()
+    public function sortingAction(Request $request): Response
     {
-        if (!$this->getRequest()->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             throw $this->createNotFoundException();
         }
 
@@ -18,12 +19,12 @@ class SortableCRUDController extends CRUDController
             return new Response();
         }
 
-        if (!$this->getRequest()->request->has('positions')) {
+        if (!$request->request->has('positions')) {
             return new Response();
         }
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($this->getRequest()->request->get('positions') as $id => $position) {
+        foreach ($request->request->get('positions') as $id => $position) {
             $object = $this->admin->getObject($id);
             if ($object) {
                 $propertyAccessor->setValue($object, $this->admin->getSortField(), $position);
