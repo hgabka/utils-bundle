@@ -3,9 +3,11 @@
 namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\SlugifierInterface;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
 
-class UtilitiesTwigExtension extends Twig_Extension
+class UtilitiesTwigExtension extends AbstractExtension
 {
     /**
      * @var SlugifierInterface
@@ -25,10 +27,10 @@ class UtilitiesTwigExtension extends Twig_Extension
      *
      * @return array An array of filters
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('slugify', [$this, 'slugify']),
+            new TwigFilter('slugify', [$this, 'slugify']),
         ];
     }
 
