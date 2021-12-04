@@ -5,6 +5,7 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\AdminList\AdminList;
 use Hgabka\UtilsBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -29,7 +30,7 @@ class AdminListTwigExtension extends AbstractExtension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
@@ -57,7 +58,7 @@ class AdminListTwigExtension extends AbstractExtension
      *
      * @return string The html markup
      */
-    public function renderWidget(\Twig_Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
     {
         $template = $env->loadTemplate('HgabkaUtilsBundle:AdminListTwigExtension:widget.html.twig');
 
