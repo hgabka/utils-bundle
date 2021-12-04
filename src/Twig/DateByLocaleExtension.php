@@ -17,7 +17,7 @@ class DateByLocaleExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
