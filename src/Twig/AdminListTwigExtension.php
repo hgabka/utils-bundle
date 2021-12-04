@@ -5,11 +5,14 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\AdminList\AdminList;
 use Hgabka\UtilsBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * AdminListTwigExtension.
  */
-class AdminListTwigExtension extends \Twig_Extension
+class AdminListTwigExtension extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -29,8 +32,8 @@ class AdminListTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new \Twig_SimpleFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
+            new TwigFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
         ];
     }
 
