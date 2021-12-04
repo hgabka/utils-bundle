@@ -4,11 +4,14 @@ namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\FormHelper;
 use Symfony\Component\Form\FormView;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFunction;
 
 /**
  * FormToolsExtension.
  */
-class FormToolsExtension extends \Twig_Extension
+class FormToolsExtension extends AbstractExtension
 {
     /**
      * @var FormHelper
@@ -25,11 +28,11 @@ class FormToolsExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('form_errors_recursive', [$this, 'getErrorMessages']),
-            new \Twig_SimpleFunction('form_has_errors_recursive', [$this, 'hasErrorMessages']),
+            new TwigFunction('form_errors_recursive', [$this, 'getErrorMessages']),
+            new TwigFunction('form_has_errors_recursive', [$this, 'hasErrorMessages']),
         ];
     }
 
