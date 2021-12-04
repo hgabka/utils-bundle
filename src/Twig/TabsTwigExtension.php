@@ -3,13 +3,15 @@
 namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\FormWidgets\Tabs\TabPane;
-use Twig_Environment;
-use Twig_Extension;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFunction;
 
 /**
  * Extension to render tabs.
  */
-class TabsTwigExtension extends Twig_Extension
+class TabsTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.
@@ -19,7 +21,7 @@ class TabsTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('tabs_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('tabs_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 
@@ -30,7 +32,7 @@ class TabsTwigExtension extends Twig_Extension
      *
      * @return string
      */
-    public function renderWidget(Twig_Environment $env, TabPane $tabPane, $options = [], $template = '@HgabkaUtils/TabsTwigExtension/widget.html.twig')
+    public function renderWidget(Environment $env, TabPane $tabPane, $options = [], $template = '@HgabkaUtils/TabsTwigExtension/widget.html.twig')
     {
         $template = $env->loadTemplate($template);
 
