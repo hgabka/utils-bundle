@@ -223,12 +223,12 @@ services:
         arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
         public: true
 
-    hgabka_utils.logger.processor.user:
-        class: Hgabka\UtilsBundle\Helper\UserProcessor
-        arguments: [ '@service_container' ]
-        tags:
-        - { name: monolog.processor, method: processRecord }
-        - { name: hgabka_utils.logger.processor, method: processRecord }
+#    hgabka_utils.logger.processor.user:
+#        class: Hgabka\UtilsBundle\Helper\UserProcessor
+#        arguments: [ '@service_container' ]
+#        tags:
+#        - { name: monolog.processor, method: processRecord }
+#        - { name: hgabka_utils.logger.processor, method: processRecord }
 
     hgabka_utils.logger.handler:
         class: Monolog\Handler\RotatingFileHandler
