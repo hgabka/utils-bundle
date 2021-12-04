@@ -4,8 +4,10 @@ namespace Hgabka\UtilsBundle\Twig\Extension;
 
 use Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager;
 use Twig\Extension\GlobalsInterface;
+use Twig\Extension\AbstractExtension;
 
-class BreadcrumbTwigExtension extends \Twig_Extension implements GlobalsInterface
+
+class BreadcrumbTwigExtension extends AbstractExtension implements GlobalsInterface
 {
     /**
      * @var BreadcrumbManager
