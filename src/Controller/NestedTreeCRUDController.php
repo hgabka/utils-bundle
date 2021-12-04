@@ -80,7 +80,7 @@ class NestedTreeCRUDController extends CRUDController
         );
     }
 
-    public function reorderAction(Request $request)
+    public function reorderAction(Request $request): Response
     {
         $this->admin->checkAccess('reorder');
         $folders = [];
@@ -123,7 +123,7 @@ class NestedTreeCRUDController extends CRUDController
         );
     }
 
-    public function subCreateAction(Request $request)
+    public function subCreateAction(Request $request): Response
     {
         $this->admin->checkAccess('create');
         /** @var EntityManager $em */
@@ -187,10 +187,14 @@ class NestedTreeCRUDController extends CRUDController
         );
     }
 
-    public function deleteAction($id)
+    public function deleteAction(Request $request): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
+
         $id = $request->get($this->admin->getIdParameter());
+        \assert(null !== $id);
+        $object = $this->admin->getObject($id);
+        \assert(null !== $object);
         /** @var NestedTreeEntityInterface $object */
         $object = $this->admin->getObject($id);
         /** @var EntityManager $em */
