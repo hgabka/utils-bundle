@@ -4,18 +4,21 @@ namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFunction;
 
-class SidebarTwigExtension extends \Twig_Extension
+class SidebarTwigExtension extends AbstractExtension
 {
     /**
      * Get Twig functions defined in this extension.
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('hideSidebarInNodeEditAdmin', [$this, 'hideSidebarInNodeEditAdmin']),
+            new TwigFunction('hideSidebarInNodeEditAdmin', [$this, 'hideSidebarInNodeEditAdmin']),
         ];
     }
 
