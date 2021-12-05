@@ -12,37 +12,37 @@ abstract class AbstractUser implements UserInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="email", type="string", unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(name="username", type="string", unique=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(name="password", type="string", nullable=true)
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\Column(name="salt", type="string", nullable=true)
      */
-    private $salt;
+    protected $salt;
 
     /**
      * @ORM\Column(name="enabled", type="boolean", nullable=true)
      */
-    private $enabled;
+    protected $enabled;
 
     /**
-     * @ORM\Column(name="roles", type="json_array")
+     * @ORM\Column(name="roles", type="json")
      */
-    private $roles;
+    protected $roles;
 
 
     public function __construct()
@@ -266,4 +266,3 @@ abstract class AbstractUser implements UserInterface
             ) = $data;
     }
 }
-
