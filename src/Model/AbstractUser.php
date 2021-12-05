@@ -4,8 +4,9 @@ namespace Hgabka\UtilsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-abstract class AbstractUser implements UserInterface, SecurityUserInterface
+abstract class AbstractUser implements UserInterface, SecurityUserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -113,7 +114,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
