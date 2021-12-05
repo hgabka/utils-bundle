@@ -752,7 +752,7 @@
 
     .jstree-node,
     .jstree-icon {
-        background-image: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg");
+        background-image: url("../images/jstree/kuma.svg");
     }
 
     .jstree-node {
@@ -832,7 +832,7 @@
     }
 
     #jstree-dnd .jstree-ok, #jstree-dnd .jstree-er {
-        background: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg") no-repeat;
+        background: url("../images/jstree/kuma.svg") no-repeat;
     }
 
     #jstree-dnd .jstree-ok {
