@@ -35,8 +35,8 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('client_id')->end()
                     ->scalarNode('client_secret')->end()
                 ->end()
-            ->end()
-            ->scalarNode('backand_user_class')->defaultValue(AbstractUser::class)->end()
+                ->end()
+            ->scalarNode('backend_user_class')->defaultValue(AbstractUser::class)->end()
             ->end()
         ;
 
