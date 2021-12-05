@@ -321,3 +321,13 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Model\UserManager:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $userClass: '%hgabka_utils.backend_user_class%'
+
+    Hgabka\UtilsBundle\Util\PasswordUpdater:
+        autowire: true
+        autoconfigure: true
+

@@ -3,7 +3,6 @@
 namespace Hgabka\UtilsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Hgabka\UtilsBundle\Entity\UserInterface;
 
 abstract class AbstractUser implements UserInterface
 {
@@ -44,12 +43,13 @@ abstract class AbstractUser implements UserInterface
      */
     protected $roles;
 
+    /** @var string */
+    protected $plainPassword;
 
     public function __construct()
     {
         $this->enabled = false;
         $this->roles = [];
-
     }
 
     /**
@@ -206,7 +206,6 @@ abstract class AbstractUser implements UserInterface
         $this->plainPassword = null;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -256,13 +255,32 @@ abstract class AbstractUser implements UserInterface
             $data = array_values($data);
         }
 
-        list(
+        [
             $this->password,
             $this->salt,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            ) = $data;
+        ] = $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     * @return AbstractUser
+     */
+    public function setPlainPassword(string $plainPassword): AbstractUser
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
