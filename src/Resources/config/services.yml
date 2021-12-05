@@ -90,12 +90,6 @@ services:
         tags:
             - { name: form.type }
 
-    hgabka_utils.form.help_type_extension:
-        class: Hgabka\UtilsBundle\Form\Extension\HelpTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-        public: true
-
     Hgabka\UtilsBundle\Helper\HgabkaUtils:
         arguments:  ["@service_container"]
         alias:
