@@ -331,3 +331,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Util\UserManipulator:
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\CreateUserCommand:
+        autowire: true
+        autoconfigure: true
+

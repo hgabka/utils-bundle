@@ -9,27 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Hgabka\UtilsBundle\Command;
+namespace FOS\UserBundle\Command;
 
-use Hgabka\UtilsBundle\Util\UserManipulator;
+use FOS\UserBundle\Util\UserManipulator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
 /**
- * @author Matthieu Bontemps <matthieu@knplabs.com>
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Luis Cordova <cordoval@gmail.com>
- *
  * @internal
  * @final
  */
-class CreateUserCommand extends Command
+class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'hgabka:backend-user:create';
+    protected static $defaultName = 'fos:user:change-password';
 
     private $userManipulator;
 
@@ -46,30 +41,22 @@ class CreateUserCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::$defaultName)
-            ->setDescription('Create a backend user.')
+            ->setName('fos:user:change-password')
+            ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
-                new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
-                new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ])
             ->setHelp(<<<'EOT'
-The <info>hgabka:backend-user:create</info> command creates a user:
+The <info>fos:user:change-password</info> command changes the password of a user:
 
+  <info>php %command.full_name% matthieu</info>
 
-This interactive shell will ask you for an email and then a password.
+This interactive shell will first ask you for a password.
 
-You can alternatively specify the email and password as the second and third arguments:
+You can alternatively specify the password as a second argument:
 
-You can create a super admin via the super-admin flag:
-
-  <info>php %command.full_name% admin --super-admin</info>
-
-You can create an inactive user (will not be able to log in):
-
-  <info>php %command.full_name% thibault --inactive</info>
+  <info>php %command.full_name% matthieu mypassword</info>
 
 EOT
             );
@@ -81,14 +68,11 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
-        $email = $input->getArgument('email');
         $password = $input->getArgument('password');
-        $inactive = $input->getOption('inactive');
-        $superadmin = $input->getOption('super-admin');
 
-        $this->userManipulator->create($username, $password, $email, !$inactive, $superadmin);
+        $this->userManipulator->changePassword($username, $password);
 
-        $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
+        $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $username));
 
         return 0;
     }
@@ -101,7 +85,7 @@ EOT
         $questions = [];
 
         if (!$input->getArgument('username')) {
-            $question = new Question('Please choose a username:');
+            $question = new Question('Please give the username:');
             $question->setValidator(function ($username) {
                 if (empty($username)) {
                     throw new \Exception('Username can not be empty');
@@ -112,20 +96,8 @@ EOT
             $questions['username'] = $question;
         }
 
-        if (!$input->getArgument('email')) {
-            $question = new Question('Please choose an email:');
-            $question->setValidator(function ($email) {
-                if (empty($email)) {
-                    throw new \Exception('Email can not be empty');
-                }
-
-                return $email;
-            });
-            $questions['email'] = $question;
-        }
-
         if (!$input->getArgument('password')) {
-            $question = new Question('Please choose a password:');
+            $question = new Question('Please enter the new password:');
             $question->setValidator(function ($password) {
                 if (empty($password)) {
                     throw new \Exception('Password can not be empty');

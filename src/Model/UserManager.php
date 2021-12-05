@@ -13,6 +13,8 @@ namespace Hgabka\UtilsBundle\Model;
 
 
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 use Hgabka\UtilsBundle\Util\PasswordUpdater;
 
 /**
@@ -25,17 +27,16 @@ abstract class UserManager implements UserManagerInterface
 {
     private $passwordUpdater;
 
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
     private $userClass;
 
-    public function __construct(PasswordUpdater $passwordUpdater, string $userClass)
+    public function __construct(PasswordUpdater $passwordUpdater, EntityManagerInterface $entityManager, string $userClass)
     {
         $this->passwordUpdater = $passwordUpdater;
         $this->userClass = $userClass;
-    }
-
-    public function getClass()
-    {
-        return $this->userClass;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -102,5 +103,74 @@ abstract class UserManager implements UserManagerInterface
     protected function getPasswordUpdater()
     {
         return $this->passwordUpdater;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteUser(UserInterface $user)
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClass()
+    {
+        if (false !== strpos($this->class, ':')) {
+            $metadata = $this->entityManager->getClassMetadata($this->class);
+            $this->class = $metadata->getName();
+        }
+
+        return $this->class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findUserBy(array $criteria)
+    {
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findUsers()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reloadUser(UserInterface $user)
+    {
+        $this->entityManager->refresh($user);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateUser(UserInterface $user, $andFlush = true)
+    {
+        $this->updateCanonicalFields($user);
+        $this->updatePassword($user);
+
+        $this->entityManager->persist($user);
+        if ($andFlush) {
+            $this->entityManager->flush();
+        }
+    }
+
+    /**
+     * @return ObjectRepository
+     */
+    protected function getRepository()
+    {
+        return $this->entityManager->getRepository($this->getClass());
     }
 }

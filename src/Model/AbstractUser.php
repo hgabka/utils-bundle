@@ -19,6 +19,11 @@ abstract class AbstractUser implements UserInterface
     protected $email;
 
     /**
+     * @ORM\Column(name="confirmation_token", type="string", unique=true)
+     */
+    protected $confirmationToken;
+
+    /**
      * @ORM\Column(name="username", type="string", unique=true)
      */
     protected $username;
@@ -280,6 +285,25 @@ abstract class AbstractUser implements UserInterface
     public function setPlainPassword(string $plainPassword): AbstractUser
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param mixed $confirmationToken
+     * @return AbstractUser
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
 
         return $this;
     }
