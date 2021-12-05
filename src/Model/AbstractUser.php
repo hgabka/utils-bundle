@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgabka\Model;
+namespace Hgabka\UtilsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\UtilsBundle\Entity\UserInterface;
