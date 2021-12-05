@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgabka\UtilsBundle\Validator\Constraint;
+namespace Hgabka\UtilsBundle\Validator\Constraints;
 
 use Hgabka\UtilsBundle\Validator\TaxValidator;
 use Symfony\Component\Validator\Constraint;
