@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgabka\Entity;
+namespace Hgabka\UtilsBundle\Entity;
 
 interface UserInterface
 {
