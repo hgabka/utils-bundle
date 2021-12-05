@@ -306,4 +306,18 @@ services:
     Hgabka\UtilsBundle\Validator\Constraints\TaxNoValidator:
         autoconfigure: true
         autowire: true
+    
+    Hgabka\UtilsBundle\Security\UserProvider:
+        autoconfigure: true
+        autowire: true
+        arguments:
+            $userClass: '%hgabka_utils.backend_user_class%'
+            
+     Hgabka\UtilsBundle\Security\AdminLoginAuthenticator:
+         autoconfigure: true
+         autowire: true
+         
+     Hgabka\UtilsBundle\Form\AdminLoginForm:
+         autowire: true
+         autoconfigure: true
 
