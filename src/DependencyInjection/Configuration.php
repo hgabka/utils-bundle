@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('client_secret')->end()
                 ->end()
             ->end()
+            ->scalarNode('backand_user_class')->isRequired(true)->end()
             ->end()
         ;
 
