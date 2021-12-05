@@ -34,7 +34,7 @@ abstract class AbstractLoginController extends AbstractController
             'email' => $this->authenticationUtils->getLastUsername(),
         ]);
 
-        return $this->render('@HgabkaUtils/security/login.html.twig', [
+        return $this->render('@HgabkaUtils/Security/login.html.twig', [
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'form' => $form->createView(),
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
