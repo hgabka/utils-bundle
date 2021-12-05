@@ -59,7 +59,7 @@ class AdminListTwigExtension extends AbstractExtension
      */
     public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
     {
-        $template = $env->loadTemplate('HgabkaUtilsBundle:AdminListTwigExtension:widget.html.twig');
+        $template = $env->load('HgabkaUtilsBundle:AdminListTwigExtension:widget.html.twig');
 
         $filterBuilder = $view->getFilterBuilder();
 
