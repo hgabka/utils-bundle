@@ -12,7 +12,8 @@
 namespace Hgabka\UtilsBundle\Util;
 
 use Hgabka\UtilsBundle\Model\UserInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
+use Symfony\Component\PasswordHasher\PasswordHasher;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
@@ -24,11 +25,11 @@ use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
  */
 class PasswordUpdater implements PasswordUpdaterInterface
 {
-    private $hasher;
+    private $hasherFactory;
 
-    public function __construct(PasswordHasherInterface $hasher)
+    public function __construct(PasswordHasherFactoryInterface $hasherFactory)
     {
-        $this->hasher = $hasher;
+        $this->hasherFactory = $hasherFactory;
     }
 
     public function hashPassword(UserInterface $user)
@@ -39,8 +40,8 @@ class PasswordUpdater implements PasswordUpdaterInterface
             return;
         }
 
-
-        $hashedPassword = $this->hasher->hash($plainPassword);
+        $hasher = $this->hasherFactory->getPasswordHasher($user);
+        $hashedPassword = $hasher->hash($plainPassword);
         $user->setPassword($hashedPassword);
         $user->eraseCredentials();
     }
