@@ -5,7 +5,7 @@ namespace Hgabka\Model;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\Entity\UserInterface;
 
-abstract class User implements UserInterface
+abstract class AbstractUser implements UserInterface
 {
     /**
      * @ORM\Id
