@@ -97,11 +97,6 @@ interface UserManagerInterface
     public function updateUser(UserInterface $user);
 
     /**
-     * Updates the canonical username and email fields for a user.
-     */
-    public function updateCanonicalFields(UserInterface $user);
-
-    /**
      * Updates a user password if a plain password is set.
      */
     public function updatePassword(UserInterface $user);

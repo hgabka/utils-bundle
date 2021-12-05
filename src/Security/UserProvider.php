@@ -27,12 +27,12 @@ final class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername(string $username): User
     {
-        $user = $this->findOneUserBy(['email' => $username]);
+        $user = $this->findOneUserBy(['username' => $username]);
 
         if (!$user) {
             throw new AuthenticationException(
                 sprintf(
-                    'User with "%s" email does not exist.',
+                    'User with "%s" username does not exist.',
                     $username
                 )
             );

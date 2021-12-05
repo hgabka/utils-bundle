@@ -23,7 +23,7 @@ use Hgabka\UtilsBundle\Util\PasswordUpdater;
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
-abstract class UserManager implements UserManagerInterface
+class UserManager implements UserManagerInterface
 {
     private $passwordUpdater;
 
@@ -120,12 +120,12 @@ abstract class UserManager implements UserManagerInterface
      */
     public function getClass()
     {
-        if (false !== strpos($this->class, ':')) {
-            $metadata = $this->entityManager->getClassMetadata($this->class);
-            $this->class = $metadata->getName();
+        if (false !== strpos($this->userClass, ':')) {
+            $metadata = $this->entityManager->getClassMetadata($this->userClass);
+            $this->userClass = $metadata->getName();
         }
 
-        return $this->class;
+        return $this->userClass;
     }
 
     /**
@@ -157,7 +157,6 @@ abstract class UserManager implements UserManagerInterface
      */
     public function updateUser(UserInterface $user, $andFlush = true)
     {
-        $this->updateCanonicalFields($user);
         $this->updatePassword($user);
 
         $this->entityManager->persist($user);

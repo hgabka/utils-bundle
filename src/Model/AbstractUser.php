@@ -3,8 +3,9 @@
 namespace Hgabka\UtilsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 
-abstract class AbstractUser implements UserInterface
+abstract class AbstractUser implements UserInterface, SecurityUserInterface
 {
     /**
      * @ORM\Id
@@ -19,7 +20,7 @@ abstract class AbstractUser implements UserInterface
     protected $email;
 
     /**
-     * @ORM\Column(name="confirmation_token", type="string", unique=true)
+     * @ORM\Column(name="confirmation_token", type="string", unique=true, nullable=true)
      */
     protected $confirmationToken;
 
@@ -128,18 +129,23 @@ abstract class AbstractUser implements UserInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getRoles(): array
+    public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+
+        // we need to make sure to have at least one role
+        $roles[] = static::ROLE_DEFAULT;
+
+        return array_values(array_unique($roles));
     }
 
     /**
      * @param array $roles
      * @return User
      */
-    public function setRoles(array $roles): User
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -196,7 +202,7 @@ abstract class AbstractUser implements UserInterface
      * @param false $enabled
      * @return User
      */
-    public function setEnabled(bool $enabled): User
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
@@ -214,7 +220,7 @@ abstract class AbstractUser implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function addRole($role): User
+    public function addRole($role): self
     {
         $role = strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
@@ -282,7 +288,7 @@ abstract class AbstractUser implements UserInterface
      * @param string $plainPassword
      * @return AbstractUser
      */
-    public function setPlainPassword(string $plainPassword): AbstractUser
+    public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
 
@@ -301,9 +307,53 @@ abstract class AbstractUser implements UserInterface
      * @param mixed $confirmationToken
      * @return AbstractUser
      */
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken($confirmationToken): self
     {
         $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isSuperAdmin()
+    {
+        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeRole($role)
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setSuperAdmin($boolean)
+    {
+        if (true === $boolean) {
+            $this->addRole(static::ROLE_SUPER_ADMIN);
+        } else {
+            $this->removeRole(static::ROLE_SUPER_ADMIN);
+        }
 
         return $this;
     }
