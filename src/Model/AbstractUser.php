@@ -3,7 +3,7 @@
 namespace Hgabka\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Hgabka\Entity\UserInterface;
+use Hgabka\UtilsBundle\Entity\UserInterface;
 
 abstract class AbstractUser implements UserInterface
 {
