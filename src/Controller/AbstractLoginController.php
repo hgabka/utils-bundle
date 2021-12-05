@@ -16,10 +16,12 @@ abstract class AbstractLoginController extends AbstractController
 
     /**
      * @required
+     *
      * @param AuthenticationUtils $authenticationUtils
+     *
      * @return AbstractLoginController
      */
-    public function setAuthenticationUtils(AuthenticationUtils $authenticationUtils): AbstractLoginController
+    public function setAuthenticationUtils(AuthenticationUtils $authenticationUtils): self
     {
         $this->authenticationUtils = $authenticationUtils;
 
@@ -29,7 +31,7 @@ abstract class AbstractLoginController extends AbstractController
     public function loginAction(): Response
     {
         $form = $this->createForm(AdminLoginForm::class, [
-            'email' => $this->authenticationUtils->getLastUsername()
+            'email' => $this->authenticationUtils->getLastUsername(),
         ]);
 
         return $this->render('@HgabkaUtils/security/login.html.twig', [

@@ -10,11 +10,11 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilderRetrievalInterface;
  */
 class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInterface
 {
-    const PERMISSION_VIEW = 'VIEW';
-    const PERMISSION_EDIT = 'EDIT';
-    const PERMISSION_DELETE = 'DELETE';
-    const PERMISSION_PUBLISH = 'PUBLISH';
-    const PERMISSION_UNPUBLISH = 'UNPUBLISH';
+    public const PERMISSION_VIEW = 'VIEW';
+    public const PERMISSION_EDIT = 'EDIT';
+    public const PERMISSION_DELETE = 'DELETE';
+    public const PERMISSION_PUBLISH = 'PUBLISH';
+    public const PERMISSION_UNPUBLISH = 'UNPUBLISH';
 
     private $map = [
         self::PERMISSION_VIEW => [
@@ -44,7 +44,7 @@ class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInter
      * these bitmasks.
      *
      * @param string      $permission The permission
-     * @param null|object $object     The object
+     * @param object|null $object     The object
      *
      * @return array may return null if permission/object combination is not supported
      */

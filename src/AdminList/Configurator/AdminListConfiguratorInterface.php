@@ -261,21 +261,21 @@ interface AdminListConfiguratorInterface
     /**
      * Returns list title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getListTitle();
 
     /**
      * Returns view title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getViewTitle();
 
     /**
      * Returns edit title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getEditTitle();
 
@@ -303,21 +303,21 @@ interface AdminListConfiguratorInterface
     /**
      * Returns tab fields.
      *
-     * @return null|array|string
+     * @return array|string|null
      */
     public function getDefaultSort();
 
     /**
      * Returns default sort.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getTabFields();
 
     /**
      * Returns pagesize options.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getPagesizeOptions();
 

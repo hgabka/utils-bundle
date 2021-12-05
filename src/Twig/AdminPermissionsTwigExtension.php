@@ -6,7 +6,6 @@ use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Symfony\Component\Form\FormView;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**

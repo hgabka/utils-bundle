@@ -59,10 +59,10 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.google_signin.client_secret', $config['google']['client_secret'] ?? null);
         $container->setParameter('hgabka_utils.google_api_key', $config['google']['api_key'] ?? null);
         $container->setParameter('hgabka_utils.google_signin.hosted_domains', []);
-        
+
         $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
@@ -93,7 +93,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $columnHydrator = [ColumnHydrator::HYDRATOR_NAME, ColumnHydrator::class];
         $countHydrator = [CountHydrator::HYDRATOR_NAME, CountHydrator::class];
         foreach ($container->getParameter('doctrine.entity_managers') as $name => $serviceName) {
-            $definition = $container->getDefinition('doctrine.orm.'.$name.'_configuration');
+            $definition = $container->getDefinition('doctrine.orm.' . $name . '_configuration');
             $definition->addMethodCall('addCustomHydrationMode', $keyValueHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $columnHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $countHydrator);

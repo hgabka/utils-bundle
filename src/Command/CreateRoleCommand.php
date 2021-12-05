@@ -55,7 +55,7 @@ EOT
 
         $roleName = strtoupper($input->getArgument('role'));
         if ('ROLE_' !== substr($roleName, 0, 5)) {
-            $roleName = 'ROLE_'.$roleName;
+            $roleName = 'ROLE_' . $roleName;
         }
 
         $role = new Role($roleName);

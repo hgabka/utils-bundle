@@ -1,0 +1,42 @@
+<?php
+$srcDir = __DIR__ . DIRECTORY_SEPARATOR . 'src';
+$finder = PhpCsFixer\Finder::create()
+    ->in([$srcDir])
+    // Skip auto generated migration files.
+    ->exclude('Migrations')
+;
+$config = new PhpCsFixer\Config();
+return $config
+    ->setRules([
+        'psr_autoloading' => ['dir' => $srcDir],
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'concat_space' => ['spacing' => 'one'],
+        'no_php4_constructor' => true,
+        'ordered_imports' => true,
+        'no_unreachable_default_argument_value' => true,
+        'braces' => ['allow_single_line_closure' => true],
+        'phpdoc_order' => true,
+        // Problémát okozhat, ha törli nevet, pláne, ha többet szeretnénk megadni pl egy for ciklus előtt.
+        'phpdoc_var_without_name' => false,
+        // Nem szeretnénk '.'-ot minden doccomment végére
+        'phpdoc_summary' => false,
+        // Erre azért van szükség, mert pl a JMSTranslationBundle miatt elhelyezhetünk a kódon belül pl /** @Ignore */ -t
+        'phpdoc_to_comment' => false,
+        // Néha bizony van értelme behúzni a tömböknél az értéket, ezért kikapcsoljuk, hogy levágja a "szóközöket" a => operátor körül.
+        'binary_operator_spaces' => ['operators' => [
+            "=>" => null,
+            "=" => null,
+        ]],
+        'heredoc_to_nowdoc' => false,
+        'no_superfluous_phpdoc_tags' => false,
+        'native_function_invocation' => [
+            'include' => [],
+            'scope' => 'namespaced',
+            'strict' => false,
+        ],
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder($finder)
+;

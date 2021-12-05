@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class IfElse extends FunctionNode
 {
-    const FUNCTION_NAME = 'IF';
+    public const FUNCTION_NAME = 'IF';
 
     private $expr = [];
 

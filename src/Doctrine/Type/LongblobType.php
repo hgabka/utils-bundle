@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Type;
 
 class LongblobType extends Type
 {
-    const TYPE = 'hg_utils_longblob';
+    public const TYPE = 'hg_utils_longblob';
 
     /**
      * {@inheritdoc}

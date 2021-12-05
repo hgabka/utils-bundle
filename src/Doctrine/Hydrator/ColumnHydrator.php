@@ -7,7 +7,7 @@ use PDO;
 
 class ColumnHydrator extends AbstractHydrator
 {
-    const HYDRATOR_NAME = 'column';
+    public const HYDRATOR_NAME = 'column';
 
     /**
      * Hydrators all data at once.

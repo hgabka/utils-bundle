@@ -34,10 +34,12 @@ abstract class EntityExporter
 
     /**
      * @required
+     *
      * @param EntityManagerInterface $entityManager
+     *
      * @return EntityExporter
      */
-    public function setEntityManager(EntityManagerInterface $entityManager): EntityExporter
+    public function setEntityManager(EntityManagerInterface $entityManager): self
     {
         $this->entityManager = $entityManager;
 
@@ -46,10 +48,12 @@ abstract class EntityExporter
 
     /**
      * @required
+     *
      * @param ExportFieldDescriptor $fieldDescriptor
+     *
      * @return EntityExporter
      */
-    public function setFieldDescriptor(ExportFieldDescriptor $fieldDescriptor): EntityExporter
+    public function setFieldDescriptor(ExportFieldDescriptor $fieldDescriptor): self
     {
         $this->fieldDescriptor = $fieldDescriptor;
 
@@ -58,16 +62,17 @@ abstract class EntityExporter
 
     /**
      * @required
+     *
      * @param TranslatorInterface $translator
+     *
      * @return EntityExporter
      */
-    public function setTranslator(TranslatorInterface $translator): EntityExporter
+    public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
 
         return $this;
     }
-
 
     /**
      * @var int
@@ -80,7 +85,7 @@ abstract class EntityExporter
      * @param $object
      * @param $field
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     protected function getObjectFieldValue($object, $field)
     {
@@ -197,7 +202,7 @@ abstract class EntityExporter
      * @param $object
      * @param $field
      *
-     * @return null|mixed|string
+     * @return mixed|string|null
      */
     protected function getRelationValue($object, $field): ?string
     {
@@ -234,7 +239,7 @@ abstract class EntityExporter
     /**
      * @param $field
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     protected function getEntityFieldValue(object $entity, $field)
     {
@@ -263,7 +268,7 @@ abstract class EntityExporter
             if (isset($options['property_path'])) {
                 $this->addCellValue($column, $this->getEntityFieldValue($entity, $options['property_path']), $entity, $options['value_callback'] ?? null, $field, $row);
             } else {
-                $method = 'addCellValue'.ucfirst($field->getType());
+                $method = 'addCellValue' . ucfirst($field->getType());
                 if (!method_exists($this, $method)) {
                     throw new InvalidArgumentException('Nincs ilyen metodus: ', $method);
                 }
@@ -317,7 +322,7 @@ abstract class EntityExporter
     protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         $this->addCellValueAuto($column, $field, $entity, null === $callback ? function ($value) {
-            return $this->trans('general.label.'.($value ? 'yes' : 'no'));
+            return $this->trans('general.label.' . ($value ? 'yes' : 'no'));
         } : $callback, $exportField, $row);
     }
 

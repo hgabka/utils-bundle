@@ -73,6 +73,6 @@ interface UserInterface
      * the plain-text password is stored on this object.
      */
     public function eraseCredentials();
-    
+
     public function getPlainPassword();
 }

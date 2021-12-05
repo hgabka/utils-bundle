@@ -5,7 +5,6 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\Helper\FormWidgets\Tabs\TabPane;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
 
 /**

@@ -10,10 +10,10 @@ use Imagine\Image\Point;
 
 class Paste implements FilterInterface
 {
-    /** @var null|int */
+    /** @var int|null */
     private $width;
 
-    /** @var null|int */
+    /** @var int|null */
     private $height;
 
     /** @var string */
@@ -32,8 +32,8 @@ class Paste implements FilterInterface
      * Paste constructor.
      *
      * @param $imagine
-     * @param null|int $width
-     * @param null|int $height
+     * @param int|null $width
+     * @param int|null $height
      * @param string   $position
      * @param string   $color
      * @param int      $transparency

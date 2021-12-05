@@ -287,7 +287,7 @@ class Words_fr_BE extends Words
         // process the "hundreds" digit.
         if ($s) {
             if ($s > 1) {
-                $ret .= $this->_digits[$s].$this->_sep.$this->_misc_numbers[100];
+                $ret .= $this->_digits[$s] . $this->_sep . $this->_misc_numbers[100];
                 if ($last && !$e && !$d) {
                     $ret .= $this->_plural;
                 }
@@ -304,11 +304,11 @@ class Words_fr_BE extends Words
                 if ($e <= 6) {
                     $ret .= $this->_misc_numbers[10 + $e];
                 } else {
-                    $ret .= $this->_misc_numbers[10].'-'.$this->_digits[$e];
+                    $ret .= $this->_misc_numbers[10] . '-' . $this->_digits[$e];
                 }
                 $e = 0;
             } elseif (8 === $d) {
-                $ret .= $this->_digits[4].$this->_dash.$this->_misc_numbers[20];
+                $ret .= $this->_digits[4] . $this->_dash . $this->_misc_numbers[20];
                 $resto = $d * 10 + $e - 80;
                 if ($resto) {
                     $ret .= $this->_dash;
@@ -326,7 +326,7 @@ class Words_fr_BE extends Words
         if ($e) {
             if ($d) {
                 if (1 === $e) {
-                    $ret .= $this->_sep.$this->_and.$this->_sep;
+                    $ret .= $this->_sep . $this->_and . $this->_sep;
                 } else {
                     $ret .= $this->_dash;
                 }
@@ -364,13 +364,13 @@ class Words_fr_BE extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_minus.$this->_sep;
+            $ret = $this->_minus . $this->_sep;
             $num = substr($num, 1);
         }
 
         // if the absolute value is greater than 9.99*10^302, return infinity
         if (\strlen($num) > 306) {
-            return $ret.$this->_infinity;
+            return $ret . $this->_infinity;
         }
 
         // strip excessive zero signs
@@ -388,7 +388,7 @@ class Words_fr_BE extends Words
             // skip processment for empty groups
             if ('000' !== $number) {
                 if (1 !== $number || 2 !== $pow) {
-                    $ret .= $this->_showDigitsGroup($number, $i + 1 === $sizeof_numgroups).$this->_sep;
+                    $ret .= $this->_showDigitsGroup($number, $i + 1 === $sizeof_numgroups) . $this->_sep;
                 }
                 $ret .= $this->_exponent[($pow - 1) * 3];
                 if ($pow > 2 && $number > 1) {

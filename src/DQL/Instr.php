@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Instr extends FunctionNode
 {
-    const FUNCTION_NAME = 'INSTR';
+    public const FUNCTION_NAME = 'INSTR';
 
     public $str;
     public $substr;
@@ -29,9 +29,9 @@ class Instr extends FunctionNode
      */
     public function getSql(SqlWalker $sqlWalker)
     {
-        return 'INSTR('.
-            $this->str->dispatch($sqlWalker).', '.
-            $this->substr->dispatch($sqlWalker).
+        return 'INSTR(' .
+            $this->str->dispatch($sqlWalker) . ', ' .
+            $this->substr->dispatch($sqlWalker) .
             ')';
     }
 }

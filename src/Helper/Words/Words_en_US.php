@@ -271,7 +271,7 @@ class Words_en_US extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -291,7 +291,7 @@ class Words_en_US extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -306,7 +306,7 @@ class Words_en_US extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -331,7 +331,7 @@ class Words_en_US extends Words
         }
 
         if ($h) {
-            $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'hundred';
+            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'hundred';
 
             // in English only - add ' and' for [1-9]01..[1-9]99
             // (also for 1001..1099, 10001..10099 but it is harder)
@@ -346,60 +346,60 @@ class Words_en_US extends Words
         case 9:
         case 7:
         case 6:
-            $ret .= $this->_sep.$this->_digits[$t].'ty';
+            $ret .= $this->_sep . $this->_digits[$t] . 'ty';
 
             break;
         case 8:
-            $ret .= $this->_sep.'eighty';
+            $ret .= $this->_sep . 'eighty';
 
             break;
         case 5:
-            $ret .= $this->_sep.'fifty';
+            $ret .= $this->_sep . 'fifty';
 
             break;
         case 4:
-            $ret .= $this->_sep.'forty';
+            $ret .= $this->_sep . 'forty';
 
             break;
         case 3:
-            $ret .= $this->_sep.'thirty';
+            $ret .= $this->_sep . 'thirty';
 
             break;
         case 2:
-            $ret .= $this->_sep.'twenty';
+            $ret .= $this->_sep . 'twenty';
 
             break;
         case 1:
             switch ($d) {
             case 0:
-                $ret .= $this->_sep.'ten';
+                $ret .= $this->_sep . 'ten';
 
                 break;
             case 1:
-                $ret .= $this->_sep.'eleven';
+                $ret .= $this->_sep . 'eleven';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'twelve';
+                $ret .= $this->_sep . 'twelve';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'thirteen';
+                $ret .= $this->_sep . 'thirteen';
 
                 break;
             case 4:
             case 6:
             case 7:
             case 9:
-                $ret .= $this->_sep.$this->_digits[$d].'teen';
+                $ret .= $this->_sep . $this->_digits[$d] . 'teen';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'fifteen';
+                $ret .= $this->_sep . 'fifteen';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'eighteen';
+                $ret .= $this->_sep . 'eighteen';
 
                 break;
             }
@@ -410,9 +410,9 @@ class Words_en_US extends Words
         if (1 !== $t && $d > 0) { // add digits only in <0>,<1,9> and <21,inf>
             // add minus sign between [2-9] and digit
             if ($t > 1) {
-                $ret .= '-'.$this->_digits[$d];
+                $ret .= '-' . $this->_digits[$d];
             } else {
-                $ret .= $this->_sep.$this->_digits[$d];
+                $ret .= $this->_sep . $this->_digits[$d];
             }
         }
 
@@ -425,11 +425,11 @@ class Words_en_US extends Words
                 return null;
             }
 
-            $ret .= $this->_sep.$lev[0];
+            $ret .= $this->_sep . $lev[0];
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;
@@ -468,29 +468,29 @@ class Words_en_US extends Words
         $lev = (1 === $decimal) ? 0 : 1;
         if ($lev > 0) {
             if (\count($curr_names[0]) > 1) {
-                $ret .= $this->_sep.$curr_names[0][$lev];
+                $ret .= $this->_sep . $curr_names[0][$lev];
             } else {
-                $ret .= $this->_sep.$curr_names[0][0].'s';
+                $ret .= $this->_sep . $curr_names[0][0] . 's';
             }
         } else {
-            $ret .= $this->_sep.$curr_names[0][0];
+            $ret .= $this->_sep . $curr_names[0][0];
         }
 
         if (false !== $fraction) {
             if ($convert_fraction) {
-                $ret .= $this->_sep.trim($this->_toWords($fraction));
+                $ret .= $this->_sep . trim($this->_toWords($fraction));
             } else {
-                $ret .= $this->_sep.$fraction;
+                $ret .= $this->_sep . $fraction;
             }
             $lev = (1 === $fraction) ? 0 : 1;
             if ($lev > 0) {
                 if (\count($curr_names[1]) > 1) {
-                    $ret .= $this->_sep.$curr_names[1][$lev];
+                    $ret .= $this->_sep . $curr_names[1][$lev];
                 } else {
-                    $ret .= $this->_sep.$curr_names[1][0].'s';
+                    $ret .= $this->_sep . $curr_names[1][0] . 's';
                 }
             } else {
-                $ret .= $this->_sep.$curr_names[1][0];
+                $ret .= $this->_sep . $curr_names[1][0];
             }
         }
 

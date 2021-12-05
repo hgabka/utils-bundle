@@ -68,7 +68,7 @@ EOT
             $roleNames = explode(',', strtoupper($roleNames));
             foreach ($roleNames as $roleName) {
                 if ('ROLE_' !== substr($roleName, 0, 5)) {
-                    $roleName = 'ROLE_'.$roleName;
+                    $roleName = 'ROLE_' . $roleName;
                 }
                 // @var Role $role
                 $role = $em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(['role' => $roleName]);

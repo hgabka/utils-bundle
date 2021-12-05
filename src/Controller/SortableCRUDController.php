@@ -3,9 +3,9 @@
 namespace Hgabka\UtilsBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\HttpFoundation\Request;
 
 class SortableCRUDController extends CRUDController
 {

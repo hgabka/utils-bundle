@@ -5,7 +5,6 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
 
 class SidebarTwigExtension extends AbstractExtension

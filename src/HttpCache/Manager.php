@@ -39,7 +39,7 @@ class Manager
 
     public function forcePurgeAll()
     {
-        $cacheDir = $this->cacheDir.\DIRECTORY_SEPARATOR.'http_cache';
+        $cacheDir = $this->cacheDir . \DIRECTORY_SEPARATOR . 'http_cache';
         if ($this->filesystem->exists($cacheDir) && is_dir($cacheDir)) {
             $this->filesystem->remove(new \FilesystemIterator($cacheDir));
         }

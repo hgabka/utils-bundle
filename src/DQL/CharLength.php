@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class CharLength extends FunctionNode
 {
-    const FUNCTION_NAME = 'CHAR_LENGTH';
+    public const FUNCTION_NAME = 'CHAR_LENGTH';
 
     /** @var string */
     public $string;
@@ -28,8 +28,8 @@ class CharLength extends FunctionNode
     public function getSql(SqlWalker $sqlWalker)
     {
         return
-            'CHAR_LENGTH('.
-            $this->string->dispatch($sqlWalker).
+            'CHAR_LENGTH(' .
+            $this->string->dispatch($sqlWalker) .
             ')'
             ;
     }

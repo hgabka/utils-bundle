@@ -271,7 +271,7 @@ class Words_pt_BR extends Words
          */
         if ((\count($ret) > 2 + $neg)
             && $this->_mustSeparate($chunks)) {
-            $ret[1 + $neg] = trim($this->_sep.$ret[1 + $neg]);
+            $ret[1 + $neg] = trim($this->_sep . $ret[1 + $neg]);
         }
 
         $ret = array_reverse(array_filter($ret));

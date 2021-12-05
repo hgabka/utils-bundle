@@ -11,7 +11,6 @@
 
 namespace Hgabka\UtilsBundle\Model;
 
-
 /**
  * Interface to be implemented by user managers. This adds an additional level
  */

@@ -47,7 +47,7 @@ class XmlWriter implements TypedWriterInterface
 
     public function open()
     {
-        $this->xml = new SimpleXmlElementExtended('<?xml version=\"1.0\" encoding=\"utf-8\" ?><'.$this->rootTag.' />');
+        $this->xml = new SimpleXmlElementExtended('<?xml version=\"1.0\" encoding=\"utf-8\" ?><' . $this->rootTag . ' />');
     }
 
     public function write(array $data)

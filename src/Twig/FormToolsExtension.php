@@ -5,7 +5,6 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\Helper\FormHelper;
 use Symfony\Component\Form\FormView;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
 
 /**

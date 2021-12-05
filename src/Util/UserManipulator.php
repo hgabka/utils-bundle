@@ -69,7 +69,6 @@ class UserManipulator
         $user->setSuperAdmin((bool) $superadmin);
         $this->userManager->updateUser($user);
 
-
         return $user;
     }
 

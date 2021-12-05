@@ -5,7 +5,6 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
 
 /**
@@ -73,7 +72,7 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param null|mixed $switchedHost
+     * @param mixed|null $switchedHost
      *
      * @return array
      */

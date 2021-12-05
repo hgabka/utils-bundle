@@ -14,7 +14,7 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class Rand extends FunctionNode
 {
-    const FUNCTION_NAME = 'RAND';
+    public const FUNCTION_NAME = 'RAND';
 
     public function parse(Parser $parser)
     {

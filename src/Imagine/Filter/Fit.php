@@ -8,13 +8,13 @@ use Imagine\Image\ImageInterface;
 
 class Fit implements FilterInterface
 {
-    const MODE_OUTBOUND = 'outbound';
-    const MODE_INSET = 'inset';
+    public const MODE_OUTBOUND = 'outbound';
+    public const MODE_INSET = 'inset';
 
-    /** @var null|int */
+    /** @var int|null */
     private $width;
 
-    /** @var null|int */
+    /** @var int|null */
     private $height;
 
     /** @var string */
@@ -23,8 +23,8 @@ class Fit implements FilterInterface
     /**
      * Fit constructor.
      *
-     * @param null|int $width
-     * @param null|int $height
+     * @param int|null $width
+     * @param int|null $height
      * @param string   $mode
      */
     public function __construct($width, $height, $mode = self::MODE_INSET)

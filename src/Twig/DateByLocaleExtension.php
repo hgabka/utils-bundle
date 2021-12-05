@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
-use Twig\TwigFunction;
 
 /**
  * DateByLocaleExtension.

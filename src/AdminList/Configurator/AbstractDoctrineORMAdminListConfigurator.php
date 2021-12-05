@@ -138,7 +138,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @return null|Query
+     * @return Query|null
      */
     public function getQuery()
     {
@@ -179,7 +179,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * Get current permission definition.
      *
-     * @return null|PermissionDefinition
+     * @return PermissionDefinition|null
      */
     public function getPermissionDefinition()
     {
@@ -222,7 +222,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     {
         $orderBy = $this->orderBy;
         if (!strpos($orderBy, '.')) {
-            $orderBy = 'b.'.$orderBy;
+            $orderBy = 'b.' . $orderBy;
         }
 
         return $orderBy;
@@ -231,7 +231,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
-            $queryBuilder->addOrderBy('b.'.$this->getSortableField());
+            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
         }
     }
 

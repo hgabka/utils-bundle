@@ -34,7 +34,7 @@ class AdminList
     }
 
     /**
-     * @return null|AdminListConfiguratorInterface
+     * @return AdminListConfiguratorInterface|null
      */
     public function getConfigurator()
     {
@@ -79,7 +79,7 @@ class AdminList
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function getItems()
     {
@@ -305,7 +305,7 @@ class AdminList
     /**
      * Returns pagesize options.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getPagesizeOptions()
     {

@@ -22,12 +22,12 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
-    const SUFFIX_ADD = 'add';
-    const SUFFIX_EDIT = 'edit';
-    const SUFFIX_EXPORT = 'export';
-    const SUFFIX_PAGESIZE = 'set_pagesize';
-    const SUFFIX_DELETE = 'delete';
-    const SUFFIX_VIEW = 'view';
+    public const SUFFIX_ADD = 'add';
+    public const SUFFIX_EDIT = 'edit';
+    public const SUFFIX_EXPORT = 'export';
+    public const SUFFIX_PAGESIZE = 'set_pagesize';
+    public const SUFFIX_DELETE = 'delete';
+    public const SUFFIX_VIEW = 'view';
 
     /**
      * @var int
@@ -294,7 +294,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException('You need to implement the getAdminType method in '.static::class.' or '.\get_class($entity));
+        throw new InvalidArgumentException('You need to implement the getAdminType method in ' . static::class . ' or ' . \get_class($entity));
     }
 
     /**
@@ -766,7 +766,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_'.$request->get('_route');
+        $adminListName = 'listconfig_' . $request->get('_route');
         $adminListName = str_replace('_set_pagesize', '', $adminListName);
 
         $this->page = $query->has('pagesize') ? 1 : $query->getInt('page', 1);
@@ -900,7 +900,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Return list title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getListTitle()
     {
@@ -910,7 +910,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns edit title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getViewTitle()
     {
@@ -920,7 +920,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns edit title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getEditTitle()
     {
@@ -930,7 +930,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns new title.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getNewTitle()
     {
@@ -954,13 +954,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getEntityNamePlural()
     {
-        return $this->getEntityName().'s';
+        return $this->getEntityName() . 's';
     }
 
     /**
      * Returns tab fields.
      *
-     * @return null|array|string
+     * @return array|string|null
      */
     public function getDefaultSort()
     {
@@ -970,7 +970,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns tab fields.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getTabFields()
     {
@@ -980,7 +980,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns pagesize options.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getPagesizeOptions()
     {
@@ -1045,9 +1045,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             $result['filter_columnname'][] = $columns[$id];
             $result['filter_uniquefilterid'][] = $id;
             if (!empty($comparators[$id])) {
-                $result['filter_comparator_'.$id] = $comparators[$id];
+                $result['filter_comparator_' . $id] = $comparators[$id];
             }
-            $result['filter_value_'.$id] = $values[$id];
+            $result['filter_value_' . $id] = $values[$id];
         }
 
         return $result;

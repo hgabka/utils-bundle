@@ -100,6 +100,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param mixed $email
+     *
      * @return User
      */
     public function setEmail($email)
@@ -119,6 +120,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param mixed $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -143,6 +145,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param array $roles
+     *
      * @return User
      */
     public function setRoles(array $roles): self
@@ -162,6 +165,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param mixed $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -181,6 +185,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param mixed $salt
+     *
      * @return User
      */
     public function setSalt($salt)
@@ -200,6 +205,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param false $enabled
+     *
      * @return User
      */
     public function setEnabled(bool $enabled): self
@@ -286,6 +292,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param string $plainPassword
+     *
      * @return AbstractUser
      */
     public function setPlainPassword(string $plainPassword): self
@@ -305,6 +312,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
 
     /**
      * @param mixed $confirmationToken
+     *
      * @return AbstractUser
      */
     public function setConfirmationToken($confirmationToken): self
@@ -321,7 +329,6 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
-
 
     /**
      * {@inheritdoc}

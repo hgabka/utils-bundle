@@ -7,7 +7,7 @@ use PDO;
 
 class KeyValueHydrator extends AbstractHydrator
 {
-    const HYDRATOR_NAME = 'key_value';
+    public const HYDRATOR_NAME = 'key_value';
 
     /**
      * Hydrators all data at once.

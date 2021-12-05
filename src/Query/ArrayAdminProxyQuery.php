@@ -27,7 +27,7 @@ class ArrayAdminProxyQuery extends BaseQuery
             $sortBy = $this->getSortBy();
             if (false === strpos($sortBy, '.')) { // add the current alias
                 if (!$this->isCustomField($sortBy)) {
-                    $sortBy = $rootAlias.'.'.$sortBy;
+                    $sortBy = $rootAlias . '.' . $sortBy;
                 }
             }
             $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
@@ -56,7 +56,7 @@ class ArrayAdminProxyQuery extends BaseQuery
         }
 
         foreach ($identifierFields as $identifierField) {
-            $order = $rootAlias.'.'.$identifierField;
+            $order = $rootAlias . '.' . $identifierField;
             if (!\in_array($order, $existingOrders, true)) {
                 $queryBuilder->addOrderBy(
                     $order,
@@ -79,7 +79,7 @@ class ArrayAdminProxyQuery extends BaseQuery
             $this->sortBy = $fieldMapping['fieldName'];
         } else {
             $alias = $this->entityJoin($parentAssociationMappings);
-            $this->sortBy = $alias.'.'.$fieldMapping['fieldName'];
+            $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
         }
 
         return $this;
@@ -100,8 +100,8 @@ class ArrayAdminProxyQuery extends BaseQuery
     {
         foreach ($query = $this->getFixedQueryBuilder($this->queryBuilder)->getDQLPart('select') as $select) {
             foreach ($select->getParts() as $selectPart) {
-                if (strpos(strtoupper($selectPart), 'AS '.strtoupper($field)) ||
-                    strpos(strtoupper($selectPart), 'AS HIDDEN '.strtoupper($field))) {
+                if (strpos(strtoupper($selectPart), 'AS ' . strtoupper($field)) ||
+                    strpos(strtoupper($selectPart), 'AS HIDDEN ' . strtoupper($field))) {
                     return true;
                 }
             }

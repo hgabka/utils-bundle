@@ -36,7 +36,7 @@ class ExportFieldDescriptor
     public function add($key, $type = null, $options = []): self
     {
         if (!isset($options['label'])) {
-            $options['label'] = 'label.export.'.str_replace('.', '_', $key);
+            $options['label'] = 'label.export.' . str_replace('.', '_', $key);
         }
         $options['label'] = $this->translator->trans($options['label'], [], 'messages');
         if (!isset($options['key'])) {
@@ -59,12 +59,12 @@ class ExportFieldDescriptor
     /**
      * @param $key
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     public function get($key)
     {
         if (empty($this->fields[$key])) {
-            throw new InvalidArgumentException('Invalid export key: '.$key);
+            throw new InvalidArgumentException('Invalid export key: ' . $key);
         }
 
         return $this->fields[$key] ?? null;

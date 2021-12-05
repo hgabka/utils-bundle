@@ -19,7 +19,7 @@ class CustomSortProxyQuery extends BaseQuery
     {
         $alias = $this->entityJoin($parentAssociationMappings);
         if (\is_string($fieldMapping['fieldName'])) {
-            $this->sortBy = $alias.'.'.$fieldMapping['fieldName'];
+            $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
         } else {
             $this->sortBy = $fieldMapping['fieldName'];
         }
@@ -46,12 +46,12 @@ class CustomSortProxyQuery extends BaseQuery
             if (\is_callable($sortBy)) {
                 \call_user_func($sortBy, $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (isset($sortBy['field'])) {
-                $queryBuilder->addOrderBy($rootAlias.'.'.$sortBy['field'], $this->getSortOrder());
+                $queryBuilder->addOrderBy($rootAlias . '.' . $sortBy['field'], $this->getSortOrder());
             } elseif (isset($sortBy['callback']) && \is_callable($sortBy['callback'])) {
                 \call_user_func($sortBy['callback'], $queryBuilder, $this->getSortOrder(), $rootAlias);
             } elseif (\is_string($sortBy)) {
                 if (false === strpos($sortBy, '.')) { // add the current alias
-                    $sortBy = $rootAlias.'.'.$sortBy;
+                    $sortBy = $rootAlias . '.' . $sortBy;
                 }
                 $queryBuilder->addOrderBy($sortBy, $this->getSortOrder());
             }
@@ -84,7 +84,7 @@ class CustomSortProxyQuery extends BaseQuery
         }
 
         foreach ($identifierFields as $identifierField) {
-            $order = $rootAlias.'.'.$identifierField;
+            $order = $rootAlias . '.' . $identifierField;
             if (!\in_array($order, $existingOrders, true)) {
                 $queryBuilder->addOrderBy(
                     $order,

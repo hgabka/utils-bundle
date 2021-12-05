@@ -101,7 +101,7 @@ class TabPane
 
     /**
      * @param TabInterface $tab      The tab
-     * @param null|int     $position The position
+     * @param int|null     $position The position
      *
      * @return TabPane
      */
@@ -178,7 +178,7 @@ class TabPane
     /**
      * @param string $title
      *
-     * @return null|TabInterface
+     * @return TabInterface|null
      */
     public function getTabByTitle($title)
     {
@@ -194,7 +194,7 @@ class TabPane
     /**
      * @param int $position
      *
-     * @return null|TabInterface
+     * @return TabInterface|null
      */
     public function getTabByPosition($position)
     {

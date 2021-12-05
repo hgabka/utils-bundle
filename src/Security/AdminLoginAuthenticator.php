@@ -6,11 +6,9 @@ use Hgabka\UtilsBundle\Form\AdminLoginForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,7 +45,7 @@ final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator imple
 
     public function supports(Request $request): bool
     {
-        return $request->attributes->get('_route') === 'admin_login' && $request->isMethod('POST');
+        return 'admin_login' === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request): array

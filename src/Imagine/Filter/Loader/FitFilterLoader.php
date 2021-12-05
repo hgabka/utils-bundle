@@ -28,10 +28,10 @@ class FitFilterLoader implements LoaderInterface
     {
         [$width, $height] = $options['size'];
         [$insideWidth, $insideHeight] = $options['inside_size'] ?? [null, null];
-        if (0 === (int)$insideWidth || $insideWidth >= $width) {
+        if (0 === (int) $insideWidth || $insideWidth >= $width) {
             $insideWidth = null;
         }
-        if (0 === (int)$insideHeight || $insideHeight >= $height) {
+        if (0 === (int) $insideHeight || $insideHeight >= $height) {
             $insideHeight = null;
         }
         if (null === $insideWidth || null === $insideHeight) {

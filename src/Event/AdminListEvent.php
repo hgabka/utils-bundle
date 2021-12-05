@@ -58,7 +58,7 @@ class AdminListEvent extends Event
     }
 
     /**
-     * @return null|FormInterface
+     * @return FormInterface|null
      */
     public function getForm()
     {

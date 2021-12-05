@@ -11,8 +11,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class UserProvider implements UserProviderInterface
 {
-    protected $userClass;
-
+    private $userClass;
 
     /**
      * @var EntityManagerInterface
@@ -30,12 +29,7 @@ final class UserProvider implements UserProviderInterface
         $user = $this->findOneUserBy(['username' => $username]);
 
         if (!$user) {
-            throw new AuthenticationException(
-                sprintf(
-                    'User with "%s" username does not exist.',
-                    $username
-                )
-            );
+            throw new AuthenticationException(sprintf('User with "%s" username does not exist.', $username));
         }
 
         return $user;
@@ -56,10 +50,7 @@ final class UserProvider implements UserProviderInterface
         assert($user instanceof BundleUserInterface);
 
         if (null === $reloadedUser = $this->findOneUserBy(['id' => $user->getId()])) {
-            throw new AuthenticationException(sprintf(
-                'User with ID "%s" could not be reloaded.',
-                $user->getId()
-            ));
+            throw new AuthenticationException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;
@@ -67,6 +58,6 @@ final class UserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return $class === User::class;
+        return User::class === $class;
     }
 }

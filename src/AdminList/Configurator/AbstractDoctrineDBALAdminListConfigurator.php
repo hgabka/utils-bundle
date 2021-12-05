@@ -138,7 +138,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * @return null|QueryBuilder
+     * @return QueryBuilder|null
      */
     public function getQueryBuilder()
     {

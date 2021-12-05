@@ -187,14 +187,14 @@ class Words
             $locale = [$locale];
         }
 
-        $dname = __DIR__.\DIRECTORY_SEPARATOR.'Words'.\DIRECTORY_SEPARATOR;
+        $dname = __DIR__ . \DIRECTORY_SEPARATOR . 'Words' . \DIRECTORY_SEPARATOR;
 
         $dh = opendir($dname);
 
         if ($dh) {
             while ($fname = readdir($dh)) {
                 if (preg_match('#^Words_\.([a-z_]+)\.php$#i', $fname, $matches)) {
-                    if (is_file($dname.$fname) && is_readable($dname.$fname) &&
+                    if (is_file($dname . $fname) && is_readable($dname . $fname) &&
                         (!isset($locale) || \in_array($matches[1], $locale, true))) {
                         $ret[] = $matches[1];
                     }

@@ -132,7 +132,7 @@ class Words_sv extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -154,7 +154,7 @@ class Words_sv extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -171,7 +171,7 @@ class Words_sv extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -196,7 +196,7 @@ class Words_sv extends Words
         }
 
         if ($h) {
-            $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'hundra';
+            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'hundra';
         }
 
         // ten, twenty etc.
@@ -204,66 +204,66 @@ class Words_sv extends Words
             case 5:
             case 6:
             case 7:
-                $ret .= $this->_sep.$this->_digits[$t].'tio';
+                $ret .= $this->_sep . $this->_digits[$t] . 'tio';
 
                 break;
             case 9:
-                $ret .= $this->_sep.'nittio';
+                $ret .= $this->_sep . 'nittio';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'ĺttio';
+                $ret .= $this->_sep . 'ĺttio';
 
                 break;
             case 4:
-                $ret .= $this->_sep.'fyrtio';
+                $ret .= $this->_sep . 'fyrtio';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'trettio';
+                $ret .= $this->_sep . 'trettio';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'tjugo';
+                $ret .= $this->_sep . 'tjugo';
 
                 break;
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'tio';
+                        $ret .= $this->_sep . 'tio';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'elva';
+                        $ret .= $this->_sep . 'elva';
 
                         break;
                     case 2:
-                        $ret .= $this->_sep.'tolv';
+                        $ret .= $this->_sep . 'tolv';
 
                         break;
                     case 3:
-                        $ret .= $this->_sep.'tretton';
+                        $ret .= $this->_sep . 'tretton';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'fjorton';
+                        $ret .= $this->_sep . 'fjorton';
 
                         break;
                     case 5:
                     case 6:
-                        $ret .= $this->_sep.$this->_digits[$d].'ton';
+                        $ret .= $this->_sep . $this->_digits[$d] . 'ton';
 
                         break;
                     case 7:
-                        $ret .= $this->_sep.'sjutton';
+                        $ret .= $this->_sep . 'sjutton';
 
                         break;
                     case 8:
-                        $ret .= $this->_sep.'arton';
+                        $ret .= $this->_sep . 'arton';
 
                         break;
                     case 9:
-                        $ret .= $this->_sep.'nitton';
+                        $ret .= $this->_sep . 'nitton';
                 }
 
                 break;
@@ -271,7 +271,7 @@ class Words_sv extends Words
 
         if (1 !== $t && $d > 0) { // add digits only in <0>,<1,9> and <21,inf>
             // add minus sign between [2-9] and digit
-            $ret .= $this->_sep.$this->_digits[$d];
+            $ret .= $this->_sep . $this->_digits[$d];
         }
 
         if ($power > 0) {
@@ -283,11 +283,11 @@ class Words_sv extends Words
                 return null;
             }
 
-            $ret .= $this->_sep.$lev[0];
+            $ret .= $this->_sep . $lev[0];
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;

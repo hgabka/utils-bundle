@@ -133,7 +133,7 @@ class Words_de extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -153,7 +153,7 @@ class Words_de extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -168,7 +168,7 @@ class Words_de extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -193,12 +193,12 @@ class Words_de extends Words
         }
 
         if ($h) {
-            $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'hundert';
+            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'hundert';
         }
 
         if (1 !== $t && $d > 0) { // add digits only in <0>,<1,9> and <21,inf>
             if ($t > 0) {
-                $ret .= $this->_digits[$d].'und';
+                $ret .= $this->_digits[$d] . 'und';
             } else {
                 $ret .= $this->_digits[$d];
                 if (1 === $d) {
@@ -218,41 +218,41 @@ class Words_de extends Words
         case 9:
         case 8:
         case 5:
-            $ret .= $this->_sep.$this->_digits[$t].'zig';
+            $ret .= $this->_sep . $this->_digits[$t] . 'zig';
 
             break;
         case 7:
-            $ret .= $this->_sep.'siebzig';
+            $ret .= $this->_sep . 'siebzig';
 
             break;
         case 6:
-            $ret .= $this->_sep.'sechzig';
+            $ret .= $this->_sep . 'sechzig';
 
             break;
         case 4:
-            $ret .= $this->_sep.'vierzig';
+            $ret .= $this->_sep . 'vierzig';
 
             break;
         case 3:
-            $ret .= $this->_sep.'dreißig';
+            $ret .= $this->_sep . 'dreißig';
 
             break;
         case 2:
-            $ret .= $this->_sep.'zwanzig';
+            $ret .= $this->_sep . 'zwanzig';
 
             break;
         case 1:
             switch ($d) {
             case 0:
-                $ret .= $this->_sep.'zehn';
+                $ret .= $this->_sep . 'zehn';
 
                 break;
             case 1:
-                $ret .= $this->_sep.'elf';
+                $ret .= $this->_sep . 'elf';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'zwölf';
+                $ret .= $this->_sep . 'zwölf';
 
                 break;
             case 3:
@@ -260,15 +260,15 @@ class Words_de extends Words
             case 5:
             case 8:
             case 9:
-                $ret .= $this->_sep.$this->_digits[$d].'zehn';
+                $ret .= $this->_sep . $this->_digits[$d] . 'zehn';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'sechzehn';
+                $ret .= $this->_sep . 'sechzehn';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'siebzehn';
+                $ret .= $this->_sep . 'siebzehn';
 
                 break;
             }
@@ -286,16 +286,16 @@ class Words_de extends Words
             }
 
             if (3 === $power) {
-                $ret .= $this->_sep.$lev[0];
+                $ret .= $this->_sep . $lev[0];
             } elseif (1 === $d && 0 === ($t + $h)) {
-                $ret .= $this->_sep2.$lev[0].$this->_sep2;
+                $ret .= $this->_sep2 . $lev[0] . $this->_sep2;
             } else {
-                $ret .= $this->_sep2.$lev[1].$this->_sep2;
+                $ret .= $this->_sep2 . $lev[1] . $this->_sep2;
             }
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;

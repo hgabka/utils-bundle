@@ -27,7 +27,7 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         $this->setName('hgabka:acl:update')
             ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project'.
+            ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project' .
                 'with given role and permissions');
     }
 
@@ -83,6 +83,6 @@ class UpdateAclCommand extends ContainerAwareCommand
             }
             $aclProvider->updateAcl($acl);
         }
-        $output->writeln(\count($nodes).' nodes processed.');
+        $output->writeln(\count($nodes) . ' nodes processed.');
     }
 }

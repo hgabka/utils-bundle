@@ -4,7 +4,6 @@ namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\SlugifierInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 
 class UtilitiesTwigExtension extends AbstractExtension

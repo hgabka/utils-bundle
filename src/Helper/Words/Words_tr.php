@@ -159,7 +159,7 @@ class Words_tr extends Words
 
         // add a the word for the minus sign if necessary
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -183,7 +183,7 @@ class Words_tr extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return ' '.$this->_digits[0].' ';
+            return ' ' . $this->_digits[0] . ' ';
             $current_power = \strlen($num);
         } else {
             $current_power = \strlen($num);
@@ -192,9 +192,9 @@ class Words_tr extends Words
         // See if we need "thousands"
         $thousands = floor($num / 1000);
         if (1 === $thousands) {
-            $ret .= $this->_sep.'bin'.$this->_sep;
+            $ret .= $this->_sep . 'bin' . $this->_sep;
         } elseif ($thousands > 1) {
-            $ret .= $this->_toWords($thousands, 3).$this->_sep; //. 'mil' . $this->_sep;
+            $ret .= $this->_toWords($thousands, 3) . $this->_sep; //. 'mil' . $this->_sep;
         }
 
         // values for digits, tens and hundreds
@@ -203,7 +203,7 @@ class Words_tr extends Words
         $d = floor($num % 10);
 
         if ($h) {
-            $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'yüz';
+            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'yüz';
 
             // in English only - add ' and' for [1-9]01..[1-9]99
             // (also for 1001..1099, 10001..10099 but it is harder)
@@ -216,39 +216,39 @@ class Words_tr extends Words
         // decine: venti trenta, etc...
         switch ($t) {
             case 9:
-                $ret .= $this->_sep.'doksan';
+                $ret .= $this->_sep . 'doksan';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'seksen';
+                $ret .= $this->_sep . 'seksen';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'yetmiş';
+                $ret .= $this->_sep . 'yetmiş';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'altmış';
+                $ret .= $this->_sep . 'altmış';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'elli';
+                $ret .= $this->_sep . 'elli';
 
                 break;
             case 4:
-                $ret .= $this->_sep.'kırk';
+                $ret .= $this->_sep . 'kırk';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'otuz';
+                $ret .= $this->_sep . 'otuz';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'yirmi';
+                $ret .= $this->_sep . 'yirmi';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'on';
+                $ret .= $this->_sep . 'on';
 
                 break;
 
@@ -256,7 +256,7 @@ class Words_tr extends Words
         }
 
         if ($t > 1 && $d > 0) {
-            $ret .= $this->_sep.$this->_digits[$d];
+            $ret .= $this->_sep . $this->_digits[$d];
         }
 
         if ($power > 0) {
@@ -275,7 +275,7 @@ class Words_tr extends Words
                 $suffix = $lev[1];
             }
             if (0 !== $num) {
-                $ret .= $this->_sep.$suffix;
+                $ret .= $this->_sep . $suffix;
             }
         }
 
@@ -315,29 +315,29 @@ class Words_tr extends Words
         $lev = (1 === $decimal) ? 0 : 1;
         if ($lev > 0) {
             if (\count($curr_names[0]) > 1) {
-                $ret .= $this->_sep.$curr_names[0][$lev];
+                $ret .= $this->_sep . $curr_names[0][$lev];
             } else {
-                $ret .= $this->_sep.$curr_names[0][0];
+                $ret .= $this->_sep . $curr_names[0][0];
             }
         } else {
-            $ret .= $this->_sep.$curr_names[0][0];
+            $ret .= $this->_sep . $curr_names[0][0];
         }
 
         if (false !== $fraction) {
             if ($convert_fraction) {
-                $ret .= $this->_sep.trim($this->_toWords($fraction));
+                $ret .= $this->_sep . trim($this->_toWords($fraction));
             } else {
-                $ret .= $this->_sep.$fraction;
+                $ret .= $this->_sep . $fraction;
             }
             $lev = (1 === $fraction) ? 0 : 1;
             if ($lev > 0) {
                 if (\count($curr_names[1]) > 1) {
-                    $ret .= $this->_sep.$curr_names[1][$lev];
+                    $ret .= $this->_sep . $curr_names[1][$lev];
                 } else {
-                    $ret .= $this->_sep.$curr_names[1][0].'s';
+                    $ret .= $this->_sep . $curr_names[1][0] . 's';
                 }
             } else {
-                $ret .= $this->_sep.$curr_names[1][0];
+                $ret .= $this->_sep . $curr_names[1][0];
             }
         }
 

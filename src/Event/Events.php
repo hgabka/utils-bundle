@@ -10,14 +10,14 @@ class Events
      *
      * @var string
      */
-    const DEEP_CLONE_AND_SAVE = 'hgabka_utils.onDeepCloneAndSave';
+    public const DEEP_CLONE_AND_SAVE = 'hgabka_utils.onDeepCloneAndSave';
 
     /**
      * The postDeepClone event occurs for a given entity after it has been deep cloned.
      *
      * @var string
      */
-    const POST_DEEP_CLONE_AND_SAVE = 'hgabka_utils.postDeepCloneAndSave';
+    public const POST_DEEP_CLONE_AND_SAVE = 'hgabka_utils.postDeepCloneAndSave';
 
     /**
      * The adapt_simple_form event occurs after a simple form is created, here it's possible to add a tabPane to a form without
@@ -25,5 +25,5 @@ class Events
      *
      * @var string
      */
-    const ADAPT_SIMPLE_FORM = 'hgabka_utils.adaptSimpleForm';
+    public const ADAPT_SIMPLE_FORM = 'hgabka_utils.adaptSimpleForm';
 }

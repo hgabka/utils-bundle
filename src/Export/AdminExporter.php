@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Export;
 
-use Doctrine\ORM\Query;
 use Generator;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -14,6 +13,7 @@ abstract class AdminExporter extends EntityExporter
 
     /**
      * @param AdminInterface $admin
+     *
      * @return AdminExporter
      */
     public function setAdmin(AdminInterface $admin): self
@@ -22,7 +22,6 @@ abstract class AdminExporter extends EntityExporter
 
         return $this;
     }
-
 
     public function getClass(): string
     {

@@ -86,7 +86,7 @@ class AclHelper
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = \constant(\get_class($builder).'::MASK_'.strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
         $query->setHint('acl.mask', $builder->get());
@@ -130,7 +130,7 @@ class AclHelper
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = \constant(\get_class($builder).'::MASK_'.strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
 
@@ -152,7 +152,7 @@ class AclHelper
     }
 
     /**
-     * @return null|TokenStorageInterface
+     * @return TokenStorageInterface|null
      */
     public function getTokenStorage()
     {
@@ -214,9 +214,9 @@ class AclHelper
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
         $aclConnection = $this->em->getConnection();
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
         $mask = $query->getHint('acl.mask');
-        $rootEntity = '"'.str_replace('\\', '\\\\', $query->getHint('acl.root.entity')).'"';
+        $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         // @var $token TokenInterface
         $token = $this->tokenStorage->getToken();
@@ -234,18 +234,18 @@ class AclHelper
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if ('ROLE_USER' !== $role->getRole()) {
-                $uR[] = '"'.$role->getRole().'"';
+                $uR[] = '"' . $role->getRole() . '"';
             }
         }
         $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "'.str_replace(
+            $inString .= ' OR s.identifier = "' . str_replace(
                 '\\',
                 '\\\\',
                 \get_class($user)
-            ).'-'.$user->getUserName().'"';
+            ) . '-' . $user->getUserName() . '"';
         }
 
         $selectQuery = <<<SELECTQUERY

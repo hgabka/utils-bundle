@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class XlsxWriter implements TypedWriterInterface
 {
-    const LABEL_COLUMN = 1;
+    public const LABEL_COLUMN = 1;
     /** @var int */
     protected $position;
     /** @var Spreadsheet */
@@ -54,15 +54,15 @@ class XlsxWriter implements TypedWriterInterface
             if (\is_array($value)) {
                 $this->setCellValue($cell, $value['value']);
                 if (isset($value['format'])) {
-                    $this->getActiveSheet()->getStyle($column.'2:'.$column.$this->position)->getNumberFormat()->setFormatCode($value['format']);
+                    $this->getActiveSheet()->getStyle($column . '2:' . $column . $this->position)->getNumberFormat()->setFormatCode($value['format']);
                 }
                 if (false !== strpos($value['value'], "\r") || false !== strpos($value['value'], "\n")) {
-                    $this->getActiveSheet()->getStyle($column.'2:'.$column.$this->position)->getAlignment()->setWrapText(true);
+                    $this->getActiveSheet()->getStyle($column . '2:' . $column . $this->position)->getAlignment()->setWrapText(true);
                 }
             } else {
                 $this->setCellValue($cell, $value);
                 if (false !== strpos($value, "\r") || false !== strpos($value, "\n")) {
-                    $this->getActiveSheet()->getStyle($column.'2:'.$column.$this->position)->getAlignment()->setWrapText(true);
+                    $this->getActiveSheet()->getStyle($column . '2:' . $column . $this->position)->getAlignment()->setWrapText(true);
                 }
             }
         }
@@ -89,7 +89,7 @@ class XlsxWriter implements TypedWriterInterface
     public static function formatColumnName($number)
     {
         for ($char = ''; $number >= 0; $number = (int) ($number / 26) - 1) {
-            $char = \chr($number % 26 + 0x41).$char;
+            $char = \chr($number % 26 + 0x41) . $char;
         }
 
         return $char;
@@ -155,7 +155,7 @@ class XlsxWriter implements TypedWriterInterface
      */
     private function setHeader($column, $value)
     {
-        $this->setCellValue($column.self::LABEL_COLUMN, $value);
+        $this->setCellValue($column . self::LABEL_COLUMN, $value);
         $this->getActiveSheet()->getColumnDimension($column)->setAutoSize(true);
         $this->headerColumns[$value] = $column;
     }
@@ -169,6 +169,6 @@ class XlsxWriter implements TypedWriterInterface
      */
     private function getColumn($name)
     {
-        return $this->headerColumns[$name].$this->position;
+        return $this->headerColumns[$name] . $this->position;
     }
 }

@@ -139,7 +139,7 @@ class Words_cs extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -159,7 +159,7 @@ class Words_cs extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -174,7 +174,7 @@ class Words_cs extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -201,13 +201,13 @@ class Words_cs extends Words
         if ($h) {
             // inflection of the word "hundred"
             if (1 === $h) {
-                $ret .= $this->_sep.$this->_hundreds[0];
+                $ret .= $this->_sep . $this->_hundreds[0];
             } elseif (2 === $h) {
-                $ret .= $this->_sep.'dvě'.$this->_sep.$this->_hundreds[1];
+                $ret .= $this->_sep . 'dvě' . $this->_sep . $this->_hundreds[1];
             } elseif (($h > 1) && ($h < 5)) {
-                $ret .= $this->_sep.$this->_digits[$h].$this->_sep.$this->_hundreds[2];
+                $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . $this->_hundreds[2];
             } else {        //if ($h >= 5)
-                $ret .= $this->_sep.$this->_digits[$h].$this->_sep.$this->_hundreds[3];
+                $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . $this->_hundreds[3];
             }
             // in English only - add ' and' for [1-9]01..[1-9]99
             // (also for 1001..1099, 10001..10099 but it is harder)
@@ -222,49 +222,49 @@ class Words_cs extends Words
             case 2:
             case 3:
             case 4:
-                $ret .= $this->_sep.$this->_digits[$t].'cet';
+                $ret .= $this->_sep . $this->_digits[$t] . 'cet';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'padesát';
+                $ret .= $this->_sep . 'padesát';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'ąedesát';
+                $ret .= $this->_sep . 'ąedesát';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'sedmdesát';
+                $ret .= $this->_sep . 'sedmdesát';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'osmdesát';
+                $ret .= $this->_sep . 'osmdesát';
 
                 break;
             case 9:
-                $ret .= $this->_sep.'devadesát';
+                $ret .= $this->_sep . 'devadesát';
 
                 break;
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'deset';
+                        $ret .= $this->_sep . 'deset';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'jedenáct';
+                        $ret .= $this->_sep . 'jedenáct';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'čtrnáct';
+                        $ret .= $this->_sep . 'čtrnáct';
 
                         break;
                     case 5:
-                        $ret .= $this->_sep.'patnáct';
+                        $ret .= $this->_sep . 'patnáct';
 
                         break;
                     case 9:
-                        $ret .= $this->_sep.'devatenáct';
+                        $ret .= $this->_sep . 'devatenáct';
 
                         break;
                     case 2:
@@ -272,7 +272,7 @@ class Words_cs extends Words
                     case 6:
                     case 7:
                     case 8:
-                        $ret .= $this->_sep.$this->_digits[$d].'náct';
+                        $ret .= $this->_sep . $this->_digits[$d] . 'náct';
 
                         break;
                 }
@@ -281,7 +281,7 @@ class Words_cs extends Words
         }
 
         if ((1 !== $t) && ($d > 0) && ((0 === $power) || ($num > 1))) {
-            $ret .= $this->_sep.$this->_digits[$d];
+            $ret .= $this->_sep . $this->_digits[$d];
         }
 
         if ($power > 0) {
@@ -302,11 +302,11 @@ class Words_cs extends Words
                 $idx = 2;
             }
 
-            $ret .= $this->_sep.$lev[$idx];
+            $ret .= $this->_sep . $lev[$idx];
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;

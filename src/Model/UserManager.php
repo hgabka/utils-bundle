@@ -11,8 +11,6 @@
 
 namespace Hgabka\UtilsBundle\Model;
 
-
-
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Hgabka\UtilsBundle\Util\PasswordUpdater;
@@ -104,7 +102,6 @@ class UserManager implements UserManagerInterface
     {
         return $this->passwordUpdater;
     }
-
 
     /**
      * {@inheritdoc}

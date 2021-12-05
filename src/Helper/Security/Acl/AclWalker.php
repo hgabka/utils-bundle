@@ -26,6 +26,6 @@ class AclWalker extends SqlWalker
 JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
 tempAclView;
 
-        return $sql.' '.$tempAclView;
+        return $sql . ' ' . $tempAclView;
     }
 }
