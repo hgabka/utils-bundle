@@ -135,7 +135,7 @@ pageEditor.pageEditor = (function(window, undefined) {
 
                     // Destroy rich editors inside dragged element
                     $el.find('.js-rich-editor').each(function() {
-                        hgutils.richEditor.destroySpecificRichEditor($(this));
+                        richeditor.richEditor.destroySpecificRichEditor($(this));
                     });
 
                     // Add active class
@@ -171,7 +171,7 @@ pageEditor.pageEditor = (function(window, undefined) {
                     $('.js-sortable-container').off('dragover');
 
                     // Set edited on true
-                    hgutils.checkIfEdited.edited();
+                    checkIfEdited.checkIfEdited.edited();
 
                     // Update context name
                     $contextUpdateField.each(function() {
@@ -180,7 +180,7 @@ pageEditor.pageEditor = (function(window, undefined) {
 
                     // Enable rich editors inside dragged element
                     $el.find('.js-rich-editor').each(function() {
-                        hgutils.richEditor.enableRichEditor($(this));
+                        richEditor.richEditor.enableRichEditor($(this));
                     });
                 }
             });
@@ -324,7 +324,7 @@ pageEditor.pageEditor = (function(window, undefined) {
             if((e.ctrlKey || e.metaKey) && e.which === 83) {
                 e.preventDefault();
 
-                hgutils.appLoading.addLoading();
+                appLoading.appLoading.addLoading();
 
                 $('#pageadminform').submit();
             };
