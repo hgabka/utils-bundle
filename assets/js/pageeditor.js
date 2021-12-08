@@ -1,3 +1,6 @@
+var appLoading = require('./apploading.js').appLoading;
+var richeditor = require('./richeditor.js').richeditor;
+var checkIfEdited = require('./checkifedited.js').checkIfEdited;
 import pagepartEditor from './pageparteditor';
 
 var pageEditor = {};
