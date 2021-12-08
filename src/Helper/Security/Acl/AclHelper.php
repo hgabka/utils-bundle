@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use InvalidArgumentException;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
@@ -83,6 +84,53 @@ class AclHelper
         }
 
         $query = $this->cloneQuery($queryBuilder->getQuery());
+
+        $builder = new MaskBuilder();
+        foreach ($permissionDef->getPermissions() as $permission) {
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
+            $builder->add($mask);
+        }
+        $query->setHint('acl.mask', $builder->get());
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, AclWalker::class);
+
+        $rootEntity = $permissionDef->getEntity();
+        $rootAlias = $permissionDef->getAlias();
+        // If either alias or entity was not specified - use default from QueryBuilder
+        if (empty($rootEntity) || empty($rootAlias)) {
+            $rootEntities = $queryBuilder->getRootEntities();
+            $rootAliases = $queryBuilder->getRootAliases();
+            $rootEntity = $rootEntities[0];
+            $rootAlias = $rootAliases[0];
+        }
+        $query->setHint('acl.root.entity', $rootEntity);
+        $query->setHint('acl.extra.query', $this->getPermittedAclIdsSQLForUser($query));
+
+        $classMeta = $this->em->getClassMetadata($rootEntity);
+        $entityRootTableName = $this->quoteStrategy->getTableName(
+            $classMeta,
+            $this->em->getConnection()->getDatabasePlatform()
+        );
+        $query->setHint('acl.entityRootTableName', $entityRootTableName);
+        $query->setHint('acl.entityRootTableDqlAlias', $rootAlias);
+
+        return $query;
+    }
+
+    /**
+     * Apply the ACL constraints to the specified query builder, using the permission definition.
+     *
+     * @param QueryBuilder         $queryBuilder  The query builder
+     * @param PermissionDefinition $permissionDef The permission definition
+     *
+     * @return Query
+     */
+    public function applyToProxyQuery(ProxyQueryInterface $query, PermissionDefinition $permissionDef): ProxyQueryInterface
+    {
+        $queryBuilder = $query->getQueryBuilder();
+        $whereQueryParts = $queryBuilder->getDQLPart('where');
+        if (empty($whereQueryParts)) {
+            $queryBuilder->where('1 = 1'); // this will help in cases where no where query is specified
+        }
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
