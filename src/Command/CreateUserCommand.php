@@ -83,7 +83,7 @@ class CreateUserCommand extends Command
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $username));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**
