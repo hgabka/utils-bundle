@@ -67,7 +67,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      *
      * @return bool
      */
@@ -77,7 +77,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      *
      * @return array
      */
@@ -87,7 +87,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      *
      * @return array
      */
@@ -105,7 +105,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      */
     public function getRootNode($host = null)
     {
@@ -137,7 +137,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      */
     public function getFullHost($host = null)
     {
@@ -158,7 +158,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
+     * @param null|string $host
      */
     public function getHostBaseUrl($host = null)
     {
@@ -166,7 +166,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request|null
+     * @return null|\Symfony\Component\HttpFoundation\Request
      */
     protected function getMasterRequest()
     {

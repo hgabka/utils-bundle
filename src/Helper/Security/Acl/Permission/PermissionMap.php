@@ -44,7 +44,7 @@ class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInter
      * these bitmasks.
      *
      * @param string      $permission The permission
-     * @param object|null $object     The object
+     * @param null|object $object     The object
      *
      * @return array may return null if permission/object combination is not supported
      */

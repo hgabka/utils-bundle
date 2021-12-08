@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FOS\UserBundle\Command;
 
@@ -48,11 +40,12 @@ class DeactivateUserCommand extends Command
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
             ])
-            ->setHelp(<<<'EOT'
-The <info>fos:user:deactivate</info> command deactivates a user (will not be able to log in)
+            ->setHelp(
+                <<<'EOT'
+                    The <info>fos:user:deactivate</info> command deactivates a user (will not be able to log in)
 
-  <info>php %command.full_name% matthieu</info>
-EOT
+                      <info>php %command.full_name% matthieu</info>
+                    EOT
             );
     }
 

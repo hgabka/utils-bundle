@@ -192,7 +192,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
         $map = [
         ];
 
-        return isset($map[$route]) ? $map[$route] : 'breadcrumb.' . $route;
+        return $map[$route] ?? 'breadcrumb.' . $route;
     }
 
     public function getIterator()

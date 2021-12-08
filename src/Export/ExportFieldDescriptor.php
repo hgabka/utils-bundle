@@ -59,7 +59,7 @@ class ExportFieldDescriptor
     /**
      * @param $key
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function get($key)
     {

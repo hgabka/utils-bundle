@@ -24,7 +24,7 @@ class SimpleItemAction implements ItemActionInterface
     private $label;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $template;
 

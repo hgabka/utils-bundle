@@ -168,11 +168,11 @@ class NestedTreeCRUDController extends CRUDController
 
             return new RedirectResponse(
                 $this->admin->generateUrl(
-                        'list',
-                        [
+                    'list',
+                    [
                             $this->admin->getIdParameter() => $newObject->getId(),
                         ]
-                    )
+                )
             );
         }
 

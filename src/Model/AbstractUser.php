@@ -3,8 +3,8 @@
 namespace Hgabka\UtilsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 
 abstract class AbstractUser implements UserInterface, SecurityUserInterface, PasswordAuthenticatedUserInterface
 {

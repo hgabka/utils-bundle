@@ -40,7 +40,7 @@ class HgabkaUtils
      * @param null $baseLocale
      * @param bool $frontend
      *
-     * @return string|null
+     * @return null|string
      */
     public function getCurrentLocale($baseLocale = null)
     {
@@ -114,7 +114,7 @@ class HgabkaUtils
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request|null
+     * @return null|\Symfony\Component\HttpFoundation\Request
      */
     public function getMasterRequest()
     {
@@ -437,7 +437,7 @@ class HgabkaUtils
     public function getArrayValueForPath($values, $name, $default = null)
     {
         if (false === $offset = strpos($name, '[')) {
-            return isset($values[$name]) ? $values[$name] : $default;
+            return $values[$name] ?? $default;
         }
 
         if (!isset($values[substr($name, 0, $offset)])) {
@@ -990,7 +990,7 @@ class HgabkaUtils
      * @param mixed      $to
      * @param string     $interval
      * @param bool       $returnArray     Tömbben adja vissza a dátumokat?
-     * @param mixed|null $intervalOptions
+     * @param null|mixed $intervalOptions
      *
      * @return array|\DatePeriod
      */
@@ -1146,7 +1146,7 @@ class HgabkaUtils
      *
      * @throws \Exception
      *
-     * @return \DateTime|null
+     * @return null|\DateTime
      */
     public function createDateTime($date, $throwOnError = false)
     {
@@ -1538,7 +1538,7 @@ class HgabkaUtils
     }
 
     /**
-     * @return Response|null
+     * @return null|Response
      */
     public function setNoCacheResponseHeaders(?Response $response = null)
     {

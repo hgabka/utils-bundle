@@ -130,7 +130,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
 
         if ($definition) {
             foreach ($container->findTaggedServiceIds('hgabka_utils.menu.adaptor') as $id => $attributes) {
-                $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+                $priority = $attributes[0]['priority'] ?? 0;
 
                 $definition->addMethodCall('addAdaptMenu', [new Reference($id), $priority]);
             }

@@ -11,10 +11,10 @@ class Fit implements FilterInterface
     public const MODE_OUTBOUND = 'outbound';
     public const MODE_INSET = 'inset';
 
-    /** @var int|null */
+    /** @var null|int */
     private $width;
 
-    /** @var int|null */
+    /** @var null|int */
     private $height;
 
     /** @var string */
@@ -23,8 +23,8 @@ class Fit implements FilterInterface
     /**
      * Fit constructor.
      *
-     * @param int|null $width
-     * @param int|null $height
+     * @param null|int $width
+     * @param null|int $height
      * @param string   $mode
      */
     public function __construct($width, $height, $mode = self::MODE_INSET)

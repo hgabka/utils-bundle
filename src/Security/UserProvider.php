@@ -35,16 +35,6 @@ final class UserProvider implements UserProviderInterface
         return $user;
     }
 
-    private function findOneUserBy(array $options): ?User
-    {
-        return
-            $this
-                ->entityManager
-                ->getRepository($this->userClass)
-                ->findOneBy($options)
-        ;
-    }
-
     public function refreshUser(UserInterface $user)
     {
         assert($user instanceof BundleUserInterface);
@@ -59,5 +49,15 @@ final class UserProvider implements UserProviderInterface
     public function supportsClass(string $class): bool
     {
         return User::class === $class;
+    }
+
+    private function findOneUserBy(array $options): ?User
+    {
+        return
+            $this
+                ->entityManager
+                ->getRepository($this->userClass)
+                ->findOneBy($options)
+        ;
     }
 }

@@ -138,7 +138,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @return Query|null
+     * @return null|Query
      */
     public function getQuery()
     {
@@ -179,7 +179,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * Get current permission definition.
      *
-     * @return PermissionDefinition|null
+     * @return null|PermissionDefinition
      */
     public function getPermissionDefinition()
     {

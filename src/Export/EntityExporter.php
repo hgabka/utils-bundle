@@ -33,6 +33,11 @@ abstract class EntityExporter
     protected $translator;
 
     /**
+     * @var int
+     */
+    protected $currentRow = 1;
+
+    /**
      * @required
      *
      * @param EntityManagerInterface $entityManager
@@ -74,18 +79,37 @@ abstract class EntityExporter
         return $this;
     }
 
-    /**
-     * @var int
-     */
-    protected $currentRow = 1;
-
     abstract public function getData(): Generator;
+
+    /**
+     * @param $filename
+     */
+    public function save($filename): void
+    {
+        $this->write();
+        $this->saveContent($filename);
+    }
+
+    /**
+     * @param $filename
+     *
+     * @return StreamedResponse
+     */
+    public function getStreamedResponse($filename): StreamedResponse
+    {
+        return new StreamedResponse(function () {
+            $this->save('php://output');
+        }, 200, [
+            'Content-Type' => $this->getMimeType(),
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+        ]);
+    }
 
     /**
      * @param $object
      * @param $field
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     protected function getObjectFieldValue($object, $field)
     {
@@ -202,7 +226,7 @@ abstract class EntityExporter
      * @param $object
      * @param $field
      *
-     * @return mixed|string|null
+     * @return null|mixed|string
      */
     protected function getRelationValue($object, $field): ?string
     {
@@ -239,7 +263,7 @@ abstract class EntityExporter
     /**
      * @param $field
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     protected function getEntityFieldValue(object $entity, $field)
     {
@@ -372,32 +396,8 @@ abstract class EntityExporter
         $this->writeData();
     }
 
-    /**
-     * @param $filename
-     */
-    public function save($filename): void
-    {
-        $this->write();
-        $this->saveContent($filename);
-    }
-
     protected function isUtf8(): bool
     {
         return null === $this->encoding || \in_array(strtolower($this->encoding), ['utf-8', 'utf8'], true);
-    }
-
-    /**
-     * @param $filename
-     *
-     * @return StreamedResponse
-     */
-    public function getStreamedResponse($filename): StreamedResponse
-    {
-        return new StreamedResponse(function () {
-            $this->save('php://output');
-        }, 200, [
-            'Content-Type' => $this->getMimeType(),
-            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
-        ]);
     }
 }

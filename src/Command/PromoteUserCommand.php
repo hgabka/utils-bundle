@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FOS\UserBundle\Command;
 
@@ -37,12 +29,13 @@ class PromoteUserCommand extends RoleCommand
         $this
             ->setName('fos:user:promote')
             ->setDescription('Promotes a user by adding a role')
-            ->setHelp(<<<'EOT'
-The <info>fos:user:promote</info> command promotes a user by adding a role
+            ->setHelp(
+                <<<'EOT'
+                    The <info>fos:user:promote</info> command promotes a user by adding a role
 
-  <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
-  <info>php %command.full_name% --super matthieu</info>
-EOT
+                      <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
+                      <info>php %command.full_name% --super matthieu</info>
+                    EOT
             );
     }
 

@@ -79,13 +79,13 @@ final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator imple
         return new RedirectResponse($this->router->generate('admin_login'));
     }
 
-    protected function getLoginUrl(): string
-    {
-        return $this->router->generate('admin_login');
-    }
-
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
     {
         return new RedirectResponse($this->router->generate('sonata_admin_dashboard'));
+    }
+
+    protected function getLoginUrl(): string
+    {
+        return $this->router->generate('admin_login');
     }
 }

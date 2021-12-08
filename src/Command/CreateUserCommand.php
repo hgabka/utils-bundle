@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Hgabka\UtilsBundle\Command;
 
@@ -55,23 +47,24 @@ class CreateUserCommand extends Command
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ])
-            ->setHelp(<<<'EOT'
-The <info>hgabka:backend-user:create</info> command creates a user:
+            ->setHelp(
+                <<<'EOT'
+                    The <info>hgabka:backend-user:create</info> command creates a user:
 
 
-This interactive shell will ask you for an email and then a password.
+                    This interactive shell will ask you for an email and then a password.
 
-You can alternatively specify the email and password as the second and third arguments:
+                    You can alternatively specify the email and password as the second and third arguments:
 
-You can create a super admin via the super-admin flag:
+                    You can create a super admin via the super-admin flag:
 
-  <info>php %command.full_name% admin --super-admin</info>
+                      <info>php %command.full_name% admin --super-admin</info>
 
-You can create an inactive user (will not be able to log in):
+                    You can create an inactive user (will not be able to log in):
 
-  <info>php %command.full_name% thibault --inactive</info>
+                      <info>php %command.full_name% thibault --inactive</info>
 
-EOT
+                    EOT
             );
     }
 

@@ -25,12 +25,12 @@ class Field
     private $sort;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $template;
 
     /**
-     * @var FieldAlias|null
+     * @var null|FieldAlias
      */
     private $alias;
 
@@ -83,7 +83,7 @@ class Field
     }
 
     /**
-     * @return FieldAlias|null
+     * @return null|FieldAlias
      */
     public function getAlias()
     {

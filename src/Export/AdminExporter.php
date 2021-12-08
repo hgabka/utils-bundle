@@ -28,6 +28,21 @@ abstract class AdminExporter extends EntityExporter
         return $this->admin->getClass();
     }
 
+    /**
+     * @return Generator
+     */
+    public function getData(): Generator
+    {
+        $query = $this->createQuery();
+
+        $doctrineQuery = $query->getDoctrineQuery();
+
+        foreach ($doctrineQuery
+                     ->iterate() as $row) {
+            yield $row[0];
+        }
+    }
+
     protected function createQuery(): ProxyQueryInterface
     {
         $datagrid = $this->admin->getDatagrid();
@@ -42,20 +57,5 @@ abstract class AdminExporter extends EntityExporter
         $query->setMaxResults(null);
 
         return $query;
-    }
-
-    /**
-     * @return Generator
-     */
-    public function getData(): Generator
-    {
-        $query = $this->createQuery();
-
-        $doctrineQuery = $query->getDoctrineQuery();
-
-        foreach ($doctrineQuery
-                     ->iterate() as $row) {
-            yield $row[0];
-        }
     }
 }

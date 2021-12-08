@@ -31,19 +31,19 @@ class CreateGroupCommand extends ContainerAwareCommand
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>hgabka:group:create</info> command creates a group:
+                    The <info>hgabka:group:create</info> command creates a group:
 
-  <info>php bin/console hgabka:group:create Administrators</info>
+                      <info>php bin/console hgabka:group:create Administrators</info>
 
-You can specify a list of roles to attach to this group by specifying the
-optional --roles parameter, providing a comma separated list of roles :
+                    You can specify a list of roles to attach to this group by specifying the
+                    optional --roles parameter, providing a comma separated list of roles :
 
-  <info>php bin/console hgabka:group:create --role=admin,guest Administrators</info>
+                      <info>php bin/console hgabka:group:create --role=admin,guest Administrators</info>
 
-<comment>Note:</comment> The ROLE_ prefix will be added if you don't provide it AND you must make
-sure the roles already exist!
+                    <comment>Note:</comment> The ROLE_ prefix will be added if you don't provide it AND you must make
+                    sure the roles already exist!
 
-EOT
+                    EOT
             );
     }
 

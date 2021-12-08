@@ -31,7 +31,7 @@ class MenuBuilder
     private $container;
 
     /**
-     * @var MenuItem|null
+     * @var null|MenuItem
      */
     private $currentCache;
 
@@ -59,7 +59,7 @@ class MenuBuilder
     /**
      * Get current menu item.
      *
-     * @return MenuItem|null
+     * @return null|MenuItem
      */
     public function getCurrent()
     {
@@ -106,7 +106,7 @@ class MenuBuilder
     /**
      * Get top parent menu of current menu item.
      *
-     * @return TopMenuItem|null
+     * @return null|TopMenuItem
      */
     public function getLowestTopChild()
     {

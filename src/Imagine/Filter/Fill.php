@@ -9,10 +9,10 @@ use Imagine\Image\Point;
 
 class Fill implements FilterInterface
 {
-    /** @var int|null */
+    /** @var null|int */
     private $width;
 
-    /** @var int|null */
+    /** @var null|int */
     private $height;
 
     private $position;
@@ -20,8 +20,8 @@ class Fill implements FilterInterface
     /**
      * Fill constructor.
      *
-     * @param int|null $width
-     * @param int|null $height
+     * @param null|int $width
+     * @param null|int $height
      * @param $position
      */
     public function __construct($width, $height, $position)

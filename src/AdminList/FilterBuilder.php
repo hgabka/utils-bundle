@@ -47,7 +47,7 @@ class FilterBuilder
     /**
      * @param string $columnName
      *
-     * @return mixed|null
+     * @return null|mixed
      */
     public function get($columnName)
     {

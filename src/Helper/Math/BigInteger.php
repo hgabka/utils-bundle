@@ -779,7 +779,7 @@ class BigInteger
         $result = '';
         while (\count($temp->value)) {
             [$temp, $mod] = $temp->divide($divisor);
-            $result = str_pad(isset($mod->value[0]) ? $mod->value[0] : '', MATH_BIGINTEGER_MAX10_LEN, '0', \STR_PAD_LEFT) . $result;
+            $result = str_pad($mod->value[0] ?? '', MATH_BIGINTEGER_MAX10_LEN, '0', \STR_PAD_LEFT) . $result;
         }
         $result = ltrim($result, '0');
         if (empty($result)) {
@@ -1158,9 +1158,9 @@ class BigInteger
         for ($i = $x_max; $i >= $y_max + 1; --$i) {
             $x_value = &$x->value;
             $x_window = [
-                isset($x_value[$i]) ? $x_value[$i] : 0,
-                isset($x_value[$i - 1]) ? $x_value[$i - 1] : 0,
-                isset($x_value[$i - 2]) ? $x_value[$i - 2] : 0,
+                $x_value[$i] ?? 0,
+                $x_value[$i - 1] ?? 0,
+                $x_value[$i - 2] ?? 0,
             ];
             $y_window = [
                 $y_value[$y_max],

@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Hgabka\UtilsBundle\Model;
 
@@ -31,7 +23,7 @@ interface UserManagerInterface
     /**
      * Finds one user by the given criteria.
      *
-     * @return UserInterface|null
+     * @return null|UserInterface
      */
     public function findUserBy(array $criteria);
 
@@ -40,7 +32,7 @@ interface UserManagerInterface
      *
      * @param string $username
      *
-     * @return UserInterface|null
+     * @return null|UserInterface
      */
     public function findUserByUsername($username);
 
@@ -49,7 +41,7 @@ interface UserManagerInterface
      *
      * @param string $email
      *
-     * @return UserInterface|null
+     * @return null|UserInterface
      */
     public function findUserByEmail($email);
 
@@ -58,7 +50,7 @@ interface UserManagerInterface
      *
      * @param string $usernameOrEmail
      *
-     * @return UserInterface|null
+     * @return null|UserInterface
      */
     public function findUserByUsernameOrEmail($usernameOrEmail);
 
@@ -67,7 +59,7 @@ interface UserManagerInterface
      *
      * @param string $token
      *
-     * @return UserInterface|null
+     * @return null|UserInterface
      */
     public function findUserByConfirmationToken($token);
 

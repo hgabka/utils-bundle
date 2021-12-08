@@ -62,7 +62,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
             $this->em->flush();
         }
 
-        return isset($user) ? $user : null;
+        return $user ?? null;
     }
 
     /**
@@ -71,7 +71,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
      *
      * @param string $email
      *
-     * @return string[]|null
+     * @return null|string[]
      */
     private function getAccessLevels($email)
     {

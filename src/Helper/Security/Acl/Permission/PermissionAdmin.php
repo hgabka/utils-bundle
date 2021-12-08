@@ -154,7 +154,7 @@ class PermissionAdmin
      *
      * @param RoleInterface|string $role
      *
-     * @return MaskBuilder|null
+     * @return null|MaskBuilder
      */
     public function getPermission($role)
     {

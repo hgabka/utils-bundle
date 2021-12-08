@@ -72,7 +72,7 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed|null $switchedHost
+     * @param null|mixed $switchedHost
      *
      * @return array
      */

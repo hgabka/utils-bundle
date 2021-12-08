@@ -34,7 +34,7 @@ trait TranslatableTrait
     /**
      * Translation helper method.
      *
-     * @param mixed|null $locale
+     * @param null|mixed $locale
      */
     public function translate($locale = null)
     {

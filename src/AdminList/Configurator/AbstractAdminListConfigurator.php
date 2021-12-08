@@ -900,7 +900,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Return list title.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getListTitle()
     {
@@ -910,7 +910,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns edit title.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getViewTitle()
     {
@@ -920,7 +920,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns edit title.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getEditTitle()
     {
@@ -930,7 +930,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns new title.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getNewTitle()
     {
@@ -960,7 +960,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns tab fields.
      *
-     * @return array|string|null
+     * @return null|array|string
      */
     public function getDefaultSort()
     {
@@ -970,7 +970,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns tab fields.
      *
-     * @return array|null
+     * @return null|array
      */
     public function getTabFields()
     {
@@ -980,7 +980,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Returns pagesize options.
      *
-     * @return array|null
+     * @return null|array
      */
     public function getPagesizeOptions()
     {

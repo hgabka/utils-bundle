@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Export;
 
 class ExportField
 {
-    /** @var string|null */
+    /** @var null|string */
     protected $type;
 
     /** @var array */

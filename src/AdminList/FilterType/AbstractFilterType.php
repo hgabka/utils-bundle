@@ -10,12 +10,12 @@ namespace Hgabka\UtilsBundle\AdminList\FilterType;
 abstract class AbstractFilterType implements FilterTypeInterface
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     protected $columnName;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     protected $alias;
 

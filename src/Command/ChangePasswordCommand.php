@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FOS\UserBundle\Command;
 
@@ -47,18 +39,19 @@ class ChangePasswordCommand extends Command
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
             ])
-            ->setHelp(<<<'EOT'
-The <info>fos:user:change-password</info> command changes the password of a user:
+            ->setHelp(
+                <<<'EOT'
+                    The <info>fos:user:change-password</info> command changes the password of a user:
 
-  <info>php %command.full_name% matthieu</info>
+                      <info>php %command.full_name% matthieu</info>
 
-This interactive shell will first ask you for a password.
+                    This interactive shell will first ask you for a password.
 
-You can alternatively specify the password as a second argument:
+                    You can alternatively specify the password as a second argument:
 
-  <info>php %command.full_name% matthieu mypassword</info>
+                      <info>php %command.full_name% matthieu mypassword</info>
 
-EOT
+                    EOT
             );
     }
 

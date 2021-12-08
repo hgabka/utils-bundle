@@ -166,7 +166,7 @@ class MenuItem
     /**
      * Get parent menu item.
      *
-     * @return MenuItem|null
+     * @return null|MenuItem
      */
     public function getParent()
     {
@@ -176,7 +176,7 @@ class MenuItem
     /**
      * Set parent menu item.
      *
-     * @param MenuItem|null $parent
+     * @param null|MenuItem $parent
      *
      * @return MenuItem
      */

@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace FOS\UserBundle\Command;
 
@@ -35,12 +27,13 @@ class DemoteUserCommand extends RoleCommand
         $this
             ->setName('fos:user:demote')
             ->setDescription('Demote a user by removing a role')
-            ->setHelp(<<<'EOT'
-The <info>fos:user:demote</info> command demotes a user by removing a role
+            ->setHelp(
+                <<<'EOT'
+                    The <info>fos:user:demote</info> command demotes a user by removing a role
 
-  <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
-  <info>php %command.full_name% --super matthieu</info>
-EOT
+                      <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
+                      <info>php %command.full_name% --super matthieu</info>
+                    EOT
             );
     }
 

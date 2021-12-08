@@ -28,8 +28,8 @@ class PermissionDefinition
      * Construct the PermissionDefinition.
      *
      * @param array       $permissions Set of permissions (strings)
-     * @param string|null $entity      Class name of entity for which to check permissions
-     * @param string|null $alias       DQL alias of entity table
+     * @param null|string $entity      Class name of entity for which to check permissions
+     * @param null|string $alias       DQL alias of entity table
      *
      * @throws InvalidArgumentException
      */
