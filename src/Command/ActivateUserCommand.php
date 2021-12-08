@@ -60,7 +60,7 @@ class ActivateUserCommand extends Command
 
         $output->writeln(sprintf('User "%s" has been activated.', $username));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**
