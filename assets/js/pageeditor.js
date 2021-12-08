@@ -324,7 +324,7 @@ pageEditor.pageEditor = (function(window, undefined) {
             if((e.ctrlKey || e.metaKey) && e.which === 83) {
                 e.preventDefault();
 
-                hgutils.appLoading.addLoading();
+                appLoading.appLoading.addLoading();
 
                 $('#pageadminform').submit();
             };
