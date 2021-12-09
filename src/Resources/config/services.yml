@@ -28,6 +28,8 @@ services:
         class: '%hgabka_utils.admin_panel.class%'
 
     Hgabka\UtilsBundle\AdminList\AdminListFactory:
+        autowire: true
+        autoconfigure: true
         public: true
 
     hgabka_utils.service.export:
