@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Hgabka\UtilsBundle\Entity\UserInterface as BundleUserInterface;
+use Hgabka\UtilsBundle\Model\UserInterface as BundleUserInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
