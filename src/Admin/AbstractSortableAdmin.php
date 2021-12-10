@@ -34,18 +34,14 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
      */
     protected $maxPerPage = \PHP_INT_MAX;
 
-    /**
-     * @return array
-     */
-    public function getFilterParameters()
+    protected function configureFilterParameters(array $parameters): array
     {
-        $parameters = parent::getFilterParameters();
         $parameters['_sort_by'] = $this->sortField;
         $parameters['_sort_order'] = $this->isDescending() ? 'DESC' : 'ASC';
 
         return $parameters;
     }
-
+    
     public function getSortField(): string
     {
         return $this->sortField;
