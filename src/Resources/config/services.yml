@@ -341,3 +341,12 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Controller\SortableCRUDController:
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Controller\NestedTreeCRUDController:
+        autowire: true
+        autoconfigure: true
+
+    
