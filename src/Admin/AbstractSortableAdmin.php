@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
@@ -90,7 +90,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return !empty($filters);
     }
 
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('sorting');
     }
