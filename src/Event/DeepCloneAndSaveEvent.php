@@ -2,7 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class DeepCloneAndSaveEvent extends Event
 {
