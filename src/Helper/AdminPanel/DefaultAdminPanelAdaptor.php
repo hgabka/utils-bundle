@@ -34,7 +34,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
             [],
             '',
             '',
-            'HgabkaUtilsBundle:AdminPanel:_language_chooser.html.twig'
+            '@HgabkaUtilsBundle/AdminPanel/_language_chooser.html.twig'
         );
     }
 
@@ -56,7 +56,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
     {
         return new AdminPanelAction(
             [
-                'path' => 'fos_user_security_logout',
+                'path' => 'admin_logout',
                 'attrs' => ['id' => 'app__logout', 'title' => 'logout'],
             ],
             '',
