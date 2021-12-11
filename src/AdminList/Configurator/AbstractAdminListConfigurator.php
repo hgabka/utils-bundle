@@ -87,27 +87,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var string
      */
-    private $listTemplate = 'HgabkaUtilsBundle:Default:list.html.twig';
+    private $listTemplate = '@HgabkaUtils/Default/list.html.twig';
 
     /**
      * @var string
      */
-    private $addTemplate = 'HgabkaUtilsBundle:Default:add_or_edit.html.twig';
+    private $addTemplate = '@HgabkaUtils/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $editTemplate = 'HgabkaUtilsBundle:Default:add_or_edit.html.twig';
+    private $editTemplate = '@HgabkaUtils/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $viewTemplate = 'HgabkaUtilsBundle:Default:view.html.twig';
+    private $viewTemplate = '@HgabkaUtils/Default/view.html.twig';
 
     /**
      * @var string
      */
-    private $deleteTemplate = 'HgabkaUtilsBundle:Default:delete.html.twig';
+    private $deleteTemplate = '@HgabkaUtils/Default/delete.html.twig';
 
     /**
      * @var FilterBuilder
