@@ -298,55 +298,71 @@ services:
         autowire: true
     
     Hgabka\UtilsBundle\Validator\TaxValidator:
+        public: false
         autoconfigure: true
         autowire: true
 
     Hgabka\UtilsBundle\Validator\Constraints\TaxIdValidator:
+        public: false
         autoconfigure: true
         autowire: true
 
     Hgabka\UtilsBundle\Validator\Constraints\TaxNoValidator:
+        public: false
         autoconfigure: true
         autowire: true
     
     Hgabka\UtilsBundle\Security\UserProvider:
+        public: false
         autoconfigure: true
         autowire: true
         arguments:
             $userClass: '%hgabka_utils.backend_user_class%'
             
     Hgabka\UtilsBundle\Security\AdminLoginAuthenticator:
+        public: false
         autoconfigure: true
         autowire: true
          
     Hgabka\UtilsBundle\Form\AdminLoginForm:
+        public: false
         autowire: true
         autoconfigure: true
 
     Hgabka\UtilsBundle\Model\UserManager:
+        public: false
         autowire: true
         autoconfigure: true
         arguments:
             $userClass: '%hgabka_utils.backend_user_class%'
 
     Hgabka\UtilsBundle\Util\PasswordUpdater:
+        public: false
         autowire: true
         autoconfigure: true
 
     Hgabka\UtilsBundle\Util\UserManipulator:
+        public: false
         autowire: true
         autoconfigure: true
 
     Hgabka\UtilsBundle\Command\CreateUserCommand:
+        public: false
         autowire: true
         autoconfigure: true
 
     Hgabka\UtilsBundle\Controller\SortableCRUDController:
+        public: false
         autowire: true
         autoconfigure: true
 
     Hgabka\UtilsBundle\Controller\NestedTreeCRUDController:
+        public: false
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Util\TokenGenerator:
+        public: false
+        autowire: true
+        autoconfigure: true
     
