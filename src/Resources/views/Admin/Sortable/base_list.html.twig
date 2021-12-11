@@ -72,7 +72,11 @@
 
                         {% block table_body %}
                             <tbody>
-                                {% include get_admin_template('outer_list_rows_' ~ admin.getListMode(), admin.code) %}
+                                {% for object in admin.datagrid.results %}
+                                    <tr data-id="{{ object.id }}">
+                                        {% include get_admin_template('inner_list_row', admin.code) %}
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         {% endblock %}
 
