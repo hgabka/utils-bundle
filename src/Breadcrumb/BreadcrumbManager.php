@@ -4,14 +4,15 @@ namespace Hgabka\UtilsBundle\Breadcrumb;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 class BreadcrumbManager implements \IteratorAggregate, \Countable
 {
     /** @var array */
     protected $breadCrumbs = [];
 
-    /** @var TokenStorageInterface */
-    protected $tokenStorage;
+    /** @var Security */
+    protected $security;
 
     /** @var RequestStack */
     protected $requestStack;
@@ -27,9 +28,9 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
     /**
      * BreadcrumbManager constructor.
      */
-    public function __construct(TokenStorageInterface $tokenStorage, RequestStack $requestStack)
+    public function __construct(Security $security, RequestStack $requestStack)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
         $this->requestStack = $requestStack;
     }
 
@@ -214,7 +215,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
 
     protected function getUser()
     {
-        $user = $this->tokenStorage->getToken()->getUser();
+        $user = $this->security->getUser();
 
         return \is_object($user) ? $user : null;
     }
