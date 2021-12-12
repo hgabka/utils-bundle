@@ -99,7 +99,7 @@ services:
 
     hgabka_utils.breadcrumb_manager:
         class: Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager
-        arguments:  ["@security.token_storage", "@request_stack"]
+        arguments:  ["@security.helper", "@request_stack"]
 
     hgabka_utils.number_to_text:
         class: Hgabka\UtilsBundle\Helper\Number\NumberToText
