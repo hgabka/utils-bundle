@@ -173,6 +173,6 @@ class DomainConfiguration implements DomainConfigurationInterface
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get('request_stack');
 
-        return $requestStack->getMasterRequest();
+        return $requestStack->getMainRequest();
     }
 }
