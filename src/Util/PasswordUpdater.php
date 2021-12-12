@@ -24,7 +24,7 @@ class PasswordUpdater implements PasswordUpdaterInterface
     {
         $plainPassword = $user->getPlainPassword();
 
-        if ('' === $plainPassword) {
+        if ('' === $plainPassword || null === $plainPassword) {
             return;
         }
 
