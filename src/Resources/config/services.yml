@@ -82,7 +82,7 @@ services:
 
     hgabka_utils.form.type.plain_widget:
         class: Hgabka\UtilsBundle\Form\Type\StaticControlType
-        arguments: ['twig']
+        arguments: ['@twig']
         tags:
             - { name: form.type }
 
