@@ -37,7 +37,7 @@ class NestedTreeAdmin extends AbstractAdmin
         $collection->remove('edit');
         $collection->remove('create');
     }
-    
+
     protected function getAccessMapping(): array
     {
         return $this->accessMapping;

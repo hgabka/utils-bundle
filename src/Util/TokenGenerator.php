@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the HgabkaUtilsBundle package.
- *
- */
 
 namespace Hgabka\UtilsBundle\Util;
 

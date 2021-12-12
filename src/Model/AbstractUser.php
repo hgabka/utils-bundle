@@ -60,6 +60,14 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getUsername();
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -364,13 +372,5 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
         }
 
         return $this;
-    }
-    
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->getUsername();
     }
 }

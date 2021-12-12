@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hgabka\UtilsBundle\Util;
 
 use Hgabka\UtilsBundle\Model\UserInterface;

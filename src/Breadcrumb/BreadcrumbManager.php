@@ -3,7 +3,6 @@
 namespace Hgabka\UtilsBundle\Breadcrumb;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 
 class BreadcrumbManager implements \IteratorAggregate, \Countable

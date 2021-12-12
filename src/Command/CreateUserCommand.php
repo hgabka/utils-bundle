@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hgabka\UtilsBundle\Command;
 
 use Hgabka\UtilsBundle\Util\UserManipulator;

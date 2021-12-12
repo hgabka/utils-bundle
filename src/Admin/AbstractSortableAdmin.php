@@ -34,14 +34,6 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
      */
     protected $maxPerPage = \PHP_INT_MAX;
 
-    protected function configureFilterParameters(array $parameters): array
-    {
-        $parameters['_sort_by'] = $this->sortField;
-        $parameters['_sort_order'] = $this->isDescending() ? 'DESC' : 'ASC';
-
-        return $parameters;
-    }
-    
     public function getSortField(): string
     {
         return $this->sortField;
@@ -84,6 +76,14 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         unset($filters['_sort_by'], $filters['_sort_order'], $filters['_per_page'], $filters['_page']);
 
         return !empty($filters);
+    }
+
+    protected function configureFilterParameters(array $parameters): array
+    {
+        $parameters['_sort_by'] = $this->sortField;
+        $parameters['_sort_order'] = $this->isDescending() ? 'DESC' : 'ASC';
+
+        return $parameters;
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

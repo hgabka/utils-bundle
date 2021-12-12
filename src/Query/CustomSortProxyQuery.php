@@ -7,7 +7,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery as BaseQuery;
 use Sonata\DoctrineORMAdminBundle\Util\SmartPaginatorFactory;
 
 class CustomSortProxyQuery implements ProxyQueryInterface
@@ -15,12 +14,12 @@ class CustomSortProxyQuery implements ProxyQueryInterface
     private $queryBuilder;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $sortBy;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $sortOrder;
 
@@ -168,11 +167,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
     public function setSortOrder(string $sortOrder): BaseProxyQueryInterface
     {
         if (!\in_array(strtoupper($sortOrder), $validSortOrders = ['ASC', 'DESC'], true)) {
-            throw new \InvalidArgumentException(sprintf(
-                '"%s" is not a valid sort order, valid values are "%s"',
-                $sortOrder,
-                implode(', ', $validSortOrders)
-            ));
+            throw new \InvalidArgumentException(sprintf('"%s" is not a valid sort order, valid values are "%s"', $sortOrder, implode(', ', $validSortOrders)));
         }
         $this->sortOrder = $sortOrder;
 
@@ -241,7 +236,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
                 }
             }
 
-            $newAlias .= '_'.$associationMapping['fieldName'];
+            $newAlias .= '_' . $associationMapping['fieldName'];
             if (!\in_array($newAlias, $this->entityJoinAliases, true)) {
                 $this->entityJoinAliases[] = $newAlias;
                 $this->queryBuilder->leftJoin(sprintf('%s.%s', $alias, $associationMapping['fieldName']), $newAlias);
