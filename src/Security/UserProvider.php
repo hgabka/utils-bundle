@@ -2,8 +2,8 @@
 
 namespace Hgabka\UtilsBundle\Security;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\UtilsBundle\Model\AbstractUser;
 use Hgabka\UtilsBundle\Model\UserInterface as BundleUserInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,7 +24,12 @@ final class UserProvider implements UserProviderInterface
         $this->userClass = $userClass;
     }
 
-    public function loadUserByUsername(string $username): User
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->loadUserByUsername($identifier);
+    }
+
+    public function loadUserByUsername(string $username): UserInterface
     {
         $user = $this->findOneUserBy(['username' => $username]);
 
@@ -48,10 +53,10 @@ final class UserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return User::class === $class;
+        return $this->userClass === $class;
     }
 
-    private function findOneUserBy(array $options): ?User
+    private function findOneUserBy(array $options): ?UserInterface
     {
         return
             $this
