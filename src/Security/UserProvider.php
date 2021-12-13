@@ -8,6 +8,7 @@ use Hgabka\UtilsBundle\Model\UserInterface as BundleUserInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use function is_subclass_of;
 
 final class UserProvider implements UserProviderInterface
 {
@@ -53,7 +54,7 @@ final class UserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return $this->userClass === $class;
+        return $this->userClass === $class || is_subclass_of($class, $this->userClass);
     }
 
     private function findOneUserBy(array $options): ?UserInterface
