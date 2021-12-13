@@ -53,17 +53,25 @@ final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator imple
         $form = $this->formFactory->create(AdminLoginForm::class);
         $form->handleRequest($request);
 
-        $data = $form->getData();
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $data['email']
-        );
+        if (!$form->isValid()) {
+            $data = [];
+        } else {
+            $data = $form->getData();
+            $request->getSession()->set(
+                Security::LAST_USERNAME,
+                $data['email']
+            );
+        }
 
         return $data;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
+    public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
+        if (empty($credentials['email'])) {
+            throw new AuthenticationException('Invalid form data');
+        }
+
         return $userProvider->loadUserByUsername($credentials['email']);
     }
 
