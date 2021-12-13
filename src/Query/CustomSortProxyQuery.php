@@ -98,8 +98,8 @@ class CustomSortProxyQuery implements DoctrineProxyQueryInterface
 
         $rootAlias = current($queryBuilder->getRootAliases());
 
-        if ($this->getSortBy()) {
-            $sortBy = $this->getSortBy();
+        if ($this->sortBy) {
+            $sortBy = $this->sortBy;
             $priority = \is_array($sortBy) && isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
             $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
 
