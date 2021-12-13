@@ -78,7 +78,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
         return SmartPaginatorFactory::create($this, $this->hints);
     }
 
-    public function setSortBy($parentAssociationMappings, $fieldMapping)
+    public function setSortBy(array $parentAssociationMappings, array $fieldMapping): ProxyQueryInterface
     {
         $alias = $this->entityJoin($parentAssociationMappings);
         if (\is_string($fieldMapping['fieldName'])) {
