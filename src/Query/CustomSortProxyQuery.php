@@ -184,7 +184,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
         return $this->queryBuilder;
     }
 
-    public function setFirstResult(?int $firstResult): BaseProxyQueryInterface
+    public function setFirstResult(?int $firstResult): ProxyQueryInterface
     {
         $this->queryBuilder->setFirstResult($firstResult);
 
@@ -196,7 +196,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
         return $this->queryBuilder->getFirstResult();
     }
 
-    public function setMaxResults(?int $maxResults): BaseProxyQueryInterface
+    public function setMaxResults(?int $maxResults): ProxyQueryInterface
     {
         $this->queryBuilder->setMaxResults($maxResults);
 
@@ -257,7 +257,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
      * @see \Doctrine\ORM\Query::setHint
      * @see \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER
      */
-    public function setHint(string $name, $value): \Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface
+    public function setHint(string $name, $value): ProxyQueryInterface
     {
         $this->hints[$name] = $value;
 
