@@ -373,4 +373,9 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
 
         return $this;
     }
+    
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
 }
