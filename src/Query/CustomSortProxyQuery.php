@@ -7,9 +7,10 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface as DoctrineProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Util\SmartPaginatorFactory;
 
-class CustomSortProxyQuery implements ProxyQueryInterface
+class CustomSortProxyQuery implements DoctrineProxyQueryInterface
 {
     private $queryBuilder;
 
