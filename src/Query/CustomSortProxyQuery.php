@@ -164,7 +164,7 @@ class CustomSortProxyQuery implements ProxyQueryInterface
         return $this->sortBy;
     }
 
-    public function setSortOrder(string $sortOrder): BaseProxyQueryInterface
+    public function setSortOrder(string $sortOrder): ProxyQueryInterface
     {
         if (!\in_array(strtoupper($sortOrder), $validSortOrders = ['ASC', 'DESC'], true)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not a valid sort order, valid values are "%s"', $sortOrder, implode(', ', $validSortOrders)));
