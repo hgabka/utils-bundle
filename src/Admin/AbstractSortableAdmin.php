@@ -50,15 +50,9 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return $this;
     }
 
-
     public function isDescending(): bool
     {
         return $this->descending;
-    }
-
-    protected function configureDefaultSortValues(array &$sortValues): void
-    {
-        $sortValues[Datagrid::PER_PAGE] = \PHP_INT_MAX;
     }
 
     public function getPerPageOptions(): array
@@ -82,6 +76,11 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return !empty($filters);
     }
 
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[Datagrid::PER_PAGE] = \PHP_INT_MAX;
+    }
+
     protected function configureFilterParameters(array $parameters): array
     {
         $parameters['_sort_by'] = $this->sortField;
@@ -94,7 +93,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
     {
         $collection->add('sorting');
     }
-    
+
     protected function setListTemplate()
     {
         $this->getTemplateRegistry()->setTemplate('list', '@HgabkaUtils/Admin/Sortable/base_list.html.twig');

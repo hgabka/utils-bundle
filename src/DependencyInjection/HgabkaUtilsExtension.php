@@ -94,7 +94,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $columnHydrator = [ColumnHydrator::HYDRATOR_NAME, ColumnHydrator::class];
         $countHydrator = [CountHydrator::HYDRATOR_NAME, CountHydrator::class];
         $indexedHydrator = [IndexedHydrator::HYDRATOR_NAME, IndexedHydrator::class];
-        
+
         foreach ($container->getParameter('doctrine.entity_managers') as $name => $serviceName) {
             $definition = $container->getDefinition('doctrine.orm.' . $name . '_configuration');
             $definition->addMethodCall('addCustomHydrationMode', $keyValueHydrator);

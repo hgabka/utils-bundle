@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Doctrine\Hydrator;
 
-use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 
 class ColumnHydrator extends AbstractHydrator

@@ -3,12 +3,11 @@
 namespace Hgabka\UtilsBundle\Security;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hgabka\UtilsBundle\Model\AbstractUser;
 use Hgabka\UtilsBundle\Model\UserInterface as BundleUserInterface;
+use function is_subclass_of;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use function is_subclass_of;
 
 final class UserProvider implements UserProviderInterface
 {
