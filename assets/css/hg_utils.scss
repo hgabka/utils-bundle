@@ -1953,10 +1953,14 @@
             }
         }
     }
+    .sonata-collection-add {
+        display: block;
+        text-align: left;
+    }
 }
 
 .sonata-collection-row {
-    .fa.fa-minus-circle {
+    .fas.fa-minus-circle {
         color: red;
         font-size: 20px;
         margin-top: -5px;
@@ -1976,13 +1980,14 @@
         font-size: 14px;
         line-height: 16px;
         vertical-align: 1px;
+        font-weight: normal;
     }
 
     &:hover {
         text-decoration: none !important;
     }
 
-    .fa.fa-plus-circle {
+    .fas.fa-plus-circle {
         color: green;
         font-size: 20px;
     }
