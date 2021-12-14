@@ -83,12 +83,15 @@ class SortableCollectionHandler
         });
     }
 
+
     init() {
         let $collectionHolder = $(this.options.containerSelector);
-        $collectionHolder.find('.sonata-collection-add i').prepend('<span>Hozzáadás</span>');
+        $collectionHolder.find('.sonata-collection-add i').prepend('<span style="pointer-events: none;">Hozzáadás</span>');
         $collectionHolder.addClass('sortable-collection');
         if ($collectionHolder.length) {
             $collectionHolder.sortable({
+				//handle: '.sonata-collection-row',
+				items: this.options.rowSelector,
                 start: (event, ui) => {
                     ajaxModal.ajaxModal.resetAjaxModals();
                     $collectionHolder.trigger('sortable:start');
@@ -106,19 +109,18 @@ class SortableCollectionHandler
             });
 
             $collectionHolder.find('form').submit(this.reOrder);
-
             $collectionHolder.on('click', '.sonata-collection-add, .sonata-collection-delete', e => {
                 let $target = $(e.currentTarget);
 
                 if ($target.hasClass('sonata-collection-add')) {
                     setTimeout(_ => {
-                        $collectionHolder.trigger('sortable:add');
+                      //  $collectionHolder.trigger('sortable:add');
                     }, 200);
                 }
 
                 if ($target.hasClass('sonata-collection-delete')) {
                     setTimeout(_ => {
-                        $collectionHolder.trigger('sortable:delete');
+                       // $collectionHolder.trigger('sortable:delete');
                     }, 200);
                 }
 
