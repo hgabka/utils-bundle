@@ -14,6 +14,6 @@ class CountHydrator extends AbstractHydrator
      */
     protected function hydrateAllData()
     {
-        return (int) $this->_stmt->fetchColumn(0);
+        return (int) $this->_stmt->fetchFirstColumn();
     }
 }
