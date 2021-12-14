@@ -2,9 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Doctrine\Hydrator;
 
-use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
-use PDO;
 
 class KeyValueHydrator extends AbstractHydrator
 {
@@ -17,14 +15,7 @@ class KeyValueHydrator extends AbstractHydrator
      */
     protected function hydrateAllData()
     {
-        $rows = $this->_stmt->fetchAll(FetchMode::NUMERIC);
-
-        $data = [];
-        foreach ($rows as $row) {
-            $data[$row[0]] = $row[1];
-        }
-
-        return $data;
+        return $this->_stmt->fetchAllKeyValue();
     }
 
     /**
