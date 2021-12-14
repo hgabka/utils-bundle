@@ -16,6 +16,6 @@ class ColumnHydrator extends AbstractHydrator
      */
     protected function hydrateAllData()
     {
-        return $this->_stmt->fetchAll(FetchMode::COLUMN);
+        return $this->_stmt->fetchFirstColumn();
     }
 }
