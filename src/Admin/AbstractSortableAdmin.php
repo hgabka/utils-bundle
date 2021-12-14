@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\Datagrid;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
@@ -49,17 +50,20 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return $this;
     }
 
-    /**
-     * @param $template
-     */
-    public function setListTemplate($template)
-    {
-        $this->templates['list'] = $template;
-    }
 
     public function isDescending(): bool
     {
         return $this->descending;
+    }
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[Datagrid::PER_PAGE] = \PHP_INT_MAX;
+    }
+
+    public function getPerPageOptions(): array
+    {
+        return [];
     }
 
     public function setDescending(bool $descending): self
@@ -89,5 +93,21 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('sorting');
+    }
+    
+    protected function setListTemplate()
+    {
+        $this->getTemplateRegistry()->setTemplate('list', '@HgabkaUtils/Admin/Sortable/base_list.html.twig');
+    }
+
+    protected function setResultsTemplate()
+    {
+        $this->getTemplateRegistry()->setTemplate('pager_results', '@HgabkaUtils/Admin/Sortable/base_results.html.twig');
+    }
+
+    protected function configure(): void
+    {
+        $this->setListTemplate();
+        $this->setResultsTemplate();
     }
 }
