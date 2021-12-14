@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\DependencyInjection;
 
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
+use Hgabka\UtilsBundle\Doctrine\Hydrator\IndexedHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
@@ -92,11 +93,14 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $keyValueHydrator = [KeyValueHydrator::HYDRATOR_NAME, KeyValueHydrator::class];
         $columnHydrator = [ColumnHydrator::HYDRATOR_NAME, ColumnHydrator::class];
         $countHydrator = [CountHydrator::HYDRATOR_NAME, CountHydrator::class];
+        $indexedHydrator = [IndexedHydrator::HYDRATOR_NAME, IndexedHydrator::class];
+        
         foreach ($container->getParameter('doctrine.entity_managers') as $name => $serviceName) {
             $definition = $container->getDefinition('doctrine.orm.' . $name . '_configuration');
             $definition->addMethodCall('addCustomHydrationMode', $keyValueHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $columnHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $countHydrator);
+            $definition->addMethodCall('addCustomHydrationMode', $indexedHydrator);
             $definition->addMethodCall('addCustomStringFunction', [Cast::FUNCTION_NAME, Cast::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Rand::FUNCTION_NAME, Rand::class]);
             $definition->addMethodCall('addCustomStringFunction', [IfElse::FUNCTION_NAME, IfElse::class]);
