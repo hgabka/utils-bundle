@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\Datagrid;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
@@ -78,15 +78,9 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
-        $sortValues[Datagrid::PER_PAGE] = \PHP_INT_MAX;
-    }
-
-    protected function configureFilterParameters(array $parameters): array
-    {
-        $parameters['_sort_by'] = $this->sortField;
-        $parameters['_sort_order'] = $this->isDescending() ? 'DESC' : 'ASC';
-
-        return $parameters;
+        $sortValues[DatagridInterface::PER_PAGE] = \PHP_INT_MAX;
+        $sortValues[DatagridInterface::SORT_BY] = $this->sortField;
+        $sortValues[DatagridInterface:::SORT_ORDER] = $this->isDescending() ? 'DESC' : 'ASC';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
