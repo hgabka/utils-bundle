@@ -19,7 +19,6 @@ use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -158,7 +157,7 @@ class PermissionAdmin
      */
     public function getPermission($role)
     {
-        if ($role instanceof BaseRole) {
+        if ($role instanceof Role) {
             $role = $role->getRole();
         }
 
