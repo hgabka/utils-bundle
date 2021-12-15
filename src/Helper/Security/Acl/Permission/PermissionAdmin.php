@@ -189,7 +189,7 @@ class PermissionAdmin
 
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
-            if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN', true))) {
+            if ($user && !$user->isSuperAdmin()) {
                 $rolesQb->andWhere('r.role <> :super')->setParameter('super', 'ROLE_SUPER_ADMIN');
             }
         }
