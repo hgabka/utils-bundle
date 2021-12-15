@@ -187,7 +187,6 @@ class PermissionAdmin
     {
         $rolesQb = $this->em->getRepository(Role::class)->createQueryBuilder('r');
 
-
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
             if ($user && !$user->isSuperAdmin()) {
                 $rolesQb->andWhere('r.role <> :super')->setParameter('super', 'ROLE_SUPER_ADMIN');
