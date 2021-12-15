@@ -185,16 +185,16 @@ class PermissionAdmin
      */
     public function getManageableRolesForPages()
     {
-        $roles = $this->em->getRepository(Role::class)->findAll();
+        $rolesQb = $this->em->getRepository(Role::class)->createQueryBuilder('r');
+
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
             if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN', true))) {
-                $superAdminRole = current($superAdminRole);
-                unset($roles[$superAdminRole]);
+                $rolesQb->andWhere('r.role <> :super')->setParameter('super', 'ROLE_SUPER_ADMIN');
             }
         }
 
-        return $roles;
+        return $rolesQb->getQuery()->getResult();
     }
 
     /**
