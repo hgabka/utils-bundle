@@ -80,7 +80,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
     {
         $sortValues[DatagridInterface::PER_PAGE] = \PHP_INT_MAX;
         $sortValues[DatagridInterface::SORT_BY] = $this->sortField;
-        $sortValues[DatagridInterface:::SORT_ORDER] = $this->isDescending() ? 'DESC' : 'ASC';
+        $sortValues[DatagridInterface::SORT_ORDER] = $this->isDescending() ? 'DESC' : 'ASC';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
