@@ -38,7 +38,11 @@ class ExportFieldDescriptor
         if (!isset($options['label'])) {
             $options['label'] = 'label.export.' . str_replace('.', '_', $key);
         }
-        $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+        
+        if (!isset($options['translate_label']) || false !== $options['translate_label']) {
+            $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+        }
+        
         if (!isset($options['key'])) {
             $options['key'] = $key;
         }
