@@ -17,6 +17,8 @@ class ExportFieldDescriptor
     /** @var HgabkaUtils */
     protected $hgabkaUtils;
 
+    protected $translateLabels = true;
+
     /**
      * ExportFieldDescriptor constructor.
      */
@@ -25,6 +27,18 @@ class ExportFieldDescriptor
         $this->translator = $translator;
         $this->hgabkaUtils = $hgabkaUtils;
     }
+
+    /**
+     * @param bool $translateLabels
+     * @return ExportFieldDescriptor
+     */
+    public function setTranslateLabels(bool $translateLabels): ExportFieldDescriptor
+    {
+        $this->translateLabels = $translateLabels;
+
+        return $this;
+    }
+
 
     /**
      * @param       $key
@@ -38,11 +52,17 @@ class ExportFieldDescriptor
         if (!isset($options['label'])) {
             $options['label'] = 'label.export.' . str_replace('.', '_', $key);
         }
-        
-        if (!isset($options['translate_label']) || false !== $options['translate_label']) {
-            $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+
+        if ($this->translateLabels) {
+            if (!isset($options['translate_label']) || false !== $options['translate_label']) {
+                $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+            }
+        } else {
+            if (true === ($options['translate_label'] ?? false)) {
+                $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+            }
         }
-        
+
         if (!isset($options['key'])) {
             $options['key'] = $key;
         }
