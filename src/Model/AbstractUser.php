@@ -282,7 +282,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
@@ -292,7 +292,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return AbstractUser
      */
-    public function setPlainPassword(string $plainPassword): self
+    public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
 
