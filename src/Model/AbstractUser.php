@@ -87,18 +87,6 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
         return $this;
     }
 
-    public function isLimited(): bool
-    {
-        return $this->limited;
-    }
-
-    public function setLimited(bool $limited): self
-    {
-        $this->limited = $limited;
-
-        return $this;
-    }
-
     /**
      * @return mixed
      */
