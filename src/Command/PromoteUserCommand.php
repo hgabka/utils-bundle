@@ -1,9 +1,9 @@
 <?php
 
 
-namespace FOS\UserBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
-use FOS\UserBundle\Util\UserManipulator;
+use Hgabka\UtilsBundle\Util\UserManipulator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PromoteUserCommand extends RoleCommand
 {
-    protected static $defaultName = 'fos:user:promote';
+    protected static $defaultName = 'hgabka:backend-user:promote';
 
     /**
      * {@inheritdoc}
@@ -27,14 +27,11 @@ class PromoteUserCommand extends RoleCommand
         parent::configure();
 
         $this
-            ->setName('fos:user:promote')
+            ->setName(self::$defaultName)
             ->setDescription('Promotes a user by adding a role')
             ->setHelp(
                 <<<'EOT'
-                    The <info>fos:user:promote</info> command promotes a user by adding a role
-
-                      <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
-                      <info>php %command.full_name% --super matthieu</info>
+                    The <info>hgabka:backend-user:promote</info> command promotes a user by adding a role
                     EOT
             );
     }

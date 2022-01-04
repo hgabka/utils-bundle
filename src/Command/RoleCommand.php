@@ -1,9 +1,9 @@
 <?php
 
 
-namespace FOS\UserBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
-use FOS\UserBundle\Util\UserManipulator;
+use Hgabka\UtilsBundle\Util\UserManipulator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

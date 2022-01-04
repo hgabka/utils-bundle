@@ -351,6 +351,16 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Command\PromoteUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\DemoteUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
     Hgabka\UtilsBundle\Controller\SortableCRUDController:
         public: false
         autowire: true

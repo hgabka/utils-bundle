@@ -1,9 +1,9 @@
 <?php
 
 
-namespace FOS\UserBundle\Command;
+namespace Hgabka\UtilsBundle\Command;
 
-use FOS\UserBundle\Util\UserManipulator;
+use Hgabka\UtilsBundle\Util\UserManipulator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DemoteUserCommand extends RoleCommand
 {
-    protected static $defaultName = 'fos:user:demote';
+    protected static $defaultName = 'hgabka:backend-user:demote';
 
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class DemoteUserCommand extends RoleCommand
         parent::configure();
 
         $this
-            ->setName('fos:user:demote')
+            ->setName(self::$defaultName)
             ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'
