@@ -30,15 +30,15 @@ class ExportFieldDescriptor
 
     /**
      * @param bool $translateLabels
+     *
      * @return ExportFieldDescriptor
      */
-    public function setTranslateLabels(bool $translateLabels): ExportFieldDescriptor
+    public function setTranslateLabels(bool $translateLabels): self
     {
         $this->translateLabels = $translateLabels;
 
         return $this;
     }
-
 
     /**
      * @param       $key
