@@ -119,7 +119,12 @@ pagepartEditor.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 ajaxModal.ajaxModal.resetAjaxModals();
 
-                executeEvent('add')
+                executeEvent('add');
+                
+                if (typeof Admin !== 'undefined') {
+                    Admin.setup_select2($temp);
+                    Admin.setup_icheck($temp);
+                }
             }
         });
 
