@@ -122,11 +122,11 @@ pagepartEditor.pagepartEditor = function (window) {
                 executeEvent('add');
                 
                 if (typeof Admin !== 'undefined') {
-					let $container = $('#parts-' + context + ' .js-sortable-item').last();
-					if ($container.length > 0) {
-						Admin.setup_select2($container);
+		    let $container = firstSelect ? $('#parts-' + context).find('.js-sortable-item').first() : $select.closest('.js-sortable-item').nextAll('.js-sortable-item').first();
+		    if ($container.length > 0) {
+                        Admin.setup_select2($container);
                         Admin.setup_icheck($container);
-					}
+		    }
                 }
             }
         });
