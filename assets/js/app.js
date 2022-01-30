@@ -130,4 +130,9 @@ hgabkautils.app = (function($, window, undefined) {
 
 $(function() {
     hgabkautils.app.init();
+    
+    $(".js-sortable-link").on("click",function() {
+        var href = $(this).data('order-url');
+        window.location.href = href;
+    });
 });
