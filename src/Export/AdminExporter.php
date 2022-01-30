@@ -38,8 +38,8 @@ abstract class AdminExporter extends EntityExporter
         $doctrineQuery = $query->getDoctrineQuery();
 
         foreach ($doctrineQuery
-                     ->iterate() as $row) {
-            yield $row[0];
+                     ->toIterable() as $row) {
+            yield $row;
         }
     }
 
