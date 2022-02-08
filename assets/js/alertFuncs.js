@@ -22,11 +22,20 @@ export function myAlert(text, okfunc, title) {
 }
 
 export function myAlertTimed(text, timeout, okfunc, title) {
+    var alertTimeout;
     var alert = alertify.alert(text);
     if (typeof okfunc == 'function') {
-        alert.ok = okfunc;
+        alert.ok = function() {
+           if (alertTimeout) {
+                clearTimeout(alertTimeout);
+            }
+            okfunc.call();
+        }
     } else {
         alert.ok = function () {
+            if (alertTimeout) {
+                clearTimeout(alertTimeout);
+            }
             return false;
         }
     }
@@ -37,10 +46,14 @@ export function myAlertTimed(text, timeout, okfunc, title) {
     jQuery('span.alertify-close-x').off('click');
     jQuery('span.alertify-close-x').on('click', function () {
         alert.close();
+        if (alertTimeout) {
+            clearTimeout(alertTimeout);
+        }
+        
         return false;
     });
     if (typeof timeout !== 'undefined') {
-        setTimeout(function () {
+        alertTimeout = setTimeout(function () {
             alert.close();
             if (typeof okfunc == 'function') {
                 okfunc.call();
