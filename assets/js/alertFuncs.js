@@ -10,7 +10,7 @@ export function myAlert(text, okfunc, title) {
             return false;
         }
     }
-    if (typeof title !== 'undefined') {
+    if (typeof title !== 'undefined' && null !== title) {
         $('#alertify-title-text').html(title);
     }
     alert.show();
@@ -26,10 +26,10 @@ export function myAlertTimed(text, timeout, okfunc, title) {
     var alert = alertify.alert(text);
     if (typeof okfunc == 'function') {
         alert.ok = function() {
-           if (alertTimeout) {
+            okfunc.call();
+            if (alertTimeout) {
                 clearTimeout(alertTimeout);
             }
-            okfunc.call();
         }
     } else {
         alert.ok = function () {
@@ -39,7 +39,7 @@ export function myAlertTimed(text, timeout, okfunc, title) {
             return false;
         }
     }
-    if (typeof title !== 'undefined') {
+    if (typeof title !== 'undefined' && null !== title) {
         $('#alertify-title-text').html(title);
     }
     alert.show();
@@ -49,10 +49,10 @@ export function myAlertTimed(text, timeout, okfunc, title) {
         if (alertTimeout) {
             clearTimeout(alertTimeout);
         }
-        
+
         return false;
     });
-    if (typeof timeout !== 'undefined') {
+    if (typeof timeout !== 'undefined' && null !== timeout) {
         alertTimeout = setTimeout(function () {
             alert.close();
             if (typeof okfunc == 'function') {
@@ -78,7 +78,7 @@ export function myConfirm(text, okfunc, cancelfunc, title) {
             return false;
         }
     }
-    if (typeof title !== 'undefined') {
+    if (typeof title !== 'undefined' && null !== title) {
         $('#alertify-title-text').html(title);
     }
     
