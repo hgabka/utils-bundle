@@ -2,29 +2,45 @@
 
 namespace Hgabka\UtilsBundle\Command;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\UtilsBundle\Entity\AclChangeset;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Hgabka\UtilsBundle\Helper\Shell\Shell;
 use Hgabka\UtilsBundle\Repository\AclChangesetRepository;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities.
  */
-class ApplyAclCommand extends ContainerAwareCommand
+class ApplyAclCommand extends Command
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    protected static $defaultName = 'hgabka:acl:apply';
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     /**
      * @var Shell
      */
     private $shellHelper;
+
+    /** @var PermissionAdmin */
+    private $permissionAdmin;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Shell                  $shellHelper
+     */
+    public function __construct(EntityManagerInterface $entityManager, Shell $shellHelper, PermissionAdmin $permissionAdmin)
+    {
+        parent::__construct();
+
+        $this->entityManager = $entityManager;
+        $this->shellHelper = $shellHelper;
+        $this->permissionAdmin = $permissionAdmin;
+    }
 
     /**
      * Configures the command.
@@ -33,7 +49,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('hgabka:acl:apply')
+        $this->setName(static::$defaultName)
              ->setDescription('Apply ACL changeset.')
              ->setHelp('The <info>hgabka:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
     }
@@ -48,17 +64,12 @@ class ApplyAclCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $this->shellHelper = $this->getContainer()->get('hgabka_utils.shell');
-        // @var PermissionAdmin $permissionAdmin
-        $permissionAdmin = $this->getContainer()->get('hgabka_utils.permissionadmin');
-
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
             return;
         }
         // @var AclChangesetRepository $aclRepo
-        $aclRepo = $this->em->getRepository('KunstmaanAdminBundle:AclChangeset');
+        $aclRepo = $this->entityManager->getRepository(AclChangeset::class);
         do {
             // @var AclChangeset $changeset
             $changeset = $aclRepo->findNewChangeset();
@@ -67,18 +78,20 @@ class ApplyAclCommand extends ContainerAwareCommand
             }
             $changeset->setPid(getmypid());
             $changeset->setStatus(AclChangeset::STATUS_RUNNING);
-            $this->em->persist($changeset);
-            $this->em->flush($changeset);
+            $this->entityManager->persist($changeset);
+            $this->entityManager->flush($changeset);
 
-            $entity = $this->em->getRepository($changeset->getRefEntityName())->find($changeset->getRefId());
-            $permissionAdmin->applyAclChangeset($entity, $changeset->getChangeset());
+            $entity = $this->entityManager->getRepository($changeset->getRefEntityName())->find($changeset->getRefId());
+            $this->permissionAdmin->applyAclChangeset($entity, $changeset->getChangeset());
 
             $changeset->setStatus(AclChangeset::STATUS_FINISHED);
-            $this->em->persist($changeset);
-            $this->em->flush($changeset);
+            $this->entityManager->persist($changeset);
+            $this->entityManager->flush($changeset);
 
             $hasPending = $aclRepo->hasPendingChangesets();
         } while ($hasPending);
+
+        return Command::SUCCESS;
     }
 
     /**
@@ -88,14 +101,14 @@ class ApplyAclCommand extends ContainerAwareCommand
     {
         // Check if we have records in running state, if so read PID & check if process is active
         // @var AclChangeset $runningAclChangeset
-        $runningAclChangeset = $this->em->getRepository('KunstmaanAdminBundle:AclChangeset')->findRunningChangeset();
+        $runningAclChangeset = $this->entityManager->getRepository(AclChangeset::class)->findRunningChangeset();
         if (null !== $runningAclChangeset) {
             // Found running process, check if PID is still running
             if (!$this->shellHelper->isRunning($runningAclChangeset->getPid())) {
                 // PID not running, process probably failed...
                 $runningAclChangeset->setStatus(AclChangeset::STATUS_FAILED);
-                $this->em->persist($runningAclChangeset);
-                $this->em->flush($runningAclChangeset);
+                $this->entityManager->persist($runningAclChangeset);
+                $this->entityManager->flush($runningAclChangeset);
             }
         }
 

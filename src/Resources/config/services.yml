@@ -47,8 +47,13 @@ services:
     hgabka_utils.roman:
         class: Hgabka\UtilsBundle\Helper\Number\RomanHelper
 
+    Hgabka\UtilsBundle\Helper\Shell\Shell:
+        public: true
+        autowire: true
+        autoconfigure: true
+
     hgabka_utils.shell:
-        class: '%hgabka_utils.shell.class%'
+        alias: Hgabka\UtilsBundle\Helper\Shell\Shell
 
     hgabka_utils.cipher:
         class: '%hgabka_utils.cipher.class%'
@@ -180,9 +185,14 @@ services:
         class: Doctrine\Common\Cache\FilesystemCache
         arguments: ['%kernel.cache_dir%/hgutilscache']
 
-    hgabka_utils.permissionadmin:
-        class: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin
+    Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin:
+        public: true
+        autowire: true
+        autoconfigure: true
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@hgabka_utils.shell', '@kernel']
+
+    hgabka_utils.permissionadmin:
+        alias: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin
 
     hgabka_utils.permissions.twig.extension:
         class: Hgabka\UtilsBundle\Twig\AdminPermissionsTwigExtension
@@ -197,8 +207,13 @@ services:
         public: true
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
+    Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap:
+        public: true
+        autowire: true
+        autoconfigure: true
+
     hgabka_utils.security.acl.permission.map:
-        class: '%hgabka_utils.security.acl.permission.map.class%'
+        alias: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap
 
     hgabka_utils.security.acl.voter:
         class: Hgabka\UtilsBundle\Helper\Security\Acl\Voter\AclVoter
@@ -347,6 +362,21 @@ services:
         autoconfigure: true
 
     Hgabka\UtilsBundle\Command\CreateUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\UpdateAclCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $roles: '%security.role_hierarchy.roles%'
+        calls:
+            - [ setAclProvider, [ '@security.acl.provider' ] ]
+            - [ setOiaStrategy, [ '@security.acl.object_identity_retrieval_strategy' ] ]
+
+    Hgabka\UtilsBundle\Command\ApplyAclCommand:
         public: false
         autowire: true
         autoconfigure: true
