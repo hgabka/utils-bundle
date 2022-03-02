@@ -62,6 +62,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.google_signin.hosted_domains', []);
 
         $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
+        $container->setParameter('hgabka_utils.public_access_role', $config['public_access_role']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

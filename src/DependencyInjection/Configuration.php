@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->end()
             ->scalarNode('backend_user_class')->defaultValue(AbstractUser::class)->end()
+            ->scalarNode('public_access_role')->defaultValue('PUBLIC_ACCESS')->end()
             ->end()
         ;
 

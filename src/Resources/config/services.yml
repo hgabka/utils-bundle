@@ -201,11 +201,11 @@ services:
 
     Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper:
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '@security.acl.object_identity_retrieval_strategy','@security.acl.provider']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '@security.acl.object_identity_retrieval_strategy','@security.acl.provider', '%hgabka_utils.public_access_role%']
 
     Hgabka\UtilsBundle\Helper\Security\Acl\AclNativeHelper:
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '%hgabka_utils.public_access_role%']
 
     Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap:
         public: true

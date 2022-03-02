@@ -32,6 +32,9 @@ class AclNativeHelper
      */
     private $roleHierarchy;
 
+    /** @var string */
+    private $publicAccessRole;
+
     /**
      * Constructor.
      *
@@ -39,11 +42,12 @@ class AclNativeHelper
      * @param TokenStorageInterface  $tokenStorage The security context
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, string $publicAccessRole)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->roleHierarchy = $rh;
+        $this->publicAccessRole = $publicAccessRole;
     }
 
     /**
@@ -83,7 +87,7 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
+        $uR = ['"'.$this->publicAccessRole.'"'];
 
         // @var $role RoleInterface
         foreach ($userRoles as $role) {
