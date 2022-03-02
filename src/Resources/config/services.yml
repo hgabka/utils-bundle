@@ -396,6 +396,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Controller\UrlChooserCRUDController:
+        public: false
+        autowire: true
+        autoconfigure: true
+
     Hgabka\UtilsBundle\Controller\NestedTreeCRUDController:
         public: false
         autowire: true
