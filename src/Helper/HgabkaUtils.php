@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Hgabka\UtilsBundle\Util\HtmlToText;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
