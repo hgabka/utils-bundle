@@ -1554,13 +1554,13 @@ class HgabkaUtils
 
         return $response;
     }
-    
+
     public function convertHtml(string $html, array $options = [])
     {
         $defaultOptions = ['width' => 0];
-        
+
         $converter = new HtmlToText($html, array_merge($defaultOptions, $options));
-        
+
         return $converter->getText();
     }
 }

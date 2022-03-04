@@ -6,7 +6,6 @@ use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UrlChooserCRUDController extends CRUDController
 {
@@ -14,6 +13,7 @@ class UrlChooserCRUDController extends CRUDController
      * Create action.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function createAction(Request $request): Response
@@ -94,7 +94,6 @@ class UrlChooserCRUDController extends CRUDController
         $this->setFormTheme($formView, $this->admin->getFormTheme());
 
         $template = $this->admin->getTemplateRegistry()->getTemplate($templateKey);
-
 
         return $this->renderWithExtraParams($template, [
             'action' => 'edit',

@@ -87,7 +87,7 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = ['"'.$this->publicAccessRole.'"'];
+        $uR = ['"' . $this->publicAccessRole . '"'];
 
         // @var $role RoleInterface
         foreach ($userRoles as $role) {

@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Util;
 
 class HtmlToText
 {
-    const ENCODING = 'UTF-8';
+    public const ENCODING = 'UTF-8';
 
     protected $htmlFuncFlags;
 
@@ -27,9 +27,10 @@ class HtmlToText
      * used in conjunction with $replace.
      *
      * @var array $search
+     *
      * @see $replace
      */
-    protected $search = array(
+    protected $search = [
         "/\r/",                                           // Non-legal carriage return
         "/[\n\t]+/",                                      // Newlines and tabs
         '/<head\b[^>]*>.*?<\/head>/i',                    // <head>
@@ -52,15 +53,16 @@ class HtmlToText
         '/<td\b[^>]*>(.*?)<\/td>/i',                      // <td> and </td>
         '/<span class="_html2text_ignore">.+?<\/span>/i', // <span class="_html2text_ignore">...</span>
         '/<(img)\b[^>]*alt=\"([^>"]+)\"[^>]*>/i',         // <img> with alt tag
-    );
+    ];
 
     /**
      * List of pattern replacements corresponding to patterns searched.
      *
      * @var array $replace
+     *
      * @see $search
      */
-    protected $replace = array(
+    protected $replace = [
         '',                              // Non-legal carriage return
         ' ',                             // Newlines and tabs
         '',                              // <head>
@@ -81,38 +83,40 @@ class HtmlToText
         "\n\n",                          // <table> and </table>
         "\n",                            // <tr> and </tr>
         "\t\t\\1\n",                     // <td> and </td>
-        "",                              // <span class="_html2text_ignore">...</span>
+        '',                              // <span class="_html2text_ignore">...</span>
         '[\\2]',                         // <img> with alt tag
-    );
+    ];
 
     /**
      * List of preg* regular expression patterns to search for,
      * used in conjunction with $entReplace.
      *
      * @var array $entSearch
+     *
      * @see $entReplace
      */
-    protected $entSearch = array(
+    protected $entSearch = [
         '/&#153;/i',                                     // TM symbol in win-1252
         '/&#151;/i',                                     // m-dash in win-1252
         '/&(amp|#38);/i',                                // Ampersand: see converter()
         '/[ ]{2,}/',                                     // Runs of spaces, post-handling
         '/&#39;/i',                                      // The apostrophe symbol
-    );
+    ];
 
     /**
      * List of pattern replacements corresponding to patterns searched.
      *
      * @var array $entReplace
+     *
      * @see $entSearch
      */
-    protected $entReplace = array(
+    protected $entReplace = [
         '™',         // TM symbol
         '—',         // m-dash
         '|+|amp|+|', // Ampersand: see converter()
         ' ',         // Runs of spaces, post-handling
         '\'',        // Apostrophe
-    );
+    ];
 
     /**
      * List of preg* regular expression patterns to search for
@@ -120,7 +124,7 @@ class HtmlToText
      *
      * @var array $callbackSearch
      */
-    protected $callbackSearch = array(
+    protected $callbackSearch = [
         '/<(h)[123456]( [^>]*)?>(.*?)<\/h[123456]>/i',           // h1 - h6
         '/[ ]*<(p)( [^>]*)?>(.*?)<\/p>[ ]*/si',                  // <p> with surrounding whitespace.
         '/<(br)[^>]*>[ ]*/i',                                    // <br> with leading whitespace after the newline.
@@ -128,37 +132,39 @@ class HtmlToText
         '/<(strong)( [^>]*)?>(.*?)<\/strong>/i',                 // <strong>
         '/<(del)( [^>]*)?>(.*?)<\/del>/i',                       // <del>
         '/<(th)( [^>]*)?>(.*?)<\/th>/i',                         // <th> and </th>
-        '/<(a) [^>]*href=("|\')([^"\']+)\2([^>]*)>(.*?)<\/a>/i'  // <a href="">
-    );
+        '/<(a) [^>]*href=("|\')([^"\']+)\2([^>]*)>(.*?)<\/a>/i',  // <a href="">
+    ];
 
     /**
      * List of preg* regular expression patterns to search for in PRE body,
      * used in conjunction with $preReplace.
      *
      * @var array $preSearch
+     *
      * @see $preReplace
      */
-    protected $preSearch = array(
+    protected $preSearch = [
         "/\n/",
         "/\t/",
         '/ /',
         '/<pre[^>]*>/',
-        '/<\/pre>/'
-    );
+        '/<\/pre>/',
+    ];
 
     /**
      * List of pattern replacements corresponding to patterns searched for PRE body.
      *
      * @var array $preReplace
+     *
      * @see $preSearch
      */
-    protected $preReplace = array(
+    protected $preReplace = [
         '<br>',
         '&nbsp;&nbsp;&nbsp;&nbsp;',
         '&nbsp;',
         '',
         '',
-    );
+    ];
 
     /**
      * Temporary workspace used during PRE processing.
@@ -177,7 +183,8 @@ class HtmlToText
     /**
      * Indicates whether content in the $html variable has been converted yet.
      *
-     * @var boolean $converted
+     * @var bool $converted
+     *
      * @see $html, $text
      */
     protected $converted = false;
@@ -186,16 +193,17 @@ class HtmlToText
      * Contains URL addresses from links to be rendered in plain text.
      *
      * @var array $linkList
+     *
      * @see buildlinkList()
      */
-    protected $linkList = array();
+    protected $linkList = [];
 
     /**
      * Various configuration options (able to be set in the constructor)
      *
      * @var array $options
      */
-    protected $options = array(
+    protected $options = [
         'do_links' => 'inline', // 'none'
                                 // 'inline' (show links inline)
                                 // 'nextline' (show links on the next line)
@@ -205,37 +213,31 @@ class HtmlToText
         'width' => 70,          //  Maximum width of the formatted text, in columns.
                                 //  Set this value to 0 (or less) to ignore word wrapping
                                 //  and not constrain text to a fixed-width column.
-    );
-
-    private function legacyConstruct($html = '', $fromFile = false, array $options = array())
-    {
-        $this->set_html($html, $fromFile);
-        $this->options = array_merge($this->options, $options);
-    }
+    ];
 
     /**
      * @param string $html    Source HTML
      * @param array  $options Set configuration options
      */
-    public function __construct($html = '', $options = array())
+    public function __construct($html = '', $options = [])
     {
         // for backwards compatibility
         if (!is_array($options)) {
-            return call_user_func_array(array($this, 'legacyConstruct'), func_get_args());
+            return call_user_func_array([$this, 'legacyConstruct'], func_get_args());
         }
 
         $this->html = $html;
         $this->options = array_merge($this->options, $options);
-        $this->htmlFuncFlags = (PHP_VERSION_ID < 50400)
-            ? ENT_QUOTES
-            : ENT_QUOTES | ENT_HTML5;
+        $this->htmlFuncFlags = (\PHP_VERSION_ID < 50400)
+            ? \ENT_QUOTES
+            : \ENT_QUOTES | \ENT_HTML5;
     }
 
     /**
-    * Get the source HTML
-    *
-    * @return string
-    */
+     * Get the source HTML
+     *
+     * @return string
+     */
     public function getHtml()
     {
         return $this->html;
@@ -254,11 +256,14 @@ class HtmlToText
 
     /**
      * @deprecated
+     *
+     * @param mixed $html
+     * @param mixed $from_file
      */
     public function set_html($html, $from_file = false)
     {
         if ($from_file) {
-            throw new \InvalidArgumentException("Argument from_file no longer supported");
+            throw new \InvalidArgumentException('Argument from_file no longer supported');
         }
 
         return $this->setHtml($html);
@@ -291,7 +296,7 @@ class HtmlToText
      */
     public function print_text()
     {
-        print $this->getText();
+        echo $this->getText();
     }
 
     /**
@@ -314,6 +319,8 @@ class HtmlToText
 
     /**
      * @deprecated
+     *
+     * @param mixed $baseurl
      */
     public function set_base_url($baseurl)
     {
@@ -322,17 +329,17 @@ class HtmlToText
 
     protected function convert()
     {
-       $origEncoding = mb_internal_encoding();
-       mb_internal_encoding(self::ENCODING);
+        $origEncoding = mb_internal_encoding();
+        mb_internal_encoding(self::ENCODING);
 
-       $this->doConvert();
+        $this->doConvert();
 
-       mb_internal_encoding($origEncoding);
+        mb_internal_encoding($origEncoding);
     }
 
     protected function doConvert()
     {
-        $this->linkList = array();
+        $this->linkList = [];
 
         $text = trim($this->html);
 
@@ -355,7 +362,7 @@ class HtmlToText
         $this->convertBlockquotes($text);
         $this->convertPre($text);
         $text = preg_replace($this->search, $this->replace, $text);
-        $text = preg_replace_callback($this->callbackSearch, array($this, 'pregCallback'), $text);
+        $text = preg_replace_callback($this->callbackSearch, [$this, 'pregCallback'], $text);
         $text = strip_tags($text);
         $text = preg_replace($this->entSearch, $this->entReplace, $text);
         $text = html_entity_decode($text, $this->htmlFuncFlags, self::ENCODING);
@@ -387,15 +394,16 @@ class HtmlToText
      * appeared. Also makes an effort at identifying and handling absolute
      * and relative links.
      *
-     * @param  string $link          URL of the link
-     * @param  string $display       Part of the text to associate number with
-     * @param  null   $linkOverride
+     * @param string $link         URL of the link
+     * @param string $display      Part of the text to associate number with
+     * @param null   $linkOverride
+     *
      * @return string
      */
     protected function buildlinkList($link, $display, $linkOverride = null)
     {
-        $linkMethod = ($linkOverride) ? $linkOverride : $this->options['do_links'];
-        if ($linkMethod == 'none') {
+        $linkMethod = ($linkOverride) ?: $this->options['do_links'];
+        if ('none' === $linkMethod) {
             return $display;
         }
 
@@ -408,32 +416,33 @@ class HtmlToText
             $url = $link;
         } else {
             $url = $this->baseurl;
-            if (mb_substr($link, 0, 1) != '/') {
+            if ('/' !== mb_substr($link, 0, 1)) {
                 $url .= '/';
             }
             $url .= $link;
         }
 
-        if ($linkMethod == 'table') {
-            if (($index = array_search($url, $this->linkList)) === false) {
+        if ('table' === $linkMethod) {
+            if (($index = array_search($url, $this->linkList, true)) === false) {
                 $index = count($this->linkList);
                 $this->linkList[] = $url;
             }
 
             return $display . ' [' . ($index + 1) . ']';
-        } elseif ($linkMethod == 'nextline') {
+        } elseif ('nextline' === $linkMethod) {
             if ($url === $display) {
                 return $display;
             }
+
             return $display . "\n[" . $url . ']';
-        } elseif ($linkMethod == 'bbcode') {
+        } elseif ('bbcode' === $linkMethod) {
             return sprintf('[url=%s]%s[/url]', $url, $display);
-        } else { // link_method defaults to inline
-            if ($url === $display) {
-                return $display;
-            }
-            return $display . ' [' . $url . ']';
+        }   // link_method defaults to inline
+        if ($url === $display) {
+            return $display;
         }
+
+        return $display . ' [' . $url . ']';
     }
 
     /**
@@ -451,7 +460,7 @@ class HtmlToText
             // Run our defined tags search-and-replace with callback
             $this->preContent = preg_replace_callback(
                 $this->callbackSearch,
-                array($this, 'pregCallback'),
+                [$this, 'pregCallback'],
                 $this->preContent
             );
 
@@ -464,7 +473,7 @@ class HtmlToText
             // replace the content (use callback because content can contain $0 variable)
             $text = preg_replace_callback(
                 '/<pre[^>]*>.*<\/pre>/ismU',
-                array($this, 'pregPreCallback'),
+                [$this, 'pregPreCallback'],
                 $text,
                 1
             );
@@ -481,7 +490,7 @@ class HtmlToText
      */
     protected function convertBlockquotes(&$text)
     {
-        if (preg_match_all('/<\/*blockquote[^>]*>/i', $text, $matches, PREG_OFFSET_CAPTURE)) {
+        if (preg_match_all('/<\/*blockquote[^>]*>/i', $text, $matches, \PREG_OFFSET_CAPTURE)) {
             $originalText = $text;
             $start = 0;
             $taglen = 0;
@@ -489,8 +498,8 @@ class HtmlToText
             $diff = 0;
             foreach ($matches[0] as $m) {
                 $m[1] = mb_strlen(substr($originalText, 0, $m[1]));
-                if ($m[0][0] == '<' && $m[0][1] == '/') {
-                    $level--;
+                if ('<' === $m[0][0] && '/' === $m[0][1]) {
+                    --$level;
                     if ($level < 0) {
                         $level = 0; // malformed HTML: go to next blockquote
                     } elseif ($level > 0) {
@@ -503,7 +512,9 @@ class HtmlToText
 
                         // Set text width
                         $pWidth = $this->options['width'];
-                        if ($this->options['width'] > 0) $this->options['width'] -= 2;
+                        if ($this->options['width'] > 0) {
+                            $this->options['width'] -= 2;
+                        }
                         // Convert blockquote content
                         $body = trim($body);
                         $this->converter($body);
@@ -521,11 +532,11 @@ class HtmlToText
                         unset($body);
                     }
                 } else {
-                    if ($level == 0) {
+                    if (0 === $level) {
                         $start = $m[1];
                         $taglen = mb_strlen($m[0]);
                     }
-                    $level++;
+                    ++$level;
                 }
             }
         }
@@ -534,7 +545,8 @@ class HtmlToText
     /**
      * Callback function for preg_replace_callback use.
      *
-     * @param  array  $matches PREG matches
+     * @param array $matches PREG matches
+     *
      * @return string
      */
     protected function pregCallback($matches)
@@ -542,7 +554,7 @@ class HtmlToText
         switch (mb_strtolower($matches[1])) {
             case 'p':
                 // Replace newlines with spaces.
-                $para = str_replace("\n", " ", $matches[3]);
+                $para = str_replace("\n", ' ', $matches[3]);
 
                 // Trim trailing and leading whitespace within the tag.
                 $para = trim($para);
@@ -578,7 +590,8 @@ class HtmlToText
     /**
      * Callback function for preg_replace_callback use in PRE content handler.
      *
-     * @param  array  $matches PREG matches
+     * @param array $matches PREG matches
+     *
      * @return string
      */
     protected function pregPreCallback(/** @noinspection PhpUnusedParameterInspection */ $matches)
@@ -589,28 +602,30 @@ class HtmlToText
     /**
      * Strtoupper function with HTML tags and entities handling.
      *
-     * @param  string $str Text to convert
+     * @param string $str Text to convert
+     *
      * @return string Converted text
      */
     protected function toupper($str)
     {
         // string can contain HTML tags
-        $chunks = preg_split('/(<[^>]*>)/', $str, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $chunks = preg_split('/(<[^>]*>)/', $str, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
 
         // convert toupper only the text between HTML tags
         foreach ($chunks as $i => $chunk) {
-            if ($chunk[0] != '<') {
+            if ('<' !== $chunk[0]) {
                 $chunks[$i] = $this->strtoupper($chunk);
             }
         }
 
-        return implode($chunks);
+        return implode('', $chunks);
     }
 
     /**
      * Strtoupper multibyte wrapper function with HTML entities handling.
      *
-     * @param  string $str Text to convert
+     * @param string $str Text to convert
+     *
      * @return string Converted text
      */
     protected function strtoupper($str)
@@ -625,17 +640,26 @@ class HtmlToText
     /**
      * Helper function for DEL conversion.
      *
-     * @param  string $text HTML content
+     * @param string $text HTML content
+     * @param mixed  $str
+     *
      * @return string Converted text
      */
     protected function tostrike($str)
     {
         $rtn = '';
-        for ($i = 0; $i < mb_strlen($str); $i++) {
+        for ($i = 0; $i < mb_strlen($str); ++$i) {
             $chr = mb_substr($str, $i, 1);
-            $combiningChr = chr(0xC0 | 0x336 >> 6). chr(0x80 | 0x336 & 0x3F);
+            $combiningChr = chr(0xC0 | 0x336 >> 6) . chr(0x80 | 0x336 & 0x3F);
             $rtn .= $chr . $combiningChr;
         }
+
         return $rtn;
+    }
+
+    private function legacyConstruct($html = '', $fromFile = false, array $options = [])
+    {
+        $this->set_html($html, $fromFile);
+        $this->options = array_merge($this->options, $options);
     }
 }
