@@ -3,7 +3,7 @@
 require('jquery-ui-sortable');
 let ajaxModal = require('../ajaxmodal.js').ajaxModal;
 
-$.fn.swapWith = function(that, animate) {
+$.fn.swapWith = function (that, animate) {
     var $this = this;
     var $that = $(that);
 
@@ -34,11 +34,14 @@ class SortableCollectionHandler
             containerSelector: '.sortable-collection',
             sortFieldName: 'position',
             rowSelector: '.sonata-collection-row',
-            formHolderSelector: '.sonata-ba-form'
+            formHolderSelector: '.sonata-ba-form',
+            firstAndLastButtons: false,
         }, options);
         this.reOrder = this.reOrder.bind(this);
         this.moveDown = this.moveDown.bind(this);
         this.moveUp = this.moveUp.bind(this);
+        this.moveFirst = this.moveFirst.bind(this);
+        this.moveLast = this.moveLast.bind(this);
     }
 
     reOrder() {
@@ -55,34 +58,55 @@ class SortableCollectionHandler
             $span.html(i);
             let $moveUp = $container.find('.move-up');
             let $moveDown = $container.find('.move-down');
+            let $moveFirst = $container.find('.move-first');
+            let $moveLast = $container.find('.move-last');
             if (i === 1) {
                 if ($moveUp.length) {
                     $moveUp.remove();
                 }
                 $element.removeClass('has-up');
+                $element.removeClass('has-first');
+                if ($moveFirst.length) {
+                    $moveFirst.remove();
+                }
             } else {
                 if (!$moveUp.length) {
                     $container.prepend($('<span class="collection-move move-up"><i class="fa fa-sort-up"></i></span>'));
                 }
                 $element.addClass('has-up');
+                if (this.options.firstAndLastButtons) {
+                    if (!$moveFirst.length) {
+                        $container.prepend($('<span class="collection-move move-first"><i class="fa fa-angle-double-up"></i></span>'));
+                    }
+                    $element.addClass('has-first');
+                }
             }
 
             if (i === $rows.length) {
                 if ($moveDown.length) {
                     $moveDown.remove();
                 }
+                if ($moveLast.length) {
+                    $moveLast.remove();
+                }
                 $element.removeClass('has-down');
+                $element.removeClass('has-last');
             } else {
                 if (!$moveDown.length) {
                     $container.prepend($('<span class="collection-move move-down"><i class="fa fa-sort-down"></i></span>'));
                 }
                 $element.addClass('has-down');
+                if (this.options.firstAndLastButtons) {
+                    if (!$moveLast.length) {
+                        $container.prepend($('<span class="collection-move move-last"><i class="fa fa-angle-double-down"></i></span>'));
+                    }
+                    $element.addClass('has-last');
+                }
             }
 
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
         });
     }
-
 
     init() {
         let $collectionHolder = $(this.options.containerSelector);
@@ -90,8 +114,8 @@ class SortableCollectionHandler
         $collectionHolder.addClass('sortable-collection');
         if ($collectionHolder.length) {
             $collectionHolder.sortable({
-				//handle: '.sonata-collection-row',
-				items: this.options.rowSelector,
+                //handle: '.sonata-collection-row',
+                items: this.options.rowSelector,
                 start: (event, ui) => {
                     ajaxModal.ajaxModal.resetAjaxModals();
                     $collectionHolder.trigger('sortable:start');
@@ -114,13 +138,13 @@ class SortableCollectionHandler
 
                 if ($target.hasClass('sonata-collection-add')) {
                     setTimeout(_ => {
-                      //  $collectionHolder.trigger('sortable:add');
+                        //  $collectionHolder.trigger('sortable:add');
                     }, 200);
                 }
 
                 if ($target.hasClass('sonata-collection-delete')) {
                     setTimeout(_ => {
-                       // $collectionHolder.trigger('sortable:delete');
+                        // $collectionHolder.trigger('sortable:delete');
                     }, 200);
                 }
 
@@ -132,9 +156,19 @@ class SortableCollectionHandler
                 this.moveDown($target.closest(this.options.rowSelector));
             });
 
+            $collectionHolder.on('click', '.move-last', e => {
+                let $target = $(e.currentTarget);
+                this.moveLast($target.closest(this.options.rowSelector), $collectionHolder);
+            });
+
             $collectionHolder.on('click', '.move-up', e => {
                 let $target = $(e.currentTarget);
                 this.moveUp($target.closest(this.options.rowSelector));
+            });
+
+            $collectionHolder.on('click', '.move-first', e => {
+                let $target = $(e.currentTarget);
+                this.moveFirst($target.closest(this.options.rowSelector), $collectionHolder);
             });
 
             this.reOrder();
@@ -149,6 +183,14 @@ class SortableCollectionHandler
             this.reOrder();
         }
     }
+
+    moveLast($box, $holder) {
+        let $button = $holder.find('.sonata-collection-add').closest('div');
+        $box.insertBefore($button);
+        this.reOrder();
+        $('body, html').animate({scrollTop: $box.offset().top - 150});
+    }
+
     moveUp($box) {
         let $prev = $box.prev(this.options.rowSelector);
         if ($prev.length) {
@@ -156,6 +198,12 @@ class SortableCollectionHandler
 
             this.reOrder();
         }
+    }
+
+    moveFirst($box, $holder) {
+        $box.prependTo($holder);
+        this.reOrder();
+        $('body, html').animate({scrollTop: $holder.offset().top - 150});
     }
 }
 
