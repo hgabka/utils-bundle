@@ -34,6 +34,8 @@ class BarcodeValidator
         $this->gtin14 = $this->barcode;
 
         $length = strlen($this->gtin14);
+        $this->valid = false;
+        
         if (($length > 11 && $length <= 14) || $length == 8) {
             $zeros = 18 - $length;
             $length = null;
