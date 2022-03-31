@@ -366,8 +366,14 @@ abstract class EntityExporter
 
         $row = 1;
         foreach ($this->getData() as $entity) {
-            if (false === $this->preWriteRow($this->currentRow, $entity)) {
-                continue;
+            try {
+                if (false === $this->preWriteRow($this->currentRow, $entity)) {
+                    continue;
+                }
+            } catch (StopExportException $e) {
+                $this->entityManager->clear($this->getClass());
+                
+                break;
             }
 
             $i = 0;
@@ -379,7 +385,14 @@ abstract class EntityExporter
                 $this->writeColumn($i, $field, $entity, $row);
             }
 
-            $this->postWriteRow($this->currentRow, $entity);
+            try {
+                $this->postWriteRow($this->currentRow, $entity);
+            } catch (StopExportException $e) {
+                $this->entityManager->clear($this->getClass());
+
+                break;
+            }
+            
             $this->entityManager->clear($this->getClass());
             ++$this->currentRow;
             ++$row;
