@@ -98,7 +98,7 @@ A high priority azt jelenti, hogy az oszlop szerinti rendezés történik meg el
 Itt tehát először a totalPriceGross mező szerinti a rendezés, utána jön az adminStatus szerinti.
 Ha az alapból rendezést minden körülmények között meg kell őrizni, akkor a priority legyen 'low'. Ilyenkor az oszlop szerinti rendezés csak az alap rendezés után történik meg.
 
-Ha nincs megadva priority, akkor az 'high'-nak számít.
+Ha nincs megadva priority, akkor az 'low'-nak számít.
 
 3. Ha a kettőt kombinálni kell:
 
