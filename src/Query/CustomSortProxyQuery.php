@@ -22,6 +22,11 @@ class CustomSortProxyQuery implements DoctrineProxyQueryInterface
     /**
      * @var null|string
      */
+    private $customSortBy;
+
+    /**
+     * @var null|string
+     */
     private $sortOrder;
 
     /**
@@ -84,8 +89,10 @@ class CustomSortProxyQuery implements DoctrineProxyQueryInterface
         $alias = $this->entityJoin($parentAssociationMappings);
         if (\is_string($fieldMapping['fieldName'])) {
             $this->sortBy = $alias . '.' . $fieldMapping['fieldName'];
+            $this->customSortBy = null;
         } else {
-            $this->sortBy = $fieldMapping['fieldName'];
+            $this->customSortBy = $fieldMapping['fieldName'];
+            $this->sortBy = null;
         }
 
         return $this;
@@ -98,8 +105,9 @@ class CustomSortProxyQuery implements DoctrineProxyQueryInterface
 
         $rootAlias = current($queryBuilder->getRootAliases());
 
-        if ($this->sortBy) {
-            $sortBy = $this->sortBy;
+        if ($this->sortBy || $this->customSortBy) {
+            $sortBy = $this->sortBy ?: $this->customSortBy;
+
             $priority = \is_array($sortBy) && isset($sortBy['priority']) ? $sortBy['priority'] : 'high';
             $orderByDQLPart = $queryBuilder->getDQLPart('orderBy');
 
