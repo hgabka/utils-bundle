@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +10,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class SortableCRUDController extends CRUDController
 {
-    public function sortingAction(Request $request): Response
+    public function sortingAction(Request $request, ManagerRegistry $doctrine): Response
     {
         if (!$request->isXmlHttpRequest()) {
             throw $this->createNotFoundException();
@@ -31,7 +32,7 @@ class SortableCRUDController extends CRUDController
             }
         }
 
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->flush();
 
         return new Response();
     }
