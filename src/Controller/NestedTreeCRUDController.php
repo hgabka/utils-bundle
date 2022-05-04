@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\UtilsBundle\Entity\NestedTreeEntityInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -13,6 +14,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NestedTreeCRUDController extends CRUDController
 {
+    /** @var ManagerRegistry */
+    protected $doctrine;
+
+    /**
+     * @param ManagerRegistry $doctrine
+     */
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     public function listAction(Request $request): Response
     {
         $this->admin->checkAccess('list');
@@ -23,7 +35,7 @@ class NestedTreeCRUDController extends CRUDController
         }
 
         $class = $this->admin->getClass();
-        $em = $this->getDoctrine();
+        $em = $this->doctrine;
         $repo = $em->getRepository($class);
 
         $folderId = $request->get($this->admin->getIdParameter());
@@ -87,7 +99,7 @@ class NestedTreeCRUDController extends CRUDController
         $nodeIds = $request->get('nodes');
         $changeParents = $request->get('parent');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $class = $this->admin->getClass();
         $repository = $em->getRepository($class);
 
@@ -127,7 +139,7 @@ class NestedTreeCRUDController extends CRUDController
     {
         $this->admin->checkAccess('create');
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $class = $this->admin->getClass();
         $repo = $em->getRepository($class);
 
@@ -198,7 +210,7 @@ class NestedTreeCRUDController extends CRUDController
         /** @var NestedTreeEntityInterface $object */
         $object = $this->admin->getObject($id);
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
