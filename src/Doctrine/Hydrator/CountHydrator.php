@@ -11,6 +11,7 @@ class CountHydrator extends AbstractHydrator
 
     /**
      * {@inheritdoc}
+     * @return array|mixed
      */
     protected function hydrateAllData()
     {
