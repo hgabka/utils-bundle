@@ -21,7 +21,9 @@
         "hgabka/doctrine-translatable-bundle": "^6.0",
         "google/apiclient": "^2.7",
         "guzzlehttp/guzzle": ">= 6.3",
-        "symfony/webpack-encore-bundle": "^1.0"
+        "symfony/webpack-encore-bundle": "^1.0",
+        "pagerfanta/pagerfanta": "^3.6",
+        "babdev/pagerfanta-bundle": "~3.6"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
