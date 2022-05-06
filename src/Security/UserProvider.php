@@ -40,7 +40,7 @@ final class UserProvider implements UserProviderInterface
         return $user;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         assert($user instanceof BundleUserInterface);
 
