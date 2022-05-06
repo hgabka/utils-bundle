@@ -16,7 +16,7 @@ class Rand extends FunctionNode
 {
     public const FUNCTION_NAME = 'RAND';
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
@@ -26,7 +26,7 @@ class Rand extends FunctionNode
     /**
      * @return string
      */
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return 'RAND()';
     }
