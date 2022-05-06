@@ -130,7 +130,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
