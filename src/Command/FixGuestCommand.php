@@ -43,7 +43,7 @@ class FixGuestCommand extends ContainerAwareCommand
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
 
