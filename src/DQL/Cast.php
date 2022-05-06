@@ -19,7 +19,7 @@ class Cast extends FunctionNode
     /**
      * @return string
      */
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return sprintf(
             'CAST(%s AS %s)',
