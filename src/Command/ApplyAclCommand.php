@@ -66,7 +66,7 @@ class ApplyAclCommand extends Command
     {
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
-            return;
+            return Command::SUCCESS;
         }
         // @var AclChangesetRepository $aclRepo
         $aclRepo = $this->entityManager->getRepository(AclChangeset::class);
