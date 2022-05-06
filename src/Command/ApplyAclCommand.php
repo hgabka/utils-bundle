@@ -62,7 +62,7 @@ class ApplyAclCommand extends Command
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
