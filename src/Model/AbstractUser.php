@@ -8,46 +8,30 @@ use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 
 abstract class AbstractUser implements UserInterface, SecurityUserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
-    /**
-     * @ORM\Column(name="email", type="string", unique=true)
-     */
+    #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
     protected $email;
 
-    /**
-     * @ORM\Column(name="confirmation_token", type="string", unique=true, nullable=true)
-     */
+    #[ORM\Column(name: 'confirmation_token', type: 'string', length: 255, unique: true, nullable: true)]
     protected $confirmationToken;
 
-    /**
-     * @ORM\Column(name="username", type="string", unique=true)
-     */
+    #[ORM\Column(name: 'username', type: 'string', length: 255, unique: true)]
     protected $username;
 
-    /**
-     * @ORM\Column(name="password", type="string", nullable=true)
-     */
+    #[ORM\Column(name: 'password', type: 'string', nullable: true)]
     protected $password;
 
-    /**
-     * @ORM\Column(name="salt", type="string", nullable=true)
-     */
+    #[ORM\Column(name: 'salt', type: 'string', nullable: true)]
     protected $salt;
 
-    /**
-     * @ORM\Column(name="enabled", type="boolean", nullable=true)
-     */
+    #[ORM\Column(name: 'enabled', type: 'boolean', nullable: true)]
     protected $enabled;
 
-    /**
-     * @ORM\Column(name="roles", type="json")
-     */
+    #[ORM\Column(name: 'roles', type: 'json', nullable: true)]
     protected $roles;
 
     /** @var string */
