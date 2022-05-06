@@ -42,7 +42,7 @@ abstract class RoleCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $role = $input->getArgument('role');
@@ -59,7 +59,7 @@ abstract class RoleCommand extends Command
         $manipulator = $this->userManipulator;
         $this->executeRoleCommand($manipulator, $output, $username, $super, $role);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**
