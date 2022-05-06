@@ -14,7 +14,7 @@ class IfNull extends FunctionNode
     private $expr1;
     private $expr2;
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
@@ -24,7 +24,7 @@ class IfNull extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return 'IFNULL('
             . $sqlWalker->walkArithmeticPrimary($this->expr1) . ', '
