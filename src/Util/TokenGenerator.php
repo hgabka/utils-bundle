@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hgabka\UtilsBundle\Util;
 
 class TokenGenerator implements TokenGeneratorInterface

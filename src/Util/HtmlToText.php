@@ -357,7 +357,7 @@ class HtmlToText
         $this->converted = true;
     }
 
-    protected function converter(&$text)
+    protected function converter(& $text)
     {
         $this->convertBlockquotes($text);
         $this->convertPre($text);
@@ -450,7 +450,7 @@ class HtmlToText
      *
      * @param string &$text HTML content
      */
-    protected function convertPre(&$text)
+    protected function convertPre(& $text)
     {
         // get the content of PRE element
         while (preg_match('/<pre[^>]*>(.*)<\/pre>/ismU', $text, $matches)) {
@@ -488,7 +488,7 @@ class HtmlToText
      *
      * @param string &$text HTML content
      */
-    protected function convertBlockquotes(&$text)
+    protected function convertBlockquotes(& $text)
     {
         if (preg_match_all('/<\/*blockquote[^>]*>/i', $text, $matches, \PREG_OFFSET_CAPTURE)) {
             $originalText = $text;

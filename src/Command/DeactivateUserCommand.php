@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FOS\UserBundle\Command;
 
 use FOS\UserBundle\Util\UserManipulator;

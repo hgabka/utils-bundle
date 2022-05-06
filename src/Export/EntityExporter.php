@@ -173,7 +173,7 @@ abstract class EntityExporter
      *
      * @param string $value
      */
-    protected function setHeader(string &$column, $value)
+    protected function setHeader(string & $column, $value)
     {
         $this->addCellValue($column, $value);
     }
@@ -277,7 +277,7 @@ abstract class EntityExporter
     /**
      * @param $column
      */
-    protected function writeColumn(&$column, ExportField $field, object $entity, int $row)
+    protected function writeColumn(& $column, ExportField $field, object $entity, int $row)
     {
         $options = $field->getOptions();
 
@@ -308,7 +308,7 @@ abstract class EntityExporter
      * @param $column
      * @param $value
      */
-    protected function addCellValue(&$column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null)
+    protected function addCellValue(& $column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null)
     {
         $value = \is_callable($callback) ? $callback($value, $entity, $row) : $value;
         if ((null === $field || false !== $field->getOption('trim')) && \is_string($value)) {
@@ -330,7 +330,7 @@ abstract class EntityExporter
      * @param $column
      * @param $field
      */
-    protected function addCellValueAuto(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueAuto(& $column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         if (false !== strpos($field, '.')) {
             $this->addCellValueRelation($column, $field, $entity, $callback, $exportField, $row);
@@ -343,7 +343,7 @@ abstract class EntityExporter
      * @param $column
      * @param $field
      */
-    protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueBool(& $column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         $this->addCellValueAuto($column, $field, $entity, null === $callback ? function ($value) {
             return $this->trans('general.label.' . ($value ? 'yes' : 'no'));
@@ -354,7 +354,7 @@ abstract class EntityExporter
      * @param $column
      * @param $field
      */
-    protected function addCellValueRelation(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueRelation(& $column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         $this->addCellValue($column, $this->getRelationValue($entity, $field), $entity, $callback, $exportField, $row);
     }
@@ -372,7 +372,7 @@ abstract class EntityExporter
                 }
             } catch (StopExportException $e) {
                 $this->entityManager->clear($this->getClass());
-                
+
                 break;
             }
 
@@ -392,7 +392,7 @@ abstract class EntityExporter
 
                 break;
             }
-            
+
             $this->entityManager->clear($this->getClass());
             ++$this->currentRow;
             ++$row;

@@ -53,7 +53,7 @@ class FormToolsExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getErrorMessages($formViews, array &$errors = [])
+    public function getErrorMessages($formViews, array & $errors = [])
     {
         return $this->formHelper->getRecursiveErrorMessages($formViews, $errors);
     }

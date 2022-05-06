@@ -17,7 +17,7 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
      * @param MenuItem    $parent    The parent Menu item
      * @param Request     $request   The Request
      */
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array & $children, MenuItem $parent = null, Request $request = null)
     {
         if (null === $parent) {
             $menuItem = new TopMenuItem($menu);

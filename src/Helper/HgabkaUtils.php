@@ -960,7 +960,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function permuteUnique($items, $perms = [], &$return = [])
+    public function permuteUnique($items, $perms = [], & $return = [])
     {
         if (empty($items)) {
             $return[] = $perms;
@@ -1068,7 +1068,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function replaceClass(array &$classes, $newClass)
+    public function replaceClass(array & $classes, $newClass)
     {
         $sizes = [
             'xs',

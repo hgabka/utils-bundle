@@ -433,7 +433,7 @@ class Words_ru extends Words
      *
      * @author Andrey Demenev <demenev@on-line.jar.ru>
      */
-    public function _toWordsWithCase($num, &$case, $gender = 1)
+    public function _toWordsWithCase($num, & $case, $gender = 1)
     {
         $ret = '';
         $case = 3;
@@ -511,7 +511,7 @@ class Words_ru extends Words
      *
      * @author Andrey Demenev <demenev@on-line.jar.ru>
      */
-    public function _groupToWords($num, $gender, &$case)
+    public function _groupToWords($num, $gender, & $case)
     {
         $ret = '';
         $case = 3;

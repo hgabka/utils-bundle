@@ -25,7 +25,7 @@ class KeyValueHydrator extends AbstractHydrator
      *
      * @return bool
      */
-    protected function hydrateRowData(array $row, array &$result)
+    protected function hydrateRowData(array $row, array & $result)
     {
         if (0 === \count($row)) {
             return false;

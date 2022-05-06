@@ -3680,7 +3680,7 @@ class BigInteger
      *
      * @return string
      */
-    protected function _base256_lshift(&$x, $shift)
+    protected function _base256_lshift(& $x, $shift)
     {
         if (0 === $shift) {
             return;
@@ -3709,7 +3709,7 @@ class BigInteger
      *
      * @return string
      */
-    protected function _base256_rshift(&$x, $shift)
+    protected function _base256_rshift(& $x, $shift)
     {
         if (0 === $shift) {
             $x = ltrim($x, \chr(0));
