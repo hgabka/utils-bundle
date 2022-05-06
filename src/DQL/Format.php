@@ -17,7 +17,7 @@ class Format extends FunctionNode
     /**
      * {@inheritdoc}
      */
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $lexer = $parser->getLexer();
         $parser->match(Lexer::T_IDENTIFIER);
@@ -31,7 +31,7 @@ class Format extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return 'FORMAT(' . $this->arithmeticExpression->dispatch($sqlWalker) . (null !== $this->decimals ? ', ' . $this->decimals->dispatch($sqlWalker) : '') . ')';
     }
