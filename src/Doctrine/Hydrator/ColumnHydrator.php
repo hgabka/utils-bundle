@@ -11,9 +11,9 @@ class ColumnHydrator extends AbstractHydrator
     /**
      * Hydrators all data at once.
      *
-     * @return array
+     * @return array|mixed
      */
-    protected function hydrateAllData(): array
+    protected function hydrateAllData()
     {
         return $this->_stmt->fetchFirstColumn();
     }
