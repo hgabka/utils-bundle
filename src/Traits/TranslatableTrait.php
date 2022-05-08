@@ -12,6 +12,7 @@ trait TranslatableTrait
     /**
      * @Hgabka\CurrentLocale
      */
+    #[Hgabka\CurrentLocale]
     private $currentLocale;
 
     /**
