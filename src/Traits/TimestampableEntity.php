@@ -27,8 +27,8 @@ trait TimestampableEntity
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", name="updated_at")
      */
-    #[ORM\Column(type: 'datetime', name: 'created_at')]
-    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'datetime', name: 'updated_at')]
+    #[Gedmo\Timestampable(on: 'update')]
     protected ?\DateTime $updatedAt;
 
     /**
