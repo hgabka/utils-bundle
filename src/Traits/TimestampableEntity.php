@@ -18,21 +18,25 @@ trait TimestampableEntity
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
+    #[Gedmo\Timestampable(on: 'create')]
+    protected ?\DateTime $createdAt;
 
     /**
      * @var \DateTime
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", name="updated_at")
      */
-    protected $updatedAt;
+    #[ORM\Column(type: 'datetime', name: 'created_at')]
+    #[Gedmo\Timestampable(on: 'create')]
+    protected ?\DateTime $updatedAt;
 
     /**
      * Sets createdAt.
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(?\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -44,7 +48,7 @@ trait TimestampableEntity
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -54,7 +58,7 @@ trait TimestampableEntity
      *
      * @return $this
      */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(?\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -66,7 +70,7 @@ trait TimestampableEntity
      *
      * @return \DateTime
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
