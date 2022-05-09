@@ -13,45 +13,55 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(name="email", type="string", unique=true)
      */
-    protected $email;
+    #[ORM\Column(name: 'email', type: 'string', unique: true)]
+    protected ?string $email = null;
 
     /**
      * @ORM\Column(name="confirmation_token", type="string", unique=true, nullable=true)
      */
-    protected $confirmationToken;
+    #[ORM\Column(name: 'confirmation_token', type: 'string', unique: true, nullable: true)]
+    protected ?string $confirmationToken = null;
 
     /**
      * @ORM\Column(name="username", type="string", unique=true)
      */
-    protected $username;
+    #[ORM\Column(name: 'username', type: 'string', unique: true)]
+    protected ?string $username = null;
 
     /**
      * @ORM\Column(name="password", type="string", nullable=true)
      */
-    protected $password;
+    #[ORM\Column(name: 'username', type: 'string', nullable: true)]
+    protected ?string $password = null;
 
     /**
      * @ORM\Column(name="salt", type="string", nullable=true)
      */
-    protected $salt;
+    #[ORM\Column(name: 'salt', type: 'string', nullable: true)]
+    protected ?string $salt = null;
 
     /**
      * @ORM\Column(name="enabled", type="boolean", nullable=true)
      */
-    protected $enabled;
+    #[ORM\Column(name: 'enabled', type: 'boolean', nullable: true)]
+    protected ?bool $enabled = null;
 
     /**
      * @ORM\Column(name="roles", type="json")
      */
-    protected $roles;
+    #[ORM\Column(name: 'roles', type: 'json')]
+    protected ?array $roles = null;
 
     /** @var string */
-    protected $plainPassword;
+    protected ?string $plainPassword = null;
 
     public function __construct()
     {
@@ -62,7 +72,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->getUsername();
     }
@@ -70,7 +80,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -80,7 +90,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setId($id)
+    public function setId(?int $id): self
     {
         $this->id = $id;
 
@@ -90,7 +100,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -100,7 +110,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -120,7 +130,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -145,7 +155,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setRoles(array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 
@@ -155,7 +165,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return mixed
      */
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -165,7 +175,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
 
@@ -175,7 +185,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return mixed
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
@@ -185,7 +195,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setSalt($salt)
+    public function setSalt(?string $salt): self
     {
         $this->salt = $salt;
 
@@ -215,7 +225,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
@@ -255,7 +265,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serialized)
+    public function unserialize(?string $serialized): void
     {
         $data = unserialize($serialized);
 
@@ -302,7 +312,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @return mixed
      */
-    public function getConfirmationToken()
+    public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
@@ -312,7 +322,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return AbstractUser
      */
-    public function setConfirmationToken($confirmationToken): self
+    public function setConfirmationToken(?string $confirmationToken): self
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -322,7 +332,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
@@ -330,7 +340,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function isSuperAdmin()
+    public function isSuperAdmin(): bool
     {
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
@@ -338,7 +348,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role)
+    public function removeRole($role): self
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -351,7 +361,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function setSuperAdmin($boolean)
+    public function setSuperAdmin(bool $boolean): self
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
