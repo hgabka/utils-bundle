@@ -18,7 +18,7 @@
     "google-api-load": "^0.0.4"
   },
   "resolutions": {
-    "moment": "2.24.0"
+    "moment": "2.29.0"
   },
   "main": "assets/js/app",
   "style": "assets/css/hg_utils.css",
