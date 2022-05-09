@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
@@ -37,13 +38,7 @@ abstract class EntityExporter
      */
     protected $currentRow = 1;
 
-    /**
-     * @required
-     *
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return EntityExporter
-     */
+    #[Required]
     public function setEntityManager(EntityManagerInterface $entityManager): self
     {
         $this->entityManager = $entityManager;
@@ -51,13 +46,7 @@ abstract class EntityExporter
         return $this;
     }
 
-    /**
-     * @required
-     *
-     * @param ExportFieldDescriptor $fieldDescriptor
-     *
-     * @return EntityExporter
-     */
+    #[Required]
     public function setFieldDescriptor(ExportFieldDescriptor $fieldDescriptor): self
     {
         $this->fieldDescriptor = $fieldDescriptor;
@@ -65,13 +54,7 @@ abstract class EntityExporter
         return $this;
     }
 
-    /**
-     * @required
-     *
-     * @param TranslatorInterface $translator
-     *
-     * @return EntityExporter
-     */
+    #[Required]
     public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
