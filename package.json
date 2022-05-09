@@ -12,13 +12,13 @@
     "font-awesome": "^4.7.0",
     "fontawesome": "^5.6.3",
     "jquery": "^3.4.1",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "moment-with-locales-es6": "^1.0.1",
     "popper.js": "^1.16.1",
     "google-api-load": "^0.0.4"
   },
   "resolutions": {
-    "moment": "2.24.0"
+    "moment": "2.29.2"
   },
   "main": "assets/js/app",
   "style": "assets/css/hg_utils.css",
