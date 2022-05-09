@@ -5,6 +5,7 @@ namespace Hgabka\UtilsBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\UtilsBundle\Helper\ClassLookup;
+use Hgabka\UtilsBundle\Repository\AclChangesetRepository;
 
 /**
  * An Acl changeset will be added to the queue whenever a change is made to the permissions. The {@link ApplyAclCommand}
@@ -15,6 +16,11 @@ use Hgabka\UtilsBundle\Helper\ClassLookup;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
+#[ORM\Entity(repositoryClass: AclChangesetRepository::class)]
+#[ORM\Table(name: 'hg_utils_acl_changesets')]
+#[ORM\Index(name: 'idx_acl_changeset_ref', columns: ['ref_id', 'ref_entity_name'])]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class AclChangeset
 {
     /**
@@ -41,17 +47,22 @@ class AclChangeset
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="bigint", name="ref_id")
      */
-    protected $refId;
+    #[ORM\Column(name: 'ref_id', type: 'bigint')]
+    protected ?int $refId = null;
 
     /**
      * @ORM\Column(type="string", name="ref_entity_name")
      */
-    protected $refEntityName;
+    #[ORM\Column(name: 'ref_entity_name', type: 'string')]
+    protected ?string $refEntityName = null;
 
     /**
      * The doctrine metadata is set dynamically in Hgabka\UtilsBundle\EventListener\MappingListener.
@@ -61,27 +72,32 @@ class AclChangeset
     /**
      * @ORM\Column(type="array")
      */
-    protected $changeset;
+    #[ORM\Column(name: 'changeset', type: 'array')]
+    protected ?array $changeset = null;
 
     /**
      * @ORM\Column(type="integer", name="pid", nullable=true)
      */
-    protected $pid;
+    #[ORM\Column(name: 'pid', type: 'integer', nullable: true)]
+    protected ?int $pid = null;
 
     /**
      * @ORM\Column(type="integer", name="status")
      */
-    protected $status;
+    #[ORM\Column(name: 'status', type: 'integer')]
+    protected ?int $status = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $created;
+    #[ORM\Column(name: 'created', type: 'datetime', nullable: true)]
+    protected ?DateTime $created = null;
 
     /**
      * @ORM\Column(name="last_modified", type="datetime", nullable=true)
      */
-    protected $lastModified;
+    #[ORM\Column(name: 'last_modified', type: 'datetime', nullable: true)]
+    protected ?DateTime $lastModified = null;
 
     /**
      * Constructor, sets default status to STATUS_NEW & timestamps to current datetime.
@@ -95,123 +111,65 @@ class AclChangeset
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     *
-     * @return AclChangeset
-     */
-    public function setId($id)
+    public function setId(?int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * Set ACL changeset.
-     *
-     * @param array $changeset the changeset to apply
-     *
-     * @return AclChangeset
-     */
-    public function setChangeset(array $changeset)
+    public function setChangeset(?array $changeset): self
     {
         $this->changeset = $changeset;
 
         return $this;
     }
 
-    /**
-     * Get ACL changeset.
-     *
-     * @return array
-     */
-    public function getChangeset()
+    public function getChangeset(): ?array
     {
         return $this->changeset;
     }
 
-    /**
-     * Set timestamp of creation.
-     *
-     * @param DateTime $created
-     *
-     * @return AclChangeset
-     */
-    public function setCreated($created)
+    public function setCreated(?DateTime $created): self
     {
         $this->created = $created;
 
         return $this;
     }
 
-    /**
-     * Get timestamp of creation.
-     *
-     * @return DateTime
-     */
-    public function getCreated()
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
 
-    /**
-     * Set timestamp of last modification.
-     *
-     * @param DateTime $lastModified
-     *
-     * @return AclChangeset
-     */
-    public function setLastModified($lastModified)
+    public function setLastModified(?DateTime $lastModified): self
     {
         $this->lastModified = $lastModified;
 
         return $this;
     }
 
-    /**
-     * Get timestamp of last modification.
-     *
-     * @return DateTime
-     */
-    public function getLastModified()
+    public function getLastModified(): ?DateTime
     {
         return $this->lastModified;
     }
 
-    /**
-     * Get reference entity id.
-     *
-     * @return int
-     */
-    public function getRefId()
+    public function getRefId(): ?int
     {
         return $this->refId;
     }
 
-    /**
-     * Get reference entity name.
-     *
-     * @return string
-     */
-    public function getRefEntityName()
+    public function getRefEntityName(): ?string
     {
         return $this->refEntityName;
     }
 
-    /**
-     * Set reference entity.
-     *
-     * @param AbstractEntity $entity
-     *
-     * @return AclChangeset
-     */
-    public function setRef($entity)
+    public function setRef(object $entity): self
     {
         if (method_exists($entity, 'getId')) {
             $this->setRefId($entity->getId());
@@ -221,14 +179,7 @@ class AclChangeset
         return $this;
     }
 
-    /**
-     * Set status, every change in status will trigger last modified to be updated.
-     *
-     * @param int $status
-     *
-     * @return AclChangeset
-     */
-    public function setStatus($status)
+    public function setStatus(?int $status): self
     {
         $this->status = $status;
         $this->setLastModified(new DateTime('now'));
@@ -236,86 +187,43 @@ class AclChangeset
         return $this;
     }
 
-    /**
-     * Get status.
-     *
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    /**
-     * Set process id.
-     *
-     * @param int $pid
-     *
-     * @return AclChangeset
-     */
-    public function setPid($pid)
+    public function setPid(?int $pid): self
     {
         $this->pid = $pid;
 
         return $this;
     }
 
-    /**
-     * Get process id.
-     *
-     * @return int
-     */
-    public function getPid()
+    public function getPid(): ?int
     {
         return $this->pid;
     }
 
-    /**
-     * Set user.
-     *
-     * @param BaseUser $user
-     *
-     * @return AclChangeset
-     */
-    public function setUser($user)
+    public function setUser($user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return BaseUser
-     */
     public function getUser()
     {
         return $this->user;
     }
 
-    /**
-     * Set reference entity id.
-     *
-     * @param int $refId
-     *
-     * @return AclChangeset
-     */
-    protected function setRefId($refId)
+    protected function setRefId(?int $refId): self
     {
         $this->refId = $refId;
 
         return $this;
     }
 
-    /**
-     * Set reference entity name.
-     *
-     * @param string $refEntityName
-     *
-     * @return AclChangeset
-     */
-    protected function setRefEntityName($refEntityName)
+    protected function setRefEntityName(?string $refEntityName): self
     {
         $this->refEntityName = $refEntityName;
 

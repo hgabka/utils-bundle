@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table( name="hg_utils_roles" )
  * @UniqueEntity("role")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'hg_utils_roles')]
+#[UniqueEntity('role')]
 class Role
 {
     /**
@@ -20,26 +23,33 @@ class Role
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", name="role", unique=true, length=70)
      */
-    protected $role;
+    #[ORM\Column(name: 'role', type: 'string', unique: true, length: 70)]
+    #[Assert\NotBlank]
+    protected ?string $role = null;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", name="name", length=70)
      */
-    protected $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 70)]
+    #[Assert\NotBlank]
+    protected ?string $name = null;
 
     /**
      * Populate the role field.
      *
      * @param string $role
      */
-    public function __construct($role)
+    public function __construct(?string $role)
     {
         $this->role = $role;
     }
@@ -52,58 +62,29 @@ class Role
         return (string) $this->role;
     }
 
-    /**
-     * Return the role field.
-     *
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Modify the role field.
-     *
-     * @param string $role ROLE_FOO etc
-     *
-     * @return RoleInterface
-     */
-    public function setRole($role)
+    public function setRole(?string $role): self
     {
         $this->role = $role;
 
         return $this;
     }
 
-    /**
-     * Return the name field.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * Modify the name field.
-     *
-     * @param string $name
-     *
-     * @return RoleInterface
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Entity;
 
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\Entity\TranslatableTrait as BaseTranslatableTrait;
+use Hgabka\Doctrine\Translatable\TranslationInterface;
 
 trait TranslatableTrait
 {
@@ -12,31 +13,27 @@ trait TranslatableTrait
     /**
      * @Hgabka\CurrentLocale
      */
-    private $currentLocale;
+    #[Hgabka\CurrentLocale]
+    private ?string $currentLocale = null;
 
     /**
      * Cache current translation. Useful in Doctrine 2.4+.
      */
-    private $currentTranslation;
+    private ?TranslationInterface $currentTranslation;
 
-    public function getCurrentLocale()
+    public function getCurrentLocale(): ?string
     {
         return $this->currentLocale;
     }
 
-    public function setCurrentLocale($locale)
+    public function setCurrentLocale(?string $locale): self
     {
         $this->currentLocale = $locale;
 
         return $this;
     }
 
-    /**
-     * Translation helper method.
-     *
-     * @param null|mixed $locale
-     */
-    public function translate($locale = null)
+    public function translate(?string $locale = null): ?TranslationInterface
     {
         if (null === $locale) {
             $locale = $this->currentLocale;

@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, EntityInterface
@@ -11,26 +12,17 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id The unique identifier
-     *
-     * @return AbstractNestedTreeEntity
-     */
-    public function setId($id)
+    public function setId(?int $id): self
     {
         $this->id = $id;
 
@@ -40,7 +32,7 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
     /**
      * @return bool
      */
-    public function canHaveChildren()
+    public function canHaveChildren(): bool
     {
         return true;
     }
@@ -48,15 +40,12 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
     /**
      * @return bool
      */
-    public function isDeleteable()
+    public function isDeleteable(): bool
     {
         return !$this->isRoot();
     }
 
-    /**
-     * @return bool
-     */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return null === $this->getParent();
     }
@@ -64,7 +53,7 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
     /**
      * @return AbstractNestedTreeEntity[]
      */
-    public function getParents()
+    public function getParents(): array
     {
         $parent = $this->getParent();
         $parents = [];
@@ -76,11 +65,11 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
         return array_reverse($parents);
     }
 
-    abstract public function getParent();
+    abstract public function getParent(): ?self;
 
-    abstract public function getLeft();
+    abstract public function getLeft(): ?int;
 
-    abstract public function getRight();
+    abstract public function getRight(): ?int;
 
-    abstract public function getChildren();
+    abstract public function getChildren(): Collection|array|null;
 }

@@ -2,19 +2,21 @@
 
 namespace Hgabka\UtilsBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 interface NestedTreeEntityInterface
 {
-    public function getId();
+    public function getId(): ?int;
 
-    public function getParent();
+    public function getParent(): ?self;
 
-    public function getLeft();
+    public function getLeft(): ?int;
 
-    public function getRight();
+    public function getRight(): ?int;
 
-    public function getChildren();
+    public function getChildren(): Collection|array|null;
 
-    public function canHaveChildren();
+    public function canHaveChildren(): bool;
 
-    public function isDeleteable();
+    public function isDeleteable(): bool;
 }

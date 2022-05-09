@@ -39,7 +39,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * @ORM\Column(name="password", type="string", nullable=true)
      */
-    #[ORM\Column(name: 'username', type: 'string', nullable: true)]
+    #[ORM\Column(name: 'password', type: 'string', nullable: true)]
     protected ?string $password = null;
 
     /**
