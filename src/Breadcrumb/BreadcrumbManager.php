@@ -57,7 +57,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadcrumbManager
      */
-    public function add($bc = null, $label = null, $routeParams = []): self
+    public function add(BreadCrumb|BreadcrumbInterface|string|null $bc = null, ?string $label = null, array $routeParams = []): self
     {
         if ($bc instanceof BreadcrumbInterface) {
             $bcs = $bc->getBreadcrumb($this->getUser());
