@@ -8,21 +8,21 @@ use Symfony\Component\Security\Core\Security;
 class BreadcrumbManager implements \IteratorAggregate, \Countable
 {
     /** @var array */
-    protected array $breadCrumbs = [];
+    protected $breadCrumbs = [];
 
     /** @var Security */
-    protected Security $security;
+    protected $security;
 
     /** @var RequestStack */
-    protected RequestStack $requestStack;
+    protected $requestStack;
 
     /** @var bool */
-    protected bool $addHomepage = true;
+    protected $addHomepage = true;
 
     /** @var array */
-    protected array $predefinedLabels = [];
+    protected $predefinedLabels = [];
 
-    private ?Breadcrumb $waitingForLabel = null;
+    private $waitingForLabel;
 
     /**
      * BreadcrumbManager constructor.
@@ -38,7 +38,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumb[]
      */
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs()
     {
         if ($this->addHomepage && !empty($this->breadCrumbs)) {
             array_unshift($this->breadCrumbs, $this->getHomepageBreadcrumb());
@@ -57,7 +57,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadcrumbManager
      */
-    public function add($bc = null, $label = null, $routeParams = []): self
+    public function add($bc = null, $label = null, $routeParams = [])
     {
         if ($bc instanceof BreadcrumbInterface) {
             $bcs = $bc->getBreadcrumb($this->getUser());
@@ -98,7 +98,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function addCurrentRoute(?string $label = null): self
+    public function addCurrentRoute($label = null)
     {
         $request = $this->requestStack->getCurrentRequest();
         $route = $request->attributes->get('_route');
@@ -111,7 +111,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
         return $this->add($route, $label, $routeParams);
     }
 
-    public function addHomePage(): self
+    public function addHomePage()
     {
         return $this->setAddHomepage(false)->add($this->getHomepageBreadcrumb());
     }
@@ -119,7 +119,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
     /**
      * Összes beállított breadcrumb törlése.
      */
-    public function clear(): self
+    public function clear()
     {
         $this->breadCrumbs = [];
 
@@ -131,7 +131,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumb
      */
-    public function getHomepageBreadcrumb(): Breadcrumb
+    public function getHomepageBreadcrumb()
     {
         return new Breadcrumb('_slug', ['url' => '', '_locale' => $this->requestStack->getCurrentRequest()->getLocale()]);
     }
@@ -143,7 +143,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function setAddHomepage($switch): self
+    public function setAddHomepage($switch)
     {
         $this->addHomepage = (bool) $switch;
 
@@ -157,7 +157,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function setExternalLabel($label): Breadcrumb
+    public function setExternalLabel($label)
     {
         if (null !== $this->waitingForLabel) {
             $this->waitingForLabel->setLabel($label);
@@ -173,7 +173,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function trim($count): self
+    public function trim($count)
     {
         $this->breadCrumbs = \array_slice($this->getBreadcrumbs(), 0, -$count);
 
@@ -195,17 +195,17 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
         return $map[$route] ?? 'breadcrumb.' . $route;
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator()
     {
         return new \ArrayIterator($this->getBreadcrumbs());
     }
 
-    public function count(): int
+    public function count()
     {
         return \count($this->getBreadcrumbs());
     }
 
-    public function isEmpty(): bool
+    public function isEmpty()
     {
         $bc = $this->getBreadcrumbs();
 
