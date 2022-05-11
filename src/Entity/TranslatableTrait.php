@@ -19,7 +19,7 @@ trait TranslatableTrait
     /**
      * Cache current translation. Useful in Doctrine 2.4+.
      */
-    private ?TranslationInterface $currentTranslation;
+    private ?TranslationInterface $currentTranslation = null;
 
     public function getCurrentLocale(): ?string
     {
