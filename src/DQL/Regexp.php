@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Regexp extends FunctionNode
 {
-    const FUNCTION_NAME = 'REGEXP';
+    public const FUNCTION_NAME = 'REGEXP';
 
     public $value;
     public $regexp;
@@ -26,6 +26,6 @@ class Regexp extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return '('.$this->value->dispatch($sqlWalker).' REGEXP '.$this->regexp->dispatch($sqlWalker).')';
+        return '(' . $this->value->dispatch($sqlWalker) . ' REGEXP ' . $this->regexp->dispatch($sqlWalker) . ')';
     }
 }

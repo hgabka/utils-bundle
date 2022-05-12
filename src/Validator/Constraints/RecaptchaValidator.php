@@ -14,7 +14,7 @@ class RecaptchaValidator extends ConstraintValidator
     /**
      * The reCAPTCHA server URL's.
      */
-    const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
+    public const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
     /**
      * @var string
@@ -47,7 +47,7 @@ class RecaptchaValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Recaptcha) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Recaptcha');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Recaptcha');
         }
 
         $request = $this->requestStack->getCurrentRequest();
@@ -77,10 +77,10 @@ class RecaptchaValidator extends ConstraintValidator
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }
         // discard spam submissions
-        if (null === $response || 0 === \strlen($response)) {
+        if (null === $response || '' === $response) {
             return false;
         }
-        $result = $this->hgabkaUtils->curlPost(self::RECAPTCHA_VERIFY_SERVER.'/recaptcha/api/siteverify', [
+        $result = $this->hgabkaUtils->curlPost(self::RECAPTCHA_VERIFY_SERVER . '/recaptcha/api/siteverify', [
             'secret' => $privateKey,
             'remoteip' => $remoteip,
             'response' => $response,

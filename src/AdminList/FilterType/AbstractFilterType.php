@@ -44,6 +44,6 @@ abstract class AbstractFilterType implements FilterTypeInterface
             return $this->alias;
         }
 
-        return $this->alias.'.';
+        return $this->alias . '.';
     }
 }

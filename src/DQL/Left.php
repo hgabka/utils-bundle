@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Left extends FunctionNode
 {
-    const FUNCTION_NAME = 'LEFT';
+    public const FUNCTION_NAME = 'LEFT';
 
     /** @var string */
     public $string;
@@ -33,9 +33,9 @@ class Left extends FunctionNode
     public function getSql(SqlWalker $sqlWalker)
     {
         return
-            'LEFT('.
-            $this->string->dispatch($sqlWalker).', '.
-            $this->offset->dispatch($sqlWalker).
+            'LEFT(' .
+            $this->string->dispatch($sqlWalker) . ', ' .
+            $this->offset->dispatch($sqlWalker) .
             ')'
             ;
     }

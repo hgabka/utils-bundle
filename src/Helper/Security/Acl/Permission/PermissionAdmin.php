@@ -19,7 +19,6 @@ use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -27,8 +26,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class PermissionAdmin
 {
-    const ADD = 'ADD';
-    const DELETE = 'DEL';
+    public const ADD = 'ADD';
+    public const DELETE = 'DEL';
 
     /**
      * @var AbstractEntity
@@ -158,7 +157,7 @@ class PermissionAdmin
      */
     public function getPermission($role)
     {
-        if ($role instanceof BaseRole) {
+        if ($role instanceof Role) {
             $role = $role->getRole();
         }
 
@@ -186,16 +185,15 @@ class PermissionAdmin
      */
     public function getManageableRolesForPages()
     {
-        $roles = $this->em->getRepository(Role::class)->findAll();
+        $rolesQb = $this->em->getRepository(Role::class)->createQueryBuilder('r');
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
-            if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN', true))) {
-                $superAdminRole = current($superAdminRole);
-                unset($roles[$superAdminRole]);
+            if ($user && !$user->isSuperAdmin()) {
+                $rolesQb->andWhere('r.role <> :super')->setParameter('super', 'ROLE_SUPER_ADMIN');
             }
         }
 
-        return $roles;
+        return $rolesQb->getQuery()->getResult();
     }
 
     /**
@@ -231,8 +229,8 @@ class PermissionAdmin
             $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
-            $cmd = 'php '.$this->kernel->getRootDir().'/console hgabka:acl:apply';
-            $cmd .= ' --env='.$this->kernel->getEnvironment();
+            $cmd = 'php ' . $this->kernel->getProjectDir() . '/bin/console hgabka:acl:apply';
+            $cmd .= ' --env=' . $this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);
         }

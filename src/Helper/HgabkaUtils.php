@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Hgabka\UtilsBundle\Util\HtmlToText;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -120,7 +121,7 @@ class HgabkaUtils
     {
         $requestStack = $this->container->get('request_stack');
 
-        return $requestStack->getMasterRequest();
+        return $requestStack->getMainRequest();
     }
 
     public function getRequestStack(): RequestStack
@@ -135,7 +136,7 @@ class HgabkaUtils
 
     public function getWebDir(): string
     {
-        return $this->container->getParameter('kernel.project_dir').'/web';
+        return $this->container->getParameter('kernel.project_dir') . '/web';
     }
 
     public function slugify($text, $default = '', $replace = ["'"], $delimiter = '-')
@@ -182,7 +183,7 @@ class HgabkaUtils
     public function entityFromArray($entity, array $array)
     {
         foreach ($array as $key => $value) {
-            $method = 'set'.ucfirst($key);
+            $method = 'set' . ucfirst($key);
             if (method_exists($entity, $method)) {
                 $entity->$method($value);
             }
@@ -207,7 +208,7 @@ class HgabkaUtils
                 $search = preg_replace_callback($pattern, function ($matches) use ($replacement) {
                     preg_match("/('::'\.)?([a-z]*)\('\\\\([0-9]{1})'\)/", $replacement, $match);
 
-                    return ('' === $match[1] ? '' : '::').\call_user_func($match[2], $matches[$match[3]]);
+                    return ('' === $match[1] ? '' : '::') . \call_user_func($match[2], $matches[$match[3]]);
                 }, $search);
             } else {
                 $search = preg_replace($pattern, $replacement, $search);
@@ -272,7 +273,7 @@ class HgabkaUtils
      */
     public function foreign_key($class_name, $separate_with_underscore = true)
     {
-        return $this->underscore($this->demodulize($class_name)).($separate_with_underscore ? '_id' : 'id');
+        return $this->underscore($this->demodulize($class_name)) . ($separate_with_underscore ? '_id' : 'id');
     }
 
     /**
@@ -415,7 +416,7 @@ class HgabkaUtils
         foreach (['php5', 'php'] as $phpCli) {
             foreach ($suffixes as $suffix) {
                 foreach (explode(\PATH_SEPARATOR, $path) as $dir) {
-                    if (is_file($file = $dir.\DIRECTORY_SEPARATOR.$phpCli.$suffix) && is_executable($file)) {
+                    if (is_file($file = $dir . \DIRECTORY_SEPARATOR . $phpCli . $suffix) && is_executable($file)) {
                         return $file;
                     }
                 }
@@ -437,7 +438,7 @@ class HgabkaUtils
     public function getArrayValueForPath($values, $name, $default = null)
     {
         if (false === $offset = strpos($name, '[')) {
-            return isset($values[$name]) ? $values[$name] : $default;
+            return $values[$name] ?? $default;
         }
 
         if (!isset($values[substr($name, 0, $offset)])) {
@@ -525,7 +526,7 @@ class HgabkaUtils
     {
         static $isEmpty = true;
         foreach ($array as $value) {
-            $isEmpty = (\is_array($value)) ? $this->isArrayValuesEmpty($value) : (0 === \strlen($value));
+            $isEmpty = (\is_array($value)) ? $this->isArrayValuesEmpty($value) : ('' === $value);
             if (!$isEmpty) {
                 break;
             }
@@ -704,18 +705,18 @@ class HgabkaUtils
 
         while (false !== ($file = readdir($fp))) {
             if (!\in_array($file, $ignore, true)) {
-                if (is_link($directory.'/'.$file)) {
+                if (is_link($directory . '/' . $file)) {
                     // delete symlink
-                    unlink($directory.'/'.$file);
-                } elseif (is_dir($directory.'/'.$file)) {
+                    unlink($directory . '/' . $file);
+                } elseif (is_dir($directory . '/' . $file)) {
                     // recurse through directory
-                    $this->clearDirectory($directory.'/'.$file);
+                    $this->clearDirectory($directory . '/' . $file);
 
                     // delete the directory
-                    rmdir($directory.'/'.$file);
+                    rmdir($directory . '/' . $file);
                 } else {
                     // delete the file
-                    unlink($directory.'/'.$file);
+                    unlink($directory . '/' . $file);
                 }
             }
         }
@@ -813,7 +814,7 @@ class HgabkaUtils
         } else {
             $str_end = mb_substr($str, 1, mb_strlen($str, $encoding), $encoding);
         }
-        $str = $first_letter.$str_end;
+        $str = $first_letter . $str_end;
 
         return $str;
     }
@@ -860,7 +861,7 @@ class HgabkaUtils
 
         $tsz = '';
         $ej = ($nsz < 0 ? '- ' : '');
-        $sz = trim(''.floor($nsz));
+        $sz = trim('' . floor($nsz));
         $hj = 0;
         if ('0' === $sz) {
             $tsz = 'nulla';
@@ -868,11 +869,11 @@ class HgabkaUtils
             while ($sz > '') {
                 ++$hj;
                 $t = '';
-                $wsz = substr('00'.substr($sz, -3), -3);
+                $wsz = substr('00' . substr($sz, -3), -3);
                 $tizesek[0] = ('0' === $wsz[2] ? 'tíz' : 'tizen');
                 $tizesek[1] = ('0' === $wsz[2] ? 'húsz' : 'huszon');
                 if ($c = $wsz[0]) {
-                    $t = $szamok[$c - 1].'száz';
+                    $t = $szamok[$c - 1] . 'száz';
                 }
                 if ($c = $wsz[1]) {
                     $t .= $tizesek[$c - 1];
@@ -881,12 +882,12 @@ class HgabkaUtils
                     $t .= $szamok[$c - 1];
                 }
                 //        $tsz=($t?$t.$hatv[$hj-1]:'').($tsz==''?'':'-').$tsz;
-                $tsz = ($t ? $t.$hatv[$hj - 1] : '').('' === $tsz ? '' : ($nsz > 2000 ? '-' : '')).$tsz;
+                $tsz = ($t ? $t . $hatv[$hj - 1] : '') . ('' === $tsz ? '' : ($nsz > 2000 ? '-' : '')) . $tsz;
                 $sz = substr($sz, 0, -3);
             }
         }
 
-        return ucfirst($ej.$tsz);
+        return ucfirst($ej . $tsz);
     }
 
     public function getKozteruletJellegek()
@@ -1075,8 +1076,8 @@ class HgabkaUtils
             'md',
             'lg',
         ];
-        $sizesStackedRegexp = '(?P<size>'.implode('|', $sizes).')'; // ha minden méretből lehet egy
-        $sizesRegexp = '('.implode('|', $sizes).')'; // ha csak egy féle méret lehet
+        $sizesStackedRegexp = '(?P<size>' . implode('|', $sizes) . ')'; // ha minden méretből lehet egy
+        $sizesRegexp = '(' . implode('|', $sizes) . ')'; // ha csak egy féle méret lehet
 
         $states = [
             'default',
@@ -1088,33 +1089,33 @@ class HgabkaUtils
             'link',
             'muted',
         ];
-        $statesRegexp = '('.implode('|', $states).')';
+        $statesRegexp = '(' . implode('|', $states) . ')';
 
         $map = [
             'glyphicon-.+',
-            'col-'.$sizesStackedRegexp.'-\d+',
-            'col-'.$sizesStackedRegexp.'-push-\d+',
-            'col-'.$sizesStackedRegexp.'-pull-\d+',
-            'col-'.$sizesStackedRegexp.'-offset-\d+',
-            'btn-'.$sizesRegexp,
-            'btn-'.$statesRegexp,
-            'btn-group-'.$sizesRegexp,
-            'bg-'.$statesRegexp,
-            'text-'.$statesRegexp,
-            'hidden-'.$sizesStackedRegexp,
-            'visible-'.$sizesStackedRegexp.'-block',
-            'visible-'.$sizesStackedRegexp.'-inline',
-            'visible-'.$sizesStackedRegexp.'-inline-block',
-            'well-'.$sizesRegexp,
-            'panel-'.$statesRegexp,
-            'alert-'.$statesRegexp,
-            'label-'.$statesRegexp,
+            'col-' . $sizesStackedRegexp . '-\d+',
+            'col-' . $sizesStackedRegexp . '-push-\d+',
+            'col-' . $sizesStackedRegexp . '-pull-\d+',
+            'col-' . $sizesStackedRegexp . '-offset-\d+',
+            'btn-' . $sizesRegexp,
+            'btn-' . $statesRegexp,
+            'btn-group-' . $sizesRegexp,
+            'bg-' . $statesRegexp,
+            'text-' . $statesRegexp,
+            'hidden-' . $sizesStackedRegexp,
+            'visible-' . $sizesStackedRegexp . '-block',
+            'visible-' . $sizesStackedRegexp . '-inline',
+            'visible-' . $sizesStackedRegexp . '-inline-block',
+            'well-' . $sizesRegexp,
+            'panel-' . $statesRegexp,
+            'alert-' . $statesRegexp,
+            'label-' . $statesRegexp,
             'pull-(left|right)',
         ];
 
         foreach ($map as $regexp) {
             $matches = [];
-            $pattern = '/^'.$regexp.'$/';
+            $pattern = '/^' . $regexp . '$/';
             if (preg_match($pattern, $newClass, $matches)) {
                 foreach ($classes as $idx => $cls) {
                     $submatches = [];
@@ -1183,7 +1184,7 @@ class HgabkaUtils
     {
         $data = [];
         foreach ($choices as $choice) {
-            $data[$choice] = $prefix.$choice;
+            $data[$choice] = $prefix . $choice;
         }
 
         return $data;
@@ -1284,7 +1285,7 @@ class HgabkaUtils
     public function curlGet($url, $params)
     {
         $ch = curl_init();
-        curl_setopt($ch, \CURLOPT_URL, $url.(empty($params) ? '' : ('?'.http_build_query($params))));
+        curl_setopt($ch, \CURLOPT_URL, $url . (empty($params) ? '' : ('?' . http_build_query($params))));
         curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
 
         $result = curl_exec($ch);
@@ -1335,7 +1336,7 @@ class HgabkaUtils
                 // Lets sample the time there right now
                 $time = new \DateTime(null, new \DateTimeZone($timezone));
                 // Us dumb Americans can't handle millitary time
-                $ampm = $time->format('H') > 12 ? ' ('.$time->format('g:i a').')' : '';
+                $ampm = $time->format('H') > 12 ? ' (' . $time->format('g:i a') . ')' : '';
                 // Remove region name and add a sample time
                 if (empty($timezones[$name])) {
                     $timezones[$name] = [];
@@ -1367,7 +1368,7 @@ class HgabkaUtils
         $request = $requestStack->getCurrentRequest();
         $context = $router->getContext();
 
-        return $request ? $request->getSchemeAndHttpHost() : $context->getScheme().'://'.$context->getHost();
+        return $request ? $request->getSchemeAndHttpHost() : $context->getScheme() . '://' . $context->getHost();
     }
 
     /**
@@ -1438,7 +1439,7 @@ class HgabkaUtils
             return $context->getHost();
         }
 
-        return $context->getHost().':'.$port;
+        return $context->getHost() . ':' . $port;
     }
 
     public function getIntlLocale($culture, $locale = null)
@@ -1485,10 +1486,10 @@ class HgabkaUtils
 
         $params = ['filename' => $filenameFallback];
         if ($filename !== $filenameFallback) {
-            $params['filename*'] = "utf-8''".rawurlencode($filename);
+            $params['filename*'] = "utf-8''" . rawurlencode($filename);
         }
 
-        return $disposition.'; '.HeaderUtils::toString($params, ';');
+        return $disposition . '; ' . HeaderUtils::toString($params, ';');
     }
 
     public function sanitizeXML($string, $encoding = 'UTF-8')
@@ -1552,5 +1553,14 @@ class HgabkaUtils
         $response->headers->set('Expires', 'Thu, 19 Nov 1981 08:52:00 GMT');
 
         return $response;
+    }
+
+    public function convertHtml(string $html, array $options = [])
+    {
+        $defaultOptions = ['width' => 0];
+
+        $converter = new HtmlToText($html, array_merge($defaultOptions, $options));
+
+        return $converter->getText();
     }
 }

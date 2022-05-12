@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class IfNull extends FunctionNode
 {
-    const FUNCTION_NAME = 'IFNULL';
+    public const FUNCTION_NAME = 'IFNULL';
 
     private $expr1;
     private $expr2;
@@ -27,7 +27,7 @@ class IfNull extends FunctionNode
     public function getSql(SqlWalker $sqlWalker)
     {
         return 'IFNULL('
-            .$sqlWalker->walkArithmeticPrimary($this->expr1).', '
-            .$sqlWalker->walkArithmeticPrimary($this->expr2).')';
+            . $sqlWalker->walkArithmeticPrimary($this->expr1) . ', '
+            . $sqlWalker->walkArithmeticPrimary($this->expr2) . ')';
     }
 }

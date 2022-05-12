@@ -3,7 +3,8 @@
 namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
@@ -34,18 +35,6 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
      */
     protected $maxPerPage = \PHP_INT_MAX;
 
-    /**
-     * @return array
-     */
-    public function getFilterParameters()
-    {
-        $parameters = parent::getFilterParameters();
-        $parameters['_sort_by'] = $this->sortField;
-        $parameters['_sort_order'] = $this->isDescending() ? 'DESC' : 'ASC';
-
-        return $parameters;
-    }
-
     public function getSortField(): string
     {
         return $this->sortField;
@@ -61,17 +50,14 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return $this;
     }
 
-    /**
-     * @param $template
-     */
-    public function setListTemplate($template)
-    {
-        $this->templates['list'] = $template;
-    }
-
     public function isDescending(): bool
     {
         return $this->descending;
+    }
+
+    public function getPerPageOptions(): array
+    {
+        return [];
     }
 
     public function setDescending(bool $descending): self
@@ -90,8 +76,31 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return !empty($filters);
     }
 
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PER_PAGE] = \PHP_INT_MAX;
+        $sortValues[DatagridInterface::SORT_BY] = $this->sortField;
+        $sortValues[DatagridInterface::SORT_ORDER] = $this->isDescending() ? 'DESC' : 'ASC';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('sorting');
+    }
+
+    protected function setListTemplate()
+    {
+        $this->getTemplateRegistry()->setTemplate('list', '@HgabkaUtils/Admin/Sortable/base_list.html.twig');
+    }
+
+    protected function setResultsTemplate()
+    {
+        $this->getTemplateRegistry()->setTemplate('pager_results', '@HgabkaUtils/Admin/Sortable/base_results.html.twig');
+    }
+
+    protected function configure(): void
+    {
+        $this->setListTemplate();
+        $this->setResultsTemplate();
     }
 }

@@ -99,7 +99,7 @@ class Words_it extends Words
 
         // add a the word for the minus sign if necessary
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -123,7 +123,7 @@ class Words_it extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return ' '.$this->_digits[0].' ';
+            return ' ' . $this->_digits[0] . ' ';
             $current_power = \strlen($num);
         } else {
             $current_power = \strlen($num);
@@ -132,9 +132,9 @@ class Words_it extends Words
         // See if we need "thousands"
         $thousands = floor($num / 1000);
         if (1 === $thousands) {
-            $ret .= $this->_sep.'mille'.$this->_sep;
+            $ret .= $this->_sep . 'mille' . $this->_sep;
         } elseif ($thousands > 1) {
-            $ret .= $this->_toWords($thousands, 3).$this->_sep; //. 'mil' . $this->_sep;
+            $ret .= $this->_toWords($thousands, 3) . $this->_sep; //. 'mil' . $this->_sep;
         }
 
         // values for digits, tens and hundreds
@@ -146,9 +146,9 @@ class Words_it extends Words
         switch ($h) {
             case 1:
                 if ((0 === $d) && (0 === $t)) { // is it's '100' use 'cien'
-                    $ret .= $this->_sep.'cento';
+                    $ret .= $this->_sep . 'cento';
                 } else {
-                    $ret .= $this->_sep.'cento';
+                    $ret .= $this->_sep . 'cento';
                 }
 
                 break;
@@ -157,19 +157,19 @@ class Words_it extends Words
             case 4:
             case 6:
             case 8:
-                $ret .= $this->_sep.$this->_digits[$h].'cento';
+                $ret .= $this->_sep . $this->_digits[$h] . 'cento';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'cinquecento';
+                $ret .= $this->_sep . 'cinquecento';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'settecento';
+                $ret .= $this->_sep . 'settecento';
 
                 break;
             case 9:
-                $ret .= $this->_sep.'novecento';
+                $ret .= $this->_sep . 'novecento';
 
                 break;
         }
@@ -180,11 +180,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'novant';
+                        $ret .= $this->_sep . 'novant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'novanta';
+                        $ret .= $this->_sep . 'novanta';
 
                         break;
                 }
@@ -194,11 +194,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'ottant';
+                        $ret .= $this->_sep . 'ottant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'ottanta';
+                        $ret .= $this->_sep . 'ottanta';
 
                         break;
                 }
@@ -208,11 +208,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'settant';
+                        $ret .= $this->_sep . 'settant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'settanta';
+                        $ret .= $this->_sep . 'settanta';
 
                         break;
                 }
@@ -222,11 +222,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'sessant';
+                        $ret .= $this->_sep . 'sessant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'sessanta';
+                        $ret .= $this->_sep . 'sessanta';
 
                         break;
                 }
@@ -236,11 +236,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'cinquant';
+                        $ret .= $this->_sep . 'cinquant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'cinquanta';
+                        $ret .= $this->_sep . 'cinquanta';
 
                         break;
                 }
@@ -250,11 +250,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'quarant';
+                        $ret .= $this->_sep . 'quarant';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'quaranta';
+                        $ret .= $this->_sep . 'quaranta';
 
                         break;
                 }
@@ -264,11 +264,11 @@ class Words_it extends Words
                 switch ($d) {
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'trent';
+                        $ret .= $this->_sep . 'trent';
 
                         break;
                     default:
-                        $ret .= $this->_sep.'trenta';
+                        $ret .= $this->_sep . 'trenta';
 
                         break;
                 }
@@ -277,16 +277,16 @@ class Words_it extends Words
             case 2:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'venti';
+                        $ret .= $this->_sep . 'venti';
 
                         break;
                     case 1:
                     case 8:
-                        $ret .= $this->_sep.'vent'.$this->_digits[$d];
+                        $ret .= $this->_sep . 'vent' . $this->_digits[$d];
 
                         break;
                     default:
-                        $ret .= $this->_sep.'venti'.$this->_digits[$d];
+                        $ret .= $this->_sep . 'venti' . $this->_digits[$d];
 
                         break;
                 }
@@ -295,43 +295,43 @@ class Words_it extends Words
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'dieci';
+                        $ret .= $this->_sep . 'dieci';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'undici';
+                        $ret .= $this->_sep . 'undici';
 
                         break;
                     case 2:
-                        $ret .= $this->_sep.'dodici';
+                        $ret .= $this->_sep . 'dodici';
 
                         break;
                     case 3:
-                        $ret .= $this->_sep.'tredici';
+                        $ret .= $this->_sep . 'tredici';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'quattordici';
+                        $ret .= $this->_sep . 'quattordici';
 
                         break;
                     case 5:
-                        $ret .= $this->_sep.'quindici';
+                        $ret .= $this->_sep . 'quindici';
 
                         break;
                     case 6:
-                        $ret .= $this->_sep.'sedici';
+                        $ret .= $this->_sep . 'sedici';
 
                         break;
                     case 7:
-                        $ret .= $this->_sep.'diciassette';
+                        $ret .= $this->_sep . 'diciassette';
 
                         break;
                     case 8:
-                        $ret .= $this->_sep.'diciotto';
+                        $ret .= $this->_sep . 'diciotto';
 
                         break;
                     case 9:
-                        $ret .= $this->_sep.'diciannove';
+                        $ret .= $this->_sep . 'diciannove';
 
                         break;
                 }
@@ -345,15 +345,15 @@ class Words_it extends Words
             if (0 !== $t) {
                 // use 'un' instead of 'uno' when there is a suffix ('mila', 'milloni', etc...)
                 if (($power > 0) && (1 === $d)) {
-                    $ret .= $this->_sep.' e un';
+                    $ret .= $this->_sep . ' e un';
                 } else {
-                    $ret .= $this->_sep.''.$this->_digits[$d];
+                    $ret .= $this->_sep . '' . $this->_digits[$d];
                 }
             } else {
                 if (($power > 0) && (1 === $d)) {
-                    $ret .= $this->_sep.'un ';
+                    $ret .= $this->_sep . 'un ';
                 } else {
-                    $ret .= $this->_sep.$this->_digits[$d];
+                    $ret .= $this->_sep . $this->_digits[$d];
                 }
             }
         }
@@ -374,7 +374,7 @@ class Words_it extends Words
                 $suffix = $lev[1];
             }
             if (0 !== $num) {
-                $ret .= $this->_sep.$suffix;
+                $ret .= $this->_sep . $suffix;
             }
         }
 

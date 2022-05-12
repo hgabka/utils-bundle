@@ -9,10 +9,10 @@ namespace Hgabka\UtilsBundle\FlashMessages;
  */
 class FlashTypes
 {
-    const SUCCESS = 'success';
-    const ERROR = 'error';
-    const WARNING = 'warning';
+    public const SUCCESS = 'success';
+    public const ERROR = 'error';
+    public const WARNING = 'warning';
 
-    const INFO = 'info';
-    const DANGER = 'danger';
+    public const INFO = 'info';
+    public const DANGER = 'danger';
 }

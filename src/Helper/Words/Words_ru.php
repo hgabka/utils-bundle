@@ -442,12 +442,12 @@ class Words_ru extends Words
 
         $sign = '';
         if ('-' === substr($num, 0, 1)) {
-            $sign = $this->_minus.$this->_sep;
+            $sign = $this->_minus . $this->_sep;
             $num = substr($num, 1);
         }
 
         while (\strlen($num) % 3) {
-            $num = '0'.$num;
+            $num = '0' . $num;
         }
 
         if (0 === $num || '' === $num) {
@@ -471,14 +471,14 @@ class Words_ru extends Words
 
                 if (3 === $power) {
                     if (1 === $_case) {
-                        $group .= $this->_sep.'тысяча';
+                        $group .= $this->_sep . 'тысяча';
                     } elseif (2 === $_case) {
-                        $group .= $this->_sep.'тысячи';
+                        $group .= $this->_sep . 'тысячи';
                     } else {
-                        $group .= $this->_sep.'тысяч';
+                        $group .= $this->_sep . 'тысяч';
                     }
                 } elseif ($group && $power > 3 && isset($this->_exponent[$power])) {
-                    $group .= $this->_sep.$this->_exponent[$power];
+                    $group .= $this->_sep . $this->_exponent[$power];
                     if (2 === $_case) {
                         $group .= 'а';
                     } elseif (3 === $_case) {
@@ -487,14 +487,14 @@ class Words_ru extends Words
                 }
 
                 if ($group) {
-                    $ret = $group.$this->_sep.$ret;
+                    $ret = $group . $this->_sep . $ret;
                 }
 
                 $power += 3;
             }
         }
 
-        return $sign.$ret;
+        return $sign . $ret;
     }
 
     /**
@@ -554,7 +554,7 @@ class Words_ru extends Words
 
                     if ($ones > 0) {
                         $ret .= $this->_sep
-                            .$this->_digits[$gender][$ones];
+                            . $this->_digits[$gender][$ones];
 
                         if (1 === $ones) {
                             $case = 1;
@@ -597,16 +597,16 @@ class Words_ru extends Words
         $curr_names = $this->_currency_names[$int_curr];
 
         $ret = trim($this->_toWordsWithCase($decimal, $case, $curr_names[0][0]));
-        $ret .= $this->_sep.$curr_names[0][$case];
+        $ret .= $this->_sep . $curr_names[0][$case];
 
         if (false !== $fraction) {
             if ($convert_fraction) {
-                $ret .= $this->_sep.trim($this->_toWordsWithCase($fraction, $case, $curr_names[1][0]));
+                $ret .= $this->_sep . trim($this->_toWordsWithCase($fraction, $case, $curr_names[1][0]));
             } else {
-                $ret .= $this->_sep.$fraction;
+                $ret .= $this->_sep . $fraction;
             }
 
-            $ret .= $this->_sep.$curr_names[1][$case];
+            $ret .= $this->_sep . $curr_names[1][$case];
         }
 
         return $ret;

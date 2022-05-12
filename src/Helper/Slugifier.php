@@ -26,7 +26,7 @@ class Slugifier implements SlugifierInterface
         }
 
         $text = strtolower($text);
-        $text = preg_replace('~[^-a-z0-9_'.$subst.']+~', '', $text); // keep only letters, numbers, '_' and separator  $text = preg_replace('~[^\\pL0-9_]+~u', '-', $text); // substitutes anything but letters, numbers and '_' with separator
+        $text = preg_replace('~[^-a-z0-9_' . $subst . ']+~', '', $text); // keep only letters, numbers, '_' and separator  $text = preg_replace('~[^\\pL0-9_]+~u', '-', $text); // substitutes anything but letters, numbers and '_' with separator
         $text = trim($text, $delimiter);
         $origText = $text;
         $text = @iconv('utf-8', 'us-ascii//TRANSLIT', $text); // TRANSLIT does the whole job
@@ -34,7 +34,7 @@ class Slugifier implements SlugifierInterface
             $text = Transliterator::transliterate($origText, $delimiter);
         }
         $text = strtolower($text);
-        $text = preg_replace('~[^-a-z0-9_'.$subst.']+~', '', $text); // keep only letters, numbers, '_' and separator
+        $text = preg_replace('~[^-a-z0-9_' . $subst . ']+~', '', $text); // keep only letters, numbers, '_' and separator
 
         if (empty($text)) {
             return empty($default) ? '' : $default;

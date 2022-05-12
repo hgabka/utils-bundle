@@ -22,7 +22,7 @@ class AdminPanelAction implements AdminPanelActionInterface
     /**
      * @var string
      */
-    private $template = 'HgabkaUtilsBundle:AdminPanel:_admin_panel_action.html.twig';
+    private $template = '@HgabkaUtils/AdminPanel/_admin_panel_action.html.twig';
 
     /**
      * @param array  $url      The url path and parameters

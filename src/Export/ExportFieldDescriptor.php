@@ -17,6 +17,8 @@ class ExportFieldDescriptor
     /** @var HgabkaUtils */
     protected $hgabkaUtils;
 
+    protected $translateLabels = true;
+
     /**
      * ExportFieldDescriptor constructor.
      */
@@ -24,6 +26,18 @@ class ExportFieldDescriptor
     {
         $this->translator = $translator;
         $this->hgabkaUtils = $hgabkaUtils;
+    }
+
+    /**
+     * @param bool $translateLabels
+     *
+     * @return ExportFieldDescriptor
+     */
+    public function setTranslateLabels(bool $translateLabels): self
+    {
+        $this->translateLabels = $translateLabels;
+
+        return $this;
     }
 
     /**
@@ -36,9 +50,19 @@ class ExportFieldDescriptor
     public function add($key, $type = null, $options = []): self
     {
         if (!isset($options['label'])) {
-            $options['label'] = 'label.export.'.str_replace('.', '_', $key);
+            $options['label'] = 'label.export.' . str_replace('.', '_', $key);
         }
-        $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+
+        if ($this->translateLabels) {
+            if (!isset($options['translate_label']) || false !== $options['translate_label']) {
+                $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+            }
+        } else {
+            if (true === ($options['translate_label'] ?? false)) {
+                $options['label'] = $this->translator->trans($options['label'], [], 'messages');
+            }
+        }
+
         if (!isset($options['key'])) {
             $options['key'] = $key;
         }
@@ -64,7 +88,7 @@ class ExportFieldDescriptor
     public function get($key)
     {
         if (empty($this->fields[$key])) {
-            throw new InvalidArgumentException('Invalid export key: '.$key);
+            throw new InvalidArgumentException('Invalid export key: ' . $key);
         }
 
         return $this->fields[$key] ?? null;

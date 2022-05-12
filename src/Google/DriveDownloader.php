@@ -59,7 +59,7 @@ class DriveDownloader
             $file = $service->files->get($fileId, ['fields' => 'size,originalFilename,mimeType,webContentLink,exportLinks,name,fileExtension,fullFileExtension']);
             $mimeType = $file->getMimeType();
             $extension = $file->getFileExtension();
-            $fileName = null !== $forcedFileName ? ($forcedFileName.'.'.$extension) : $file->getOriginalFilename();
+            $fileName = null !== $forcedFileName ? ($forcedFileName . '.' . $extension) : $file->getOriginalFilename();
             $size = $file->getSize();
         } catch (Throwable $e) {
             $file = null;
@@ -78,7 +78,7 @@ class DriveDownloader
                 if (null !== ($data = $this->guessDataFromExportLinks($service, $fileId, $file->getExportLinks()))) {
                     ['content' => $content, 'size' => $size, 'mimeType' => $mimeType, 'extension' => $extension] = $data;
 
-                    $fileName = ($forcedFileName ?? $file->getName()).(empty($extension) ? '' : ('.'.$extension));
+                    $fileName = ($forcedFileName ?? $file->getName()) . (empty($extension) ? '' : ('.' . $extension));
                     $error = null;
                 }
             }
@@ -115,7 +115,7 @@ class DriveDownloader
         $response = new Response($content);
         $disposition = $this->utils->makeUtf8Disposition($disposition, $fileName);
 
-        $response->headers->set('Content-Disposition', $disposition.'; '.HeaderUtils::toString(['filename' => $fileName], ';'));
+        $response->headers->set('Content-Disposition', $disposition . '; ' . HeaderUtils::toString(['filename' => $fileName], ';'));
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', $mimeType);
         $response->headers->set('Content-length', $size);

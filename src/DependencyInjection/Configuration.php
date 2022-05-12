@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\DependencyInjection;
 
+use Hgabka\Entity\AbstractUser;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -34,7 +35,9 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('client_id')->end()
                     ->scalarNode('client_secret')->end()
                 ->end()
-            ->end()
+                ->end()
+            ->scalarNode('backend_user_class')->defaultValue(AbstractUser::class)->end()
+            ->scalarNode('public_access_role')->defaultValue('PUBLIC_ACCESS')->end()
             ->end()
         ;
 

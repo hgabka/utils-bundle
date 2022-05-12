@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use InvalidArgumentException;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
@@ -50,6 +51,9 @@ class AclHelper
      */
     private $roleHierarchy;
 
+    /** @var string */
+    private $publicAccessRole;
+
     /**
      * Constructor.
      *
@@ -57,7 +61,7 @@ class AclHelper
      * @param TokenStorageInterface  $tokenStorage The security token storage
      * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, ObjectIdentityRetrievalStrategy $oiaStrategy, MutableAclProviderInterface $aclProvider)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh, ObjectIdentityRetrievalStrategy $oiaStrategy, MutableAclProviderInterface $aclProvider, string $publicAccessRole)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
@@ -65,6 +69,7 @@ class AclHelper
         $this->roleHierarchy = $rh;
         $this->oiaStrategy = $oiaStrategy;
         $this->aclProvider = $aclProvider;
+        $this->publicAccessRole = $publicAccessRole;
     }
 
     /**
@@ -86,7 +91,54 @@ class AclHelper
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = \constant(\get_class($builder).'::MASK_'.strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
+            $builder->add($mask);
+        }
+        $query->setHint('acl.mask', $builder->get());
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, AclWalker::class);
+
+        $rootEntity = $permissionDef->getEntity();
+        $rootAlias = $permissionDef->getAlias();
+        // If either alias or entity was not specified - use default from QueryBuilder
+        if (empty($rootEntity) || empty($rootAlias)) {
+            $rootEntities = $queryBuilder->getRootEntities();
+            $rootAliases = $queryBuilder->getRootAliases();
+            $rootEntity = $rootEntities[0];
+            $rootAlias = $rootAliases[0];
+        }
+        $query->setHint('acl.root.entity', $rootEntity);
+        $query->setHint('acl.extra.query', $this->getPermittedAclIdsSQLForUser($query));
+
+        $classMeta = $this->em->getClassMetadata($rootEntity);
+        $entityRootTableName = $this->quoteStrategy->getTableName(
+            $classMeta,
+            $this->em->getConnection()->getDatabasePlatform()
+        );
+        $query->setHint('acl.entityRootTableName', $entityRootTableName);
+        $query->setHint('acl.entityRootTableDqlAlias', $rootAlias);
+
+        return $query;
+    }
+
+    /**
+     * Apply the ACL constraints to the specified query builder, using the permission definition.
+     *
+     * @param QueryBuilder         $queryBuilder  The query builder
+     * @param PermissionDefinition $permissionDef The permission definition
+     *
+     * @return Query
+     */
+    public function applyToProxyQuery(ProxyQueryInterface $query, PermissionDefinition $permissionDef): ProxyQueryInterface
+    {
+        $queryBuilder = $query->getQueryBuilder();
+        $whereQueryParts = $queryBuilder->getDQLPart('where');
+        if (empty($whereQueryParts)) {
+            $queryBuilder->where('1 = 1'); // this will help in cases where no where query is specified
+        }
+
+        $builder = new MaskBuilder();
+        foreach ($permissionDef->getPermissions() as $permission) {
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
         $query->setHint('acl.mask', $builder->get());
@@ -130,7 +182,7 @@ class AclHelper
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = \constant(\get_class($builder).'::MASK_'.strtoupper($permission));
+            $mask = \constant(\get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
 
@@ -214,9 +266,9 @@ class AclHelper
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
         $aclConnection = $this->em->getConnection();
-        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase() . '.';
         $mask = $query->getHint('acl.mask');
-        $rootEntity = '"'.str_replace('\\', '\\\\', $query->getHint('acl.root.entity')).'"';
+        $rootEntity = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         // @var $token TokenInterface
         $token = $this->tokenStorage->getToken();
@@ -224,44 +276,44 @@ class AclHelper
         $user = null;
         if (null !== $token) {
             $user = $token->getUser();
-            $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+            $userRoles = $this->roleHierarchy->getReachableRoleNames($token->getRoleNames());
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
+        $uR = ['"' . $this->publicAccessRole . '"'];
 
         // @var $role RoleInterface
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
-            if ('ROLE_USER' !== $role->getRole()) {
-                $uR[] = '"'.$role->getRole().'"';
+            if ('ROLE_USER' !== $role) {
+                $uR[] = '"' . $role . '"';
             }
         }
         $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (\is_object($user)) {
-            $inString .= ' OR s.identifier = "'.str_replace(
+            $inString .= ' OR s.identifier = "' . str_replace(
                 '\\',
                 '\\\\',
                 \get_class($user)
-            ).'-'.$user->getUserName().'"';
+            ) . '-' . $user->getUserName() . '"';
         }
 
         $selectQuery = <<<SELECTQUERY
-SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
-INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
-LEFT JOIN {$databasePrefix}acl_entries e ON (
-    e.class_id = o.class_id AND (e.object_identity_id = o.id
-    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
-)
-LEFT JOIN {$databasePrefix}acl_security_identities s ON (
-s.id = e.security_identity_id
-)
-WHERE c.class_type = {$rootEntity}
-AND (s.identifier = {$inString})
-AND e.mask & {$mask} > 0
-SELECTQUERY;
+            SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
+            INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
+            LEFT JOIN {$databasePrefix}acl_entries e ON (
+                e.class_id = o.class_id AND (e.object_identity_id = o.id
+                OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
+            )
+            LEFT JOIN {$databasePrefix}acl_security_identities s ON (
+            s.id = e.security_identity_id
+            )
+            WHERE c.class_type = {$rootEntity}
+            AND (s.identifier = {$inString})
+            AND e.mask & {$mask} > 0
+            SELECTQUERY;
 
         return $selectQuery;
     }

@@ -9,13 +9,13 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Date extends FunctionNode
 {
-    const FUNCTION_NAME = 'DATE';
+    public const FUNCTION_NAME = 'DATE';
 
     protected $date;
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return 'DATE('.$sqlWalker->walkArithmeticPrimary($this->date).')';
+        return 'DATE(' . $sqlWalker->walkArithmeticPrimary($this->date) . ')';
     }
 
     public function parse(Parser $parser)

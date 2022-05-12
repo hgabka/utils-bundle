@@ -16,7 +16,7 @@ class BooleanFilterType extends AbstractORMFilterType
      */
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
-        $data['value'] = $request->query->get('filter_value_'.$uniqueId);
+        $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }
 
     /**
@@ -26,7 +26,7 @@ class BooleanFilterType extends AbstractORMFilterType
     public function apply(array $data, $uniqueId)
     {
         if (isset($data['value'])) {
-            $colName = false === stripos($this->columnName, '.') ? $this->getAlias().$this->columnName : $this->columnName;
+            $colName = false === stripos($this->columnName, '.') ? $this->getAlias() . $this->columnName : $this->columnName;
             switch ($data['value']) {
                 case 'true':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($colName, 'true'));

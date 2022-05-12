@@ -168,7 +168,7 @@ class Words_es_MX extends Words
 
         // add a the word for the minus sign if necessary
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -197,7 +197,7 @@ class Words_es_MX extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return ' '.$this->_digits[0];
+            return ' ' . $this->_digits[0];
             $current_power = \strlen($num);
         } else {
             $current_power = \strlen($num);
@@ -206,7 +206,7 @@ class Words_es_MX extends Words
         // See if we need "thousands"
         $thousands = floor($num / 1000);
         if (1 === $thousands) {
-            $ret .= $this->_sep.'mil';
+            $ret .= $this->_sep . 'mil';
         } elseif ($thousands > 1) {
             $ret .= $this->_toWords($thousands, 3);
         }
@@ -220,9 +220,9 @@ class Words_es_MX extends Words
         switch ($h) {
             case 1:
                 if ((0 === $d) && (0 === $t)) { // is it's '100' use 'cien'
-                    $ret .= $this->_sep.'cien';
+                    $ret .= $this->_sep . 'cien';
                 } else {
-                    $ret .= $this->_sep.'ciento';
+                    $ret .= $this->_sep . 'ciento';
                 }
 
                 break;
@@ -231,19 +231,19 @@ class Words_es_MX extends Words
             case 4:
             case 6:
             case 8:
-                $ret .= $this->_sep.$this->_digits[$h].'cientos';
+                $ret .= $this->_sep . $this->_digits[$h] . 'cientos';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'quinientos';
+                $ret .= $this->_sep . 'quinientos';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'setecientos';
+                $ret .= $this->_sep . 'setecientos';
 
                 break;
             case 9:
-                $ret .= $this->_sep.'novecientos';
+                $ret .= $this->_sep . 'novecientos';
 
                 break;
         }
@@ -251,41 +251,41 @@ class Words_es_MX extends Words
         // decenas: veinte, treinta, etc...
         switch ($t) {
             case 9:
-                $ret .= $this->_sep.'noventa';
+                $ret .= $this->_sep . 'noventa';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'ochenta';
+                $ret .= $this->_sep . 'ochenta';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'setenta';
+                $ret .= $this->_sep . 'setenta';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'sesenta';
+                $ret .= $this->_sep . 'sesenta';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'cincuenta';
+                $ret .= $this->_sep . 'cincuenta';
 
                 break;
             case 4:
-                $ret .= $this->_sep.'cuarenta';
+                $ret .= $this->_sep . 'cuarenta';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'treinta';
+                $ret .= $this->_sep . 'treinta';
 
                 break;
             case 2:
                 if (0 === $d) {
-                    $ret .= $this->_sep.'veinte';
+                    $ret .= $this->_sep . 'veinte';
                 } else {
                     if (($power > 0) && (1 === $d)) {
-                        $ret .= $this->_sep.'veintiún';
+                        $ret .= $this->_sep . 'veintiún';
                     } else {
-                        $ret .= $this->_sep.'veinti'.$this->_digits[$d];
+                        $ret .= $this->_sep . 'veinti' . $this->_digits[$d];
                     }
                 }
 
@@ -293,34 +293,34 @@ class Words_es_MX extends Words
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'diez';
+                        $ret .= $this->_sep . 'diez';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'once';
+                        $ret .= $this->_sep . 'once';
 
                         break;
                     case 2:
-                        $ret .= $this->_sep.'doce';
+                        $ret .= $this->_sep . 'doce';
 
                         break;
                     case 3:
-                        $ret .= $this->_sep.'trece';
+                        $ret .= $this->_sep . 'trece';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'catorce';
+                        $ret .= $this->_sep . 'catorce';
 
                         break;
                     case 5:
-                        $ret .= $this->_sep.'quince';
+                        $ret .= $this->_sep . 'quince';
 
                         break;
                     case 6:
                     case 7:
                     case 9:
                     case 8:
-                        $ret .= $this->_sep.'dieci'.$this->_digits[$d];
+                        $ret .= $this->_sep . 'dieci' . $this->_digits[$d];
 
                         break;
                 }
@@ -334,15 +334,15 @@ class Words_es_MX extends Words
             if (0 !== $t) {
                 // use 'un' instead of 'uno' when there is a suffix ('mil', 'millones', etc...)
                 if (($power > 0) && (1 === $d)) {
-                    $ret .= $this->_sep.' y un';
+                    $ret .= $this->_sep . ' y un';
                 } else {
-                    $ret .= $this->_sep.'y '.$this->_digits[$d];
+                    $ret .= $this->_sep . 'y ' . $this->_digits[$d];
                 }
             } else {
                 if (($power > 0) && (1 === $d)) {
-                    $ret .= $this->_sep.'un';
+                    $ret .= $this->_sep . 'un';
                 } else {
-                    $ret .= $this->_sep.$this->_digits[$d];
+                    $ret .= $this->_sep . $this->_digits[$d];
                 }
             }
         }
@@ -363,13 +363,13 @@ class Words_es_MX extends Words
                 $suffix = $lev[1];
             }
             if (0 !== $num) {
-                $ret .= $this->_sep.$suffix;
+                $ret .= $this->_sep . $suffix;
             }
         }
 
         if ($dec) {
             $dec = $this->_toWords(trim($dec));
-            $ret .= ' con '.trim($dec);
+            $ret .= ' con ' . trim($dec);
         }
 
         return $ret;
@@ -405,29 +405,29 @@ class Words_es_MX extends Words
             if (\count($curr_names[0]) > 1) {
                 $ret = $curr_names[0][$lev];
             } else {
-                $ret = $curr_names[0][0].'s';
+                $ret = $curr_names[0][0] . 's';
             }
         } else {
             $ret = $curr_names[0][0];
         }
-        $ret = $this->_sep.ucfirst(trim($this->_toWords($decimal).' '.$ret));
+        $ret = $this->_sep . ucfirst(trim($this->_toWords($decimal) . ' ' . $ret));
 
         if (false !== $fraction) {
             if ($convert_fraction) {
-                $ret .= $this->_sep.'con'.$this->_sep.trim($this->_toWords($fraction));
+                $ret .= $this->_sep . 'con' . $this->_sep . trim($this->_toWords($fraction));
             } else {
-                $ret .= $this->_sep.'con'.$this->_sep.$fraction;
+                $ret .= $this->_sep . 'con' . $this->_sep . $fraction;
             }
 
             $lev = (1 === $fraction) ? 0 : 1;
             if ($lev > 0) {
                 if (\count($curr_names[1]) > 1) {
-                    $ret .= $this->_sep.$curr_names[1][$lev];
+                    $ret .= $this->_sep . $curr_names[1][$lev];
                 } else {
-                    $ret .= $this->_sep.$curr_names[1][0].'s';
+                    $ret .= $this->_sep . $curr_names[1][0] . 's';
                 }
             } else {
-                $ret .= $this->_sep.$curr_names[1][0];
+                $ret .= $this->_sep . $curr_names[1][0];
             }
         }
 

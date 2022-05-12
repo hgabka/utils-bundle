@@ -33,7 +33,7 @@ abstract class ConstantsChoiceList extends ArrayChoiceList implements \IteratorA
      */
     public static function getPrefixedChoice($choice)
     {
-        return static::getI18nPrefix().$choice;
+        return static::getI18nPrefix() . $choice;
     }
 
     public function getIterator()
@@ -55,7 +55,7 @@ abstract class ConstantsChoiceList extends ArrayChoiceList implements \IteratorA
         if ($prefix) {
             $ret = [];
             foreach ($array as $key => $el) {
-                $ret[$el] = $prefix.$el;
+                $ret[$el] = $prefix . $el;
             }
 
             return $ret;

@@ -6,14 +6,14 @@ use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 
 class CountHydrator extends AbstractHydrator
 {
-    const HYDRATOR_NAME = 'count';
-    const FIELD = 'count';
+    public const HYDRATOR_NAME = 'count';
+    public const FIELD = 'count';
 
     /**
      * {@inheritdoc}
      */
     protected function hydrateAllData()
     {
-        return (int) $this->_stmt->fetchColumn(0);
+        return (int) $this->_stmt->fetchOne();
     }
 }

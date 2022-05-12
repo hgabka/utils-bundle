@@ -56,7 +56,7 @@ slugChooser.slugChooser = (function(window, undefined) {
     updateSlugPreview = function($input, $preview, urlprefix) {
         var inputValue = $input.val();
 
-        $preview.html('url: ' + urlprefix + inputValue);
+        $preview.html('url: <a target="_blank" href="' + urlprefix + inputValue + '">'+urlprefix + inputValue+'</a>');
     };
 
 

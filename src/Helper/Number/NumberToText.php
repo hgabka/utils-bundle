@@ -28,11 +28,11 @@ class NumberToText
         $num = number_format($num, 2, '.', '');
         $nw = new Words();
         if (false === strpos($num, '.')) {
-            return $nw->toWords($num, $lang).' Euros';
+            return $nw->toWords($num, $lang) . ' Euros';
         }
 
         $parts = explode('.', $num);
 
-        return $nw->toWords($parts[0], $lang).' euros '.(!empty($parts[1]) && '00' !== $parts[1] ? $nw->toWords($parts[1], $lang).' cents' : '');
+        return $nw->toWords($parts[0], $lang) . ' euros ' . (!empty($parts[1]) && '00' !== $parts[1] ? $nw->toWords($parts[1], $lang) . ' cents' : '');
     }
 }

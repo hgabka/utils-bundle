@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Export;
 
-use Doctrine\ORM\Query;
 use Generator;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -14,6 +13,7 @@ abstract class AdminExporter extends EntityExporter
 
     /**
      * @param AdminInterface $admin
+     *
      * @return AdminExporter
      */
     public function setAdmin(AdminInterface $admin): self
@@ -23,10 +23,24 @@ abstract class AdminExporter extends EntityExporter
         return $this;
     }
 
-
     public function getClass(): string
     {
         return $this->admin->getClass();
+    }
+
+    /**
+     * @return Generator
+     */
+    public function getData(): Generator
+    {
+        $query = $this->createQuery();
+
+        $doctrineQuery = $query->getDoctrineQuery();
+
+        foreach ($doctrineQuery
+                     ->toIterable() as $row) {
+            yield $row;
+        }
     }
 
     protected function createQuery(): ProxyQueryInterface
@@ -43,20 +57,5 @@ abstract class AdminExporter extends EntityExporter
         $query->setMaxResults(null);
 
         return $query;
-    }
-
-    /**
-     * @return Generator
-     */
-    public function getData(): Generator
-    {
-        $query = $this->createQuery();
-
-        $doctrineQuery = $query->getDoctrineQuery();
-
-        foreach ($doctrineQuery
-                     ->iterate() as $row) {
-            yield $row[0];
-        }
     }
 }

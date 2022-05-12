@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 class NestedTreeAdmin extends AbstractAdmin
 {
@@ -29,12 +29,17 @@ class NestedTreeAdmin extends AbstractAdmin
         }
     }
 
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('reorder', 'reOrder');
         $collection->add('subcreate', 'subCreate');
 
         $collection->remove('edit');
         $collection->remove('create');
+    }
+
+    protected function getAccessMapping(): array
+    {
+        return $this->accessMapping;
     }
 }

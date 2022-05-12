@@ -145,7 +145,7 @@ class Words_dk extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -165,7 +165,7 @@ class Words_dk extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -180,7 +180,7 @@ class Words_dk extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -206,9 +206,9 @@ class Words_dk extends Words
 
         if ($h) {
             if (1 === $h) {
-                $ret .= $this->_sep.'et'.$this->_sep.'hundrede';
+                $ret .= $this->_sep . 'et' . $this->_sep . 'hundrede';
             } else {
-                $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'hundrede';
+                $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'hundrede';
             }
 
             //if (($t + $d) > 0)
@@ -216,87 +216,87 @@ class Words_dk extends Words
         } elseif ((isset($maxp)) && ($maxp > 3)) {
             // add 'og' in the case where there are preceding thousands but not hundreds or tens,
             // so fx. 80001 becomes 'firs tusinde og en' instead of 'firs tusinde en'
-            $ret .= $this->_sep.'og';
+            $ret .= $this->_sep . 'og';
         }
 
         if (1 !== $t && $d > 0) {
-            $ret .= $this->_sep.((1 === $d & 3 === $power && 0 === $t && 0 === $h) ? 'et' : $this->_digits[$d]).($t > 1 ? $this->_sep.'og' : '');
+            $ret .= $this->_sep . ((1 === $d & 3 === $power && 0 === $t && 0 === $h) ? 'et' : $this->_digits[$d]) . ($t > 1 ? $this->_sep . 'og' : '');
         }
 
         // ten, twenty etc.
         switch ($t) {
             case 9:
-                $ret .= $this->_sep.'halvfems';
+                $ret .= $this->_sep . 'halvfems';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'firs';
+                $ret .= $this->_sep . 'firs';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'halvfjerds';
+                $ret .= $this->_sep . 'halvfjerds';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'tres';
+                $ret .= $this->_sep . 'tres';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'halvtreds';
+                $ret .= $this->_sep . 'halvtreds';
 
                 break;
             case 4:
-                $ret .= $this->_sep.'fyrre';
+                $ret .= $this->_sep . 'fyrre';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'tredive';
+                $ret .= $this->_sep . 'tredive';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'tyve';
+                $ret .= $this->_sep . 'tyve';
 
                 break;
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'ti';
+                        $ret .= $this->_sep . 'ti';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'elleve';
+                        $ret .= $this->_sep . 'elleve';
 
                         break;
                     case 2:
-                        $ret .= $this->_sep.'tolv';
+                        $ret .= $this->_sep . 'tolv';
 
                         break;
                     case 3:
-                        $ret .= $this->_sep.'tretten';
+                        $ret .= $this->_sep . 'tretten';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'fjorten';
+                        $ret .= $this->_sep . 'fjorten';
 
                         break;
                     case 5:
-                        $ret .= $this->_sep.'femten';
+                        $ret .= $this->_sep . 'femten';
 
                         break;
                     case 6:
-                        $ret .= $this->_sep.'seksten';
+                        $ret .= $this->_sep . 'seksten';
 
                         break;
                     case 7:
-                        $ret .= $this->_sep.'sytten';
+                        $ret .= $this->_sep . 'sytten';
 
                         break;
                     case 8:
-                        $ret .= $this->_sep.'atten';
+                        $ret .= $this->_sep . 'atten';
 
                         break;
                     case 9:
-                        $ret .= $this->_sep.'nitten';
+                        $ret .= $this->_sep . 'nitten';
 
                         break;
                 }
@@ -314,14 +314,14 @@ class Words_dk extends Words
             }
 
             if (1 === $d && 0 === ($t + $h)) {
-                $ret .= $this->_sep.$lev[0];
+                $ret .= $this->_sep . $lev[0];
             } else {
-                $ret .= $this->_sep.$lev[1];
+                $ret .= $this->_sep . $lev[1];
             }
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;
@@ -361,34 +361,34 @@ class Words_dk extends Words
             $lev = (1 === $decimal) ? 0 : 1;
             if ($lev > 0) {
                 if (\count($curr_names[0]) > 1) {
-                    $ret .= $this->_sep.$curr_names[0][$lev];
+                    $ret .= $this->_sep . $curr_names[0][$lev];
                 } else {
-                    $ret .= $this->_sep.$curr_names[0][0];
+                    $ret .= $this->_sep . $curr_names[0][0];
                 }
             } else {
-                $ret .= $this->_sep.$curr_names[0][0];
+                $ret .= $this->_sep . $curr_names[0][0];
             }
 
             if ((false !== $fraction) && (0 !== $fraction)) {
-                $ret .= $this->_sep.'og';
+                $ret .= $this->_sep . 'og';
             }
         }
 
         if ((false !== $fraction) && (0 !== $fraction)) {
             if ($convert_fraction) {
-                $ret .= $this->_sep.trim($this->_toWords($fraction));
+                $ret .= $this->_sep . trim($this->_toWords($fraction));
             } else {
-                $ret .= $this->_sep.$fraction;
+                $ret .= $this->_sep . $fraction;
             }
             $lev = (1 === $fraction) ? 0 : 1;
             if ($lev > 0) {
                 if (\count($curr_names[1]) > 1) {
-                    $ret .= $this->_sep.$curr_names[1][$lev];
+                    $ret .= $this->_sep . $curr_names[1][$lev];
                 } else {
-                    $ret .= $this->_sep.$curr_names[1][0];
+                    $ret .= $this->_sep . $curr_names[1][0];
                 }
             } else {
-                $ret .= $this->_sep.$curr_names[1][0];
+                $ret .= $this->_sep . $curr_names[1][0];
             }
         }
 

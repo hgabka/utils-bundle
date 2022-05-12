@@ -212,7 +212,7 @@ class Words_et extends Words
         $ret = '';
 
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -231,7 +231,7 @@ class Words_et extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -247,7 +247,7 @@ class Words_et extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -272,7 +272,7 @@ class Words_et extends Words
         }
 
         if ($h) {
-            $ret .= $this->_sep.$this->_digits[$h].'sada';
+            $ret .= $this->_sep . $this->_digits[$h] . 'sada';
         }
 
         switch ($t) {
@@ -284,13 +284,13 @@ class Words_et extends Words
             case 4:
             case 3:
             case 2:
-                $ret .= $this->_sep.$this->_digits[$t].'kümmend';
+                $ret .= $this->_sep . $this->_digits[$t] . 'kümmend';
 
                 break;
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'kümme';
+                        $ret .= $this->_sep . 'kümme';
 
                         break;
                     case 1:
@@ -302,7 +302,7 @@ class Words_et extends Words
                     case 7:
                     case 8:
                     case 9:
-                        $ret .= $this->_sep.$this->_digits[$d].'teist';
+                        $ret .= $this->_sep . $this->_digits[$d] . 'teist';
 
                         break;
                 }
@@ -312,9 +312,9 @@ class Words_et extends Words
 
         if (1 !== $t && $d > 0) {
             if ($t > 1) {
-                $ret .= ' '.$this->_digits[$d];
+                $ret .= ' ' . $this->_digits[$d];
             } else {
-                $ret .= $this->_sep.$this->_digits[$d];
+                $ret .= $this->_sep . $this->_digits[$d];
             }
         }
 
@@ -327,11 +327,11 @@ class Words_et extends Words
                 return null;
             }
 
-            $ret .= $this->_sep.$lev[0].(1 !== $num && 3 !== $power ? 'it' : '');
+            $ret .= $this->_sep . $lev[0] . (1 !== $num && 3 !== $power ? 'it' : '');
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;

@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Format extends FunctionNode
 {
-    const FUNCTION_NAME = 'FORMAT';
+    public const FUNCTION_NAME = 'FORMAT';
 
     private $arithmeticExpression;
     private $decimals;
@@ -33,6 +33,6 @@ class Format extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return 'FORMAT('.$this->arithmeticExpression->dispatch($sqlWalker).(null !== $this->decimals ? ', '.$this->decimals->dispatch($sqlWalker) : '').')';
+        return 'FORMAT(' . $this->arithmeticExpression->dispatch($sqlWalker) . (null !== $this->decimals ? ', ' . $this->decimals->dispatch($sqlWalker) : '') . ')';
     }
 }

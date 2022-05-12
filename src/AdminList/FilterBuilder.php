@@ -92,7 +92,7 @@ class FilterBuilder
 
     public function bindRequest(Request $request, array $defaults = [])
     {
-        $filterBuilderName = 'filter_'.$request->get('_route');
+        $filterBuilderName = 'filter_' . $request->get('_route');
         $this->currentParameters = $request->query->all();
         unset($this->currentParameters['pagesize'], $this->currentParameters['folderId']);
 

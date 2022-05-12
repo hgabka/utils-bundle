@@ -3,21 +3,77 @@
 namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\NodeBundle\Command\InitAclCommand;
+use Hgabka\NodeBundle\Entity\Node;
+use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Security\Acl\Domain\Acl;
 use Symfony\Component\Security\Acl\Domain\Entry;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * Permissions update of ACL entries for all nodes for given role.
  */
-class UpdateAclCommand extends ContainerAwareCommand
+class UpdateAclCommand extends Command
 {
+    protected static $defaultName = 'hgabka:acl:update';
+
+    /** @var ObjectIdentityRetrievalStrategy */
+    protected $oiaStrategy;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var AclProviderInterface */
+    private $aclProvider;
+
+    /** @var PermissionMap */
+    private $permissionMap;
+
+    /** @var array */
+    private $roles;
+
+    /**
+     * @param ObjectIdentityRetrievalStrategy $oiaStrategy
+     * @param EntityManagerInterface          $entityManager
+     * @param AclProviderInterface            $aclProvider
+     * @param array                           $roles
+     */
+    public function __construct(EntityManagerInterface $entityManager, PermissionMap $permissionMap, array $roles)
+    {
+        parent::__construct();
+
+        $this->entityManager = $entityManager;
+        $this->permissionMap = $permissionMap;
+
+        $this->roles = $roles;
+    }
+
+    public function setAclProvider(AclProviderInterface $provider)
+    {
+        $this->aclProvider = $provider;
+    }
+
+    /**
+     * @param ObjectIdentityRetrievalStrategy $oiaStrategy
+     *
+     * @return InitAclCommand
+     */
+    public function setOiaStrategy($oiaStrategy)
+    {
+        $this->oiaStrategy = $oiaStrategy;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -25,9 +81,9 @@ class UpdateAclCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('hgabka:acl:update')
+        $this->setName(static::$defaultName)
             ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project'.
+            ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project' .
                 'with given role and permissions');
     }
 
@@ -39,13 +95,13 @@ class UpdateAclCommand extends ContainerAwareCommand
         $helper = $this->getHelper('question');
 
         // Select Role
-        $roles = $this->getContainer()->getParameter('security.role_hierarchy.roles');
+        $roles = $this->roles;
         $question = new ChoiceQuestion('Select role', array_keys($roles));
         $question->setErrorMessage('Role %s is invalid.');
         $role = $helper->ask($input, $output, $question);
 
         // Select Permission(s)
-        $permissionMap = $this->getContainer()->get('security.acl.permission.map');
+        $permissionMap = $this->permissionMap;
         $question = new ChoiceQuestion(
             'Select permissions(s) (separate by ",")',
             $permissionMap->getPossiblePermissions()
@@ -56,14 +112,14 @@ class UpdateAclCommand extends ContainerAwareCommand
         }, 0);
 
         // @var EntityManager $em
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->entityManager;
         // @var MutableAclProviderInterface $aclProvider
-        $aclProvider = $this->getContainer()->get('security.acl.provider');
+        $aclProvider = $this->aclProvider;
         // @var ObjectIdentityRetrievalStrategyInterface $oidStrategy
-        $oidStrategy = $this->getContainer()->get('security.acl.object_identity_retrieval_strategy');
+        $oidStrategy = $this->oiaStrategy;
 
         // Fetch all nodes & grant access
-        $nodes = $em->getRepository('KunstmaanNodeBundle:Node')->findAll();
+        $nodes = $em->getRepository(Node::class)->findAll();
 
         foreach ($nodes as $node) {
             $objectIdentity = $oidStrategy->getObjectIdentity($node);
@@ -83,6 +139,8 @@ class UpdateAclCommand extends ContainerAwareCommand
             }
             $aclProvider->updateAcl($acl);
         }
-        $output->writeln(\count($nodes).' nodes processed.');
+        $output->writeln(\count($nodes) . ' nodes processed.');
+
+        return Command::SUCCESS;
     }
 }

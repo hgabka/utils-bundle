@@ -505,7 +505,8 @@
 
     .fa, .glyphicon, .table--sortable__th::before, .sortable-item--error {
         display: inline-block;
-        font: normal normal normal 16px/1 FontAwesome;
+        font: normal normal normal 16px/1 Font Awesome 5 Free;
+        font-family: 'Font Awesome 5 Free';
         font-size: inherit;
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
@@ -752,7 +753,7 @@
 
     .jstree-node,
     .jstree-icon {
-        background-image: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg");
+        background-image: url("../images/jstree/kuma.svg");
     }
 
     .jstree-node {
@@ -832,7 +833,7 @@
     }
 
     #jstree-dnd .jstree-ok, #jstree-dnd .jstree-er {
-        background: url("/bundles/hgabkautils/default-theme/img/jstree/kuma.svg") no-repeat;
+        background: url("../images/jstree/kuma.svg") no-repeat;
     }
 
     #jstree-dnd .jstree-ok {
@@ -1327,11 +1328,11 @@
         overflow: auto;
         padding-bottom: 4em;
     }
-    
+
     .app__sidebar .app__sidebar__navigation {
         visibility: hidden;
     }
-    
+
     .app__sidebar.app__sidebar--tree-ready .app__sidebar__navigation {
         visibility: visible;
     }
@@ -1825,11 +1826,12 @@
         color: #fff;
     }
 }
+
 .table-sortable tr {
     &.ui-sortable-handle {
         cursor: move;
     }
-    
+
     &.ui-sortable-helper {
         display: table;
         cursor: move;
@@ -1840,9 +1842,11 @@
     .input-group-btn.show {
         display: table-cell !important;
     }
+
     .input-group.urlchooser-widget {
         width: 300px;
     }
+
     .js-urlchooser-value.form-control {
         width: 300px;
     }
@@ -1853,9 +1857,11 @@
         .input-group-btn.show {
             display: table-cell !important;
         }
+
         .input-group.urlchooser-widget {
             width: 500px;
         }
+
         .js-urlchooser-value.form-control {
             width: 500px;
         }
@@ -1918,6 +1924,7 @@
                     margin-top: 4px;
                 }
             }
+
             &.move-down {
                 i {
                     vertical-align: 0;
@@ -1935,11 +1942,39 @@
                 span.collection-move.move-down {
                     right: 15px;
                 }
+
+                &.has-first.has-last {
+                    span.collection-move.move-first {
+                        right: 90px;
+                    }
+
+                    span.collection-move.move-up {
+                        right: 65px;
+                    }
+
+                    span.collection-move.move-down {
+                        right: 40px;
+                    }
+
+                    span.collection-move.move-last {
+                        right: 15px;
+                    }
+                }
             }
 
             &:not(.has-down) {
                 span.collection-move.move-up {
                     right: 15px;
+                }
+
+                &.has-first {
+                    span.collection-move.move-up {
+                        right: 15px;
+                    }
+
+                    span.collection-move.move-first {
+                        right: 40px;
+                    }
                 }
             }
         }
@@ -1949,13 +1984,28 @@
                 span.collection-move.move-down {
                     right: 15px;
                 }
+
+                &.has-last {
+                    span.collection-move.move-down {
+                        right: 40px;
+                    }
+
+                    span.collection-move.move-last {
+                        right: 15px;
+                    }
+                }
             }
         }
+    }
+
+    .sonata-collection-add {
+        display: block;
+        text-align: left;
     }
 }
 
 .sonata-collection-row {
-    .fa.fa-minus-circle {
+    .fas.fa-minus-circle {
         color: red;
         font-size: 20px;
         margin-top: -5px;
@@ -1975,13 +2025,14 @@
         font-size: 14px;
         line-height: 16px;
         vertical-align: 1px;
+        font-weight: normal;
     }
 
     &:hover {
         text-decoration: none !important;
     }
 
-    .fa.fa-plus-circle {
+    .fas.fa-plus-circle {
         color: green;
         font-size: 20px;
     }
@@ -1991,7 +2042,7 @@
     .dynamic-collection-box {
         display: inline-block;
         padding: 5px 10px 5px 5px;
-        border: 1px solid  #ccc;
+        border: 1px solid #ccc;
         margin-top: 5px;
         background: #eee;
         margin-right: 10px;
@@ -2000,8 +2051,8 @@
             float: right;
             color: red;
             cursor: pointer;
-                line-height: 20px;
-                margin-left: 10px;
+            line-height: 20px;
+            margin-left: 10px;
         }
     }
 }

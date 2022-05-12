@@ -222,7 +222,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     {
         $orderBy = $this->orderBy;
         if (!strpos($orderBy, '.')) {
-            $orderBy = 'b.'.$orderBy;
+            $orderBy = 'b.' . $orderBy;
         }
 
         return $orderBy;
@@ -231,7 +231,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
-            $queryBuilder->addOrderBy('b.'.$this->getSortableField());
+            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
         }
     }
 

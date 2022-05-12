@@ -46,7 +46,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
                 $user = new $this->userClass();
                 $user->setUsername($email);
                 $user->setEmail($email);
-                $user->setPlainPassword($googleId.$email.time());
+                $user->setPlainPassword($googleId . $email . time());
                 $user->setEnabled(true);
                 $user->setAdminLocale('en');
                 $user->setPasswordChanged(true);
@@ -62,7 +62,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
             $this->em->flush();
         }
 
-        return isset($user) ? $user : null;
+        return $user ?? null;
     }
 
     /**
@@ -76,7 +76,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     private function getAccessLevels($email)
     {
         foreach ($this->hostedDomains as $hostedDomain) {
-            if (preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
+            if (preg_match('/' . $hostedDomain['domain_name'] . '$/', $email)) {
                 return $hostedDomain['access_levels'];
             }
         }
@@ -94,7 +94,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     private function isConfiguredDomain($email)
     {
         foreach ($this->hostedDomains as $hostedDomain) {
-            if (preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
+            if (preg_match('/' . $hostedDomain['domain_name'] . '$/', $email)) {
                 return true;
             }
         }

@@ -3,9 +3,10 @@
 namespace Hgabka\UtilsBundle\Twig\Extension;
 
 use Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager;
+use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 
-class BreadcrumbTwigExtension extends \Twig_Extension implements GlobalsInterface
+class BreadcrumbTwigExtension extends AbstractExtension implements GlobalsInterface
 {
     /**
      * @var BreadcrumbManager
@@ -20,7 +21,7 @@ class BreadcrumbTwigExtension extends \Twig_Extension implements GlobalsInterfac
         $this->breadcrumbManager = $manager;
     }
 
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return ['breadcrumb_manager' => $this->breadcrumbManager];
     }

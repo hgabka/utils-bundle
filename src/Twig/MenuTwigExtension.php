@@ -5,8 +5,10 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\Helper\AdminPanel\AdminPanel;
 use Hgabka\UtilsBundle\Helper\AdminPanel\AdminPanelActionInterface;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MenuTwigExtension extends \Twig_Extension
+class MenuTwigExtension extends AbstractExtension
 {
     /**
      * @var MenuBuilder
@@ -29,11 +31,11 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('get_admin_menu', [$this, 'getAdminMenu']),
-            new \Twig_SimpleFunction('get_admin_panel_actions', [$this, 'getAdminPanelActions']),
+            new TwigFunction('get_admin_menu', [$this, 'getAdminMenu']),
+            new TwigFunction('get_admin_panel_actions', [$this, 'getAdminPanelActions']),
         ];
     }
 
@@ -42,7 +44,7 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @return MenuBuilder
      */
-    public function getAdminMenu()
+    public function getAdminMenu(): ?MenuBuilder
     {
         return $this->menuBuilder;
     }

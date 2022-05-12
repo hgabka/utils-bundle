@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Cast extends FunctionNode
 {
-    const FUNCTION_NAME = 'CAST';
+    public const FUNCTION_NAME = 'CAST';
 
     /** @var \Doctrine\ORM\Query\AST\PathExpression */
     protected $first;

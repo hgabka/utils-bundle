@@ -4,7 +4,6 @@ namespace Hgabka\UtilsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -14,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table( name="hg_utils_roles" )
  * @UniqueEntity("role")
  */
-class Role extends BaseRole
+class Role
 {
     /**
      * @ORM\Id

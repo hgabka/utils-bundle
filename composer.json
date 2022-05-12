@@ -14,13 +14,14 @@
         }
     ],
     "require": {
-        "php" : "~7.2",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/acl-bundle": "^1.0",
+        "php": "^7.3 || ^8.0",
+        "symfony/framework-bundle": "5.4.*",
+        "symfony/acl-bundle": "^2.0",
         "liip/imagine-bundle": "^2.1",
-        "hgabka/doctrine-translatable-bundle": "^1.0",
+        "hgabka/doctrine-translatable-bundle": "^5.0",
         "google/apiclient": "^2.7",
-        "guzzlehttp/guzzle": ">= 6.3"
+        "guzzlehttp/guzzle": ">= 6.3",
+        "symfony/webpack-encore-bundle": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",

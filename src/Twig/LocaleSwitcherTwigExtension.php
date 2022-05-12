@@ -3,11 +3,14 @@
 namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * LocaleSwitcherTwigExtension.
  */
-class LocaleSwitcherTwigExtension extends \Twig_Extension
+class LocaleSwitcherTwigExtension extends AbstractExtension
 {
     /**
      * @var HgabkaUtils
@@ -24,13 +27,13 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('localeswitcher_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new \Twig_SimpleFunction('get_locales', [$this, 'getLocales']),
-            new \Twig_SimpleFunction('get_backend_locales', [$this, 'getBackendLocales']),
-            new \Twig_SimpleFunction('locale_display_name', [$this, 'getLocaleDisplayName']),
+            new TwigFunction('localeswitcher_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('get_locales', [$this, 'getLocales']),
+            new TwigFunction('get_backend_locales', [$this, 'getBackendLocales']),
+            new TwigFunction('locale_display_name', [$this, 'getLocaleDisplayName']),
         ];
     }
 
@@ -43,9 +46,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderWidget(\Twig_Environment $env, $locales, $route, array $parameters = [])
+    public function renderWidget(Environment $env, $locales, $route, array $parameters = [])
     {
-        $template = $env->loadTemplate(
+        $template = $env->load(
             '@HgabkaUtils/LocaleSwitcherTwigExtension/widget.html.twig'
         );
 

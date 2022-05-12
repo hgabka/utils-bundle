@@ -119,7 +119,19 @@ pagepartEditor.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 ajaxModal.ajaxModal.resetAjaxModals();
 
-                executeEvent('add')
+                executeEvent('add');
+                
+                if (typeof Admin !== 'undefined') {
+                    let $container = firstSelect ? $('#parts-' + context).find('.js-sortable-item').first() : $select.closest('.js-sortable-item').nextAll('.js-sortable-item').first();
+                    if ($container.length > 0) {
+                        Admin.setup_select2($container);
+                        Admin.setup_icheck($container);
+                        Admin.setup_checkbox_range_selection($container);
+                        Admin.setup_form_tabs_for_errors($container);
+                        Admin.setup_inline_form_errors($container);
+                        Admin.setup_collection_counter($container);
+                    }
+                }
             }
         });
 

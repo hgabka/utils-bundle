@@ -4,22 +4,24 @@ namespace Hgabka\UtilsBundle\Twig;
 
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Symfony\Component\Form\FormView;
-use Twig_Environment;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * AdminPermissionsTwigExtension.
  */
-class AdminPermissionsTwigExtension extends \Twig_Extension
+class AdminPermissionsTwigExtension extends AbstractExtension
 {
     /**
      * Returns a list of functions to add to the existing list.
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('permissionsadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('permissionsadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 
@@ -32,9 +34,9 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderWidget(Twig_Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = [])
+    public function renderWidget(Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = [])
     {
-        $template = $env->loadTemplate('@HgabkaUtils/PermissionsAdminTwigExtension/widget.html.twig');
+        $template = $env->load('@HgabkaUtils/PermissionsAdminTwigExtension/widget.html.twig');
 
         return $template->render(array_merge([
             'form' => $form,

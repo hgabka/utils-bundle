@@ -17,8 +17,8 @@ class DateTimeFilterType extends AbstractORMFilterType
      */
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
-        $data['comparator'] = $request->query->get('filter_comparator_'.$uniqueId);
-        $data['value'] = $request->query->get('filter_value_'.$uniqueId);
+        $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
+        $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }
 
     /**
@@ -36,19 +36,19 @@ class DateTimeFilterType extends AbstractORMFilterType
                 return;
             }
 
-            $colName = false === stripos($this->columnName, '.') ? $this->getAlias().$this->columnName : $this->columnName;
+            $colName = false === stripos($this->columnName, '.') ? $this->getAlias() . $this->columnName : $this->columnName;
 
             switch ($data['comparator']) {
                 case 'before':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($colName, ':var_'.$uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($colName, ':var_' . $uniqueId));
 
                     break;
                 case 'after':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($colName, ':var_'.$uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($colName, ':var_' . $uniqueId));
 
                     break;
             }
-            $this->queryBuilder->setParameter('var_'.$uniqueId, $dateTime->format('Y-m-d H:i'));
+            $this->queryBuilder->setParameter('var_' . $uniqueId, $dateTime->format('Y-m-d H:i'));
         }
     }
 

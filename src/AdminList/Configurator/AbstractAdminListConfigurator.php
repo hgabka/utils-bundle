@@ -22,12 +22,12 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
-    const SUFFIX_ADD = 'add';
-    const SUFFIX_EDIT = 'edit';
-    const SUFFIX_EXPORT = 'export';
-    const SUFFIX_PAGESIZE = 'set_pagesize';
-    const SUFFIX_DELETE = 'delete';
-    const SUFFIX_VIEW = 'view';
+    public const SUFFIX_ADD = 'add';
+    public const SUFFIX_EDIT = 'edit';
+    public const SUFFIX_EXPORT = 'export';
+    public const SUFFIX_PAGESIZE = 'set_pagesize';
+    public const SUFFIX_DELETE = 'delete';
+    public const SUFFIX_VIEW = 'view';
 
     /**
      * @var int
@@ -87,27 +87,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var string
      */
-    private $listTemplate = 'HgabkaUtilsBundle:Default:list.html.twig';
+    private $listTemplate = '@HgabkaUtils/Default/list.html.twig';
 
     /**
      * @var string
      */
-    private $addTemplate = 'HgabkaUtilsBundle:Default:add_or_edit.html.twig';
+    private $addTemplate = '@HgabkaUtils/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $editTemplate = 'HgabkaUtilsBundle:Default:add_or_edit.html.twig';
+    private $editTemplate = '@HgabkaUtils/Default/add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $viewTemplate = 'HgabkaUtilsBundle:Default:view.html.twig';
+    private $viewTemplate = '@HgabkaUtils/Default/view.html.twig';
 
     /**
      * @var string
      */
-    private $deleteTemplate = 'HgabkaUtilsBundle:Default:delete.html.twig';
+    private $deleteTemplate = '@HgabkaUtils/Default/delete.html.twig';
 
     /**
      * @var FilterBuilder
@@ -294,7 +294,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException('You need to implement the getAdminType method in '.static::class.' or '.\get_class($entity));
+        throw new InvalidArgumentException('You need to implement the getAdminType method in ' . static::class . ' or ' . \get_class($entity));
     }
 
     /**
@@ -766,7 +766,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_'.$request->get('_route');
+        $adminListName = 'listconfig_' . $request->get('_route');
         $adminListName = str_replace('_set_pagesize', '', $adminListName);
 
         $this->page = $query->has('pagesize') ? 1 : $query->getInt('page', 1);
@@ -954,7 +954,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getEntityNamePlural()
     {
-        return $this->getEntityName().'s';
+        return $this->getEntityName() . 's';
     }
 
     /**
@@ -1045,9 +1045,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             $result['filter_columnname'][] = $columns[$id];
             $result['filter_uniquefilterid'][] = $id;
             if (!empty($comparators[$id])) {
-                $result['filter_comparator_'.$id] = $comparators[$id];
+                $result['filter_comparator_' . $id] = $comparators[$id];
             }
-            $result['filter_value_'.$id] = $values[$id];
+            $result['filter_value_' . $id] = $values[$id];
         }
 
         return $result;

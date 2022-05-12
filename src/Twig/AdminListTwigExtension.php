@@ -5,11 +5,14 @@ namespace Hgabka\UtilsBundle\Twig;
 use Hgabka\UtilsBundle\AdminList\AdminList;
 use Hgabka\UtilsBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * AdminListTwigExtension.
  */
-class AdminListTwigExtension extends \Twig_Extension
+class AdminListTwigExtension extends AbstractExtension
 {
     /**
      * @var ContainerInterface
@@ -26,11 +29,11 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new \Twig_SimpleFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
+            new TwigFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
         ];
     }
 
@@ -54,9 +57,9 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      * @return string The html markup
      */
-    public function renderWidget(\Twig_Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
     {
-        $template = $env->loadTemplate('HgabkaUtilsBundle:AdminListTwigExtension:widget.html.twig');
+        $template = $env->load('@HgabkaUtils/AdminListTwigExtension/widget.html.twig');
 
         $filterBuilder = $view->getFilterBuilder();
 

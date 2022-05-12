@@ -14,7 +14,7 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class Repeat extends FunctionNode
 {
-    const FUNCTION_NAME = 'REPEAT';
+    public const FUNCTION_NAME = 'REPEAT';
 
     /** @var string */
     public $repeatString;
@@ -38,9 +38,9 @@ class Repeat extends FunctionNode
     public function getSql(SqlWalker $sqlWalker)
     {
         return
-            'REPEAT('.
-            $this->repeatString->dispatch($sqlWalker).', '.
-            $this->repetition->dispatch($sqlWalker).
+            'REPEAT(' .
+            $this->repeatString->dispatch($sqlWalker) . ', ' .
+            $this->repetition->dispatch($sqlWalker) .
             ')'
             ;
     }

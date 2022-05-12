@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Substr extends FunctionNode
 {
-    const FUNCTION_NAME = 'SUBSTR';
+    public const FUNCTION_NAME = 'SUBSTR';
 
     /** @var \Doctrine\ORM\Query\AST\PathExpression */
     protected $str;

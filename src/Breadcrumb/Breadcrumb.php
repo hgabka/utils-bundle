@@ -4,8 +4,8 @@ namespace Hgabka\UtilsBundle\Breadcrumb;
 
 class Breadcrumb
 {
-    const LABEL_PREFIX = 'breadcrumb.';
-    const LABEL_SUFFIX = '';
+    public const LABEL_PREFIX = 'breadcrumb.';
+    public const LABEL_SUFFIX = '';
 
     protected $route;
     protected $routeParams;
@@ -61,7 +61,7 @@ class Breadcrumb
     public function setLabel($label)
     {
         if (empty($label)) {
-            $label = self::LABEL_PREFIX.$this->getRoute().self::LABEL_SUFFIX;
+            $label = self::LABEL_PREFIX . $this->getRoute() . self::LABEL_SUFFIX;
         }
 
         $this->label = $label;

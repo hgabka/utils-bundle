@@ -23,9 +23,9 @@ class AclWalker extends SqlWalker
         $extraQuery = $this->getQuery()->getHint('acl.extra.query');
 
         $tempAclView = <<<tempAclView
-JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
-tempAclView;
+            JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
+            tempAclView;
 
-        return $sql.' '.$tempAclView;
+        return $sql . ' ' . $tempAclView;
     }
 }

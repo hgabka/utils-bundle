@@ -1,4 +1,5 @@
 import datePicker from './datepicker.js';
+var appLoading = require('./apploading.js').appLoading;
 var filter = {};
 
 filter.filter = (function($, window, undefined) {
@@ -170,7 +171,7 @@ filter.filter = (function($, window, undefined) {
 
     clearAllFilters = function() {
         // Set Loading
-        hgutils.appLoading.addLoading();
+        appLoading.appLoading.addLoading();
 
         // Remove all filters
         $('.app__filter__line').remove();

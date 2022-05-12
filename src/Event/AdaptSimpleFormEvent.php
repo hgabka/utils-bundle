@@ -3,8 +3,8 @@
 namespace Hgabka\UtilsBundle\Event;
 
 use Hgabka\UtilsBundle\Helper\FormWidgets\Tabs\TabPane;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class AdaptSimpleFormEvent.

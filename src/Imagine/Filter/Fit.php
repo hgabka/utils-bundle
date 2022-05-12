@@ -8,8 +8,8 @@ use Imagine\Image\ImageInterface;
 
 class Fit implements FilterInterface
 {
-    const MODE_OUTBOUND = 'outbound';
-    const MODE_INSET = 'inset';
+    public const MODE_OUTBOUND = 'outbound';
+    public const MODE_INSET = 'inset';
 
     /** @var null|int */
     private $width;

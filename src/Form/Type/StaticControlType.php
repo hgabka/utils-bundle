@@ -2,16 +2,16 @@
 
 namespace Hgabka\UtilsBundle\Form\Type;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Twig\Environment;
 
 class StaticControlType extends AbstractType
 {
-    /** @var EngineInterface */
+    /** @var Environment */
     protected $templating;
 
     /**
@@ -19,7 +19,7 @@ class StaticControlType extends AbstractType
      *
      * @param TemplateRegistryInterface $twig
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(Environment $templating)
     {
         $this->templating = $templating;
     }

@@ -111,7 +111,7 @@ class Words_lt extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret = $this->_sep.$this->_minus;
+            $ret = $this->_sep . $this->_minus;
             $num = substr($num, 1);
         }
 
@@ -131,7 +131,7 @@ class Words_lt extends Words
                     if ('' !== $snum) {
                         $cursuffix = $this->_exponent[$power][\count($this->_exponent[$power]) - 1];
                         if ('' !== $powsuffix) {
-                            $cursuffix .= $this->_sep.$powsuffix;
+                            $cursuffix .= $this->_sep . $powsuffix;
                         }
 
                         $ret .= $this->_toWords($snum, $p, $cursuffix);
@@ -146,7 +146,7 @@ class Words_lt extends Words
                 return $ret;
             }
         } elseif (0 === $num || '' === $num) {
-            return $this->_sep.$this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -171,85 +171,85 @@ class Words_lt extends Words
         }
 
         if ($h > 1) {
-            $ret .= $this->_sep.$this->_digits[$h].$this->_sep.'đimtai';
+            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'đimtai';
         } elseif ($h) {
-            $ret .= $this->_sep.'đimtas';
+            $ret .= $this->_sep . 'đimtas';
         }
 
         // ten, twenty etc.
         switch ($t) {
             case 9:
-                $ret .= $this->_sep.'devyniasdeđimt';
+                $ret .= $this->_sep . 'devyniasdeđimt';
 
                 break;
             case 8:
-                $ret .= $this->_sep.'ađtuoniasdeđimt';
+                $ret .= $this->_sep . 'ađtuoniasdeđimt';
 
                 break;
             case 7:
-                $ret .= $this->_sep.'septyniasdeđimt';
+                $ret .= $this->_sep . 'septyniasdeđimt';
 
                 break;
             case 6:
-                $ret .= $this->_sep.'đeđiasdeđimt';
+                $ret .= $this->_sep . 'đeđiasdeđimt';
 
                 break;
             case 5:
-                $ret .= $this->_sep.'penkiasdeđimt';
+                $ret .= $this->_sep . 'penkiasdeđimt';
 
                 break;
             case 4:
-                $ret .= $this->_sep.'keturiasdeđimt';
+                $ret .= $this->_sep . 'keturiasdeđimt';
 
                 break;
             case 3:
-                $ret .= $this->_sep.'trisdeđimt';
+                $ret .= $this->_sep . 'trisdeđimt';
 
                 break;
             case 2:
-                $ret .= $this->_sep.'dvideđimt';
+                $ret .= $this->_sep . 'dvideđimt';
 
                 break;
             case 1:
                 switch ($d) {
                     case 0:
-                        $ret .= $this->_sep.'deđimt';
+                        $ret .= $this->_sep . 'deđimt';
 
                         break;
                     case 1:
-                        $ret .= $this->_sep.'vienuolika';
+                        $ret .= $this->_sep . 'vienuolika';
 
                         break;
                     case 2:
-                        $ret .= $this->_sep.'dvylika';
+                        $ret .= $this->_sep . 'dvylika';
 
                         break;
                     case 3:
-                        $ret .= $this->_sep.'trylika';
+                        $ret .= $this->_sep . 'trylika';
 
                         break;
                     case 4:
-                        $ret .= $this->_sep.'keturiolika';
+                        $ret .= $this->_sep . 'keturiolika';
 
                         break;
                     case 5:
-                        $ret .= $this->_sep.'penkiolika';
+                        $ret .= $this->_sep . 'penkiolika';
 
                         break;
                     case 6:
-                        $ret .= $this->_sep.'đeđiolika';
+                        $ret .= $this->_sep . 'đeđiolika';
 
                         break;
                     case 7:
-                        $ret .= $this->_sep.'septyniolika';
+                        $ret .= $this->_sep . 'septyniolika';
 
                         break;
                     case 8:
-                        $ret .= $this->_sep.'ađtuoniolika';
+                        $ret .= $this->_sep . 'ađtuoniolika';
 
                         break;
                     case 9:
-                        $ret .= $this->_sep.'devyniolika';
+                        $ret .= $this->_sep . 'devyniolika';
 
                         break;
                 }
@@ -260,7 +260,7 @@ class Words_lt extends Words
         // add digits only in <0>,<1,9> and <21,inf>
         if (1 !== $t && $d > 0) {
             if ($d > 1 || !$power || $t) {
-                $ret .= $this->_sep.$this->_digits[$d];
+                $ret .= $this->_sep . $this->_digits[$d];
             }
         }
 
@@ -276,16 +276,16 @@ class Words_lt extends Words
             //echo " $t $d  <br>";
 
             if (1 === $t || ($t > 0 && 0 === $d)) {
-                $ret .= $this->_sep.$lev[2];
+                $ret .= $this->_sep . $lev[2];
             } elseif ($d > 1) {
-                $ret .= $this->_sep.$lev[1];
+                $ret .= $this->_sep . $lev[1];
             } else {
-                $ret .= $this->_sep.$lev[0];
+                $ret .= $this->_sep . $lev[0];
             }
         }
 
         if ('' !== $powsuffix) {
-            $ret .= $this->_sep.$powsuffix;
+            $ret .= $this->_sep . $powsuffix;
         }
 
         return $ret;

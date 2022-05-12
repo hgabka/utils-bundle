@@ -3,11 +3,10 @@
 namespace Hgabka\UtilsBundle\Doctrine\Hydrator;
 
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
-use PDO;
 
 class KeyValueHydrator extends AbstractHydrator
 {
-    const HYDRATOR_NAME = 'key_value';
+    public const HYDRATOR_NAME = 'key_value';
 
     /**
      * Hydrators all data at once.
@@ -16,7 +15,7 @@ class KeyValueHydrator extends AbstractHydrator
      */
     protected function hydrateAllData()
     {
-        return $this->_stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        return $this->_stmt->fetchAllKeyValue();
     }
 
     /**

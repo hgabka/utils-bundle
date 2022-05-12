@@ -9,7 +9,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class Round extends FunctionNode
 {
-    const FUNCTION_NAME = 'ROUND';
+    public const FUNCTION_NAME = 'ROUND';
 
     private $arithmeticExpression;
     private $decimals;
@@ -33,6 +33,6 @@ class Round extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return 'ROUND('.$this->arithmeticExpression->dispatch($sqlWalker).(null !== $this->decimals ? ', '.$this->decimals->dispatch($sqlWalker) : '').')';
+        return 'ROUND(' . $this->arithmeticExpression->dispatch($sqlWalker) . (null !== $this->decimals ? ', ' . $this->decimals->dispatch($sqlWalker) : '') . ')';
     }
 }

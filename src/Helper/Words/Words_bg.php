@@ -336,11 +336,11 @@ class Words_bg extends Words
                     break;
                 case 2:
                 case 3:
-                    $ret[1] = $this->_digits[0][$s].$this->_misc_strings['sta'];
+                    $ret[1] = $this->_digits[0][$s] . $this->_misc_strings['sta'];
 
                     break;
                 default:
-                    $ret[1] = $this->_digits[0][$s].$this->_misc_strings['stotin'];
+                    $ret[1] = $this->_digits[0][$s] . $this->_misc_strings['stotin'];
             }
         }
 
@@ -354,13 +354,13 @@ class Words_bg extends Words
                     if (1 === $e) {
                         $ret[3] = $this->_misc_strings['edinadeset']; // eleven
                     } else {
-                        $ret[3] = $this->_digits[1][$e].$this->_misc_strings['na'].$this->_misc_strings['deset']; // twelve - nineteen
+                        $ret[3] = $this->_digits[1][$e] . $this->_misc_strings['na'] . $this->_misc_strings['deset']; // twelve - nineteen
                     }
                     // the "ones" digit is alredy processed, so skip a second processment
                     $e = 0;
                 }
             } else {
-                $ret[3] = $this->_digits[1][$d].$this->_misc_strings['deset']; // twenty - ninety
+                $ret[3] = $this->_digits[1][$d] . $this->_misc_strings['deset']; // twenty - ninety
             }
         }
 
@@ -418,14 +418,14 @@ class Words_bg extends Words
 
         // add a minus sign
         if ('-' === substr($num, 0, 1)) {
-            $ret_minus = $this->_minus.$this->_sep;
+            $ret_minus = $this->_minus . $this->_sep;
 
             $num = substr($num, 1);
         }
 
         // if the absolute value is greater than 9.99*10^302, return infinity
         if (\strlen($num) > 306) {
-            return $ret_minus.$this->_infinity;
+            return $ret_minus . $this->_infinity;
         }
 
         // strip excessive zero signs
@@ -449,27 +449,27 @@ class Words_bg extends Words
             if ('000' !== $num_groups[$i]) {
                 if ($num_groups[$i] > 1) {
                     if (1 === $pow) {
-                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 0, !$this->_last_and && $i).$this->_sep;
+                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 0, !$this->_last_and && $i) . $this->_sep;
                         $ret[$j] .= $this->_exponent[($pow - 1) * 3];
                     } elseif (2 === $pow) {
-                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], -1, !$this->_last_and && $i).$this->_sep;
-                        $ret[$j] .= $this->_misc_strings['hiliadi'].$this->_sep;
+                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], -1, !$this->_last_and && $i) . $this->_sep;
+                        $ret[$j] .= $this->_misc_strings['hiliadi'] . $this->_sep;
                     } else {
-                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 1, !$this->_last_and && $i).$this->_sep;
-                        $ret[$j] .= $this->_exponent[($pow - 1) * 3].$this->_plural.$this->_sep;
+                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 1, !$this->_last_and && $i) . $this->_sep;
+                        $ret[$j] .= $this->_exponent[($pow - 1) * 3] . $this->_plural . $this->_sep;
                     }
                 } else {
                     if (1 === $pow) {
-                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 0, !$this->_last_and && $i).$this->_sep;
+                        $ret[$j] .= $this->_showDigitsGroup($num_groups[$i], 0, !$this->_last_and && $i) . $this->_sep;
                     } elseif (2 === $pow) {
-                        $ret[$j] .= $this->_exponent[($pow - 1) * 3].$this->_sep;
+                        $ret[$j] .= $this->_exponent[($pow - 1) * 3] . $this->_sep;
                     } else {
-                        $ret[$j] .= $this->_digits[1][1].$this->_sep.$this->_exponent[($pow - 1) * 3].$this->_sep;
+                        $ret[$j] .= $this->_digits[1][1] . $this->_sep . $this->_exponent[($pow - 1) * 3] . $this->_sep;
                     }
                 }
             }
         }
 
-        return $ret_minus.rtrim(implode('', array_reverse($ret)), $this->_sep);
+        return $ret_minus . rtrim(implode('', array_reverse($ret)), $this->_sep);
     }
 }

@@ -33,11 +33,18 @@ abstract class EntityExporter
     protected $translator;
 
     /**
+     * @var int
+     */
+    protected $currentRow = 1;
+
+    /**
      * @required
+     *
      * @param EntityManagerInterface $entityManager
+     *
      * @return EntityExporter
      */
-    public function setEntityManager(EntityManagerInterface $entityManager): EntityExporter
+    public function setEntityManager(EntityManagerInterface $entityManager): self
     {
         $this->entityManager = $entityManager;
 
@@ -46,10 +53,12 @@ abstract class EntityExporter
 
     /**
      * @required
+     *
      * @param ExportFieldDescriptor $fieldDescriptor
+     *
      * @return EntityExporter
      */
-    public function setFieldDescriptor(ExportFieldDescriptor $fieldDescriptor): EntityExporter
+    public function setFieldDescriptor(ExportFieldDescriptor $fieldDescriptor): self
     {
         $this->fieldDescriptor = $fieldDescriptor;
 
@@ -58,23 +67,43 @@ abstract class EntityExporter
 
     /**
      * @required
+     *
      * @param TranslatorInterface $translator
+     *
      * @return EntityExporter
      */
-    public function setTranslator(TranslatorInterface $translator): EntityExporter
+    public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;
 
         return $this;
     }
 
+    abstract public function getData(): Generator;
 
     /**
-     * @var int
+     * @param $filename
      */
-    protected $currentRow = 1;
+    public function save($filename): void
+    {
+        $this->write();
+        $this->saveContent($filename);
+    }
 
-    abstract public function getData(): Generator;
+    /**
+     * @param $filename
+     *
+     * @return StreamedResponse
+     */
+    public function getStreamedResponse($filename): StreamedResponse
+    {
+        return new StreamedResponse(function () {
+            $this->save('php://output');
+        }, 200, [
+            'Content-Type' => $this->getMimeType(),
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+        ]);
+    }
 
     /**
      * @param $object
@@ -263,7 +292,7 @@ abstract class EntityExporter
             if (isset($options['property_path'])) {
                 $this->addCellValue($column, $this->getEntityFieldValue($entity, $options['property_path']), $entity, $options['value_callback'] ?? null, $field, $row);
             } else {
-                $method = 'addCellValue'.ucfirst($field->getType());
+                $method = 'addCellValue' . ucfirst($field->getType());
                 if (!method_exists($this, $method)) {
                     throw new InvalidArgumentException('Nincs ilyen metodus: ', $method);
                 }
@@ -317,7 +346,7 @@ abstract class EntityExporter
     protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
     {
         $this->addCellValueAuto($column, $field, $entity, null === $callback ? function ($value) {
-            return $this->trans('general.label.'.($value ? 'yes' : 'no'));
+            return $this->trans('general.label.' . ($value ? 'yes' : 'no'));
         } : $callback, $exportField, $row);
     }
 
@@ -337,8 +366,14 @@ abstract class EntityExporter
 
         $row = 1;
         foreach ($this->getData() as $entity) {
-            if (false === $this->preWriteRow($this->currentRow, $entity)) {
-                continue;
+            try {
+                if (false === $this->preWriteRow($this->currentRow, $entity)) {
+                    continue;
+                }
+            } catch (StopExportException $e) {
+                $this->entityManager->clear($this->getClass());
+                
+                break;
             }
 
             $i = 0;
@@ -350,7 +385,14 @@ abstract class EntityExporter
                 $this->writeColumn($i, $field, $entity, $row);
             }
 
-            $this->postWriteRow($this->currentRow, $entity);
+            try {
+                $this->postWriteRow($this->currentRow, $entity);
+            } catch (StopExportException $e) {
+                $this->entityManager->clear($this->getClass());
+
+                break;
+            }
+            
             $this->entityManager->clear($this->getClass());
             ++$this->currentRow;
             ++$row;
@@ -367,32 +409,8 @@ abstract class EntityExporter
         $this->writeData();
     }
 
-    /**
-     * @param $filename
-     */
-    public function save($filename): void
-    {
-        $this->write();
-        $this->saveContent($filename);
-    }
-
     protected function isUtf8(): bool
     {
         return null === $this->encoding || \in_array(strtolower($this->encoding), ['utf-8', 'utf8'], true);
-    }
-
-    /**
-     * @param $filename
-     *
-     * @return StreamedResponse
-     */
-    public function getStreamedResponse($filename): StreamedResponse
-    {
-        return new StreamedResponse(function () {
-            $this->save('php://output');
-        }, 200, [
-            'Content-Type' => $this->getMimeType(),
-            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
-        ]);
     }
 }

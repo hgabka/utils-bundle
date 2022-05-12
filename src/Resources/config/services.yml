@@ -28,6 +28,8 @@ services:
         class: '%hgabka_utils.admin_panel.class%'
 
     Hgabka\UtilsBundle\AdminList\AdminListFactory:
+        autowire: true
+        autoconfigure: true
         public: true
 
     hgabka_utils.service.export:
@@ -45,8 +47,13 @@ services:
     hgabka_utils.roman:
         class: Hgabka\UtilsBundle\Helper\Number\RomanHelper
 
+    Hgabka\UtilsBundle\Helper\Shell\Shell:
+        public: true
+        autowire: true
+        autoconfigure: true
+
     hgabka_utils.shell:
-        class: '%hgabka_utils.shell.class%'
+        alias: Hgabka\UtilsBundle\Helper\Shell\Shell
 
     hgabka_utils.cipher:
         class: '%hgabka_utils.cipher.class%'
@@ -80,7 +87,7 @@ services:
 
     hgabka_utils.form.type.plain_widget:
         class: Hgabka\UtilsBundle\Form\Type\StaticControlType
-        arguments: ['@templating']
+        arguments: ['@twig']
         tags:
             - { name: form.type }
 
@@ -90,12 +97,6 @@ services:
         tags:
             - { name: form.type }
 
-    hgabka_utils.form.help_type_extension:
-        class: Hgabka\UtilsBundle\Form\Extension\HelpTypeExtension
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-        public: true
-
     Hgabka\UtilsBundle\Helper\HgabkaUtils:
         arguments:  ["@service_container"]
         alias:
@@ -103,7 +104,7 @@ services:
 
     hgabka_utils.breadcrumb_manager:
         class: Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager
-        arguments:  ["@security.token_storage", "@request_stack"]
+        arguments:  ["@security.helper", "@request_stack"]
 
     hgabka_utils.number_to_text:
         class: Hgabka\UtilsBundle\Helper\Number\NumberToText
@@ -153,7 +154,7 @@ services:
 
     hgabka_utils.doctrine_mapping.listener:
         class: Hgabka\UtilsBundle\EventListener\MappingListener
-        arguments: ['%fos_user.model.user.class%']
+        arguments: ['%hgabka_utils.backend_user_class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
@@ -184,9 +185,14 @@ services:
         class: Doctrine\Common\Cache\FilesystemCache
         arguments: ['%kernel.cache_dir%/hgutilscache']
 
-    hgabka_utils.permissionadmin:
-        class: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin
+    Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin:
+        public: true
+        autowire: true
+        autoconfigure: true
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@hgabka_utils.shell', '@kernel']
+
+    hgabka_utils.permissionadmin:
+        alias: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin
 
     hgabka_utils.permissions.twig.extension:
         class: Hgabka\UtilsBundle\Twig\AdminPermissionsTwigExtension
@@ -195,14 +201,19 @@ services:
 
     Hgabka\UtilsBundle\Helper\Security\Acl\AclHelper:
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '@security.acl.object_identity_retrieval_strategy','@security.acl.provider']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '@security.acl.object_identity_retrieval_strategy','@security.acl.provider', '%hgabka_utils.public_access_role%']
 
     Hgabka\UtilsBundle\Helper\Security\Acl\AclNativeHelper:
         public: true
-        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy', '%hgabka_utils.public_access_role%']
+
+    Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap:
+        public: true
+        autowire: true
+        autoconfigure: true
 
     hgabka_utils.security.acl.permission.map:
-        class: '%hgabka_utils.security.acl.permission.map.class%'
+        alias: Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap
 
     hgabka_utils.security.acl.voter:
         class: Hgabka\UtilsBundle\Helper\Security\Acl\Voter\AclVoter
@@ -223,12 +234,12 @@ services:
         arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
         public: true
 
-    hgabka_utils.logger.processor.user:
-        class: Hgabka\UtilsBundle\Helper\UserProcessor
-        arguments: [ '@service_container' ]
-        tags:
-        - { name: monolog.processor, method: processRecord }
-        - { name: hgabka_utils.logger.processor, method: processRecord }
+#    hgabka_utils.logger.processor.user:
+#        class: Hgabka\UtilsBundle\Helper\UserProcessor
+#        arguments: [ '@service_container' ]
+#        tags:
+#        - { name: monolog.processor, method: processRecord }
+#        - { name: hgabka_utils.logger.processor, method: processRecord }
 
     hgabka_utils.logger.handler:
         class: Monolog\Handler\RotatingFileHandler
@@ -302,14 +313,101 @@ services:
         autowire: true
     
     Hgabka\UtilsBundle\Validator\TaxValidator:
+        public: false
         autoconfigure: true
         autowire: true
 
     Hgabka\UtilsBundle\Validator\Constraints\TaxIdValidator:
+        public: false
         autoconfigure: true
         autowire: true
 
     Hgabka\UtilsBundle\Validator\Constraints\TaxNoValidator:
+        public: false
         autoconfigure: true
         autowire: true
+    
+    Hgabka\UtilsBundle\Security\UserProvider:
+        public: false
+        autoconfigure: true
+        autowire: true
+        arguments:
+            $userClass: '%hgabka_utils.backend_user_class%'
+            
+    Hgabka\UtilsBundle\Security\AdminLoginAuthenticator:
+        public: false
+        autoconfigure: true
+        autowire: true
+         
+    Hgabka\UtilsBundle\Form\AdminLoginForm:
+        public: false
+        autowire: true
+        autoconfigure: true
 
+    Hgabka\UtilsBundle\Model\UserManager:
+        public: false
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $userClass: '%hgabka_utils.backend_user_class%'
+
+    Hgabka\UtilsBundle\Util\PasswordUpdater:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Util\UserManipulator:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\CreateUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\UpdateAclCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $roles: '%security.role_hierarchy.roles%'
+        calls:
+            - [ setAclProvider, [ '@security.acl.provider' ] ]
+            - [ setOiaStrategy, [ '@security.acl.object_identity_retrieval_strategy' ] ]
+
+    Hgabka\UtilsBundle\Command\ApplyAclCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\PromoteUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\DemoteUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Controller\SortableCRUDController:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Controller\UrlChooserCRUDController:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Controller\NestedTreeCRUDController:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Util\TokenGenerator:
+        public: false
+        autowire: true
+        autoconfigure: true
+    

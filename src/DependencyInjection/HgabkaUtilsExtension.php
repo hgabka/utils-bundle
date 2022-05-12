@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\DependencyInjection;
 
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
+use Hgabka\UtilsBundle\Doctrine\Hydrator\IndexedHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
@@ -36,7 +37,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class HgabkaUtilsExtension extends Extension implements PrependExtensionInterface, CompilerPassInterface
 {
     /** @var string */
-    protected $formTypeTemplate = 'HgabkaUtilsBundle:Form:fields.html.twig';
+    protected $formTypeTemplate = '@HgabkaUtils/Form/fields.html.twig';
 
     /**
      * {@inheritdoc}
@@ -60,7 +61,10 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.google_api_key', $config['google']['api_key'] ?? null);
         $container->setParameter('hgabka_utils.google_signin.hosted_domains', []);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
+        $container->setParameter('hgabka_utils.public_access_role', $config['public_access_role']);
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
@@ -90,11 +94,14 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $keyValueHydrator = [KeyValueHydrator::HYDRATOR_NAME, KeyValueHydrator::class];
         $columnHydrator = [ColumnHydrator::HYDRATOR_NAME, ColumnHydrator::class];
         $countHydrator = [CountHydrator::HYDRATOR_NAME, CountHydrator::class];
+        $indexedHydrator = [IndexedHydrator::HYDRATOR_NAME, IndexedHydrator::class];
+
         foreach ($container->getParameter('doctrine.entity_managers') as $name => $serviceName) {
-            $definition = $container->getDefinition('doctrine.orm.'.$name.'_configuration');
+            $definition = $container->getDefinition('doctrine.orm.' . $name . '_configuration');
             $definition->addMethodCall('addCustomHydrationMode', $keyValueHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $columnHydrator);
             $definition->addMethodCall('addCustomHydrationMode', $countHydrator);
+            $definition->addMethodCall('addCustomHydrationMode', $indexedHydrator);
             $definition->addMethodCall('addCustomStringFunction', [Cast::FUNCTION_NAME, Cast::class]);
             $definition->addMethodCall('addCustomNumericFunction', [Rand::FUNCTION_NAME, Rand::class]);
             $definition->addMethodCall('addCustomStringFunction', [IfElse::FUNCTION_NAME, IfElse::class]);
@@ -128,7 +135,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
 
         if ($definition) {
             foreach ($container->findTaggedServiceIds('hgabka_utils.menu.adaptor') as $id => $attributes) {
-                $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+                $priority = $attributes[0]['priority'] ?? 0;
 
                 $definition->addMethodCall('addAdaptMenu', [new Reference($id), $priority]);
             }

@@ -26,17 +26,17 @@ class CreateRoleCommand extends ContainerAwareCommand
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>hgabka:role:create</info> command creates a role:
+                    The <info>hgabka:role:create</info> command creates a role:
 
-  <info>php bin/console kuma:role:create ROLE_ADMIN</info>
+                      <info>php bin/console kuma:role:create ROLE_ADMIN</info>
 
-<comment>Note:</comment> The ROLE_ prefix will be added if you don't provide it
+                    <comment>Note:</comment> The ROLE_ prefix will be added if you don't provide it
 
-  <info>php bin/console kuma:role:create ADMIN</info>
+                      <info>php bin/console kuma:role:create ADMIN</info>
 
-will create ROLE_ADMIN.
+                    will create ROLE_ADMIN.
 
-EOT
+                    EOT
             );
     }
 
@@ -55,7 +55,7 @@ EOT
 
         $roleName = strtoupper($input->getArgument('role'));
         if ('ROLE_' !== substr($roleName, 0, 5)) {
-            $roleName = 'ROLE_'.$roleName;
+            $roleName = 'ROLE_' . $roleName;
         }
 
         $role = new Role($roleName);
