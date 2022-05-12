@@ -115,7 +115,11 @@ sidebarTree.sidebartree = (function($, window, undefined) {
                         if(!node_parent || node_parent.id === '#') {
                             return false;
                         }
-
+                        
+                        if (node.data.unmovable) {
+							return false;
+						}
+                        
                         // Only on same level please
                         if(node.parent === node_parent.id) {
                             return true;
