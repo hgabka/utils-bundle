@@ -46,7 +46,8 @@ class NestedTreeCRUDController extends CRUDController
         $sub = $this->admin->getNewInstance();
         $sub->setParent($folder);
         $this->admin->setSubject($sub);
-        $subForm = $this->admin->getFormBuilder()->getForm();
+        $subFormBuilder = $this->admin->getFormBuilder();
+        $subForm = $this->admin->getSubFormBuilder()->getForm();
         $subForm->setData($sub);
 
         $this->admin->setSubject($folder);
@@ -88,6 +89,7 @@ class NestedTreeCRUDController extends CRUDController
                 'editform' => $editForm->createView(),
                 'object' => $folder,
                 'admin' => $this->admin,
+                'base_template' => $this->getBaseTemplate(),
             ]
         );
     }
@@ -145,7 +147,7 @@ class NestedTreeCRUDController extends CRUDController
 
         $folder = $this->admin->getNewInstance();
         $this->admin->setSubject($folder);
-        $form = $this->admin->getForm();
+        $form = $this->admin->getSubFormBuilder()->getForm();
         $form->setData($folder);
         $form->handleRequest($request);
 
@@ -161,7 +163,8 @@ class NestedTreeCRUDController extends CRUDController
                     'sonata_flash_success',
                     $this->trans('kuma_admin_list.messages.add_success')
                 );
-                $redirect = $this->admin->generateUrl('list');
+                $redirect = $this->admin->generateUrl('list')
+                ;
 
                 return new RedirectResponse(
                     $this->admin->generateUrl(

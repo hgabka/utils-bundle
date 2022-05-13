@@ -19,12 +19,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return null;
     }
 
-    /**
-     * @param Category $category Kategória
-     *
-     * @throws \Exception
-     */
-    public function save(NestedTreeEntityInterface $object)
+    public function save(NestedTreeEntityInterface $object): void
     {
         $em = $this->getEntityManager();
         $parent = $object->getParent();
@@ -46,12 +41,12 @@ class NestedTreeRepository extends BaseTreeRepository
         }
     }
 
-    public function delete(Category $category)
+    public function delete(NestedTreeEntityInterface $object)
     {
         $em = $this->getEntityManager();
 
-        $this->deleteChildren($category);
-        $em->remove($category);
+        $this->deleteChildren($object);
+        $em->remove($object);
         $em->flush();
     }
 
@@ -84,7 +79,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return $qb;
     }
 
-    public function getParentIds(NestedTreeEntityInterface $object)
+    public function getParentIds(NestedTreeEntityInterface $object): array
     {
         /** @var QueryBuilder $qb */
         $qb = $this->getPathQueryBuilder($object)
@@ -97,7 +92,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return $ids;
     }
 
-    public function getRootFor(NestedTreeEntityInterface $object)
+    public function getRootFor(NestedTreeEntityInterface $object): ?object
     {
         $ids = $this->getParentIds($object);
 
@@ -110,17 +105,12 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @return array|string
      */
-    public function getHierarchy(NestedTreeEntityInterface $root = null, $includeNode = false)
+    public function getHierarchy(NestedTreeEntityInterface $root = null, $includeNode = false): array|string
     {
         return $this->childrenHierarchy($root, false, [], $includeNode);
     }
 
-    /**
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getAllObjectsQueryBuilder($limit = null)
+    public function getAllObjectsQueryBuilder(?int $limit = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('object')
                    ->select('object')
@@ -134,25 +124,12 @@ class NestedTreeRepository extends BaseTreeRepository
         return $qb;
     }
 
-    /**
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getAllObjects($limit = null)
+    public function getAllObjects(?int $limit = null)
     {
-        return $this->getAllObjectsQueryBuilder()->getQuery()->getResult();
+        return $this->getAllObjectsQueryBuilder($limit)->getQuery()->getResult();
     }
 
-    /**
-     * @param int   $categoryId
-     * @param mixed $id
-     *
-     * @throws EntityNotFoundException
-     *
-     * @return object
-     */
-    public function getObject($id)
+    public function getObject(?int $id): object
     {
         $category = $this->find($id);
         if (!$category) {
@@ -162,7 +139,7 @@ class NestedTreeRepository extends BaseTreeRepository
         return $category;
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $ret = [];
 

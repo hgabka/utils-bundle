@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class NestedTreeAdmin extends AbstractAdmin
 {
@@ -27,6 +28,18 @@ class NestedTreeAdmin extends AbstractAdmin
         if (isset($node['translations']['hu']['title'])) {
             return $node['translations']['hu']['title'];
         }
+    }
+
+    public function getSubFormBuilder(): FormBuilderInterface
+    {
+        $formBuilder = $this->getFormContractor()->getFormBuilder(
+            $this->getUniqId() . 'sub',
+            ['data_class' => $this->getClass()] + $this->getFormOptions(),
+        );
+
+        $this->defineFormBuilder($formBuilder);
+
+        return $formBuilder;
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

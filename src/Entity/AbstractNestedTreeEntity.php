@@ -72,4 +72,11 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
     abstract public function getRight(): ?int;
 
     abstract public function getChildren(): Collection|array|null;
+
+    public function getOptionLabel(string $textIndent = '-'): string
+    {
+        $indent = str_repeat($textIndent, $this->getLevel());
+
+        return $indent . ' ' . $this->getTitle('hu');
+    }
 }
