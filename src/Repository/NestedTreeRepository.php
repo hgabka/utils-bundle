@@ -46,12 +46,12 @@ class NestedTreeRepository extends BaseTreeRepository
         }
     }
 
-    public function delete(Category $category)
+    public function delete(NestedTreeEntityInterface $object)
     {
         $em = $this->getEntityManager();
 
-        $this->deleteChildren($category);
-        $em->remove($category);
+        $this->deleteChildren($object);
+        $em->remove($object);
         $em->flush();
     }
 
