@@ -247,7 +247,7 @@ class NestedTreeCRUDController extends CRUDController
         try {
             $this->admin->delete($object);
 
-            if ($this->isXmlHttpRequest()) {
+            if ($this->isXmlHttpRequest($request)) {
                 return $this->renderJson(['result' => 'ok'], Response::HTTP_OK, []);
             }
 
@@ -259,7 +259,7 @@ class NestedTreeCRUDController extends CRUDController
         } catch (ModelManagerException $e) {
             $this->handleModelManagerException($e);
 
-            if ($this->isXmlHttpRequest()) {
+            if ($this->isXmlHttpRequest($request)) {
                 return $this->renderJson(['result' => 'error'], Response::HTTP_OK, []);
             }
 
