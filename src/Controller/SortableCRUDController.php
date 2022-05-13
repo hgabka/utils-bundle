@@ -25,14 +25,14 @@ class SortableCRUDController extends CRUDController
         }
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        foreach ($request->request->get('positions') as $id => $position) {
+        foreach ($request->request->all('positions') as $id => $position) {
             $object = $this->admin->getObject($id);
             if ($object) {
                 $propertyAccessor->setValue($object, $this->admin->getSortField(), $position);
             }
         }
 
-        $this->doctrine->getManager()->flush();
+        $doctrine->getManager()->flush();
 
         return new Response();
     }
