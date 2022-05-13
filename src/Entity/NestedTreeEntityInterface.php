@@ -17,4 +17,6 @@ interface NestedTreeEntityInterface
     public function canHaveChildren();
 
     public function isDeleteable();
+    
+    public function getOptionLabel(string $textIndent = '-'): string;
 }
