@@ -28,6 +28,18 @@ class NestedTreeAdmin extends AbstractAdmin
             return $node['translations']['hu']['title'];
         }
     }
+    
+    public function getSubFormBuilder(): FormBuilderInterface
+    {
+        $formBuilder = $this->getFormContractor()->getFormBuilder(
+            $this->getUniqId() . 'sub',
+            ['data_class' => $this->getClass()] + $this->getFormOptions(),
+        );
+
+        $this->defineFormBuilder($formBuilder);
+
+        return $formBuilder;
+    }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
