@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Traits;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -33,6 +34,11 @@ trait NestedTreeFieldsTrait
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     #[ORM\OrderBy(['left' => 'ASC'])]
     private ?Collection $children;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     public function getLeft(): ?int
     {
