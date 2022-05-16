@@ -198,3 +198,9 @@ user_edit:
 kuma_js:
     auto_collapse:
         more_button_label: Továbbiak
+        
+hg_utils:
+    nested_tree:
+        subcreate: '%subentity% létrehozása'
+        subnew: 'Új %subentity%'
+        delete: '%entity% törlése'
