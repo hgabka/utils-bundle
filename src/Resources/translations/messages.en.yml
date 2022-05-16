@@ -197,3 +197,9 @@ user_edit:
 kuma_js:
     auto_collapse:
         more_button_label: More
+
+hg_utils:
+    nested_tree:
+        subcreate: 'Add %subentity%'
+        subnew: 'Add %subentity%'
+        delete: 'Delete %entity%'
