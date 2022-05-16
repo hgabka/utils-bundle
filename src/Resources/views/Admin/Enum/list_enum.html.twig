@@ -1,5 +1,6 @@
 {% extends get_admin_template('base_list_field', admin.code) %}
 
 {% block field %}
-    {{ value.value|trans }}
+    {% set valueToDisplay = value.i18nPrefix is defined ? value.i18nPrefix ~ value.value : value.value %}
+    {{ valueToDisplay|trans }}
 {% endblock %}
