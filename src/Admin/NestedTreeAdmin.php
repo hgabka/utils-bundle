@@ -5,7 +5,7 @@ namespace Hgabka\UtilsBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
-class NestedTreeAdmin extends AbstractAdmin
+abstract class NestedTreeAdmin extends AbstractAdmin
 {
     protected $accessMapping = [
         'reorder' => 'REORDER',
@@ -41,6 +41,10 @@ class NestedTreeAdmin extends AbstractAdmin
         return $formBuilder;
     }
 
+    abstract public function getEntityName(string $locale): string;
+    
+    abstract public function getSubEntityName(string $locale): string;
+    
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('reorder', 'reOrder');
