@@ -6,7 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class NestedTreeAdmin extends AbstractAdmin
+abstract class NestedTreeAdmin extends AbstractAdmin
 {
     protected $accessMapping = [
         'reorder' => 'REORDER',
@@ -34,13 +34,17 @@ class NestedTreeAdmin extends AbstractAdmin
     {
         $formBuilder = $this->getFormContractor()->getFormBuilder(
             $this->getUniqId() . 'sub',
-            ['data_class' => $this->getClass()] + $this->getFormOptions(),
+            ['data_class' => $this->getClass(), ...$this->getFormOptions()],
         );
 
         $this->defineFormBuilder($formBuilder);
 
         return $formBuilder;
     }
+
+    abstract public function getEntityName(string $locale): string;
+
+    abstract public function getSubEntityName(string $locale): string;
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {

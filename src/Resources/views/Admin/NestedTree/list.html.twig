@@ -58,14 +58,14 @@
                         {% block actions %}
                             {% if object.canHaveChildren %}
                                 <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
-                                    <span class="large-screen">Alkategória létrehozása</span>
-                                    <span class="small-screen">Új alkategória <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                                    <span class="large-screen">{{ 'hg_utils.nested_tree.subcreate'|trans({'%subentity%': admin.subEntityName(app.request.locale)|capitalize}) }}</span>
+                                    <span class="small-screen">{{ 'hg_utils.nested_tree.subnew'|trans({'%subentity%': admin.subEntityName(app.request.locale)|lower}) }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                                 </button>
                             {% endif %}
                             {% if object.deleteable and admin.hasAccess('delete', object) %}
                                 <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
-                                    <span class="large-screen">Kategória törlése</span>
-                                    <span class="small-screen">Törlés <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                                    <span class="large-screen">{{ 'hg_utils.nested_tree.delete'|trans({'%entity%': admin.entityName(app.request.locale)|capitalize}) }}</span>
+                                    <span class="small-screen">{{ 'action.delete'|trans([], 'SonataAdminBundle')}} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                                 </button>
                             {% endif %}
                         {% endblock %}
