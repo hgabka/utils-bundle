@@ -32,7 +32,7 @@ trait NestedTreeFieldsTrait
     private ?self $parent = null;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    #[ORM\OrderBy(['left' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     private ?Collection $children;
 
     public function __construct()
