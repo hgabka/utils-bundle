@@ -172,7 +172,7 @@ class NestedTreeCRUDController extends CRUDController
                 $this->admin->generateUrl(
                     'list',
                     [
-                            $this->admin->getIdParameter() => $newObject->getId(),
+                            $this->admin->getIdParameter() => $request->query->get('parent'),
                         ]
                 )
             );
