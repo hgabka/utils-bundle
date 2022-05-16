@@ -1,5 +1,6 @@
 {% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %}
 
 {% block field %}
-    {{ value.value|trans }}
+    {% set valueToDisplay = value.i18nPrefix is defined ? value.i18nPrefix ~ value.value : value.value %}
+    {{ valueToDisplay|trans }}
 {% endblock %}
