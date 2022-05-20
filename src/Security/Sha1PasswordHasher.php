@@ -32,5 +32,4 @@ class Sha1PasswordHasher implements LegacyPasswordHasherInterface
     {
         return true;
     }
-
 }
