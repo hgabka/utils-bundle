@@ -8,6 +8,8 @@ use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 class Md5PasswordHasher implements PasswordHasherInterface
 {
+    use CheckPasswordLengthTrait;
+    
     public function hash(string $plainPassword): string
     {
         if ($this->isPasswordTooLong($plainPassword)) {
