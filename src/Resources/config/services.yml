@@ -420,3 +420,9 @@ services:
         public: false
         autowire: true
         autoconfigure: true
+        
+    Hgabka\UtilsBundle\Security\LoginManager:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $firewallMap: '@security.firewall.map'
