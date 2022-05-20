@@ -415,3 +415,8 @@ services:
         public: false
         autowire: true
         autoconfigure: true
+
+    Hgabka\UtilsBundle\Security\Sha1PasswordHasher:
+        public: false
+        autowire: true
+        autoconfigure: true
