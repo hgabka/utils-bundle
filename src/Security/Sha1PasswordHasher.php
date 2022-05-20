@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace Hgabka\UtilsBundle\Security;
 
 use Symfony\Component\PasswordHasher\LegacyPasswordHasherInterface;
 
