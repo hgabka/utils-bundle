@@ -32,5 +32,4 @@ class Md5PasswordHasher implements PasswordHasherInterface
     {
         return true;
     }
-
 }
