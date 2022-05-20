@@ -410,4 +410,9 @@ services:
         public: false
         autowire: true
         autoconfigure: true
-    
+ 
+    Hgabka\UtilsBundle\Security\Md5PasswordHasher:
+        public: false
+        autowire: true
+        autoconfigure: true
+
