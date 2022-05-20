@@ -44,7 +44,8 @@ class LoginManager
 
     public function loginUser(UserInterface $user, string $firewallName)
     {
-        $currentFirewallName = $this->getFirewallConfig()?->getName();
+        $config = $this->getFirewallConfig();
+        $currentFirewallName = $config ? $config->getName() : null;
         $token = new UsernamePasswordToken($user, $firewallName, $user->getRoles());
         $request = $this->requestStack->getCurrentRequest();
 
