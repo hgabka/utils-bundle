@@ -199,6 +199,8 @@ kuma_js:
         more_button_label: More
 
 hg_utils:
+    security:
+        user_not_enabled: Account is inactive
     nested_tree:
         subcreate: 'Add %subentity%'
         subnew: 'Add %subentity%'
