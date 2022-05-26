@@ -24,4 +24,6 @@ class UserChecker implements UserCheckerInterface
             throw new CustomUserMessageAccountStatusException($this->translator->trans('hg_utils.security.error_not_enabled.'));
         }
     }
+    
+    public function checkPostAuth(UserInterface $user): void {}
 }
