@@ -200,6 +200,8 @@ kuma_js:
         more_button_label: Továbbiak
         
 hg_utils:
+    security:
+        user_not_enabled: A fiók inaktív
     nested_tree:
         subcreate: '%subentity% létrehozása'
         subnew: 'Új %subentity%'
