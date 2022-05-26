@@ -426,3 +426,7 @@ services:
         autoconfigure: true
         arguments:
             $firewallMap: '@security.firewall.map'
+
+    Hgabka\UtilsBundle\Security\UserChecker:
+        autowire: true
+        autoconfigure: true            
