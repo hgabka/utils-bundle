@@ -21,7 +21,7 @@ class UserChecker implements UserCheckerInterface
 
         if (!$user->isEnabled()) {
             // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException($this->translator->trans('hg_utils.security.error_not_enabled.'));
+            throw new CustomUserMessageAccountStatusException($this->translator->trans('hg_utils.security.error_not_enabled'));
         }
     }
     
