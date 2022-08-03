@@ -76,7 +76,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return !empty($filters);
     }
 
-    protected function configureDefaultSortValues(array & $sortValues): void
+    protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PER_PAGE] = \PHP_INT_MAX;
         $sortValues[DatagridInterface::SORT_BY] = $this->sortField;

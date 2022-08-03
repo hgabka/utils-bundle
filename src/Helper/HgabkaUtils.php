@@ -24,9 +24,9 @@ class HgabkaUtils
         'D' => 500,
         'M' => 1000,
     ];
-    //values that should evaluate as 0
+    // values that should evaluate as 0
     protected $roman_zero = ['N', 'nulla'];
-    //Regex - checking for valid Roman numerals
+    // Regex - checking for valid Roman numerals
     protected $roman_regex = '/^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/';
 
     /**
@@ -754,28 +754,28 @@ class HgabkaUtils
         return preg_match($this->roman_regex, $roman) > 0;
     }
 
-    //Conversion: Roman Numeral to Integer
+    // Conversion: Roman Numeral to Integer
     public function Roman2Int($roman)
     {
-        //checking for zero values
+        // checking for zero values
         if (\in_array($roman, $this->roman_zero, true)) {
             return 0;
         }
 
-        //validating string
+        // validating string
         if (!$this->isRomanNumber($roman)) {
             return false;
         }
 
         $values = $this->roman_values;
         $result = 0;
-        //iterating through characters LTR
+        // iterating through characters LTR
         for ($i = 0, $length = \strlen($roman); $i < $length; ++$i) {
-            //getting value of current char
+            // getting value of current char
             $value = $values[$roman[$i]];
-            //getting value of next char - null if there is no next char
+            // getting value of next char - null if there is no next char
             $nextvalue = !isset($roman[$i + 1]) ? null : $values[$roman[$i + 1]];
-            //adding/subtracting value from result based on $nextvalue
+            // adding/subtracting value from result based on $nextvalue
             $result += (null !== $nextvalue && $nextvalue > $value) ? -$value : $value;
         }
 
@@ -960,7 +960,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function permuteUnique($items, $perms = [], & $return = [])
+    public function permuteUnique($items, $perms = [], &$return = [])
     {
         if (empty($items)) {
             $return[] = $perms;
@@ -1068,7 +1068,7 @@ class HgabkaUtils
      *
      * @return array
      */
-    public function replaceClass(array & $classes, $newClass)
+    public function replaceClass(array &$classes, $newClass)
     {
         $sizes = [
             'xs',
@@ -1563,7 +1563,7 @@ class HgabkaUtils
 
         return $converter->getText();
     }
-    
+
     public function replaceExtension(string $file, string $newExtension): string
     {
         $pathinfo = pathinfo($file);
@@ -1572,6 +1572,6 @@ class HgabkaUtils
             $newExtension = substr($newExtension, 1);
         }
 
-        return $pathinfo['dirname'].'/'.$pathinfo['filename'].(empty($newExtension) ? '' : ('.'.$newExtension));
+        return $pathinfo['dirname'] . '/' . $pathinfo['filename'] . (empty($newExtension) ? '' : ('.' . $newExtension));
     }
 }

@@ -4,7 +4,7 @@ namespace Hgabka\UtilsBundle\Helper\Number;
 
 class RomanHelper
 {
-    //array of roman values
+    // array of roman values
     protected $romanValues = [
         'I' => 1,
         'V' => 5,
@@ -15,41 +15,41 @@ class RomanHelper
         'M' => 1000,
     ];
 
-    //values that should evaluate as 0
+    // values that should evaluate as 0
     protected $romanZero = ['N', 'nulla'];
-    //Regex - checking for valid Roman numerals
+    // Regex - checking for valid Roman numerals
     protected $romanRegex = '/^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/';
 
-    //Roman numeral validation function - is the string a valid Roman Number?
+    // Roman numeral validation function - is the string a valid Roman Number?
     public function validate($roman)
     {
         return preg_match($this->romanRegex, $roman) > 0;
     }
 
-    //Conversion: Roman Numeral to Integer
+    // Conversion: Roman Numeral to Integer
     public function parse($roman)
     {
-        //checking for zero values
+        // checking for zero values
         if (\in_array($roman, $this->romanZero, true)) {
             return 0;
         }
 
         $roman = strtoupper($roman);
 
-        //validating string
+        // validating string
         if (!$this->validate($roman)) {
             return false;
         }
 
         $values = $this->romanValues;
         $result = 0;
-        //iterating through characters LTR
+        // iterating through characters LTR
         for ($i = 0, $length = \strlen($roman); $i < $length; ++$i) {
-            //getting value of current char
+            // getting value of current char
             $value = $values[$roman[$i]];
-            //getting value of next char - null if there is no next char
+            // getting value of next char - null if there is no next char
             $nextvalue = !isset($roman[$i + 1]) ? null : $values[$roman[$i + 1]];
-            //adding/subtracting value from result based on $nextvalue
+            // adding/subtracting value from result based on $nextvalue
             $result += (null !== $nextvalue && $nextvalue > $value) ? -$value : $value;
         }
 

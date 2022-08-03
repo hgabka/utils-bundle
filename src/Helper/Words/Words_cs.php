@@ -206,7 +206,7 @@ class Words_cs extends Words
                 $ret .= $this->_sep . 'dvě' . $this->_sep . $this->_hundreds[1];
             } elseif (($h > 1) && ($h < 5)) {
                 $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . $this->_hundreds[2];
-            } else {        //if ($h >= 5)
+            } else {        // if ($h >= 5)
                 $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . $this->_hundreds[3];
             }
             // in English only - add ' and' for [1-9]01..[1-9]99

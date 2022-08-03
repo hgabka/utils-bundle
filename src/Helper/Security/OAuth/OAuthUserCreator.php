@@ -41,7 +41,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
             $user = $this->userFinder->findUserByGoogleSignInData($email, $googleId);
 
             if (!$user instanceof $this->userClass) {
-                //User not present in database, create new one
+                // User not present in database, create new one
                 /** @var User $user */
                 $user = new $this->userClass();
                 $user->setUsername($email);

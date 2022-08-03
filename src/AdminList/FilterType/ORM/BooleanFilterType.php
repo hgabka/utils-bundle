@@ -14,7 +14,7 @@ class BooleanFilterType extends AbstractORMFilterType
      * @param array   &$data    The data
      * @param string  $uniqueId The unique identifier
      */
-    public function bindRequest(Request $request, array & $data, $uniqueId)
+    public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }

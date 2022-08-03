@@ -300,7 +300,7 @@ class BigInteger
                     \define('MATH_BIGINTEGER_MAX_DIGIT2', 2 ** 62);
 
                     break;
-                //case 4: // use 64-bit floats if int size is 4 bytes
+                // case 4: // use 64-bit floats if int size is 4 bytes
                 default:
                     \define('MATH_BIGINTEGER_BASE', 26);
                     \define('MATH_BIGINTEGER_BASE_FULL', 0x4000000);
@@ -2609,12 +2609,12 @@ class BigInteger
      */
     protected function _multiply($x_value, $x_negative, $y_value, $y_negative)
     {
-        //if ( $x_value == $y_value ) {
+        // if ( $x_value == $y_value ) {
         //    return array(
         //        MATH_BIGINTEGER_VALUE => $this->_square($x_value),
         //        MATH_BIGINTEGER_SIGN => $x_sign != $y_value
         //    );
-        //}
+        // }
 
         $x_length = \count($x_value);
         $y_length = \count($y_value);
@@ -2809,7 +2809,7 @@ class BigInteger
     protected function _slidingWindow($e, $n, $mode)
     {
         static $window_ranges = [7, 25, 81, 241, 673, 1793]; // from BigInteger.java's oddModPow function
-        //static $window_ranges = array(0, 7, 36, 140, 450, 1303, 3529); // from MPM 7.3.1
+        // static $window_ranges = array(0, 7, 36, 140, 450, 1303, 3529); // from MPM 7.3.1
 
         $e_value = $e->value;
         $e_length = \count($e_value) - 1;
@@ -3680,7 +3680,7 @@ class BigInteger
      *
      * @return string
      */
-    protected function _base256_lshift(& $x, $shift)
+    protected function _base256_lshift(&$x, $shift)
     {
         if (0 === $shift) {
             return;
@@ -3709,7 +3709,7 @@ class BigInteger
      *
      * @return string
      */
-    protected function _base256_rshift(& $x, $shift)
+    protected function _base256_rshift(&$x, $shift)
     {
         if (0 === $shift) {
             $x = ltrim($x, \chr(0));

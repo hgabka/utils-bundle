@@ -134,7 +134,7 @@ class Words_it extends Words
         if (1 === $thousands) {
             $ret .= $this->_sep . 'mille' . $this->_sep;
         } elseif ($thousands > 1) {
-            $ret .= $this->_toWords($thousands, 3) . $this->_sep; //. 'mil' . $this->_sep;
+            $ret .= $this->_toWords($thousands, 3) . $this->_sep; // . 'mil' . $this->_sep;
         }
 
         // values for digits, tens and hundreds
