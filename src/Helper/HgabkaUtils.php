@@ -1563,4 +1563,15 @@ class HgabkaUtils
 
         return $converter->getText();
     }
+
+    public function replaceExtension(string $file, string $newExtension): string
+    {
+        $pathinfo = pathinfo($file);
+
+        if (str_starts_with($newExtension, '.')) {
+            $newExtension = substr($newExtension, 1);
+        }
+
+        return $pathinfo['dirname'] . '/' . $pathinfo['filename'] . (empty($newExtension) ? '' : ('.' . $newExtension));
+    }
 }
