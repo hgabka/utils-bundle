@@ -886,6 +886,11 @@
         border-radius: 3px;
         min-height: 15px;
     }
+    
+    .breadcrumb.sub-breadcrumb > li + li::before {
+        content: "";
+        padding: 0;
+    }
 
     .app__filter {
         margin-bottom: 2rem;
