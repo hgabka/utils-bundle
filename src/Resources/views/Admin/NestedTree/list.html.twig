@@ -1,5 +1,12 @@
 {% extends '@HgabkaUtils/Default/layout.html.twig' %}
 
+{% block title %}
+    {% if objectId is not null %}
+        {{ 'title_edit'|trans({'%name%': admin.toString(object)|u.truncate(15, '...') }, 'SonataAdminBundle') }}
+    {% else %}
+        {{ 'title_create'|trans({}, 'SonataAdminBundle')|u.truncate(15, '...') }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     {% set lowestTopChild = repo.getRootFor(object) %}
