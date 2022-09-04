@@ -90,6 +90,7 @@ class NestedTreeCRUDController extends CRUDController
                 'object' => $folder,
                 'admin' => $this->admin,
                 'base_template' => $this->getBaseTemplate(),
+                'objectId' => $folder ? $folder->getId() : null,
             ]
         );
     }
@@ -198,6 +199,7 @@ class NestedTreeCRUDController extends CRUDController
                 'subform' => $form->createView(),
                 'object' => $folder,
                 'parent' => $parent,
+                'objectId' => $folder ? $folder->getId() : null,
             ]
         );
     }
