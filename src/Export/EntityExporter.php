@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Export;
 
+use DateTimeInterface;
 use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\NoopWordInflector;
 use Doctrine\ORM\EntityManagerInterface;
@@ -294,7 +295,7 @@ abstract class EntityExporter
             } else {
                 $method = 'addCellValue' . ucfirst($field->getType());
                 if (!method_exists($this, $method)) {
-                    throw new InvalidArgumentException('Nincs ilyen metodus: ', $method);
+                    throw new InvalidArgumentException('Nincs ilyen metodus: ' . $method);
                 }
 
                 $this->$method($column, $options['key'], $entity, $options['value_callback'] ?? null, $field, $row);
@@ -302,6 +303,21 @@ abstract class EntityExporter
         } else {
             $this->addCellValue($column, $options['value'], $entity, $options['value_callback'] ?? null, $field, $row);
         }
+    }
+
+    /**
+     * @param $column
+     * @param $field
+     */
+    protected function addCellValueDate(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    {
+        $dateValue = $this->getEntityFieldValue($entity, $field);
+        if ($dateValue instanceof DateTimeInterface) {
+            $options = $exportField ? $exportField->getOptions(): [];
+            $dateValue = $dateValue->format($options['format'] ?? 'Y-m-d H:i:s');
+        }
+
+        $this->addCellValue($column, $dateValue, $entity, $callback, $exportField, $row);
     }
 
     /**
