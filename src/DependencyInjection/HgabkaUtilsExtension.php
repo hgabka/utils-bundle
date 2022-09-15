@@ -2,10 +2,12 @@
 
 namespace Hgabka\UtilsBundle\DependencyInjection;
 
+use Hgabka\EmailBundle\Model\EmailTemplateTypeInterface;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\IndexedHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
+use Hgabka\UtilsBundle\Doctrine\Type\EnumTypeInterface;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
 use Hgabka\UtilsBundle\DQL\Date;
@@ -78,6 +80,12 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $googleDriveDownloaderDefinition->replaceArgument(1, $config['google']['api_key'] ?? null);
         $googleDriveDownloaderDefinition->replaceArgument(2, $config['google']['client_id'] ?? null);
         $googleDriveDownloaderDefinition->replaceArgument(3, $config['google']['client_secret'] ?? null);
+
+        $container
+            ->registerForAutoconfiguration(EnumTypeInterface::class)
+            ->addTag('hg_utils.doctrine_enum_type')
+        ;    
+
     }
 
     /**
@@ -141,6 +149,18 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
                 $definition->addMethodCall('addAdaptMenu', [new Reference($id), $priority]);
             }
         }
+
+        $typesDefinition = [];
+        if ($container->hasParameter('doctrine.dbal.connection_factory.types')) {
+            $typesDefinition = $container->getParameter('doctrine.dbal.connection_factory.types');
+        }
+        $taggedEnums = $container->findTaggedServiceIds('hg_utils.doctrine_enum_type');
+
+        foreach ($taggedEnums as $enumType => $definition) {
+            /** @var $enumType AbstractEnumType */
+            $typesDefinition[$enumType::NAME] = ['class' => $enumType];
+        }
+        $container->setParameter('doctrine.dbal.connection_factory.types', $typesDefinition);
     }
 
     protected function configureTwigBundle(ContainerBuilder $container)
