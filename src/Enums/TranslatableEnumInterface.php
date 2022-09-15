@@ -4,5 +4,5 @@ namespace Hgabka\UtilsBundle\Enums;
 
 interface TranslatableEnumInterface
 {
-    public static function getTranslationPrefix(): string
+    public function getTranslationPrefix(): string
 }
