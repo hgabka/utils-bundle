@@ -12,7 +12,7 @@ abstract class AbstractEnumType extends Type implements EnumTypeInterface
     {
         return self::NAME;
     }
-    
+
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'TEXT';
@@ -23,6 +23,7 @@ abstract class AbstractEnumType extends Type implements EnumTypeInterface
         if ($value instanceof BackedEnum) {
             return $value->value;
         }
+
         return null;
     }
 

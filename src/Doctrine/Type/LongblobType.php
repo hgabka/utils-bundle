@@ -25,7 +25,6 @@ class LongblobType extends Type
         if (null === $value) {
             return null;
         }
-        
 
         return (string) $value;
     }

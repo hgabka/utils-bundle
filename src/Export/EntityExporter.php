@@ -318,7 +318,7 @@ abstract class EntityExporter
     {
         $dateValue = $this->getEntityFieldValue($entity, $field);
         if ($dateValue instanceof DateTimeInterface) {
-            $options = $exportField ? $exportField->getOptions(): [];
+            $options = $exportField ? $exportField->getOptions() : [];
             $dateValue = $dateValue->format($options['format'] ?? 'Y-m-d H:i:s');
         }
 

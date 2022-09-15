@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\DependencyInjection;
 
-use Hgabka\EmailBundle\Model\EmailTemplateTypeInterface;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\IndexedHydrator;
@@ -84,8 +83,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container
             ->registerForAutoconfiguration(EnumTypeInterface::class)
             ->addTag('hg_utils.doctrine_enum_type')
-        ;    
-
+        ;
     }
 
     /**

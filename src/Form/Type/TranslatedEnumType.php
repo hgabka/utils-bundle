@@ -4,11 +4,12 @@ namespace Hgabka\UtilsBundle\Form\Type;
 
 use BackedEnum;
 use Closure;
-use UnitEnum;
+use Hgabka\UtilsBundle\Enums\TranslatableEnumInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use UnitEnum;
 
 class TranslatedEnumType extends AbstractType
 {
@@ -18,19 +19,13 @@ class TranslatedEnumType extends AbstractType
             ->setRequired(['class'])
             ->setAllowedTypes('class', 'string')
             ->setAllowedValues('class', Closure::fromCallable('enum_exists'))
-            ->setDefault('translation_prefix', '')
             ->setDefault('choices', static function (Options $options): array {
-                if (empty($options['translation_prefix'])) {
-                    return $options['class']::cases();
-                }
-                else {
-                    return array_map(fn(string $value, string $key) => $options['translation_prefix'].$value, $options['class']::cases());
-                }
+                return $options['class']::cases();
             })
             ->setDefault('choice_label', static function (UnitEnum $choice, $key, $value): string {
-                return (empty($options['translation_prefix']) ? '' : $options['translation_prefix']) . $choice->name;
+                return ($choice instanceof TranslatableEnumInterface ? $choice->getTranslationPrefix() : '') . $choice->name;
             })
-            ->setDefault('choice_value', static function (Options $options): ?\Closure {
+            ->setDefault('choice_value', static function (Options $options): ?Closure {
                 if (!is_a($options['class'], BackedEnum::class, true)) {
                     return null;
                 }
@@ -50,5 +45,4 @@ class TranslatedEnumType extends AbstractType
     {
         return ChoiceType::class;
     }
-
 }
