@@ -11,12 +11,12 @@ class Formatter
 
     public function formatPrice($price, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' ', ?string $withCurrency = null): string
     {
-        return number_format($price, 0, ',', ' ') . ($withCurrency ? ' ' . $withCurrency : '');
+        return $this->formatNumber($price, $decimals, $decimalSeparator, $thousandsSeparator) . ($withCurrency ? ' ' . $withCurrency : '');
     }
 
-    public function formatNumber($number, $postfix = false, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' '): string
+    public function formatNumber($number, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' '): string
     {
-        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator) . ($postfix ? ' ' . $postfix : '');
+        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
     
     public function getSorszamnev(int $szam): string
