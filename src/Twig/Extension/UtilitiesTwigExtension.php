@@ -9,9 +9,7 @@ use Twig\TwigFilter;
 
 class UtilitiesTwigExtension extends AbstractExtension
 {
-    public function __construct(protected SlugifierInterface $slugifier, protected Formatter $formatter)
-    {
-    }
+    public function __construct(protected SlugifierInterface $slugifier, protected Formatter $formatter) {}
 
     public function getFilters(): array
     {
@@ -39,6 +37,6 @@ class UtilitiesTwigExtension extends AbstractExtension
 
     public function formatPrice($price, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' ', ?string $withCurrency = null): string
     {
-        return $this->formatter->formatNumber($price, $decimals, $decimalSeparator, $thousandsSeparator, $withCurrency);
+        return $this->formatter->formatPrice($price, $decimals, $decimalSeparator, $thousandsSeparator, $withCurrency);
     }
 }
