@@ -63,7 +63,7 @@ services:
         class: '%hgabka_utils.slugifier.class%'
 
     hgabka_utils.twig.extension:
-        class: Hgabka\UtilsBundle\Twig\UtilitiesTwigExtension
+        class: Hgabka\UtilsBundle\Twig\Extension\UtilitiesTwigExtension
         arguments: ['@hgabka_utils.slugifier', '@Hgabka\UtilsBundle\Helper\Formatter']
         tags:
             - { name: twig.extension }
