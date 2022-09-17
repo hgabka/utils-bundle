@@ -7,7 +7,9 @@ use IntlTimeZone;
 
 class Formatter
 {
-    public function __construct(protected HgabkaUtils $utils) {}
+    public function __construct(protected HgabkaUtils $utils)
+    {
+    }
 
     public function formatPrice($price, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' ', ?string $withCurrency = null): string
     {
@@ -18,7 +20,7 @@ class Formatter
     {
         return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
-    
+
     public function getSorszamnev(int $szam): string
     {
         $sorszamok = [

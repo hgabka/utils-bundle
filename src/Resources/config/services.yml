@@ -64,7 +64,7 @@ services:
 
     hgabka_utils.twig.extension:
         class: Hgabka\UtilsBundle\Twig\UtilitiesTwigExtension
-        arguments: ['@hgabka_utils.slugifier']
+        arguments: ['@hgabka_utils.slugifier', '@Hgabka\UtilsBundle\Helper\Formatter']
         tags:
             - { name: twig.extension }
 
@@ -431,3 +431,7 @@ services:
         autowire: true
         autoconfigure: true            
 
+    Hgabka\UtilsBundle\Helper\Formatter:
+        public: false
+        autowire: true
+        autoconfigure: true
