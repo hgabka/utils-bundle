@@ -39,6 +39,6 @@ class UtilitiesTwigExtension extends AbstractExtension
 
     public function formatPrice($price, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' ', ?string $withCurrency = null): string
     {
-        return $this->formatter->formatNumber($number, $decimals, $decimalSeparator, $thousandsSeparator, $withCurrency);
+        return $this->formatter->formatNumber($price, $decimals, $decimalSeparator, $thousandsSeparator, $withCurrency);
     }
 }
