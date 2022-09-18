@@ -27,6 +27,8 @@ kuma_admin:
             label:          Törlés
 
     form:
+        from: '-tól'
+        to: '-ig'
         cancel: Mégse
         delete: Törlés
         deletesure: Biztos benne?

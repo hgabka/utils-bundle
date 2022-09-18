@@ -18,6 +18,8 @@ kuma_admin:
             external: External link
             email: Email address
     form:
+        from: from
+        to: to
         cancel: Cancel
         delete: Delete
         deletesure: Are you sure?

@@ -6,6 +6,27 @@
     </div>
 {% endblock %}
 
+{% block number_range_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="input-group range-group">
+            {% if labelPlacement is same as('before') %}
+                <span>{{ 'kuma_admin.form.from'|trans }}</span>
+            {% endif %}
+            {{ form_widget(form.start) }}
+            {% if labelPlacement is not same as('before') %}
+                <span>{{ 'kuma_admin.form.from'|trans }}</span>
+            {% endif %}
+            {% if labelPlacement is same as('before') %}
+                <span>{{ 'kuma_admin.form.to'|trans }}</span>
+            {% endif %}
+            {{ form_widget(form.end) }}
+            {% if labelPlacement is not same as('before') %}
+                <span>{{ 'kuma_admin.form.to'|trans }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endblock number_range_widget %}
+
 {% block object_autocomplete_widget %}
     {% apply spaceless %}
         {{ form_widget(form.title) }}
@@ -430,4 +451,3 @@
         <span class="fa fa-times delete-collection-box"></span>
     </div>
 {% endblock %}
-

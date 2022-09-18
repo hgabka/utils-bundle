@@ -435,3 +435,15 @@ services:
         public: false
         autowire: true
         autoconfigure: true
+
+    Hgabka\UtilsBundle\Form\Type\NumberRangeType:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Filter\NumberRangeFilter:
+        public: false
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: sonata.admin.filter.type }

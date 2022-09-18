@@ -9,7 +9,9 @@ use Twig\TwigFilter;
 
 class UtilitiesTwigExtension extends AbstractExtension
 {
-    public function __construct(protected SlugifierInterface $slugifier, protected Formatter $formatter) {}
+    public function __construct(protected SlugifierInterface $slugifier, protected Formatter $formatter)
+    {
+    }
 
     public function getFilters(): array
     {
