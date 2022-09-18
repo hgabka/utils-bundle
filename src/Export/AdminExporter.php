@@ -8,14 +8,8 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 abstract class AdminExporter extends EntityExporter
 {
-    /** @var AdminInterface */
-    protected $admin;
+    protected ?AdminInterface $admin;
 
-    /**
-     * @param AdminInterface $admin
-     *
-     * @return AdminExporter
-     */
     public function setAdmin(AdminInterface $admin): self
     {
         $this->admin = $admin;

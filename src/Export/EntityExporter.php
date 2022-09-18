@@ -17,27 +17,17 @@ use Throwable;
 
 abstract class EntityExporter
 {
-    /** @var null string */
-    protected $encoding;
+    protected ?string $encoding = null;
 
-    /**
-     * @var array
-     */
-    protected $headers;
+    protected ?array $headers = null;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var ExportFieldDescriptor */
-    protected $fieldDescriptor;
+    protected ExportFieldDescriptor $fieldDescriptor;
 
-    /** @var TranslatorInterface */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
-    /**
-     * @var int
-     */
-    protected $currentRow = 1;
+    protected int $currentRow = 1;
 
     #[Required]
     public function setEntityManager(EntityManagerInterface $entityManager): self
@@ -68,18 +58,13 @@ abstract class EntityExporter
     /**
      * @param $filename
      */
-    public function save($filename): void
+    public function save(string $filename): void
     {
         $this->write();
         $this->saveContent($filename);
     }
 
-    /**
-     * @param $filename
-     *
-     * @return StreamedResponse
-     */
-    public function getStreamedResponse($filename): StreamedResponse
+    public function getStreamedResponse(string $filename): StreamedResponse
     {
         return new StreamedResponse(function () {
             $this->save('php://output');
@@ -89,13 +74,7 @@ abstract class EntityExporter
         ]);
     }
 
-    /**
-     * @param $object
-     * @param $field
-     *
-     * @return null|mixed
-     */
-    protected function getObjectFieldValue($object, $field)
+    protected function getObjectFieldValue(object $object, string $field): mixed
     {
         $field = ucfirst(Container::camelize($field));
 
@@ -108,35 +87,15 @@ abstract class EntityExporter
         }
     }
 
-    /**
-     * @param        $id
-     * @param array  $params
-     * @param string $domain
-     *
-     * @return string
-     */
-    protected function trans($id, $params = [], $domain = 'messages')
+    protected function trans(string $id, array $params = [], string $domain = 'messages'): string
     {
         return $this->translator->trans($id, $params, $domain, 'hu');
     }
 
     /**
-     * @param        $id
-     * @param        $number
-     * @param array  $params
-     * @param string $domain
-     *
-     * @return mixed
-     */
-    protected function transChoice($id, $number, $params = [], $domain = 'messages')
-    {
-        return $this->translator->transChoice($id, $number, $params, $domain, 'hu');
-    }
-
-    /**
      * @return array|string[]
      */
-    protected function getHeaders()
+    protected function getHeaders(): ?array
     {
         if (empty($this->headers)) {
             $this->headers = [];
@@ -148,7 +107,7 @@ abstract class EntityExporter
         return $this->headers;
     }
 
-    protected function postWriteData(array $fields)
+    protected function postWriteData(array $fields): void
     {
     }
 
@@ -157,41 +116,24 @@ abstract class EntityExporter
      *
      * @param string $value
      */
-    protected function setHeader(string &$column, $value)
+    protected function setHeader(string &$column, string $value)
     {
         $this->addCellValue($column, $value);
     }
 
-    /**
-     * @param $column
-     * @param $value
-     *
-     * @return mixed
-     */
-    abstract protected function setCellValue($column, $value, ?ExportField $field = null);
+    abstract protected function setCellValue($column, string $value, ?ExportField $field = null): void;
 
-    /**
-     * @param $filename
-     *
-     * @return mixed
-     */
     abstract protected function saveContent(?string $filename): void;
 
-    /**
-     * @return string
-     */
     abstract protected function getMimeType(): string;
 
-    /**
-     * @return mixed
-     */
-    abstract protected function init();
+    abstract protected function init(): void;
 
-    protected function addFields()
+    protected function addFields(): void
     {
     }
 
-    protected function writeHeader()
+    protected function writeHeader(): void
     {
         $i = 0;
         foreach ($this->getHeaders() as $key) {
@@ -206,13 +148,7 @@ abstract class EntityExporter
         $this->currentRow = 2;
     }
 
-    /**
-     * @param $object
-     * @param $field
-     *
-     * @return null|mixed|string
-     */
-    protected function getRelationValue($object, $field): ?string
+    protected function getRelationValue(object $object, string $field): mixed
     {
         $parts = explode('.', $field, 2);
         $relation = $this->getEntityFieldValue($object, $parts[0]);
@@ -229,10 +165,7 @@ abstract class EntityExporter
             : $this->getRelationValue($relation, $parts[1]);
     }
 
-    /**
-     * @param $row
-     */
-    protected function preWriteRow($row, object $entity): bool
+    protected function preWriteRow(int $row, object $entity): bool
     {
         return true;
     }
@@ -240,16 +173,11 @@ abstract class EntityExporter
     /**
      * @param $row
      */
-    protected function postWriteRow($row, object $entity)
+    protected function postWriteRow($row, object $entity): void
     {
     }
 
-    /**
-     * @param $field
-     *
-     * @return null|mixed
-     */
-    protected function getEntityFieldValue(object $entity, $field)
+    protected function getEntityFieldValue(object $entity, string $field): mixed
     {
         $inflector = new Inflector(new NoopWordInflector(), new NoopWordInflector());
 
@@ -258,10 +186,7 @@ abstract class EntityExporter
         return $this->getObjectFieldValue($entity, $field);
     }
 
-    /**
-     * @param $column
-     */
-    protected function writeColumn(&$column, ExportField $field, object $entity, int $row)
+    protected function writeColumn(&$column, ExportField $field, object $entity, int $row): void
     {
         $options = $field->getOptions();
 
@@ -288,11 +213,7 @@ abstract class EntityExporter
         }
     }
 
-    /**
-     * @param $column
-     * @param $value
-     */
-    protected function addCellValue(&$column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null)
+    protected function addCellValue(&$column, $value, ?object $entity = null, ?callable $callback = null, ?ExportField $field = null, ?int $row = null): void
     {
         $value = \is_callable($callback) ? $callback($value, $entity, $row) : $value;
         if ((null === $field || false !== $field->getOption('trim')) && \is_string($value)) {
@@ -310,11 +231,7 @@ abstract class EntityExporter
         $this->setCellValue($column++, $value, $field);
     }
 
-    /**
-     * @param $column
-     * @param $field
-     */
-    protected function addCellValueDate(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueDate(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null): void
     {
         $dateValue = $this->getEntityFieldValue($entity, $field);
         if ($dateValue instanceof DateTimeInterface) {
@@ -325,11 +242,7 @@ abstract class EntityExporter
         $this->addCellValue($column, $dateValue, $entity, $callback, $exportField, $row);
     }
 
-    /**
-     * @param $column
-     * @param $field
-     */
-    protected function addCellValueAuto(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueAuto(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null): void
     {
         if (false !== strpos($field, '.')) {
             $this->addCellValueRelation($column, $field, $entity, $callback, $exportField, $row);
@@ -338,27 +251,19 @@ abstract class EntityExporter
         }
     }
 
-    /**
-     * @param $column
-     * @param $field
-     */
-    protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueBool(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null): void
     {
         $this->addCellValueAuto($column, $field, $entity, null === $callback ? function ($value) {
             return $this->trans('general.label.' . ($value ? 'yes' : 'no'));
         } : $callback, $exportField, $row);
     }
 
-    /**
-     * @param $column
-     * @param $field
-     */
-    protected function addCellValueRelation(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null)
+    protected function addCellValueRelation(&$column, $field, ?object $entity = null, ?callable $callback = null, ?ExportField $exportField = null, ?int $row = null): void
     {
         $this->addCellValue($column, $this->getRelationValue($entity, $field), $entity, $callback, $exportField, $row);
     }
 
-    protected function writeData()
+    protected function writeData(): void
     {
         set_time_limit(0);
         ini_set('memory_limit', '-1');
@@ -400,8 +305,9 @@ abstract class EntityExporter
         $this->postWriteData($this->getHeaders());
     }
 
-    protected function write()
+    protected function write(): void
     {
+        $this->init();
         $this->addFields();
 
         $this->writeHeader();

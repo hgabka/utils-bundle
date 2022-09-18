@@ -18,28 +18,17 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 trait ExcelTrait
 {
-    /** @var string */
-    protected $workSheetName;
+    protected ?string $workSheetName;
 
-    /** @var Spreadsheet */
-    protected $spreadsheet;
+    protected ?Spreadsheet $spreadsheet;
 
-    /** @var null|array|string */
-    protected $autoSizeColumns = true;
+    protected bool $autoSizeColumns = true;
 
-    /**
-     * @return string
-     */
     public function getWorkSheetName(): string
     {
         return $this->workSheetName;
     }
 
-    /**
-     * @param string $workSheetName
-     *
-     * @return self
-     */
     public function setWorkSheetName(string $workSheetName): self
     {
         if ($workSheetName) {
@@ -51,7 +40,7 @@ trait ExcelTrait
         return $this;
     }
 
-    protected function init()
+    protected function init(): void
     {
         $this->spreadsheet = new Spreadsheet();
         $this
@@ -82,7 +71,7 @@ trait ExcelTrait
         $writer->save($filename);
     }
 
-    protected function postWriteData(array $fields)
+    protected function postWriteData(array $fields): void
     {
         if (!empty($this->getWorkSheetName())) {
             $this->getActiveSheet()->setTitle($this->getWorkSheetName())
@@ -139,31 +128,27 @@ trait ExcelTrait
         }
     }
 
-    protected function getCellName($column, $row)
+    protected function getCellName($column, $row): string
     {
-        return $column = XlsxWriter::formatColumnName($column) . $row;
+        return XlsxWriter::formatColumnName($column) . $row;
     }
 
     /**
      * Set column label and make column auto size.
      *
-     * @param string $column
-     * @param string $value
+     * @param mixed $column
+     * @param mixed $value
      *
      * @throws Exception
      */
-    protected function setHeader(&$column, $value)
+    protected function setHeader(&$column, $value): void
     {
         parent::setHeader($column, $value);
 
         $thisCol = XlsxWriter::formatColumnName($column);
-        $this->getActiveSheet()->getColumnDimension($thisCol)->setAutoSize(true)
-        ;
+        $this->getActiveSheet()->getColumnDimension($thisCol)->setAutoSize(true);
     }
 
-    /**
-     * @return Worksheet
-     */
     protected function getActiveSheet(): Worksheet
     {
         return $this->spreadsheet->getActiveSheet();
@@ -172,13 +157,11 @@ trait ExcelTrait
     /**
      * Sets cell value.
      *
-     * @param mixed|string     $column
-     * @param string           $value
-     * @param null|ExportField $field
+     * @param mixed $column
      *
      * @throws Exception
      */
-    protected function setCellValue($column, $value, ?ExportField $field = null)
+    protected function setCellValue($column, ?string $value, ?ExportField $field = null): void
     {
         $cell = XlsxWriter::formatColumnName($column) . ($this->currentRow);
         $this->getActiveSheet()->setCellValue($cell, $value)
@@ -201,7 +184,7 @@ trait ExcelTrait
     /**
      * Makes header bold.
      */
-    protected function setHeaderStyle()
+    protected function setHeaderStyle(): void
     {
         $style = $this->getActiveSheet()->getStyle(
             sprintf(
@@ -217,12 +200,9 @@ trait ExcelTrait
                 'color' => ['rgb' => 'dddddd'],
             ],
         ]);
-        $style->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)
-        ;
-        $style->getFont()->setBold(true)
-        ;
-        $this->getActiveSheet()->getRowDimension('1')->setRowHeight(30)
-        ;
+        $style->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+        $style->getFont()->setBold(true);
+        $this->getActiveSheet()->getRowDimension('1')->setRowHeight(30);
     }
 
     protected function getMimeType(): string

@@ -6,17 +6,17 @@ use Hgabka\UtilsBundle\Export\ExportField;
 
 trait CsvTrait
 {
-    protected $rows = [];
+    protected array $rows = [];
 
     /** @var string */
-    protected $separator = ';';
+    protected string $separator = ';';
 
     /** @var bool */
-    protected $withBOM = false;
+    protected bool $withBOM = false;
 
-    protected $encoding;
+    protected ?string $encoding = null;
 
-    protected function init()
+    protected function init(): void
     {
     }
 
@@ -38,7 +38,7 @@ trait CsvTrait
         fclose($fp);
     }
 
-    protected function setCellValue($column, $value, ExportField $field = null)
+    protected function setCellValue($column, $value, ExportField $field = null): void
     {
         if (!array_key_exists($this->currentRow, $this->rows)) {
             $this->rows[$this->currentRow] = [];
