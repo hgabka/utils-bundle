@@ -4,9 +4,11 @@
     <div class="a2lix_translations tabbable">
         {% if fieldCount > 1 %}
             {% set activeLocale = app.request.locale %}
+            {% set hasError = false %}
             {% for translationsFields in form %}
-                {% if form.vars.submitted and not translationsFields.vars.valid and activeLocale == app.request.locale %}
+                {% if form.vars.submitted and not translationsFields.vars.valid and not hasError %}
                     {% set activeLocale = translationsFields.vars.name %}
+                    {% set hasError = true %}
                 {% endif %}
             {% endfor %}
             <ul class="a2lix_translationsLocales nav nav-tabs">
