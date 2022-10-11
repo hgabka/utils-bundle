@@ -23,7 +23,9 @@ class SortableCollectionHandler
 
     reOrder() {
         let i = 1;
-        let $rows = $(this.options.containerSelector).find(this.options.rowSelector);
+        let $collectionHolder = $(this.options.containerSelector);
+        let $rows = $collectionHolder.find(this.options.rowSelector);
+        
         $rows.each((index, element) => {
             let $element = $(element);
             let $container = $(element).find('.col-xs-11');
