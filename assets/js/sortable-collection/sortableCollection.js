@@ -23,7 +23,9 @@ class SortableCollectionHandler
 
     reOrder() {
         let i = 1;
-        let $rows = $(this.options.containerSelector).find(this.options.rowSelector);
+        let $collectionHolder = $(this.options.containerSelector);
+        let $rows = $collectionHolder.find(this.options.rowSelector);
+        
         $rows.each((index, element) => {
             let $element = $(element);
             let $container = $(element).find('.col-xs-11');
@@ -80,13 +82,23 @@ class SortableCollectionHandler
                     $element.addClass('has-last');
                 }
             }
-
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
         });
+        
+        this.addSortHandlers($collectionHolder);
     }
 
     init() {
         let $collectionHolder = $(this.options.containerSelector);
+        let $addButton = $collectionHolder.find('.sonata-collection-add');
+        let $div = $addButton.parent('div');
+		
+		if (!$div.is(this.options.containerSelector)) {
+			let html = $div.html();
+			$div.remove();
+			$collectionHolder.append(html);
+		}
+        
         $collectionHolder.find('.sonata-collection-add i').prepend('<span style="pointer-events: none;">Hozzáadás</span>');
         $collectionHolder.addClass('sortable-collection');
         if ($collectionHolder.length) {
@@ -128,28 +140,34 @@ class SortableCollectionHandler
                 setTimeout(this.reOrder, 200);
             });
 
-            $collectionHolder.on('click', '.move-down', e => {
-                let $target = $(e.currentTarget);
-                this.moveDown($target.closest(this.options.rowSelector));
-            });
-
-            $collectionHolder.on('click', '.move-last', e => {
-                let $target = $(e.currentTarget);
-                this.moveLast($target.closest(this.options.rowSelector), $collectionHolder);
-            });
-
-            $collectionHolder.on('click', '.move-up', e => {
-                let $target = $(e.currentTarget);
-                this.moveUp($target.closest(this.options.rowSelector));
-            });
-
-            $collectionHolder.on('click', '.move-first', e => {
-                let $target = $(e.currentTarget);
-                this.moveFirst($target.closest(this.options.rowSelector), $collectionHolder);
-            });
-
             this.reOrder();
         }
+    }
+
+    addSortHandlers = ($collectionHolder) => {
+        $collectionHolder.off('click.sortable-collection');
+
+        $collectionHolder.on('click.sortable-collection', '.move-down', e => {
+            let $target = $(e.currentTarget);
+            this.moveDown($target.closest(this.options.rowSelector));
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-last', e => {
+            let $target = $(e.currentTarget);
+            this.moveLast($target.closest(this.options.rowSelector), $collectionHolder);
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-up', e => {
+            let $target = $(e.currentTarget);
+					console.log($target.closest(this.options.rowSelector));
+            this.moveUp($target.closest(this.options.rowSelector));
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-first', e => {
+            let $target = $(e.currentTarget);
+            this.moveFirst($target.closest(this.options.rowSelector), $collectionHolder);
+        });
+
     }
 
     moveDown($box) {
