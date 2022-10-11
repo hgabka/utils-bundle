@@ -80,8 +80,8 @@ class SortableCollectionHandler
                     $element.addClass('has-last');
                 }
             }
-
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
+            this.addSortHandlers($collectionHolder);
         });
     }
 
@@ -128,28 +128,35 @@ class SortableCollectionHandler
                 setTimeout(this.reOrder, 200);
             });
 
-            $collectionHolder.on('click', '.move-down', e => {
-                let $target = $(e.currentTarget);
-                this.moveDown($target.closest(this.options.rowSelector));
-            });
-
-            $collectionHolder.on('click', '.move-last', e => {
-                let $target = $(e.currentTarget);
-                this.moveLast($target.closest(this.options.rowSelector), $collectionHolder);
-            });
-
-            $collectionHolder.on('click', '.move-up', e => {
-                let $target = $(e.currentTarget);
-                this.moveUp($target.closest(this.options.rowSelector));
-            });
-
-            $collectionHolder.on('click', '.move-first', e => {
-                let $target = $(e.currentTarget);
-                this.moveFirst($target.closest(this.options.rowSelector), $collectionHolder);
-            });
+            this.addSortHandlers($collectionHolder);
 
             this.reOrder();
         }
+    }
+
+    addSortHandlers = ($collectionHolder) => {
+        $collectionHolder.off('click.sortable-collection');
+
+        $collectionHolder.on('click.sortable-collection', '.move-down', e => {
+            let $target = $(e.currentTarget);
+            this.moveDown($target.closest(this.options.rowSelector));
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-last', e => {
+            let $target = $(e.currentTarget);
+            this.moveLast($target.closest(this.options.rowSelector), $collectionHolder);
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-up', e => {
+            let $target = $(e.currentTarget);
+            this.moveUp($target.closest(this.options.rowSelector));
+        });
+
+        $collectionHolder.on('click.sortable-collection', '.move-first', e => {
+            let $target = $(e.currentTarget);
+            this.moveFirst($target.closest(this.options.rowSelector), $collectionHolder);
+        });
+
     }
 
     moveDown($box) {
