@@ -1,0 +1,41 @@
+{% block a2lix_translations_widget %}
+    {{ form_errors(form) }}
+    {% set fieldCount = form | length %}
+    <div class="a2lix_translations tabbable">
+        {% if fieldCount > 1 %}
+            {% set activeLocale = app.request.locale %}
+            {% for translationsFields in form %}
+                {% if form.vars.submitted and not translationsFields.vars.valid and activeLocale == app.request.locale %}
+                    {% set activeLocale = translationsFields.vars.name %}
+                {% endif %}
+            {% endfor %}
+            <ul class="a2lix_translationsLocales nav nav-tabs">
+                {% for translationsFields in form %}
+                    {% set locale = translationsFields.vars.name %}
+                    <li {% if activeLocale == locale %}class="active"{% endif %}>
+                        <a href="#{{ locale }}" data-toggle="tab" data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}">
+                            {% if form.vars.submitted %}<i title="Hibás mezők" class="fas fa-exclamation-circle has-errors"{% if not translationsFields.vars.valid %} style="display:inline !important;"{% endif %} aria-hidden="true"></i>{% endif %}
+                            {{ 'form.translation_tab'|trans({'%locale%': locale_display_name(locale)}) }}
+                            {% if form.vars.default_locale == locale %}{% endif %}
+                            {% if translationsFields.vars.required %}*{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="a2lix_translationsFields tab-content{% if fieldCount >1 %} panel panel-default form-properties tab-content-custom{% endif %}">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
+
+                <div class="{% if fieldCount >1 %}panel-body {% endif %}{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} tab-pane {% if activeLocale == locale %}active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}">
+                    {{ form_errors(translationsFields) }}
+                    {{ form_widget(translationsFields) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block a2lix_translationsForms_widget %}
+    {{ block('a2lix_translations_widget') }}
+{% endblock %}
