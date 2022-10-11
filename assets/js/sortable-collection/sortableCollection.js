@@ -83,9 +83,9 @@ class SortableCollectionHandler
                 }
             }
             $element.find('input[name$="[' + this.options.sortFieldName + ']"]').val(i++);
-            
-            this.addSortHandlers($collectionHolder);
         });
+        
+        this.addSortHandlers($collectionHolder);
     }
 
     init() {
