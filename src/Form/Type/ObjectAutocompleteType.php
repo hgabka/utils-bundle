@@ -2,7 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Form\Type;
 
-use Doctrine\Common\Persistence\AbstractManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Hgabka\UtilsBundle\Form\Transformer\ObjectAutocompleteViewTransformer;
 use Symfony\Bridge\Doctrine\Form\EventListener\MergeDoctrineCollectionListener;
 use Symfony\Component\Form\AbstractType;
@@ -16,15 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObjectAutocompleteType extends AbstractType
 {
-    /**
-     * @var AbstractManagerRegistry
-     */
-    private $registry;
-
-    public function __construct(AbstractManagerRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
+    public function __construct(protected Registry $registry) {}
 
     /**
      * {@inheritdoc}
