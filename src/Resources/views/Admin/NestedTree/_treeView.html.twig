@@ -1,5 +1,6 @@
 <li id="node-{{ treeNode.id }}" class="{% if treeNode.id in parentIds %}jstree-open{% endif %}" data-jstree='{"type":"folder"}'
     data-page="{{ {'class': 'category', 'children': [{'class' : 'category'}]}|json_encode }}"
+    {% if not admin.hasAccess('reorder') or (treeNode.unmovable is defined and treeNode.unmovable is same as false) or admin.canBeMoved is defined and admin.canBeMoved(treeNode.id) is same as false %}data-unmovable="true"{% endif %}
     data-folder-id="{{ treeNode.id }}"
     rel="page">
     <a href="{{ admin.generateUrl('list', { (admin.idParameter) : treeNode.id }) }}" class="{% if object is not null and object.id == treeNode.id %}active{% endif %}">
