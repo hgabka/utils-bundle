@@ -297,7 +297,7 @@ class AclHelper
                 '\\',
                 '\\\\',
                 \get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+            ) . '-' . $user->getUserIdentifier() . '"';
         }
 
         $selectQuery = <<<SELECTQUERY
