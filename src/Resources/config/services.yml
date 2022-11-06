@@ -132,6 +132,12 @@ services:
         tags:
             - { name: form.type }
 
+    hgabka_utils.form.invisible_recaptcha_type:
+        class: Hgabka\UtilsBundle\Form\Type\InvisibleRecaptchaType
+        arguments: ['']
+        tags:
+            - { name: form.type }
+
     hgabka_utils.validator.recaptcha:
         class: Hgabka\UtilsBundle\Validator\Constraints\RecaptchaValidator
         arguments: ["@request_stack", "@hgabka_utils.hgabka_utils", '']

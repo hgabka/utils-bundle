@@ -75,6 +75,9 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
         $recaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
 
+        $invisibleRecaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.invisible_recaptcha_type');
+        $invisibleRecaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
+
         $recaptchaValidatorDefinition = $container->getDefinition('hgabka_utils.validator.recaptcha');
         $recaptchaValidatorDefinition->replaceArgument(2, $config['recaptcha']['secret'] ?? null);
 
@@ -176,7 +179,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
                             'globals' => [
                                 'recaptcha_sitekey' => $config['recaptcha']['site_key'],
                                 'recaptcha_secret' => $config['recaptcha']['secret'],
-                            ]
+                            ],
                         ]
                     );
 

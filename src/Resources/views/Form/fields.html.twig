@@ -130,6 +130,12 @@
     <div id="recaptcha" class="g-recaptcha" data-sitekey="{{ sitekey }}" {{ block('widget_attributes') }}></div>
 {% endblock %}
 
+{% block invisible_recaptcha_widget %}
+    <div class="captcha-holder" id="{{ form.vars.id }}" data-action="{{ action }}" data-sitekey="{{ sitekey }}">
+        <input type="hidden" name="g-recaptcha-response" />
+    </div>
+{% endblock %}
+
 {% block color_widget %}
     {% apply spaceless %}
         <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>

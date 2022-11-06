@@ -16,7 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObjectAutocompleteType extends AbstractType
 {
-    public function __construct(protected Registry $registry) {}
+    public function __construct(protected Registry $registry)
+    {
+    }
 
     /**
      * {@inheritdoc}

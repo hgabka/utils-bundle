@@ -2,7 +2,6 @@
 
 namespace Hgabka\UtilsBundle\Form\Transformer;
 
-use App\Repository\ChipboardMatchingQualityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
@@ -11,7 +10,9 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ObjectAutocompleteViewTransformer implements DataTransformerInterface
 {
-    public function __construct(protected EntityRepository $repository, protected ?string $callback) {}
+    public function __construct(protected EntityRepository $repository, protected ?string $callback)
+    {
+    }
 
     /**
      * Transforms a collection into an array.

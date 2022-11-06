@@ -2,15 +2,15 @@
 
 namespace Hgabka\UtilsBundle\Form\Transformer;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ObjectAutocompleteItemViewTransformer implements DataTransformerInterface
 {
-    public function __construct(protected EntityRepository $repository, protected ?string $callback) {}
-
+    public function __construct(protected EntityRepository $repository, protected ?string $callback)
+    {
+    }
 
     /**
      * Transforms a string into an array.
