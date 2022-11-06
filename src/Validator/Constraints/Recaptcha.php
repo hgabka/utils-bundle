@@ -10,9 +10,9 @@ use Symfony\Component\Validator\Constraint;
 class Recaptcha extends Constraint
 {
     public string $message = 'hg_utils.recaptcha.message';
-    
+
     public string $mode = 'normal';
-    
+
     public float $minimumScore = 0.2;
 
     #[HasNamedArguments]

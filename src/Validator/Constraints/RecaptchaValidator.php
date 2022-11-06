@@ -16,7 +16,9 @@ class RecaptchaValidator extends ConstraintValidator
      */
     public const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
-    public function __construct(protected readonly RequestStack $requestStack, protected readonly HgabkaUtils $hgabkaUtils, protected readonly ?string $secret) {}
+    public function __construct(protected readonly RequestStack $requestStack, protected readonly HgabkaUtils $hgabkaUtils, protected readonly ?string $secret)
+    {
+    }
 
     /**
      * {@inheritdoc}
