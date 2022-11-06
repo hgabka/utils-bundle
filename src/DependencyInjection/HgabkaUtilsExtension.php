@@ -65,6 +65,9 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
         $container->setParameter('hgabka_utils.public_access_role', $config['public_access_role']);
         $container->setParameter('hgabka_utils.admin_firewall_name', $config['admin_firewall_name']);
+        
+        $container->setParameter('hgabka_utils.recaptcha.site_key', $config['recaptcha']['site_key'] ?? null);
+        $container->setParameter('hgabka_utils.recaptcha.secret', $config['recaptcha']['secret'] ?? null);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
