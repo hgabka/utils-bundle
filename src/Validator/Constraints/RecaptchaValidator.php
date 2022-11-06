@@ -16,30 +16,7 @@ class RecaptchaValidator extends ConstraintValidator
      */
     public const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
-    /**
-     * @var string
-     */
-    protected $secret;
-
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /** @var HgabkaUtils */
-    protected $hgabkaUtils;
-
-    /**
-     * RecaptchaValidator constructor.
-     *
-     * @param string $secret
-     */
-    public function __construct(RequestStack $requestStack, HgabkaUtils $hgabkaUtils, $secret)
-    {
-        $this->secret = $secret;
-        $this->requestStack = $requestStack;
-        $this->hgabkaUtils = $hgabkaUtils;
-    }
+    public function __construct(protected readonly RequestStack $requestStack, protected readonly HgabkaUtils $hgabkaUtils, protected readonly ?string $secret) {}
 
     /**
      * {@inheritdoc}
@@ -54,7 +31,7 @@ class RecaptchaValidator extends ConstraintValidator
         $remoteip = $request->getClientIp();
         $response = $request->get('g-recaptcha-response');
 
-        $isValid = $this->checkAnswer($this->secret, $remoteip, $response);
+        $isValid = $this->checkAnswer($this->secret, $remoteip, $response, $constraint->mode, $constraint->minimumScore);
         if (!$isValid) {
             $this->context->addViolation($constraint->message);
         }
@@ -71,7 +48,7 @@ class RecaptchaValidator extends ConstraintValidator
      *
      * @return bool
      */
-    private function checkAnswer($privateKey, $remoteip, $response)
+    private function checkAnswer(?string $privateKey, ?string $remoteip, ?string $response, ?string $mode, float $minimumScore): bool
     {
         if (null === $remoteip || '' === $remoteip) {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
@@ -89,7 +66,11 @@ class RecaptchaValidator extends ConstraintValidator
         $result = json_decode($result, true);
 
         if (isset($result['success']) && true === $result['success']) {
-            return true;
+            if ('invisible' !== $mode) {
+                return true;
+            }
+
+            return isset($result['score']) && (float) $result['score'] >= $minimumScore;
         }
 
         return false;
