@@ -65,7 +65,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
         $container->setParameter('hgabka_utils.public_access_role', $config['public_access_role']);
         $container->setParameter('hgabka_utils.admin_firewall_name', $config['admin_firewall_name']);
-        
+
         $container->setParameter('hgabka_utils.recaptcha.site_key', $config['recaptcha']['site_key'] ?? null);
         $container->setParameter('hgabka_utils.recaptcha.secret', $config['recaptcha']['secret'] ?? null);
 
@@ -95,8 +95,8 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
     public function prepend(ContainerBuilder $container)
     {
         $configs = $container->getExtensionConfig($this->getAlias());
-        $this->processConfiguration(new Configuration(), $configs);
-        $this->configureTwigBundle($container);
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->configureTwigBundle($container, $config);
     }
 
     public function process(ContainerBuilder $container)
@@ -164,14 +164,20 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('doctrine.dbal.connection_factory.types', $typesDefinition);
     }
 
-    protected function configureTwigBundle(ContainerBuilder $container)
+    protected function configureTwigBundle(ContainerBuilder $container, $config)
     {
         foreach (array_keys($container->getExtensions()) as $name) {
             switch ($name) {
                 case 'twig':
                     $container->prependExtensionConfig(
                         $name,
-                        ['form_themes' => [$this->formTypeTemplate]]
+                        [
+                            'form_themes' => [$this->formTypeTemplate],
+                            'globals' => [
+                                'recaptcha_sitekey' => $config['recaptcha']['site_key'],
+                                'recaptcha_secret' => $config['recaptcha']['secret'],
+                            ]
+                        ]
                     );
 
                     break;
