@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Validator\Constraints;
 
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use json_decode;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
@@ -16,9 +17,11 @@ class RecaptchaValidator extends ConstraintValidator
      */
     public const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
-    public function __construct(protected readonly RequestStack $requestStack, protected readonly HgabkaUtils $hgabkaUtils, protected readonly ?string $secret)
-    {
-    }
+    public function __construct(
+        protected readonly RequestStack $requestStack,
+        protected readonly HgabkaUtils $hgabkaUtils,
+        protected readonly ?string $secret
+    ) {}
 
     /**
      * {@inheritdoc}
@@ -33,7 +36,7 @@ class RecaptchaValidator extends ConstraintValidator
         $remoteip = $request->getClientIp();
         $response = $request->get('g-recaptcha-response');
 
-        $isValid = $this->checkAnswer($this->secret, $remoteip, $response, $constraint->mode, $constraint->minimumScore);
+        $isValid = $this->checkAnswer($this->secret, $remoteip, $response, $constraint->mode, $constraint->action, $constraint->minimumScore);
         if (!$isValid) {
             $this->context->addViolation($constraint->message);
         }
@@ -42,15 +45,10 @@ class RecaptchaValidator extends ConstraintValidator
     /**
      * Calls an HTTP POST function to verify if the user's guess was correct.
      *
-     * @param string $privateKey
-     * @param string $remoteip
-     * @param string $response
-     *
      * @throws ValidatorException When missing remote ip
      *
-     * @return bool
      */
-    private function checkAnswer(?string $privateKey, ?string $remoteip, ?string $response, ?string $mode, float $minimumScore): bool
+    private function checkAnswer(?string $privateKey, ?string $remoteip, ?string $response, ?string $mode, ?string $action, float $minimumScore): bool
     {
         if (null === $remoteip || '' === $remoteip) {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
@@ -70,6 +68,10 @@ class RecaptchaValidator extends ConstraintValidator
         if (isset($result['success']) && true === $result['success']) {
             if ('invisible' !== $mode) {
                 return true;
+            }
+
+            if (!isset($result['action']) || $result['action'] !== $action) {
+                return false;
             }
 
             return isset($result['score']) && (float) $result['score'] >= $minimumScore;
