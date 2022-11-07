@@ -6,6 +6,7 @@ class RecaptchaHandler {
             submitSelector: 'button[type="submit"]',
             captchaHolderSelector: '.captcha-holder',
             hiddenInputName: 'g-recaptcha-response',
+            checkValidity: true,
         }, options);
     }
 
@@ -13,6 +14,13 @@ class RecaptchaHandler {
         $(this.options.submitSelector).click(e => {
             const $form = $(e.currentTarget).closest('form');
             const $holder = $form.find(this.options.captchaHolderSelector);
+            if (this.options.checkValidity) {
+                if (!$form[0].checkValidity()) {
+                    $form[0].reportValidity();
+
+                    return false;
+                }
+            }
             if ($holder.length > 0) {
                 e.preventDefault();
                 const sitekey = $holder.data('sitekey');
