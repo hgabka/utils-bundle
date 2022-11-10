@@ -28,6 +28,8 @@ class InvisibleRecaptchaType extends AbstractType
             'sitekey' => $this->siteKey,
             'action' => 'utils',
             'error_bubbling' => false,
+            'label' => false,
+            'mapped' => false,
         ]);
     }
 
