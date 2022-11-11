@@ -10,11 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InvisibleRecaptchaType extends AbstractType
 {
-    public function __construct(protected readonly ?string $siteKey)
-    {
-    }
+    public function __construct(protected readonly ?string $siteKey) {}
 
-    public function getParent()
+    public function getParent(): string
     {
         return FormType::class;
     }
@@ -22,7 +20,7 @@ class InvisibleRecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'sitekey' => $this->siteKey,
@@ -33,12 +31,12 @@ class InvisibleRecaptchaType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'invisible_recaptcha';
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
