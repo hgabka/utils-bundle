@@ -10,25 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RecaptchaType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    protected $siteKey;
+    public function __construct(private readonly ?string $siteKey) {}
 
-    public function __construct($siteKey)
-    {
-        $this->siteKey = $siteKey;
-    }
-
-    public function getParent()
+    public function getParent(): string
     {
         return FormType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'sitekey' => $this->siteKey,
@@ -36,12 +25,12 @@ class RecaptchaType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'recaptcha';
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
