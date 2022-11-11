@@ -11,20 +11,9 @@ use Twig\Environment;
 
 class StaticControlType extends AbstractType
 {
-    /** @var Environment */
-    protected $templating;
+    public function __construct(private readonly Environment $templating)  {}
 
-    /**
-     * StaticControlType constructor.
-     *
-     * @param TemplateRegistryInterface $twig
-     */
-    public function __construct(Environment $templating)
-    {
-        $this->templating = $templating;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
           'required' => false,
@@ -37,12 +26,12 @@ class StaticControlType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['is_html'] = !empty($options['html']) || !empty($options['template']);
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $isDate = false;
         $value = \is_string($view->vars['value']) || \is_object($view->vars['value']) ? (string) $view->vars['value'] : '';
@@ -65,12 +54,12 @@ class StaticControlType extends AbstractType
         $view->vars['value'] = $val;
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'hgabka_plain';
     }
