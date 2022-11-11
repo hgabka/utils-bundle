@@ -15,7 +15,7 @@ class DateTimepickerType extends DatepickerType
         'js-options' => [],
     ];
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($transform) {
@@ -36,12 +36,12 @@ class DateTimepickerType extends DatepickerType
         ));
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'datetimepicker';
     }
