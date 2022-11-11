@@ -11,13 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NumberRangeType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('start', $options['field_type'], array_merge(['required' => false], $options['field_options']));
         $builder->add('end', $options['field_type'], array_merge(['required' => false], $options['field_options']));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'field_options'    => [],
@@ -26,13 +26,12 @@ class NumberRangeType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        dump($options);
         $view->vars['labelPlacement'] = $options['label_placement'];
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'number_range';
     }
