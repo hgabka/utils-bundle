@@ -85,7 +85,7 @@
             var $selectedItem = this.$menu.find('.active');
             var text;
 
-            if($selectedItem.length) {
+            if ($selectedItem.length) {
                 var value = $selectedItem.attr('data-value');
 
                 if (value !== -21) {
@@ -120,7 +120,7 @@
                 left: pos.left
             });
 
-            if(this.options.alignWidth) {
+            if (this.options.alignWidth) {
                 var width = $(this.$element[0]).outerWidth();
                 this.$menu.css({
                     width: width
@@ -168,8 +168,9 @@
                 this.ajaxToggleLoadClass(true);
 
                 // Cancel last call if already in progress
-                if (this.ajax.xhr)
+                if (this.ajax.xhr) {
                     this.ajax.xhr.abort();
+                }
 
                 var params = this.ajax.preDispatch ? this.ajax.preDispatch(query) : {
                     query: query
@@ -193,13 +194,18 @@
         ajaxSource: function (data) {
             this.ajaxToggleLoadClass(false);
             var that = this, items;
-            if (!that.ajax.xhr)
+            if (!that.ajax.xhr) {
                 return;
+            }
             if (that.ajax.preProcess) {
                 data = that.ajax.preProcess(data);
             }
             // Save for selection retreival
             that.ajax.data = data;
+
+            if (typeof data === 'object' && 'html' in data) {
+                return that.render(data).show();
+            }
 
             // Manipulate objects
             items = that.grepper(that.ajax.data) || [];
@@ -211,16 +217,16 @@
             return that.render(items.slice(0, that.options.items)).show();
         },
         ajaxToggleLoadClass: function (enable) {
-            if (!this.ajax.loadingClass)
+            if (!this.ajax.loadingClass) {
                 return;
+            }
             this.$element.toggleClass(this.ajax.loadingClass, enable);
         },
         lookup: function (event) {
             var that = this, items;
             if (that.ajax) {
                 that.ajaxer();
-            }
-            else {
+            } else {
                 that.query = that.$element.val();
 
                 if (!that.query) {
@@ -228,7 +234,6 @@
                 }
 
                 items = that.grepper(that.source);
-
 
                 if (!items || items.length === 0) {
                     return that.shown ? that.hide() : that;
@@ -248,12 +253,13 @@
                     item;
 
                 while (item = items.shift()) {
-                    if (!item.toLowerCase().indexOf(this.query.toLowerCase()))
+                    if (!item.toLowerCase().indexOf(this.query.toLowerCase())) {
                         beginswith.push(item);
-                    else if (~item.indexOf(this.query))
+                    } else if (~item.indexOf(this.query)) {
                         caseSensitive.push(item);
-                    else
+                    } else {
                         caseInsensitive.push(item);
+                    }
                 }
 
                 return beginswith.concat(caseSensitive, caseInsensitive);
@@ -270,20 +276,26 @@
         render: function (items) {
             var that = this, display, isString = typeof that.options.displayField === 'string';
 
-            items = $(items).map(function (i, item) {
-                if (typeof item === 'object') {
-                    display = isString ? item[that.options.displayField] : that.options.displayField(item);
-                    i = $(that.options.item).attr('data-value', item[that.options.valueField]);
-                } else {
-                    display = item;
-                    i = $(that.options.item).attr('data-value', item);
-                }
-                i.find('a').html(that.highlighter(display));
-                return i[0];
-            });
+            let autoSelect = this.autoSelect;
+            if (typeof items === 'object' && 'html' in items) {
+                items = items.html;
+                autoSelect = false;
+            } else {
+                items = $(items).map(function (i, item) {
+                    if (typeof item === 'object') {
+                        display = isString ? item[that.options.displayField] : that.options.displayField(item);
+                        i = $(that.options.item).attr('data-value', item[that.options.valueField]);
+                    } else {
+                        display = item;
+                        i = $(that.options.item).attr('data-value', item);
+                    }
+                    i.find('a').html(that.highlighter(display));
+                    return i[0];
+                });
 
-            if(that.autoSelect){
-                items.first().addClass('active');
+                if (autoSelect) {
+                    items.first().addClass('active');
+                }
             }
 
             this.$menu.html(items);
@@ -370,8 +382,9 @@
             .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
         },
         move: function (e) {
-            if (!this.shown)
+            if (!this.shown) {
                 return
+            }
 
             switch (e.keyCode) {
                 case 9: // tab
@@ -398,8 +411,9 @@
             this.move(e)
         },
         keypress: function (e) {
-            if (this.suppressKeyPressRepeat)
+            if (this.suppressKeyPressRepeat) {
                 return
+            }
             this.move(e)
         },
         keyup: function (e) {
@@ -413,22 +427,25 @@
 
                 case 9: // tab
                 case 13: // enter
-                    if (!this.shown)
+                    if (!this.shown) {
                         return
+                    }
                     this.select()
                     break
 
                 case 27: // escape
-                    if (!this.shown)
+                    if (!this.shown) {
                         return
+                    }
                     this.hide()
                     break
 
                 default:
-                    if (this.ajax)
+                    if (this.ajax) {
                         this.ajaxLookup()
-                    else
+                    } else {
                         this.lookup()
+                    }
             }
 
             e.stopPropagation()
@@ -439,8 +456,9 @@
         },
         blur: function (e) {
             this.focused = false
-            if (!this.mousedover && this.shown)
+            if (!this.mousedover && this.shown) {
                 this.hide()
+            }
         },
         click: function (e) {
             e.stopPropagation()
@@ -455,10 +473,11 @@
         },
         mouseleave: function (e) {
             this.mousedover = false
-            if (!this.focused && this.shown)
+            if (!this.focused && this.shown) {
                 this.hide()
+            }
         },
-        destroy: function() {
+        destroy: function () {
             this.$element
             .off('focus', $.proxy(this.focus, this))
             .off('blur', $.proxy(this.blur, this))
@@ -477,7 +496,6 @@
         }
     };
 
-
     /* TYPEAHEAD PLUGIN DEFINITION
      * =========================== */
 
@@ -486,10 +504,12 @@
             var $this = $(this),
                 data = $this.data('typeahead'),
                 options = typeof option === 'object' && option;
-            if (!data)
+            if (!data) {
                 $this.data('typeahead', (data = new Typeahead(this, options)));
-            if (typeof option === 'string')
+            }
+            if (typeof option === 'string') {
                 data[option]();
+            }
         });
     };
 
@@ -524,8 +544,9 @@
     $(function () {
         $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
             var $this = $(this);
-            if ($this.data('typeahead'))
+            if ($this.data('typeahead')) {
                 return;
+            }
             e.preventDefault();
             $this.typeahead($this.data());
         });
