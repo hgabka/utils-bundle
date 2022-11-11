@@ -6,25 +6,20 @@ use Doctrine\ORM\EntityManager;
 use Hgabka\UtilsBundle\Entity\Group;
 use Hgabka\UtilsBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to create a group using bin/console kuma:group:create <name_of_the_group>.
- */
+#[AsCommand(name: 'hgabka:group:create', description: 'Creates a user group', hidden: false)]
 class CreateGroupCommand extends ContainerAwareCommand
 {
-    /**
-     * Configures the current command.
-     */
     protected function configure()
     {
         parent::configure();
 
-        $this->setName('hgabka:group:create')
-            ->setDescription('Create a user group.')
+        $this
             ->setDefinition([
                 new InputArgument('group', InputArgument::REQUIRED, 'The group'),
                 new InputOption('role', null, InputOption::VALUE_OPTIONAL, 'Role(s) (comma separated list if you want to specifiy multiple roles)'),

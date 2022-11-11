@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\NodeBundle\Command\InitAclCommand;
 use Hgabka\NodeBundle\Entity\Node;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,27 +20,14 @@ use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
-/**
- * Permissions update of ACL entries for all nodes for given role.
- */
+#[AsCommand(name: 'hgabka:acl:update', description: 'Permissions update of ACL entries for all nodes for given role', hidden: false)]
 class UpdateAclCommand extends Command
 {
-    protected static $defaultName = 'hgabka:acl:update';
-
     /** @var ObjectIdentityRetrievalStrategy */
     protected $oiaStrategy;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var AclProviderInterface */
     private $aclProvider;
-
-    /** @var PermissionMap */
-    private $permissionMap;
-
-    /** @var array */
-    private $roles;
 
     /**
      * @param ObjectIdentityRetrievalStrategy $oiaStrategy
@@ -47,14 +35,9 @@ class UpdateAclCommand extends Command
      * @param AclProviderInterface            $aclProvider
      * @param array                           $roles
      */
-    public function __construct(EntityManagerInterface $entityManager, PermissionMap $permissionMap, array $roles)
+    public function __construct(protected readonly EntityManagerInterface $entityManager, protected readonly PermissionMap $permissionMap, protected readonly array $roles)
     {
         parent::__construct();
-
-        $this->entityManager = $entityManager;
-        $this->permissionMap = $permissionMap;
-
-        $this->roles = $roles;
     }
 
     public function setAclProvider(AclProviderInterface $provider)
@@ -81,8 +64,7 @@ class UpdateAclCommand extends Command
     {
         parent::configure();
 
-        $this->setName(static::$defaultName)
-            ->setDescription('Permissions update of ACL entries for all nodes for given role')
+        $this
             ->setHelp('The <info>hgabka:update:acl</info> will update ACL entries for the nodes of the current project' .
                 'with given role and permissions');
     }

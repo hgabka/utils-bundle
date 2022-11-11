@@ -3,27 +3,19 @@
 namespace FOS\UserBundle\Command;
 
 use FOS\UserBundle\Util\UserManipulator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-/**
- * @internal
- * @final
- */
+#[AsCommand(name: 'fos:user:change-password', description: 'Changes the password of a user', hidden: false)]
 class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'fos:user:change-password';
-
-    private $userManipulator;
-
-    public function __construct(UserManipulator $userManipulator)
+    public function __construct(private readonly UserManipulator $userManipulator)
     {
         parent::__construct();
-
-        $this->userManipulator = $userManipulator;
     }
 
     /**
@@ -32,8 +24,6 @@ class ChangePasswordCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('fos:user:change-password')
-            ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),

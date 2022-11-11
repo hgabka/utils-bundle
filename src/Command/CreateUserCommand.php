@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Command;
 
 use Hgabka\UtilsBundle\Util\UserManipulator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,25 +11,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-/**
- * @author Matthieu Bontemps <matthieu@knplabs.com>
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Luis Cordova <cordoval@gmail.com>
- *
- * @internal
- * @final
- */
+#[AsCommand(name: 'hgabka:backend-user:create', description: 'Creates a backend user', hidden: false)]
 class CreateUserCommand extends Command
 {
-    protected static $defaultName = 'hgabka:backend-user:create';
-
-    private $userManipulator;
-
-    public function __construct(UserManipulator $userManipulator)
+    public function __construct(private readonly UserManipulator $userManipulator)
     {
         parent::__construct();
-
-        $this->userManipulator = $userManipulator;
     }
 
     /**
@@ -37,8 +25,6 @@ class CreateUserCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(self::$defaultName)
-            ->setDescription('Create a backend user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),

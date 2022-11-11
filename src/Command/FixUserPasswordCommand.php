@@ -4,9 +4,11 @@ namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'hgabka:fix:user-password', description: 'Sets the password changed value to true for all users', hidden: false)]
 class FixUserPasswordCommand extends ContainerAwareCommand
 {
     /**
@@ -16,8 +18,7 @@ class FixUserPasswordCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('hgabka:fix:user-password')
-            ->setDescription('Set the password changed value to true for all users.')
+        $this
             ->setHelp('The <info>hgabkaa:fix:user-password</info> command can be used to set password changed for all users to true.');
     }
 

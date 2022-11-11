@@ -3,29 +3,19 @@
 namespace FOS\UserBundle\Command;
 
 use FOS\UserBundle\Util\UserManipulator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-/**
- * @author Antoine Hérault <antoine.herault@gmail.com>
- *
- * @internal
- * @final
- */
+#[AsCommand(name: 'fos:user:deactivate', description: 'Deactivates a user', hidden: false)]
 class DeactivateUserCommand extends Command
 {
-    protected static $defaultName = 'fos:user:deactivate';
-
-    private $userManipulator;
-
-    public function __construct(UserManipulator $userManipulator)
+    public function __construct(private readonly UserManipulator $userManipulator)
     {
         parent::__construct();
-
-        $this->userManipulator = $userManipulator;
     }
 
     /**
@@ -34,8 +24,6 @@ class DeactivateUserCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('fos:user:deactivate')
-            ->setDescription('Deactivate a user')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
             ])

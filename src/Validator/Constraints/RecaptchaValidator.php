@@ -3,7 +3,6 @@
 namespace Hgabka\UtilsBundle\Validator\Constraints;
 
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
-use json_decode;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
@@ -21,7 +20,8 @@ class RecaptchaValidator extends ConstraintValidator
         protected readonly RequestStack $requestStack,
         protected readonly HgabkaUtils $hgabkaUtils,
         protected readonly ?string $secret
-    ) {}
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -46,7 +46,6 @@ class RecaptchaValidator extends ConstraintValidator
      * Calls an HTTP POST function to verify if the user's guess was correct.
      *
      * @throws ValidatorException When missing remote ip
-     *
      */
     private function checkAnswer(?string $privateKey, ?string $remoteip, ?string $response, ?string $mode, ?string $action, float $minimumScore): bool
     {

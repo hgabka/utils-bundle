@@ -11,7 +11,9 @@ use Twig\Environment;
 
 class StaticControlType extends AbstractType
 {
-    public function __construct(private readonly Environment $templating)  {}
+    public function __construct(private readonly Environment $templating)
+    {
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

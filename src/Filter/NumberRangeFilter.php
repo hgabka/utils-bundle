@@ -6,7 +6,6 @@ use function array_key_exists;
 use Hgabka\UtilsBundle\Form\Type\NumberRangeType;
 use function is_array;
 use Sonata\AdminBundle\Filter\Model\FilterData;
-use Sonata\AdminBundle\Form\Type\Filter\DefaultType;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\Filter;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

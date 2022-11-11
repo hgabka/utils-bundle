@@ -9,7 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocaleType extends AbstractType
 {
-    public function __construct(private readonly HgabkaUtils $hgabkaUtils) {}
+    public function __construct(private readonly HgabkaUtils $hgabkaUtils)
+    {
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

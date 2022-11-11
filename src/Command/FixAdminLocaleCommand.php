@@ -4,23 +4,18 @@ namespace Hgabka\UtilsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to set admin locale.
- */
+#[AsCommand(name: 'hgabka:fix:admin-locale', description: 'Sets the admin locale for all users to the default admin locale', hidden: false)]
 class FixAdminLocaleCommand extends ContainerAwareCommand
 {
-    /**
-     * Configures the command.
-     */
     protected function configure()
     {
         parent::configure();
 
-        $this->setName('hgabka:fix:admin-locale')
-            ->setDescription('Set the admin locale for all users to the default admin locale.')
+        $this
             ->setHelp('The <info>hgabka:fix:admin-locale</info> command can be used to set the admin locale for all users to the default admin locale.');
     }
 

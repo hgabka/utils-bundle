@@ -10,7 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InvisibleRecaptchaType extends AbstractType
 {
-    public function __construct(protected readonly ?string $siteKey) {}
+    public function __construct(protected readonly ?string $siteKey)
+    {
+    }
 
     public function getParent(): string
     {

@@ -3,29 +3,17 @@
 namespace Hgabka\UtilsBundle\Command;
 
 use Hgabka\UtilsBundle\Util\UserManipulator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Antoine Hérault <antoine.herault@gmail.com>
- * @author Lenar Lõhmus <lenar@city.ee>
- *
- * @internal
- * @final
- */
+#[AsCommand(name: 'hgabka:backend-user:demote', description: 'Demotes a user by removing a role', hidden: false)]
 class DemoteUserCommand extends RoleCommand
 {
-    protected static $defaultName = 'hgabka:backend-user:demote';
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         parent::configure();
 
         $this
-            ->setName(self::$defaultName)
-            ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'
                     The <info>fos:user:demote</info> command demotes a user by removing a role

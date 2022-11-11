@@ -7,6 +7,7 @@ use Hgabka\UtilsBundle\Entity\AclChangeset;
 use Hgabka\UtilsBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Hgabka\UtilsBundle\Helper\Shell\Shell;
 use Hgabka\UtilsBundle\Repository\AclChangesetRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,32 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities.
  */
+#[AsCommand(name: 'hgabka:acl:apply', description: 'Applies ACL changeset', hidden: false)]
 class ApplyAclCommand extends Command
 {
-    protected static $defaultName = 'hgabka:acl:apply';
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /**
-     * @var Shell
-     */
-    private $shellHelper;
-
-    /** @var PermissionAdmin */
-    private $permissionAdmin;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Shell                  $shellHelper
-     */
-    public function __construct(EntityManagerInterface $entityManager, Shell $shellHelper, PermissionAdmin $permissionAdmin)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly Shell $shellHelper,
+        private readonly PermissionAdmin $permissionAdmin
+    ) {
         parent::__construct();
-
-        $this->entityManager = $entityManager;
-        $this->shellHelper = $shellHelper;
-        $this->permissionAdmin = $permissionAdmin;
     }
 
     /**
@@ -49,8 +33,7 @@ class ApplyAclCommand extends Command
     {
         parent::configure();
 
-        $this->setName(static::$defaultName)
-             ->setDescription('Apply ACL changeset.')
+        $this
              ->setHelp('The <info>hgabka:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
     }
 

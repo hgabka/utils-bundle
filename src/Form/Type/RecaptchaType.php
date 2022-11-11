@@ -10,7 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RecaptchaType extends AbstractType
 {
-    public function __construct(private readonly ?string $siteKey) {}
+    public function __construct(private readonly ?string $siteKey)
+    {
+    }
 
     public function getParent(): string
     {
