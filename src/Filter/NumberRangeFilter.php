@@ -68,17 +68,14 @@ class NumberRangeFilter extends Filter
     /**
      * {@inheritdoc}
      */
-    public function getRenderSettings(): array
+    public function getFormOptions(): array
     {
         return [
-            DefaultType::class,
-            [
                 'field_type' => NumberRangeType::class,
                 'field_options' => $this->getOption('field_options', []),
                 'operator_type' => $this->getOption('operator_type'),
                 'operator_options' => $this->getOption('operator_options'),
                 'label' => $this->getLabel(),
-            ],
         ];
     }
 }
