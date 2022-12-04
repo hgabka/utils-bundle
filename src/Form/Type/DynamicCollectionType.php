@@ -20,7 +20,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class DynamicCollectionType extends AbstractType
 {
-    public function __construct(protected EntityManagerInterface $entityManager)  {}
+    public function __construct(protected readonly EntityManagerInterface $entityManager)  {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
