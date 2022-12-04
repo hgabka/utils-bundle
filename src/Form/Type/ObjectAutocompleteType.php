@@ -23,7 +23,7 @@ class ObjectAutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $repo = $this->registry->getManager()->getRepository($options['class']);
         $builder
@@ -52,7 +52,7 @@ class ObjectAutocompleteType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['placeholder'] = $options['placeholder'];
@@ -66,12 +66,12 @@ class ObjectAutocompleteType extends AbstractType
         $view->vars['kumaPagePartEvents'] = $options['kuma_pagepart_events'];
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'object_autocomplete';
     }
@@ -79,7 +79,7 @@ class ObjectAutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => [],
