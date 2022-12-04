@@ -20,18 +20,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class DynamicCollectionType extends AbstractType
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    public function __construct(protected EntityManagerInterface $entityManager)  {}
 
-    /**
-     * DynamicCollectionType constructor.
-     */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('text', TextType::class, [
@@ -170,7 +161,7 @@ class DynamicCollectionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, [
             'allow_add' => $options['allow_add'],
@@ -203,7 +194,7 @@ class DynamicCollectionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'class' => null,
@@ -218,7 +209,7 @@ class DynamicCollectionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'dynamic_collection';
     }
