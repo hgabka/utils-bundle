@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class DynamicElementType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('id', HiddenType::class)
@@ -16,7 +16,7 @@ class DynamicElementType extends AbstractType
         ;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'dynamic_element';
     }
