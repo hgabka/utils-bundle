@@ -33,6 +33,7 @@
         that.displayField = that.options.displayField || that.displayField;
         that.valueField = that.options.valueField || that.valueField;
         that.autoSelect = that.options.autoSelect || that.autoSelect;
+        that.defaultEnter = that.options.defaultEnter || that.defaultEnter;
 
         if (that.options.ajax) {
             var ajax = that.options.ajax;
@@ -65,8 +66,7 @@
     };
 
     Typeahead.prototype = {
-        constructor: Typeahead,
-        //=============================================================================================================
+        constructor: Typeahead, //=============================================================================================================
         //  Utils
         //  Check if an event is supported by the browser eg. 'keypress'
         //  * This was included to handle the "exhaustive deprecation" of jQuery.browser in jQuery 1.8
@@ -80,8 +80,7 @@
             }
 
             return isSupported;
-        },
-        select: function () {
+        }, select: function () {
             var $selectedItem = this.$menu.find('.active');
             var text;
 
@@ -100,24 +99,20 @@
 
                 if (this.options.onSelect) {
                     this.options.onSelect({
-                        value: value,
-                        text: text
+                        value: value, text: text
                     });
                 }
             }
             return this.hide();
-        },
-        updater: function (item) {
+        }, updater: function (item) {
             return item;
-        },
-        show: function () {
+        }, show: function () {
             var pos = $.extend({}, this.$element.position(), {
                 height: this.$element[0].offsetHeight
             });
 
             this.$menu.css({
-                top: pos.top + pos.height,
-                left: pos.left
+                top: pos.top + pos.height, left: pos.left
             });
 
             if (this.options.alignWidth) {
@@ -130,13 +125,11 @@
             this.$menu.show();
             this.shown = true;
             return this;
-        },
-        hide: function () {
+        }, hide: function () {
             this.$menu.hide();
             this.shown = false;
             return this;
-        },
-        ajaxLookup: function () {
+        }, ajaxLookup: function () {
 
             var query = $.trim(this.$element.val());
 
@@ -176,12 +169,7 @@
                     query: query
                 };
                 this.ajax.xhr = $.ajax({
-                    url: this.ajax.url,
-                    data: params,
-                    success: $.proxy(this.ajaxSource, this),
-                    type: this.ajax.method || 'get',
-                    dataType: 'json',
-                    headers: this.ajax.headers || {}
+                    url: this.ajax.url, data: params, success: $.proxy(this.ajaxSource, this), type: this.ajax.method || 'get', dataType: 'json', headers: this.ajax.headers || {}
                 });
                 this.ajax.timerId = null;
             }
@@ -190,8 +178,7 @@
             this.ajax.timerId = setTimeout($.proxy(execute, this), this.ajax.timeout);
 
             return this;
-        },
-        ajaxSource: function (data) {
+        }, ajaxSource: function (data) {
             this.ajaxToggleLoadClass(false);
             var that = this, items;
             if (!that.ajax.xhr) {
@@ -215,14 +202,12 @@
 
             that.ajax.xhr = null;
             return that.render(items.slice(0, that.options.items)).show();
-        },
-        ajaxToggleLoadClass: function (enable) {
+        }, ajaxToggleLoadClass: function (enable) {
             if (!this.ajax.loadingClass) {
                 return;
             }
             this.$element.toggleClass(this.ajax.loadingClass, enable);
-        },
-        lookup: function (event) {
+        }, lookup: function (event) {
             var that = this, items;
             if (that.ajax) {
                 that.ajaxer();
@@ -241,16 +226,11 @@
 
                 return that.render(items.slice(0, that.options.items)).show();
             }
-        },
-        matcher: function (item) {
+        }, matcher: function (item) {
             return ~item.toLowerCase().indexOf(this.query.toLowerCase());
-        },
-        sorter: function (items) {
+        }, sorter: function (items) {
             if (!this.options.ajax) {
-                var beginswith = [],
-                    caseSensitive = [],
-                    caseInsensitive = [],
-                    item;
+                var beginswith = [], caseSensitive = [], caseInsensitive = [], item;
 
                 while (item = items.shift()) {
                     if (!item.toLowerCase().indexOf(this.query.toLowerCase())) {
@@ -266,14 +246,12 @@
             } else {
                 return items;
             }
-        },
-        highlighter: function (item) {
+        }, highlighter: function (item) {
             var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
             return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
                 return '<strong>' + match + '</strong>';
             });
-        },
-        render: function (items) {
+        }, render: function (items) {
             var that = this, display, isString = typeof that.options.displayField === 'string';
 
             let autoSelect = this.autoSelect;
@@ -300,8 +278,7 @@
 
             this.$menu.html(items);
             return this;
-        },
-        //------------------------------------------------------------------
+        }, //------------------------------------------------------------------
         //  Filters relevent results
         //
         grepper: function (data) {
@@ -324,10 +301,8 @@
                 return null;
             }
             return this.sorter(items);
-        },
-        next: function (event) {
-            var active = this.$menu.find('.active').removeClass('active'),
-                next = active.next();
+        }, next: function (event) {
+            var active = this.$menu.find('.active').removeClass('active'), next = active.next();
 
             if (!next.length) {
                 next = $(this.$menu.find('li')[0]);
@@ -341,10 +316,8 @@
             }
 
             next.addClass('active');
-        },
-        prev: function (event) {
-            var active = this.$menu.find('.active').removeClass('active'),
-                prev = active.prev();
+        }, prev: function (event) {
+            var active = this.$menu.find('.active').removeClass('active'), prev = active.prev();
 
             if (!prev.length) {
                 prev = this.$menu.find('li').last();
@@ -364,8 +337,7 @@
 
             prev.addClass('active');
 
-        },
-        listen: function () {
+        }, listen: function () {
             this.$element
             .on('focus', $.proxy(this.focus, this))
             .on('blur', $.proxy(this.blur, this))
@@ -380,18 +352,23 @@
             .on('click', $.proxy(this.click, this))
             .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
             .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
-        },
-        move: function (e) {
+        }, move: function (e) {
             if (!this.shown) {
                 return
             }
 
             switch (e.keyCode) {
                 case 9: // tab
-                case 13: // enter
                 case 27: // escape
                     e.preventDefault();
                     break
+                case 13: // enter
+                    if (!this.defaultEnter) {
+                        e.preventDefault();
+                        break;
+                    } else {
+                        return;
+                    }
 
                 case 38: // up arrow
                     e.preventDefault()
@@ -405,18 +382,15 @@
             }
 
             e.stopPropagation();
-        },
-        keydown: function (e) {
+        }, keydown: function (e) {
             this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40, 38, 9, 13, 27])
             this.move(e)
-        },
-        keypress: function (e) {
+        }, keypress: function (e) {
             if (this.suppressKeyPressRepeat) {
                 return
             }
             this.move(e)
-        },
-        keyup: function (e) {
+        }, keyup: function (e) {
             switch (e.keyCode) {
                 case 40: // down arrow
                 case 38: // up arrow
@@ -430,8 +404,14 @@
                     if (!this.shown) {
                         return
                     }
-                    this.select()
-                    break
+                    var $selectedItem = this.$menu.find('.active');
+                    if ($selectedItem || !this.defaultEnter) {
+                        this.select();
+                    } else if (this.defaultEnter) {
+                        return;
+                    }
+
+                    break;
 
                 case 27: // escape
                     if (!this.shown) {
@@ -450,34 +430,28 @@
 
             e.stopPropagation()
             e.preventDefault()
-        },
-        focus: function (e) {
+        }, focus: function (e) {
             this.focused = true
-        },
-        blur: function (e) {
+        }, blur: function (e) {
             this.focused = false
             if (!this.mousedover && this.shown) {
                 this.hide()
             }
-        },
-        click: function (e) {
+        }, click: function (e) {
             e.stopPropagation()
             e.preventDefault()
             this.select()
             this.$element.focus()
-        },
-        mouseenter: function (e) {
+        }, mouseenter: function (e) {
             this.mousedover = true
             this.$menu.find('.active').removeClass('active')
             $(e.currentTarget).addClass('active')
-        },
-        mouseleave: function (e) {
+        }, mouseleave: function (e) {
             this.mousedover = false
             if (!this.focused && this.shown) {
                 this.hide()
             }
-        },
-        destroy: function () {
+        }, destroy: function () {
             this.$element
             .off('focus', $.proxy(this.focus, this))
             .off('blur', $.proxy(this.blur, this))
@@ -501,9 +475,7 @@
 
     $.fn.typeahead = function (option) {
         return this.each(function () {
-            var $this = $(this),
-                data = $this.data('typeahead'),
-                options = typeof option === 'object' && option;
+            var $this = $(this), data = $this.data('typeahead'), options = typeof option === 'object' && option;
             if (!data) {
                 $this.data('typeahead', (data = new Typeahead(this, options)));
             }
@@ -514,25 +486,9 @@
     };
 
     $.fn.typeahead.defaults = {
-        source: [],
-        items: 10,
-        scrollBar: false,
-        alignWidth: true,
-        menu: '<ul class="typeahead dropdown-menu"></ul>',
-        item: '<li><a href="#"></a></li>',
-        valueField: 'id',
-        displayField: 'name',
-        autoSelect: true,
-        onSelect: function () {
-        },
-        ajax: {
-            url: null,
-            timeout: 300,
-            method: 'get',
-            triggerLength: 1,
-            loadingClass: null,
-            preDispatch: null,
-            preProcess: null
+        source: [], items: 10, scrollBar: false, alignWidth: true, menu: '<ul class="typeahead dropdown-menu"></ul>', item: '<li><a href="#"></a></li>', valueField: 'id', displayField: 'name', autoSelect: true, onSelect: function () {
+        }, defaultEnter: false, ajax: {
+            url: null, timeout: 300, method: 'get', triggerLength: 1, loadingClass: null, preDispatch: null, preProcess: null
         }
     };
 
