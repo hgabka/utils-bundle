@@ -23,7 +23,7 @@ class TranslatedEnumType extends AbstractType
                 return $options['class']::cases();
             })
             ->setDefault('choice_label', static function (UnitEnum $choice, $key, $value): string {
-                return ($choice instanceof TranslatableEnumInterface ? $choice->getTranslationPrefix() : '') . $choice->value;
+                return ($choice instanceof TranslatableEnumInterface ? $choice->getTranslationPrefix() . $choice->value : $choice->name);
             })
             ->setDefault('choice_value', static function (Options $options): ?Closure {
                 if (!is_a($options['class'], BackedEnum::class, true)) {
