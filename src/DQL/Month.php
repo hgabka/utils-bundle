@@ -1,3 +1,5 @@
+<?php
+
 namespace Hgabka\UtilsBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
