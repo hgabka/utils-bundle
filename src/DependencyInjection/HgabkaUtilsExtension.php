@@ -10,17 +10,20 @@ use Hgabka\UtilsBundle\Doctrine\Type\EnumTypeInterface;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
 use Hgabka\UtilsBundle\DQL\Date;
+use Hgabka\UtilsBundle\DQL\Day;
 use Hgabka\UtilsBundle\DQL\First;
 use Hgabka\UtilsBundle\DQL\Format;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Left;
+use Hgabka\UtilsBundle\DQL\Month;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Regexp;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Hgabka\UtilsBundle\DQL\Round;
 use Hgabka\UtilsBundle\DQL\Substr;
+use Hgabka\UtilsBundle\DQL\Year;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -129,6 +132,9 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Left::FUNCTION_NAME, Left::class]);
             $definition->addMethodCall('addCustomStringFunction', [CharLength::FUNCTION_NAME, CharLength::class]);
             $definition->addMethodCall('addCustomStringFunction', [First::FUNCTION_NAME, First::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Year::FUNCTION_NAME, Year::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Month::FUNCTION_NAME, Month::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Day::FUNCTION_NAME, Day::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
