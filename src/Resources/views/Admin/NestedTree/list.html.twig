@@ -63,7 +63,7 @@
                 <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
                     <div class="btn-group">
                         {% block actions %}
-                            {% if object.canHaveChildren %}
+                            {% if object.canHaveChildren and admin.hasAccess('create') %}
                                 <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
                                     <span class="large-screen">{{ 'hg_utils.nested_tree.subcreate'|trans({'%subentity%': admin.subEntityName(app.request.locale)|capitalize}) }}</span>
                                     <span class="small-screen">{{ 'hg_utils.nested_tree.subnew'|trans({'%subentity%': admin.subEntityName(app.request.locale)|lower}) }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
