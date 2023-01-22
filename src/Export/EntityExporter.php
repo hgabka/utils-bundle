@@ -229,7 +229,7 @@ abstract class EntityExporter
      *
      * @return null|mixed|string
      */
-    protected function getRelationValue($object, $field): ?string
+    protected function getRelationValue($object, $field)
     {
         $parts = explode('.', $field, 2);
         $relation = $this->getEntityFieldValue($object, $parts[0]);
