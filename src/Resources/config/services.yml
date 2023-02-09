@@ -453,3 +453,19 @@ services:
         autoconfigure: true
         tags:
             - { name: sonata.admin.filter.type }
+
+    Hgabka\UtilsBundle\Command\PromoteGeneralUserCommand:
+        autowire: true
+        autoconfigure: true
+        public: false
+        arguments:
+            $manager: '@doctrine.orm.entity_manager'
+            $generator: '@?maker.generator'
+
+    Hgabka\UtilsBundle\Command\DemoteGeneralUserCommand:
+        autowire: true
+        autoconfigure: true
+        public: false
+        arguments:
+            $manager: '@doctrine.orm.entity_manager'
+            $generator: '@?maker.generator'
