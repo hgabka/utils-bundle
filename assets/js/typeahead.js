@@ -34,6 +34,7 @@
         that.valueField = that.options.valueField || that.valueField;
         that.autoSelect = that.options.autoSelect || that.autoSelect;
         that.defaultEnter = that.options.defaultEnter || that.defaultEnter;
+        that.preventSelect = that.options.preventSelect || that.preventSelect;
 
         if (that.options.ajax) {
             var ajax = that.options.ajax;
@@ -88,10 +89,11 @@
                 var value = $selectedItem.attr('data-value');
 
                 if (value !== -21) {
-                    text = this.$menu.find('.active a').text();
+                    let $a = this.$menu.find('.active a');
+                    text = $a.text();
 
                     this.$element
-                    .val(this.updater(text))
+                    .val(this.updater(this.preventSelect ? '' : text))
                     .change();
                 } else {
                     text = this.$element.val();
@@ -491,7 +493,7 @@
 
     $.fn.typeahead.defaults = {
         source: [], items: 10, scrollBar: false, alignWidth: true, menu: '<ul class="typeahead dropdown-menu"></ul>', item: '<li><a href="#"></a></li>', valueField: 'id', displayField: 'name', autoSelect: true, onSelect: function () {
-        }, defaultEnter: false, ajax: {
+        }, defaultEnter: false, prevetSelect: false, ajax: {
             url: null, timeout: 300, method: 'get', triggerLength: 1, loadingClass: null, preDispatch: null, preProcess: null
         }
     };
