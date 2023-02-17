@@ -268,6 +268,10 @@
                         i = $(that.options.item).attr('data-value', item);
                     }
                     i.find('a').html(that.highlighter(display));
+                    if (typeof item === 'object' && 'target' in item) {
+                        i.find('a').attr('target', item.target);
+                    }
+
                     return i[0];
                 });
 
