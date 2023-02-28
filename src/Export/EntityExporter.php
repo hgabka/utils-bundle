@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -317,5 +319,30 @@ abstract class EntityExporter
     protected function isUtf8(): bool
     {
         return null === $this->encoding || \in_array(strtolower($this->encoding), ['utf-8', 'utf8'], true);
+    }
+
+    protected function createResponse(
+        string $tmpName,
+        string $disposition,
+        string $filename,
+    ): Response
+    {
+        $this->saveContent($tmpName);
+
+        $content = file_get_contents($tmpName);
+        $response = new Response();
+        $response->setContent($content);
+
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $filename
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', $this->getMimeType());
+        $response->headers->set('Content-length', strlen($content));
+
+        return $response;
     }
 }
