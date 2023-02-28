@@ -323,8 +323,8 @@ abstract class EntityExporter
 
     protected function createResponse(
         string $tmpName,
-        string $disposition,
         string $filename,
+        string $dispositionType = ResponseHeaderBag::DISPOSITION_ATTACHMENT,
     ): Response
     {
         $this->saveContent($tmpName);
@@ -334,7 +334,7 @@ abstract class EntityExporter
         $response->setContent($content);
 
         $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $dispositionType,
             $filename
         );
 
