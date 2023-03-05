@@ -32,6 +32,10 @@ abstract class AbstractEnumType extends Type implements EnumTypeInterface
         if (false === enum_exists($this->getEnumClass(), true)) {
             throw new \LogicException('This class should be an enum');
         }
+        
+        if (null === $value) {
+            return null;
+        }
 
         return $this::getEnumClass()::tryFrom($value);
     }
