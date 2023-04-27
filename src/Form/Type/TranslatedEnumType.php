@@ -19,8 +19,20 @@ class TranslatedEnumType extends AbstractType
             ->setRequired(['class'])
             ->setAllowedTypes('class', 'string')
             ->setAllowedValues('class', Closure::fromCallable('enum_exists'))
+            ->setDefault('exclude_cases', [])
+            ->setAllowedTypes('exclude_cases', 'array')
             ->setDefault('choices', static function (Options $options): array {
-                return $options['class']::cases();
+                $cases = $options['class']::cases();
+
+                if (!empty($options['exclude_cases'])) {
+                    foreach ($options['exclude_cases'] as $excludeCase) {
+                        if (false !== ($key = array_search($excludeCase, $cases))) {
+                            unset($cases[$key]);
+                        }
+                    }
+                }
+
+                return $cases;
             })
             ->setDefault('choice_label', static function (UnitEnum $choice, $key, $value): string {
                 return $choice instanceof TranslatableEnumInterface ? $choice->getTranslationPrefix() . $choice->value : $choice->name;
