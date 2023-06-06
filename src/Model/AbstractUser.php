@@ -90,7 +90,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setId(?int $id): self
+    public function setId(?int $id): static
     {
         $this->id = $id;
 
@@ -110,7 +110,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setEmail(?string $email): self
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
 
@@ -130,7 +130,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setPassword(?string $password): self
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -155,7 +155,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setRoles(?array $roles): self
+    public function setRoles(?array $roles): static
     {
         $this->roles = $roles;
 
@@ -175,7 +175,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setUsername(?string $username): self
+    public function setUsername(?string $username): static
     {
         $this->username = $username;
 
@@ -195,7 +195,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setSalt(?string $salt): self
+    public function setSalt(?string $salt): static
     {
         $this->salt = $salt;
 
@@ -215,7 +215,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return User
      */
-    public function setEnabled(bool $enabled): self
+    public function setEnabled(bool $enabled): static
     {
         $this->enabled = $enabled;
 
@@ -233,7 +233,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function addRole($role): self
+    public function addRole($role): static
     {
         $role = strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
@@ -302,7 +302,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return AbstractUser
      */
-    public function setPlainPassword(?string $plainPassword): self
+    public function setPlainPassword(?string $plainPassword): static
     {
         $this->plainPassword = $plainPassword;
 
@@ -322,7 +322,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
      *
      * @return AbstractUser
      */
-    public function setConfirmationToken(?string $confirmationToken): self
+    public function setConfirmationToken(?string $confirmationToken): static
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -348,7 +348,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role): self
+    public function removeRole($role): static
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -361,7 +361,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     /**
      * {@inheritdoc}
      */
-    public function setSuperAdmin(bool $boolean): self
+    public function setSuperAdmin(bool $boolean): static
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);

@@ -18,7 +18,7 @@ class AdvancedEntryFilesTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('encore_entry_link_tags_advanced', [$this, 'renderWebpackLinkTags'], ['is_safe' => ['html']]),
+            new TwigFunction('encore_entry_link_tags_advanced', $this->renderWebpackLinkTags(...), ['is_safe' => ['html']]),
         ];
     }
 

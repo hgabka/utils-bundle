@@ -6,21 +6,21 @@ class HtmlToText
 {
     public const ENCODING = 'UTF-8';
 
-    protected $htmlFuncFlags;
+    protected ?int $htmlFuncFlags = null;
 
     /**
      * Contains the HTML content to convert.
      *
      * @var string $html
      */
-    protected $html;
+    protected ?string $html = null;
 
     /**
      * Contains the converted, formatted text.
      *
      * @var string $text
      */
-    protected $text;
+    protected ?string $text = null;
 
     /**
      * List of preg* regular expression patterns to search for,
@@ -30,7 +30,7 @@ class HtmlToText
      *
      * @see $replace
      */
-    protected $search = [
+    protected array $search = [
         "/\r/",                                           // Non-legal carriage return
         "/[\n\t]+/",                                      // Newlines and tabs
         '/<head\b[^>]*>.*?<\/head>/i',                    // <head>
@@ -62,7 +62,7 @@ class HtmlToText
      *
      * @see $search
      */
-    protected $replace = [
+    protected array $replace = [
         '',                              // Non-legal carriage return
         ' ',                             // Newlines and tabs
         '',                              // <head>
@@ -95,7 +95,7 @@ class HtmlToText
      *
      * @see $entReplace
      */
-    protected $entSearch = [
+    protected array $entSearch = [
         '/&#153;/i',                                     // TM symbol in win-1252
         '/&#151;/i',                                     // m-dash in win-1252
         '/&(amp|#38);/i',                                // Ampersand: see converter()
@@ -110,7 +110,7 @@ class HtmlToText
      *
      * @see $entSearch
      */
-    protected $entReplace = [
+    protected array $entReplace = [
         '™',         // TM symbol
         '—',         // m-dash
         '|+|amp|+|', // Ampersand: see converter()
@@ -124,7 +124,7 @@ class HtmlToText
      *
      * @var array $callbackSearch
      */
-    protected $callbackSearch = [
+    protected array $callbackSearch = [
         '/<(h)[123456]( [^>]*)?>(.*?)<\/h[123456]>/i',           // h1 - h6
         '/[ ]*<(p)( [^>]*)?>(.*?)<\/p>[ ]*/si',                  // <p> with surrounding whitespace.
         '/<(br)[^>]*>[ ]*/i',                                    // <br> with leading whitespace after the newline.
@@ -143,7 +143,7 @@ class HtmlToText
      *
      * @see $preReplace
      */
-    protected $preSearch = [
+    protected array $preSearch = [
         "/\n/",
         "/\t/",
         '/ /',
@@ -158,7 +158,7 @@ class HtmlToText
      *
      * @see $preSearch
      */
-    protected $preReplace = [
+    protected array $preReplace = [
         '<br>',
         '&nbsp;&nbsp;&nbsp;&nbsp;',
         '&nbsp;',
@@ -171,14 +171,14 @@ class HtmlToText
      *
      * @var string $preContent
      */
-    protected $preContent = '';
+    protected string $preContent = '';
 
     /**
      * Contains the base URL that relative links should resolve to.
      *
      * @var string $baseurl
      */
-    protected $baseurl = '';
+    protected string $baseurl = '';
 
     /**
      * Indicates whether content in the $html variable has been converted yet.
@@ -187,7 +187,7 @@ class HtmlToText
      *
      * @see $html, $text
      */
-    protected $converted = false;
+    protected bool $converted = false;
 
     /**
      * Contains URL addresses from links to be rendered in plain text.
@@ -196,14 +196,14 @@ class HtmlToText
      *
      * @see buildlinkList()
      */
-    protected $linkList = [];
+    protected array $linkList = [];
 
     /**
      * Various configuration options (able to be set in the constructor)
      *
      * @var array $options
      */
-    protected $options = [
+    protected array $options = [
         'do_links' => 'inline', // 'none'
                                 // 'inline' (show links inline)
                                 // 'nextline' (show links on the next line)
@@ -238,7 +238,7 @@ class HtmlToText
      *
      * @return string
      */
-    public function getHtml()
+    public function getHtml(): ?string
     {
         return $this->html;
     }
@@ -248,10 +248,12 @@ class HtmlToText
      *
      * @param string $html HTML source content
      */
-    public function setHtml($html)
+    public function setHtml(?string $html): self
     {
         $this->html = $html;
         $this->converted = false;
+
+        return $this;
     }
 
     /**
@@ -260,7 +262,7 @@ class HtmlToText
      * @param mixed $html
      * @param mixed $from_file
      */
-    public function set_html($html, $from_file = false)
+    public function set_html(mixed $html, bool $from_file = false)
     {
         if ($from_file) {
             throw new \InvalidArgumentException('Argument from_file no longer supported');
@@ -327,7 +329,7 @@ class HtmlToText
         return $this->setBaseUrl($baseurl);
     }
 
-    protected function convert()
+    protected function convert(): void
     {
         $origEncoding = mb_internal_encoding();
         mb_internal_encoding(self::ENCODING);
@@ -337,7 +339,7 @@ class HtmlToText
         mb_internal_encoding($origEncoding);
     }
 
-    protected function doConvert()
+    protected function doConvert(): void
     {
         $this->linkList = [];
 
@@ -606,7 +608,7 @@ class HtmlToText
      *
      * @return string Converted text
      */
-    protected function toupper($str)
+    protected function toupper(?string $str): string
     {
         // string can contain HTML tags
         $chunks = preg_split('/(<[^>]*>)/', $str, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
@@ -628,7 +630,7 @@ class HtmlToText
      *
      * @return string Converted text
      */
-    protected function strtoupper($str)
+    protected function strtoupper(?string $str): ?string
     {
         $str = html_entity_decode($str, $this->htmlFuncFlags, self::ENCODING);
         $str = mb_strtoupper($str);
@@ -645,7 +647,7 @@ class HtmlToText
      *
      * @return string Converted text
      */
-    protected function tostrike($str)
+    protected function tostrike(?string $str): ?string
     {
         $rtn = '';
         for ($i = 0; $i < mb_strlen($str); ++$i) {
@@ -657,7 +659,7 @@ class HtmlToText
         return $rtn;
     }
 
-    private function legacyConstruct($html = '', $fromFile = false, array $options = [])
+    private function legacyConstruct($html = '', $fromFile = false, array $options = []): void
     {
         $this->set_html($html, $fromFile);
         $this->options = array_merge($this->options, $options);

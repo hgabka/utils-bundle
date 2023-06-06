@@ -61,7 +61,7 @@ class Breadcrumb
     public function setLabel($label)
     {
         if (empty($label)) {
-            $label = self::LABEL_PREFIX . $this->getRoute() . self::LABEL_SUFFIX;
+            $label = static::LABEL_PREFIX . $this->getRoute() . static::LABEL_SUFFIX;
         }
 
         $this->label = $label;
@@ -95,7 +95,7 @@ class Breadcrumb
     /**
      * @return Breadcrumb
      */
-    public function setForceLink(bool $forceLink): self
+    public function setForceLink(bool $forceLink): static
     {
         $this->forceLink = $forceLink;
 

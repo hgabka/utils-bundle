@@ -52,30 +52,30 @@ class BarcodeValidator
                 $this->valid = false;
             } elseif (substr($this->gtin14, 5, 1) > 2) {
                 // EAN / JAN / EAN-13 code
-                $this->type = self::TYPE_EAN;
+                $this->type = static::TYPE_EAN;
             } elseif (0 === substr($this->gtin14, 6, 1) && 0 === substr($this->gtin14, 0, 10)) {
                 // EAN-8 / GTIN-8 code
-                $this->type = self::TYPE_EAN_8;
+                $this->type = static::TYPE_EAN_8;
             } elseif (substr($this->gtin14, 5, 1) <= 0) {
                 // UPC / UCC-12 GTIN-12 code
                 if (5 === substr($this->gtin14, 6, 1)) {
-                    $this->type = self::TYPE_UPC_COUPON_CODE;
+                    $this->type = static::TYPE_UPC_COUPON_CODE;
                 } else {
                     if (13 === strlen($this->barcode)) {
-                        $this->type = self::TYPE_EAN;
+                        $this->type = static::TYPE_EAN;
                     } else {
-                        $this->type = self::TYPE_UPC;
+                        $this->type = static::TYPE_UPC;
                     }
                 }
             } elseif (0 === substr($this->gtin14, 0, 6)) {
                 // GTIN-14 code
-                $this->type = self::TYPE_GTIN;
+                $this->type = static::TYPE_GTIN;
             } else {
                 // EAN code
                 if (2 === substr($this->gtin14, 5, 1)) {
-                    $this->type = self::TYPE_EAN_RESTRICTED;
+                    $this->type = static::TYPE_EAN_RESTRICTED;
                 } else {
-                    $this->type = self::TYPE_EAN;
+                    $this->type = static::TYPE_EAN;
                 }
             }
         }

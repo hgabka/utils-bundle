@@ -32,8 +32,8 @@ class AdminListTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new TwigFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
+            new TwigFunction('adminlist_widget', $this->renderWidget(...), ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('supported_export_extensions', $this->getSupportedExtensions(...)),
         ];
     }
 
@@ -57,7 +57,7 @@ class AdminListTwigExtension extends AbstractExtension
      *
      * @return string The html markup
      */
-    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    public function renderWidget(Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = []): string
     {
         $template = $env->load('@HgabkaUtils/AdminListTwigExtension/widget.html.twig');
 

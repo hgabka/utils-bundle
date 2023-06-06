@@ -16,9 +16,9 @@ class UtilitiesTwigExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('slugify', [$this, 'slugify']),
-            new TwigFilter('utils_format_number', [$this, 'formatNumber']),
-            new TwigFilter('utils_format_price', [$this, 'formatPrice']),
+            new TwigFilter('slugify', $this->slugify(...)),
+            new TwigFilter('utils_format_number', $this->formatNumber(...)),
+            new TwigFilter('utils_format_price', $this->formatPrice(...)),
         ];
     }
 
@@ -27,7 +27,7 @@ class UtilitiesTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function slugify($text): ?string
+    public function slugify(?string $text): ?string
     {
         return $this->slugifier->slugify($text, '');
     }

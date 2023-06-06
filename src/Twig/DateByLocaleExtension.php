@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Twig;
+namespace Hgabka\UtilsBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
 use Twig\Extension\AbstractExtension;
@@ -18,7 +18,7 @@ class DateByLocaleExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
+            new TwigFilter('localeDate', '\Hgabka\UtilsBundle\Twig\DateByLocaleExtension::localeDateFilter'),
         ];
     }
 
@@ -33,7 +33,7 @@ class DateByLocaleExtension extends AbstractExtension
      *
      * @return string
      */
-    public static function localeDateFilter($date, $locale = 'nl', $dateType = 'medium', $timeType = 'none', $pattern = null)
+    public static function localeDateFilter($date, $locale = 'hu', $dateType = 'medium', $timeType = 'none', $pattern = null)
     {
         $values = [
             'none' => DateFormatter::NONE,

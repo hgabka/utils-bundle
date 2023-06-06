@@ -8,18 +8,11 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class TaxIdValidator extends ConstraintValidator
 {
-    /** @var TaxValidator */
-    protected $taxValidator;
-
-    /**
-     * TaxNoValidator constructor.
-     */
-    public function __construct(TaxValidator $taxValidator)
+    public function __construct(private readonly TaxValidator $taxValidator)
     {
-        $this->taxValidator = $taxValidator;
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (null === $value || '' === $value) {
             return;

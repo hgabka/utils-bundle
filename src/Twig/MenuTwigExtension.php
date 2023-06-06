@@ -10,20 +10,8 @@ use Twig\TwigFunction;
 
 class MenuTwigExtension extends AbstractExtension
 {
-    /**
-     * @var MenuBuilder
-     */
-    protected $menuBuilder;
-
-    /**
-     * @var AdminPanel
-     */
-    protected $adminPanel;
-
-    public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
+    public function __construct(protected readonly MenuBuilder $menuBuilder, protected readonly AdminPanel $adminPanel)
     {
-        $this->menuBuilder = $menuBuilder;
-        $this->adminPanel = $adminPanel;
     }
 
     /**
@@ -34,26 +22,16 @@ class MenuTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_admin_menu', [$this, 'getAdminMenu']),
-            new TwigFunction('get_admin_panel_actions', [$this, 'getAdminPanelActions']),
+            new TwigFunction('get_admin_menu', $this->getAdminMenu(...)),
+            new TwigFunction('get_admin_panel_actions', $this->getAdminPanelActions(...)),
         ];
     }
 
-    /**
-     * Return the admin menu MenuBuilder.
-     *
-     * @return MenuBuilder
-     */
     public function getAdminMenu(): ?MenuBuilder
     {
         return $this->menuBuilder;
     }
 
-    /**
-     * Return the admin panel actions.
-     *
-     * @return AdminPanelActionInterface[]
-     */
     public function getAdminPanelActions()
     {
         return $this->adminPanel->getAdminPanelActions();
