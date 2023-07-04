@@ -102,7 +102,7 @@ class SortableCollectionHandler
         $collectionHolder.find('.sonata-collection-add i').prepend('<span style="pointer-events: none;">Hozzáadás</span>');
         $collectionHolder.addClass('sortable-collection');
         if ($collectionHolder.length) {
-            $collectionHolder.sortable({
+            let params = {
                 //handle: '.sonata-collection-row',
                 items: this.options.rowSelector,
                 start: (event, ui) => {
@@ -119,8 +119,13 @@ class SortableCollectionHandler
                     this.reOrder();
                     $collectionHolder.trigger('sortable:update');
                 }
-            });
+            }
+            let delay = $collectionHolder.data('delay');
 
+            if ('undefined' !== typeof(delay) && !isNaN(parseInt(delay))) {
+                params.delay = parseInt(delay);
+            }
+            $collectionHolder.sortable(params);
             $collectionHolder.find('form').submit(this.reOrder);
             $collectionHolder.on('click', '.sonata-collection-add, .sonata-collection-delete', e => {
                 let $target = $(e.currentTarget);
