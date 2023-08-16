@@ -25,7 +25,7 @@ class FixGuestCommand extends ContainerAwareCommand
     /**
      * Configures the command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
