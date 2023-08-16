@@ -26,7 +26,7 @@ class RecaptchaValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof Recaptcha) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Recaptcha');
