@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'hgabka:backend-user:demote', description: 'Demotes a user by removing a role', hidden: false)]
 class DemoteUserCommand extends RoleCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -27,7 +27,7 @@ class DemoteUserCommand extends RoleCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role)
+    protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role): void
     {
         if ($super) {
             $manipulator->demote($username);
