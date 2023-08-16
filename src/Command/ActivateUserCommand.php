@@ -27,7 +27,7 @@ class ActivateUserCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDefinition([
@@ -59,7 +59,7 @@ class ActivateUserCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         if (!$input->getArgument('username')) {
             $question = new Question('Please choose a username:');
