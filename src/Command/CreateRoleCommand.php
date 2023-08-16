@@ -16,7 +16,7 @@ class CreateRoleCommand extends ContainerAwareCommand
     /**
      * Configures the current command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDefinition([
