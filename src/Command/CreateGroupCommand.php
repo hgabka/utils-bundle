@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'hgabka:group:create', description: 'Creates a user group', hidden: false)]
 class CreateGroupCommand extends ContainerAwareCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
