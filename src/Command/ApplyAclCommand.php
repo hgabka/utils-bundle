@@ -29,7 +29,7 @@ class ApplyAclCommand extends Command
     /**
      * Configures the command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
