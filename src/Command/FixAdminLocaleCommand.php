@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'hgabka:fix:admin-locale', description: 'Sets the admin locale for all users to the default admin locale', hidden: false)]
 class FixAdminLocaleCommand extends ContainerAwareCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
