@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Entity;
 
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\UtilsBundle\Helper\ClassLookup;
 use Hgabka\UtilsBundle\Repository\AclChangesetRepository;
@@ -42,26 +43,16 @@ class AclChangeset
      * Something went wrong while applying the changeset.
      */
     public const STATUS_FAILED = 3;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="id")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
     #[ORM\Id]
     #[ORM\Column(type: 'integer', name: 'id')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="bigint", name="ref_id")
-     */
-    #[ORM\Column(name: 'ref_id', type: 'bigint')]
+    #[ORM\Column(name: 'ref_id', type: Types::INTEGER)]
     protected ?int $refId = null;
 
-    /**
-     * @ORM\Column(type="string", name="ref_entity_name")
-     */
-    #[ORM\Column(name: 'ref_entity_name', type: 'string')]
+    #[ORM\Column(name: 'ref_entity_name', type: Types::STRING)]
     protected ?string $refEntityName = null;
 
     /**
@@ -69,34 +60,19 @@ class AclChangeset
      */
     protected $user;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    #[ORM\Column(name: 'changeset', type: 'array')]
+    #[ORM\Column(name: 'changeset', type: Types::JSON)]
     protected ?array $changeset = null;
 
-    /**
-     * @ORM\Column(type="integer", name="pid", nullable=true)
-     */
-    #[ORM\Column(name: 'pid', type: 'integer', nullable: true)]
+    #[ORM\Column(name: 'pid', type: Types::INTEGER, nullable: true)]
     protected ?int $pid = null;
 
-    /**
-     * @ORM\Column(type="integer", name="status")
-     */
-    #[ORM\Column(name: 'status', type: 'integer')]
+    #[ORM\Column(name: 'status', type: Types::INTEGER)]
     protected ?int $status = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    #[ORM\Column(name: 'created', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'created', type: Types::DATETIME_MUTABLE, nullable: true)]
     protected ?DateTime $created = null;
 
-    /**
-     * @ORM\Column(name="last_modified", type="datetime", nullable=true)
-     */
-    #[ORM\Column(name: 'last_modified', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'last_modified', type: Types::DATETIME_MUTABLE, nullable: true)]
     protected ?DateTime $lastModified = null;
 
     /**
