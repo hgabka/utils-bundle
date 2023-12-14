@@ -45,7 +45,7 @@ class AclChangeset
     public const STATUS_FAILED = 3;
 
     #[ORM\Id]
-    #[ORM\Column(type: 'integer', name: 'id')]
+    #[ORM\Column(type: Types::INTEGER, name: 'id')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
