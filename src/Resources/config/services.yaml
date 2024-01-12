@@ -252,7 +252,7 @@ services:
         arguments: ['%kernel.logs_dir%/hgabka_utils_%kernel.environment%.log', 10]
 
     hgabka_utils.logger:
-        class: Symfony\Bridge\Monolog\Logger
+        class: Monolog\Logger
         arguments: [hgabka_utils]
         calls:
         - [pushHandler, ['@hgabka_utils.logger.handler']]

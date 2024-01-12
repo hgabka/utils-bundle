@@ -119,14 +119,16 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return string
      */
-    abstract public function getBundleName();
+    abstract public function getBundleName(): string;
 
     /**
      * Return current entity name.
      *
      * @return string
      */
-    abstract public function getEntityName();
+    abstract public function getEntityName(): string;
+
+    abstract public function getEntityClass(): string;
 
     /**
      * Return default repository name.
@@ -135,7 +137,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getRepositoryName()
     {
-        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+        return $this->getEntityClass();
     }
 
     /**

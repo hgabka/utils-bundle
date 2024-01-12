@@ -73,7 +73,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_utils.recaptcha.secret', $config['recaptcha']['secret'] ?? null);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
         $recaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);

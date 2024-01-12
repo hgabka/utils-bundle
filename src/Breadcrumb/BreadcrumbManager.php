@@ -5,7 +5,7 @@ namespace Hgabka\UtilsBundle\Breadcrumb;
 use Countable;
 use IteratorAggregate;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class BreadcrumbManager implements IteratorAggregate, Countable
 {

@@ -20,7 +20,7 @@ class Cipher implements CipherInterface
     public function __construct($secret)
     {
         if (empty($secret)) {
-            throw new InvalidArgumentException('You need to configure a Cipher secret in your parameters.yml before you can use this!');
+            throw new InvalidArgumentException('You need to configure a Cipher secret in your parameters.yaml before you can use this!');
         }
         $this->secret = $secret;
     }
