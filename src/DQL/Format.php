@@ -24,7 +24,7 @@ class Format extends FunctionNode
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
         $this->arithmeticExpression = $parser->SimpleArithmeticExpression();
         // parse second parameter if available
-        if (Lexer::T_COMMA === $lexer->lookahead['type']) {
+        if (Lexer::T_COMMA === $lexer->lookahead->type) {
             $parser->match(Lexer::T_COMMA);
             $this->decimals = $parser->ArithmeticPrimary();
         }
