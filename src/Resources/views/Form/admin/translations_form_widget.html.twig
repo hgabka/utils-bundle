@@ -1,9 +1,9 @@
 {% block a2lix_translations_widget %}
     {{ form_errors(form) }}
     {% set fieldCount = form | length %}
+    {% set activeLocale = app.request.locale %}
     <div class="a2lix_translations tabbable">
         {% if fieldCount > 1 %}
-            {% set activeLocale = app.request.locale %}
             {% set hasError = false %}
             {% for translationsFields in form %}
                 {% if form.vars.submitted and not translationsFields.vars.valid and not hasError %}
