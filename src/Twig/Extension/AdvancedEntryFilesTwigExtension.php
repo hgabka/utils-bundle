@@ -22,7 +22,7 @@ class AdvancedEntryFilesTwigExtension extends AbstractExtension
         ];
     }
 
-    public function renderWebpackLinkTags(string $entryName, string $packageName = null, string $entrypointName = '_default'): string
+    public function renderWebpackLinkTags(string $entryName, ?string $packageName = null, string $entrypointName = '_default'): string
     {
         return $this->tagRenderer
             ->renderWebpackLinkTags($entryName, $packageName, $entrypointName);

@@ -33,7 +33,7 @@ class DateByLocaleExtension extends AbstractExtension
      *
      * @return string
      */
-    public static function localeDateFilter($date, $locale = 'hu', $dateType = 'medium', $timeType = 'none', $pattern = null)
+    public static function localeDateFilter($date, $locale = 'hu', $dateType = 'medium', $timeType = 'none', ?string $pattern = null)
     {
         $values = [
             'none' => DateFormatter::NONE,
