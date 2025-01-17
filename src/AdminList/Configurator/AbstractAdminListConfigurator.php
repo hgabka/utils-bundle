@@ -868,7 +868,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return string
      */
-    public function getPathByConvention($suffix = null)
+    public function getPathByConvention(?string $suffix = null)
     {
         $entityName = strtolower($this->getEntityName());
         $entityName = str_replace('\\', '_', $entityName);
