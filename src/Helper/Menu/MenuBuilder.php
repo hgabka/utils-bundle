@@ -147,7 +147,7 @@ class MenuBuilder
      *
      * @return MenuItem[]
      */
-    public function getChildren(MenuItem $parent = null)
+    public function getChildren(?MenuItem $parent = null)
     {
         if (null === $parent) {
             return $this->getTopChildren();
