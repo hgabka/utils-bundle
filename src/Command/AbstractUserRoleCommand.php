@@ -92,7 +92,7 @@ abstract class AbstractUserRoleCommand extends Command
         return $entities;
     }
 
-    public function validateUserClass(string $value = null): string
+    public function validateUserClass(?string $value = null): string
     {
         if (null === $value || '' === $value) {
             throw new RuntimeCommandException('This value cannot be blank.');
