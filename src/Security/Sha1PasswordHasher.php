@@ -10,7 +10,7 @@ class Sha1PasswordHasher implements LegacyPasswordHasherInterface
 {
     use CheckPasswordLengthTrait;
 
-    public function hash(string $plainPassword, string $salt = null): string
+    public function hash(string $plainPassword, ?string $salt = null): string
     {
         if ($this->isPasswordTooLong($plainPassword)) {
             throw new InvalidPasswordException();
@@ -19,7 +19,7 @@ class Sha1PasswordHasher implements LegacyPasswordHasherInterface
         return sha1($salt . $plainPassword);
     }
 
-    public function verify(string $hashedPassword, string $plainPassword, string $salt = null): bool
+    public function verify(string $hashedPassword, string $plainPassword, ?string $salt = null): bool
     {
         if ('' === $plainPassword || $this->isPasswordTooLong($plainPassword)) {
             return false;
