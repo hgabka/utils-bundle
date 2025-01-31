@@ -27,7 +27,7 @@ class TagRenderer extends BaseTagRenderer
         array $defaultAttributes = [],
         array $defaultScriptAttributes = [],
         array $defaultLinkAttributes = [],
-        EventDispatcherInterface $eventDispatcher = null
+        ?EventDispatcherInterface $eventDispatcher = null
     ) {
         if ($entrypointLookupCollection instanceof EntrypointLookupInterface) {
             @trigger_error(sprintf('The "$entrypointLookupCollection" argument in method "%s()" must be an instance of EntrypointLookupCollection.', __METHOD__), \E_USER_DEPRECATED);
@@ -52,7 +52,7 @@ class TagRenderer extends BaseTagRenderer
         $this->reset();
     }
 
-    public function renderWebpackLinkTags(string $entryName, string $packageName = null, string $entrypointName = null, array $extraAttributes = []): string
+    public function renderWebpackLinkTags(string $entryName, ?string $packageName = null, ?string $entrypointName = null, array $extraAttributes = []): string
     {
         $entrypointName = $entrypointName ?: '_default';
         $scriptTags = [];
@@ -104,7 +104,7 @@ class TagRenderer extends BaseTagRenderer
         return $this->entrypointLookupCollection->getEntrypointLookup($buildName);
     }
 
-    private function getAssetPath(string $assetPath, string $packageName = null): string
+    private function getAssetPath(string $assetPath, ?string $packageName = null): string
     {
         if (null === $this->packages) {
             throw new \Exception('To render the script or link tags, run "composer require symfony/asset".');
