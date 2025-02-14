@@ -33,7 +33,7 @@ class FilterBuilder
      *
      * @return FilterBuilder
      */
-    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = [])
+    public function add($columnName, ?FilterTypeInterface $type = null, $filterName = null, array $options = [])
     {
         $this->filterDefinitions[$columnName] = [
             'type' => $type,
