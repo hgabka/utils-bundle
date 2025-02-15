@@ -11,7 +11,7 @@ abstract class AbstractNestedTreeEntity implements NestedTreeEntityInterface, En
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected ?int $id = null;
+    public ?int $id = null;
 
     public function getId(): ?int
     {
