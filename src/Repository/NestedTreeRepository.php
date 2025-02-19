@@ -57,7 +57,7 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @return QueryBuilder
      */
-    public function selectTreeQueryBuilder(NestedTreeEntityInterface $ignoreSubtree = null)
+    public function selectTreeQueryBuilder(?NestedTreeEntityInterface $ignoreSubtree = null)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('f');
@@ -105,7 +105,7 @@ class NestedTreeRepository extends BaseTreeRepository
      *
      * @return array|string
      */
-    public function getHierarchy(NestedTreeEntityInterface $root = null, $includeNode = false): array|string
+    public function getHierarchy(?NestedTreeEntityInterface $root = null, $includeNode = false): array|string
     {
         return $this->childrenHierarchy($root, false, [], $includeNode);
     }
