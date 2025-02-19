@@ -4,7 +4,7 @@ urlChooser.urlChooser = (function (window, undefined) {
 
     var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser;
 
-    var itemUrl, itemId, itemTitle, itemThumbPath, replacedUrl, $body = $('body');
+    var itemUrl, itemId, itemTitle, itemThumbPath, itemSvg, replacedUrl, $body = $('body');
 
 
     init = function () {
@@ -54,6 +54,7 @@ urlChooser.urlChooser = (function (window, undefined) {
             var $this = $(this),
                 path = $this.data('path'),
                 thumbPath = $this.data('thumb-path'),
+                svg = $this.data('svg'),
                 id = $this.data('id'),
                 title = $this.data('title'),
                 cke = $this.data('cke'),
@@ -63,7 +64,9 @@ urlChooser.urlChooser = (function (window, undefined) {
             itemUrl = path;
             itemId = id;
             itemTitle = title;
-            itemThumbPath = thumbPath;
+            itemThumbPath = thumbPath
+            itemSvg = svg
+            ;
 
             // Save
             if (!cke) {
@@ -161,7 +164,9 @@ urlChooser.urlChooser = (function (window, undefined) {
             // Update preview
             var $mediaChooser = window.parent.$('#' + linkedInputId + '-widget'),
                 $previewImg = window.parent.$('#' + linkedInputId + '__preview__img'),
-                $previewTitle = window.parent.$('#' + linkedInputId + '__preview__title');
+                $previewSvgHolder = window.parent.$('#' + linkedInputId + '__svg_holder'),
+                $previewTitle = window.parent.$('#' + linkedInputId + '__preview__title')
+            ;
 
             $mediaChooser.addClass('media-chooser--choosen');
             $previewTitle.html(itemTitle);
@@ -169,9 +174,21 @@ urlChooser.urlChooser = (function (window, undefined) {
             if (itemThumbPath === "") {
                 var $parent = $previewTitle.parent();
                 $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
-            }
-            else {
-                $previewImg.attr('src', itemThumbPath);
+            } else {
+                if (itemSvg !== '') {
+                    if ($previewSvgHolder.length > 0) {
+                        $previewSvgHolder.html(itemSvg);
+                    } else {
+                        $previewImg.replaceWith('<div id="'+linkedInputId+'__svg_holder" class="text-center media-thumbnail-svg-holder">' + itemSvg + '</div>');
+                    }
+                } else {
+                    if ($previewImg.length > 0) {
+                        $previewImg.attr('src', itemThumbPath);
+                    } else {
+                        $previewSvgHolder.replaceWith('<img id="'+linkedInputId+'__preview__img" src="' + itemThumbPath + '" alt="' + itemTitle + '" class="media-thumbnail__img">');
+                    }
+                }
+
             }
 
             // Close modal
