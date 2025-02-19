@@ -170,22 +170,37 @@ urlChooser.urlChooser = (function (window, undefined) {
 
             $mediaChooser.addClass('media-chooser--choosen');
             $previewTitle.html(itemTitle);
+            var $parent = $previewTitle.parent();
+            $parent.find('.fa-file-o.media-thumbnail__icon').remove();
 
             if (itemThumbPath === "") {
-                var $parent = $previewTitle.parent();
                 $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+                $previewSvgHolder.remove();
+                $previewImg.remove();
             } else {
                 if (itemSvg !== '') {
                     if ($previewSvgHolder.length > 0) {
                         $previewSvgHolder.html(itemSvg);
                     } else {
-                        $previewImg.replaceWith('<div id="'+linkedInputId+'__svg_holder" class="text-center media-thumbnail-svg-holder">' + itemSvg + '</div>');
+                        var div = '<div id="' + linkedInputId + '__svg_holder" class="text-center media-thumbnail-svg-holder">' + itemSvg + '</div>';
+
+                        if ($previewImg.length > 0) {
+                            $previewImg.replaceWith(div);
+                        } else {
+                            $parent.prepend(div)
+                        }
                     }
                 } else {
                     if ($previewImg.length > 0) {
                         $previewImg.attr('src', itemThumbPath);
                     } else {
-                        $previewSvgHolder.replaceWith('<img id="'+linkedInputId+'__preview__img" src="' + itemThumbPath + '" alt="' + itemTitle + '" class="media-thumbnail__img">');
+                        var img = '<img id="' + linkedInputId + '__preview__img" src="' + itemThumbPath + '" alt="' + itemTitle + '" class="media-thumbnail__img">';
+
+                        if ($previewSvgHolder.length > 0) {
+                            $previewSvgHolder.replaceWith(img);
+                        } else {
+                            $parent.prepend(img);
+                        }
                     }
                 }
 
