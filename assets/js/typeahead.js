@@ -126,10 +126,12 @@
 
             this.$menu.show();
             this.shown = true;
+            this.$menu.trigger('typeahead.shown', this);
             return this;
         }, hide: function () {
             this.$menu.hide();
             this.shown = false;
+            this.$menu.trigger('typeahead.hidden', this);
             return this;
         }, ajaxLookup: function () {
 
