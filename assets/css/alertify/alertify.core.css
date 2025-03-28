@@ -32,7 +32,6 @@
 }
 
 :root * > .alertify-close {
-    display: block;
     visibility: hidden
 }
 
