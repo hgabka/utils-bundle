@@ -16,7 +16,7 @@ class Recaptcha extends Constraint
     public string $action = 'utils';
 
     #[HasNamedArguments]
-    public function __construct(string $mode = 'normal', float $minimumScore = 0.2, ?string $action = 'utils', array $groups = null, mixed $payload = null)
+    public function __construct(string $mode = 'normal', float $minimumScore = 0.2, ?string $action = 'utils', ?array $groups = null, mixed $payload = null)
     {
         parent::__construct([], $groups, $payload);
 
