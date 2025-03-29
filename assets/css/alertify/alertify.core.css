@@ -32,7 +32,8 @@
 }
 
 :root * > .alertify-close {
-    visibility: hidden
+    visibility: hidden;
+    display: block;
 }
 
 .alertify-dialog-title {
