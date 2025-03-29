@@ -34,6 +34,7 @@ $alertify-button-font-size: 16px !default;
 $alertify-button-hover-font-size: 16px !default;
 $alertify-button-text-color: #fff !default;
 $alertify-button-border-radius: 4px !default;
+$alertify-button-box-shadow: none !default;
 
 $alertify-button-cancel-background-color: #f00 !default;
 $alertify-button-cancel-hover-background-color: darken($alertify-button-cancel-background-color, 15%) !default;
