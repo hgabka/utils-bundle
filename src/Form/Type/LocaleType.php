@@ -9,18 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocaleType extends AbstractType
 {
-    /** @var HgabkaUtils */
-    protected $hgabkaUtils;
-
-    /**
-     * LocaleType constructor.
-     */
-    public function __construct(HgabkaUtils $hgabkaUtils)
+    public function __construct(private readonly HgabkaUtils $hgabkaUtils)
     {
-        $this->hgabkaUtils = $hgabkaUtils;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $cultures = $this->hgabkaUtils->getLocaleChoices();
 
@@ -47,7 +40,7 @@ class LocaleType extends AbstractType
         });
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }
@@ -55,7 +48,7 @@ class LocaleType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'locale';
     }

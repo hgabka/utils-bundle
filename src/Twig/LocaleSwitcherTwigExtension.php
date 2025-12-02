@@ -12,14 +12,8 @@ use Twig\TwigFunction;
  */
 class LocaleSwitcherTwigExtension extends AbstractExtension
 {
-    /**
-     * @var HgabkaUtils
-     */
-    private $hgabkaUtils;
-
-    public function __construct(HgabkaUtils $hgabkaUtils)
+    public function __construct(private readonly HgabkaUtils $hgabkaUtils)
     {
-        $this->hgabkaUtils = $hgabkaUtils;
     }
 
     /**
@@ -30,10 +24,10 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('localeswitcher_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
-            new TwigFunction('get_locales', [$this, 'getLocales']),
-            new TwigFunction('get_backend_locales', [$this, 'getBackendLocales']),
-            new TwigFunction('locale_display_name', [$this, 'getLocaleDisplayName']),
+            new TwigFunction('localeswitcher_widget', $this->renderWidget(...), ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('get_locales', $this->getLocales(...)),
+            new TwigFunction('get_backend_locales', $this->getBackendLocales(...)),
+            new TwigFunction('locale_display_name', $this->getLocaleDisplayName(...)),
         ];
     }
 
@@ -66,7 +60,7 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getLocales()
+    public function getLocales(): array
     {
         return $this->hgabkaUtils->getAvailableLocales();
     }
@@ -76,12 +70,12 @@ class LocaleSwitcherTwigExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getBackendLocales()
+    public function getBackendLocales(): array
     {
         return $this->hgabkaUtils->getAvailableLocales();
     }
 
-    public function getLocaleDisplayName($culture, $locale = null)
+    public function getLocaleDisplayName(?string $culture, ?string $locale = null)
     {
         return $this->hgabkaUtils->getIntlLocale($culture, $locale);
     }

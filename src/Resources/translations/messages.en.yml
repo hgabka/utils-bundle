@@ -18,6 +18,8 @@ kuma_admin:
             external: External link
             email: Email address
     form:
+        from: from
+        to: to
         cancel: Cancel
         delete: Delete
         deletesure: Are you sure?
@@ -197,3 +199,11 @@ user_edit:
 kuma_js:
     auto_collapse:
         more_button_label: More
+
+hg_utils:
+    security:
+        user_not_enabled: Account is inactive
+    nested_tree:
+        subcreate: 'Add %subentity%'
+        subnew: 'Add %subentity%'
+        delete: 'Delete %entity%'

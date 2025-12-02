@@ -46,7 +46,8 @@ class NestedTreeCRUDController extends CRUDController
         $sub = $this->admin->getNewInstance();
         $sub->setParent($folder);
         $this->admin->setSubject($sub);
-        $subForm = $this->admin->getFormBuilder()->getForm();
+        $subFormBuilder = $this->admin->getFormBuilder();
+        $subForm = $this->admin->getSubFormBuilder()->getForm();
         $subForm->setData($sub);
 
         $this->admin->setSubject($folder);
@@ -63,7 +64,7 @@ class NestedTreeCRUDController extends CRUDController
                 $em->getManager()->flush();
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->trans('kuma_admin_list.messages.edit_success')
+                    $this->trans('kuma_admin_list.messages.edit_success', [], 'messages')
                 );
 
                 return new RedirectResponse(
@@ -72,7 +73,7 @@ class NestedTreeCRUDController extends CRUDController
             }
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('kuma_admin_list.messages.edit_error')
+                $this->trans('kuma_admin_list.messages.edit_error', [], 'messages')
             );
 
             return new RedirectResponse(
@@ -88,6 +89,8 @@ class NestedTreeCRUDController extends CRUDController
                 'editform' => $editForm->createView(),
                 'object' => $folder,
                 'admin' => $this->admin,
+                'base_template' => $this->getBaseTemplate(),
+                'objectId' => $folder ? $folder->getId() : null,
             ]
         );
     }
@@ -145,7 +148,7 @@ class NestedTreeCRUDController extends CRUDController
 
         $folder = $this->admin->getNewInstance();
         $this->admin->setSubject($folder);
-        $form = $this->admin->getForm();
+        $form = $this->admin->getSubFormBuilder()->getForm();
         $form->setData($folder);
         $form->handleRequest($request);
 
@@ -159,9 +162,10 @@ class NestedTreeCRUDController extends CRUDController
                 $em->flush();
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->trans('kuma_admin_list.messages.add_success')
+                    $this->trans('kuma_admin_list.messages.add_success', [], 'messages')
                 );
-                $redirect = $this->admin->generateUrl('list');
+                $redirect = $this->admin->generateUrl('list')
+                ;
 
                 return new RedirectResponse(
                     $this->admin->generateUrl(
@@ -174,7 +178,7 @@ class NestedTreeCRUDController extends CRUDController
             }
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('kuma_admin_list.messages.add_error')
+                $this->trans('kuma_admin_list.messages.add_error', [], 'messages')
             );
             $redirect = $this->admin->generateUrl('list');
 
@@ -182,7 +186,7 @@ class NestedTreeCRUDController extends CRUDController
                 $this->admin->generateUrl(
                     'list',
                     [
-                            $this->admin->getIdParameter() => $newObject->getId(),
+                            $this->admin->getIdParameter() => $request->query->get('parent'),
                         ]
                 )
             );
@@ -195,6 +199,7 @@ class NestedTreeCRUDController extends CRUDController
                 'subform' => $form->createView(),
                 'object' => $folder,
                 'parent' => $parent,
+                'objectId' => $folder ? $folder->getId() : null,
             ]
         );
     }
@@ -226,7 +231,7 @@ class NestedTreeCRUDController extends CRUDController
         if (!$object->isDeleteable()) {
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('kuma_admin_list.messages.delete_error')
+                $this->trans('kuma_admin_list.messages.delete_error', [], 'messages')
             );
 
             return new RedirectResponse(
@@ -244,25 +249,25 @@ class NestedTreeCRUDController extends CRUDController
         try {
             $this->admin->delete($object);
 
-            if ($this->isXmlHttpRequest()) {
+            if ($this->isXmlHttpRequest($request)) {
                 return $this->renderJson(['result' => 'ok'], Response::HTTP_OK, []);
             }
 
             $this->addFlash(
                 'sonata_flash_success',
-                $this->trans('kuma_admin_list.messages.delete_success')
+                $this->trans('kuma_admin_list.messages.delete_success', [], 'messages')
             );
             $id = $parentObject ? $parentObject->getId() : null;
         } catch (ModelManagerException $e) {
             $this->handleModelManagerException($e);
 
-            if ($this->isXmlHttpRequest()) {
+            if ($this->isXmlHttpRequest($request)) {
                 return $this->renderJson(['result' => 'error'], Response::HTTP_OK, []);
             }
 
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('kuma_admin_list.messages.delete_error')
+                $this->trans('kuma_admin_list.messages.delete_error', [], 'messages')
             );
         }
 

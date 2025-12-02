@@ -43,7 +43,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
     /**
      * @return AbstractSortableAdmin
      */
-    public function setSortField(string $sortField): self
+    public function setSortField(string $sortField): static
     {
         $this->sortField = $sortField;
 
@@ -60,7 +60,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return [];
     }
 
-    public function setDescending(bool $descending): self
+    public function setDescending(bool $descending): static
     {
         $this->descending = $descending;
 
@@ -76,7 +76,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         return !empty($filters);
     }
 
-    protected function configureDefaultSortValues(array & $sortValues): void
+    protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PER_PAGE] = \PHP_INT_MAX;
         $sortValues[DatagridInterface::SORT_BY] = $this->sortField;

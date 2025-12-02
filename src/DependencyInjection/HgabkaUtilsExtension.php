@@ -6,20 +6,24 @@ use Hgabka\UtilsBundle\Doctrine\Hydrator\ColumnHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\CountHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\IndexedHydrator;
 use Hgabka\UtilsBundle\Doctrine\Hydrator\KeyValueHydrator;
+use Hgabka\UtilsBundle\Doctrine\Type\EnumTypeInterface;
 use Hgabka\UtilsBundle\DQL\Cast;
 use Hgabka\UtilsBundle\DQL\CharLength;
 use Hgabka\UtilsBundle\DQL\Date;
+use Hgabka\UtilsBundle\DQL\Day;
 use Hgabka\UtilsBundle\DQL\First;
 use Hgabka\UtilsBundle\DQL\Format;
 use Hgabka\UtilsBundle\DQL\IfElse;
 use Hgabka\UtilsBundle\DQL\IfNull;
 use Hgabka\UtilsBundle\DQL\Instr;
 use Hgabka\UtilsBundle\DQL\Left;
+use Hgabka\UtilsBundle\DQL\Month;
 use Hgabka\UtilsBundle\DQL\Rand;
 use Hgabka\UtilsBundle\DQL\Regexp;
 use Hgabka\UtilsBundle\DQL\Repeat;
 use Hgabka\UtilsBundle\DQL\Round;
 use Hgabka\UtilsBundle\DQL\Substr;
+use Hgabka\UtilsBundle\DQL\Year;
 use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -42,7 +46,7 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -63,12 +67,19 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
 
         $container->setParameter('hgabka_utils.backend_user_class', $config['backend_user_class']);
         $container->setParameter('hgabka_utils.public_access_role', $config['public_access_role']);
+        $container->setParameter('hgabka_utils.admin_firewall_name', $config['admin_firewall_name']);
+
+        $container->setParameter('hgabka_utils.recaptcha.site_key', $config['recaptcha']['site_key'] ?? null);
+        $container->setParameter('hgabka_utils.recaptcha.secret', $config['recaptcha']['secret'] ?? null);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $recaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.recaptcha_type');
         $recaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
+
+        $invisibleRecaptchaTypeDefinition = $container->getDefinition('hgabka_utils.form.invisible_recaptcha_type');
+        $invisibleRecaptchaTypeDefinition->replaceArgument(0, $config['recaptcha']['site_key'] ?? null);
 
         $recaptchaValidatorDefinition = $container->getDefinition('hgabka_utils.validator.recaptcha');
         $recaptchaValidatorDefinition->replaceArgument(2, $config['recaptcha']['secret'] ?? null);
@@ -77,19 +88,24 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
         $googleDriveDownloaderDefinition->replaceArgument(1, $config['google']['api_key'] ?? null);
         $googleDriveDownloaderDefinition->replaceArgument(2, $config['google']['client_id'] ?? null);
         $googleDriveDownloaderDefinition->replaceArgument(3, $config['google']['client_secret'] ?? null);
+
+        $container
+            ->registerForAutoconfiguration(EnumTypeInterface::class)
+            ->addTag('hg_utils.doctrine_enum_type')
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $configs = $container->getExtensionConfig($this->getAlias());
-        $this->processConfiguration(new Configuration(), $configs);
-        $this->configureTwigBundle($container);
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->configureTwigBundle($container, $config);
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $keyValueHydrator = [KeyValueHydrator::HYDRATOR_NAME, KeyValueHydrator::class];
         $columnHydrator = [ColumnHydrator::HYDRATOR_NAME, ColumnHydrator::class];
@@ -116,6 +132,9 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
             $definition->addMethodCall('addCustomStringFunction', [Left::FUNCTION_NAME, Left::class]);
             $definition->addMethodCall('addCustomStringFunction', [CharLength::FUNCTION_NAME, CharLength::class]);
             $definition->addMethodCall('addCustomStringFunction', [First::FUNCTION_NAME, First::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Year::FUNCTION_NAME, Year::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Month::FUNCTION_NAME, Month::class]);
+            $definition->addMethodCall('addCustomStringFunction', [Day::FUNCTION_NAME, Day::class]);
         }
 
         $filterSets = $container->getParameter('liip_imagine.filter_sets');
@@ -140,16 +159,34 @@ class HgabkaUtilsExtension extends Extension implements PrependExtensionInterfac
                 $definition->addMethodCall('addAdaptMenu', [new Reference($id), $priority]);
             }
         }
+
+        $typesDefinition = [];
+        if ($container->hasParameter('doctrine.dbal.connection_factory.types')) {
+            $typesDefinition = $container->getParameter('doctrine.dbal.connection_factory.types');
+        }
+        $taggedEnums = $container->findTaggedServiceIds('hg_utils.doctrine_enum_type');
+
+        foreach ($taggedEnums as $enumType => $definition) {
+            /** @var $enumType AbstractEnumType */
+            $typesDefinition[$enumType::NAME] = ['class' => $enumType];
+        }
+        $container->setParameter('doctrine.dbal.connection_factory.types', $typesDefinition);
     }
 
-    protected function configureTwigBundle(ContainerBuilder $container)
+    protected function configureTwigBundle(ContainerBuilder $container, $config)
     {
         foreach (array_keys($container->getExtensions()) as $name) {
             switch ($name) {
                 case 'twig':
                     $container->prependExtensionConfig(
                         $name,
-                        ['form_themes' => [$this->formTypeTemplate]]
+                        [
+                            'form_themes' => [$this->formTypeTemplate],
+                            'globals' => [
+                                'recaptcha_sitekey' => $config['recaptcha']['site_key'],
+                                'recaptcha_secret' => $config['recaptcha']['secret'],
+                            ],
+                        ]
                     );
 
                     break;

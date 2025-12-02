@@ -273,7 +273,7 @@ class Words_lt extends Words
                 return null;
             }
 
-            //echo " $t $d  <br>";
+            // echo " $t $d  <br>";
 
             if (1 === $t || ($t > 0 && 0 === $d)) {
                 $ret .= $this->_sep . $lev[2];

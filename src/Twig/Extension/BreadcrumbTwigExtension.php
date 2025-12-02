@@ -8,29 +8,12 @@ use Twig\Extension\GlobalsInterface;
 
 class BreadcrumbTwigExtension extends AbstractExtension implements GlobalsInterface
 {
-    /**
-     * @var BreadcrumbManager
-     */
-    protected $breadcrumbManager;
-
-    /**
-     * PublicTwigExtension constructor.
-     */
-    public function __construct(BreadcrumbManager $manager)
+    public function __construct(private readonly BreadcrumbManager $breadcrumbManager)
     {
-        $this->breadcrumbManager = $manager;
     }
 
     public function getGlobals(): array
     {
         return ['breadcrumb_manager' => $this->breadcrumbManager];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'hgabka_utilsbundle_breadcrumb_twig_extension';
     }
 }

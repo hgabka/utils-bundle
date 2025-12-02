@@ -46,7 +46,7 @@ class FormHelper
      *
      * @return array
      */
-    public function getRecursiveErrorMessages($formViews, array & $errors = [])
+    public function getRecursiveErrorMessages($formViews, array &$errors = [])
     {
         if (\is_array($formViews)) {
             foreach ($formViews as $formView) {

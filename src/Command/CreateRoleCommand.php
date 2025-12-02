@@ -5,22 +5,20 @@ namespace Hgabka\UtilsBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Hgabka\UtilsBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to create a group using bin/console kuma:role:create <NAME_OF_THE_ROLE>.
- */
+#[AsCommand(name: 'hgabka:role:create', description: 'Creates a role', hidden: false)]
 class CreateRoleCommand extends ContainerAwareCommand
 {
     /**
      * Configures the current command.
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName('hgabka:role:create')
-            ->setDescription('Create a role.')
+        $this
             ->setDefinition([
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
             ])

@@ -17,7 +17,7 @@ class SidebarTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('hideSidebarInNodeEditAdmin', [$this, 'hideSidebarInNodeEditAdmin']),
+            new TwigFunction('hideSidebarInNodeEditAdmin', $this->hideSidebarInNodeEditAdmin(...)),
         ];
     }
 

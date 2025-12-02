@@ -5,12 +5,11 @@ namespace Hgabka\UtilsBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Symfony CLI command to remove the ROLE_GUEST dependency.
- */
+#[AsCommand(name: 'hgabka:fix:guest', description: 'Removes the ROLE_GUEST dependency', hidden: false)]
 class FixGuestCommand extends ContainerAwareCommand
 {
     /**
@@ -26,12 +25,11 @@ class FixGuestCommand extends ContainerAwareCommand
     /**
      * Configures the command.
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
-        $this->setName('hgabka:fix:guest')
-            ->setDescription('Remove the ROLE_GUEST dependency.')
+        $this
             ->setHelp('The <info>hgabka:fix:guest</info> command can be used to remove the ROLE_GUEST dependency.');
     }
 

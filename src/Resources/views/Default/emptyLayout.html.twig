@@ -56,7 +56,7 @@
                             {% if topchildren | length > 0 %}
                                 <!-- Navigation Item - with sub-items -->
                                 <li class="dropdown{% if menuitem.active %} active{% endif %}">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <a href="#item" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         {{ menuitem.label | trans }}
                                         <i class="fa fa-caret-down"></i>
                                     </a>
@@ -65,7 +65,7 @@
                                             {% set nestedtopchildren = topchild.topchildren %}
                                             {% if nestedtopchildren | length > 0 %}
                                                 <li class="dropdown-menu__item--has-submenu{% if topchild.active %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
-                                                    <a href="#" class="dropdown-toggle dropdown-toggle dropdown-toggle--submenu" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                    <a href="#top" class="dropdown-toggle dropdown-toggle dropdown-toggle--submenu" data-toggle="dropdown" role="button" aria-expanded="false">
                                                         {{ topchild.label | trans }}
                                                         <i class="fa fa-caret-right"></i>
                                                     </a>

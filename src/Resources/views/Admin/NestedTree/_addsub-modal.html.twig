@@ -8,12 +8,12 @@
                     <i class="fa fa-times"></i>
                 </button>
                 <h3>
-                    Alkategória hozzáadása
+                    {{ 'hg_utils.nested_tree.subcreate'|trans({'%subentity%': admin.subEntityName(app.request.locale)|capitalize}) }}
                 </h3>
             </div>
 
             {% form_theme subform '@HgabkaUtils/Form/fields.html.twig' %}
-            {{ form_start(subform, {'method': 'POST', 'action': admin.generateUrl('subcreate', { 'uniqid': admin.uniqid }), 'attr': {'id': 'addsub-modal-form'}}) }}
+            {{ form_start(subform, {'method': 'POST', 'action': admin.generateUrl('subcreate', { 'uniqid': admin.uniqid, 'parent': object.id }), 'attr': {'id': 'addsub-modal-form'}}) }}
 
             <!-- Body -->
             <div class="modal-body nested-tree-form">

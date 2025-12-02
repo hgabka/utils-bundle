@@ -4,26 +4,14 @@ namespace Hgabka\UtilsBundle\Form\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ObjectAutocompleteViewTransformer implements DataTransformerInterface
 {
-    /**
-     * @var ObjectRepository
-     */
-    protected $repository;
-
-    /**
-     * @var string
-     */
-    protected $callback;
-
-    public function __construct(ObjectRepository $repository, $callback)
+    public function __construct(protected EntityRepository $repository, protected ?string $callback)
     {
-        $this->repository = $repository;
-        $this->callback = $callback;
     }
 
     /**

@@ -3,31 +3,17 @@
 namespace Hgabka\UtilsBundle\Command;
 
 use Hgabka\UtilsBundle\Util\UserManipulator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Matthieu Bontemps <matthieu@knplabs.com>
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Luis Cordova <cordoval@gmail.com>
- * @author Lenar Lõhmus <lenar@city.ee>
- *
- * @internal
- * @final
- */
+#[AsCommand(name: 'hgabka:backend-user:promote', description: 'Promotes a user by adding a role', hidden: false)]
 class PromoteUserCommand extends RoleCommand
 {
-    protected static $defaultName = 'hgabka:backend-user:promote';
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
-            ->setName(self::$defaultName)
-            ->setDescription('Promotes a user by adding a role')
             ->setHelp(
                 <<<'EOT'
                     The <info>hgabka:backend-user:promote</info> command promotes a user by adding a role
@@ -38,7 +24,7 @@ class PromoteUserCommand extends RoleCommand
     /**
      * {@inheritdoc}
      */
-    protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role)
+    protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role): void
     {
         if ($super) {
             $manipulator->promote($username);

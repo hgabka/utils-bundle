@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class HgabkaUtilsBundle extends Bundle
 {
-    public function boot()
+    public function boot(): void
     {
         foreach ($this->container->getParameter('doctrine.entity_managers') as $name => $serviceName) {
             $em = $this->container->get($serviceName);

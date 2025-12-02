@@ -14,7 +14,7 @@ interface FilterTypeInterface
      * @param array   &$data    The data
      * @param string  $uniqueId The unique identifier
      */
-    public function bindRequest(Request $request, array & $data, $uniqueId);
+    public function bindRequest(Request $request, array &$data, $uniqueId);
 
     /**
      * @param array  $data     Data

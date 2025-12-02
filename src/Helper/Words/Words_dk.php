@@ -211,7 +211,7 @@ class Words_dk extends Words
                 $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'hundrede';
             }
 
-            //if (($t + $d) > 0)
+            // if (($t + $d) > 0)
             //  $ret .= $this->_sep . 'og';
         } elseif ((isset($maxp)) && ($maxp > 3)) {
             // add 'og' in the case where there are preceding thousands but not hundreds or tens,

@@ -111,9 +111,9 @@ class FilterBuilder
             $request->getSession()->set($filterBuilderName, $this->currentParameters);
         }
 
-        $filterColumnNames = $request->query->get('filter_columnname');
+        $filterColumnNames = $request->query->all('filter_columnname');
         if (isset($filterColumnNames)) {
-            $uniqueIds = $request->query->get('filter_uniquefilterid');
+            $uniqueIds = $request->query->all('filter_uniquefilterid');
             $index = 0;
             foreach ($filterColumnNames as $filterColumnName) {
                 $uniqueId = $uniqueIds[$index];

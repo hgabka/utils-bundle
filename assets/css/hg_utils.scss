@@ -1,3 +1,6 @@
+html {
+    font-size: 10px !important;
+}
 .sonata-bc .app__content__breadcrumb {
     padding: 0 0 0 3em;
     margin-bottom: 35px;
@@ -885,6 +888,11 @@
         background-color: white;
         border-radius: 3px;
         min-height: 15px;
+    }
+    
+    .breadcrumb.sub-breadcrumb > li + li::before {
+        content: "";
+        padding: 0;
     }
 
     .app__filter {

@@ -8,7 +8,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 trait BreadcrumbTrait
 {
     /** @var BreadcrumbManager */
-    protected $breadcrumbManager;
+    protected ?BreadcrumbManager $breadcrumbManager = null;
 
     #[Required]
     public function setBreadcrumbManager(BreadcrumbManager $breadcrumbManager)

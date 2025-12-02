@@ -2,19 +2,15 @@
 
 namespace Hgabka\UtilsBundle\Breadcrumb;
 
+use Countable;
+use IteratorAggregate;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 
-class BreadcrumbManager implements \IteratorAggregate, \Countable
+class BreadcrumbManager implements IteratorAggregate, Countable
 {
     /** @var array */
     protected array $breadCrumbs = [];
-
-    /** @var Security */
-    protected Security $security;
-
-    /** @var RequestStack */
-    protected RequestStack $requestStack;
 
     /** @var bool */
     protected bool $addHomepage = true;
@@ -27,10 +23,8 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
     /**
      * BreadcrumbManager constructor.
      */
-    public function __construct(Security $security, RequestStack $requestStack)
+    public function __construct(private readonly Security $security, private readonly RequestStack $requestStack)
     {
-        $this->security = $security;
-        $this->requestStack = $requestStack;
     }
 
     /**
@@ -57,7 +51,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadcrumbManager
      */
-    public function add(BreadCrumb|BreadcrumbInterface|string|null $bc = null, ?string $label = null, array $routeParams = []): self
+    public function add(BreadCrumb|BreadcrumbInterface|string|null $bc = null, ?string $label = null, array $routeParams = []): static
     {
         if ($bc instanceof BreadcrumbInterface) {
             $bcs = $bc->getBreadcrumb($this->getUser());
@@ -98,7 +92,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function addCurrentRoute(?string $label = null): self
+    public function addCurrentRoute(?string $label = null): static
     {
         $request = $this->requestStack->getCurrentRequest();
         $route = $request->attributes->get('_route');
@@ -111,7 +105,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
         return $this->add($route, $label, $routeParams);
     }
 
-    public function addHomePage(): self
+    public function addHomePage(): static
     {
         return $this->setAddHomepage(false)->add($this->getHomepageBreadcrumb());
     }
@@ -119,7 +113,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
     /**
      * Összes beállított breadcrumb törlése.
      */
-    public function clear(): self
+    public function clear(): static
     {
         $this->breadCrumbs = [];
 
@@ -143,7 +137,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function setAddHomepage($switch): self
+    public function setAddHomepage($switch): static
     {
         $this->addHomepage = (bool) $switch;
 
@@ -173,7 +167,7 @@ class BreadcrumbManager implements \IteratorAggregate, \Countable
      *
      * @return BreadCrumbManager
      */
-    public function trim($count): self
+    public function trim($count): static
     {
         $this->breadCrumbs = \array_slice($this->getBreadcrumbs(), 0, -$count);
 

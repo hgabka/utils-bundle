@@ -33,6 +33,8 @@
         that.displayField = that.options.displayField || that.displayField;
         that.valueField = that.options.valueField || that.valueField;
         that.autoSelect = that.options.autoSelect || that.autoSelect;
+        that.defaultEnter = that.options.defaultEnter || that.defaultEnter;
+        that.preventSelect = that.options.preventSelect || that.preventSelect;
 
         if (that.options.ajax) {
             var ajax = that.options.ajax;
@@ -65,8 +67,7 @@
     };
 
     Typeahead.prototype = {
-        constructor: Typeahead,
-        //=============================================================================================================
+        constructor: Typeahead, //=============================================================================================================
         //  Utils
         //  Check if an event is supported by the browser eg. 'keypress'
         //  * This was included to handle the "exhaustive deprecation" of jQuery.browser in jQuery 1.8
@@ -80,19 +81,19 @@
             }
 
             return isSupported;
-        },
-        select: function () {
+        }, select: function () {
             var $selectedItem = this.$menu.find('.active');
             var text;
 
-            if($selectedItem.length) {
+            if ($selectedItem.length) {
                 var value = $selectedItem.attr('data-value');
 
                 if (value !== -21) {
-                    text = this.$menu.find('.active a').text();
+                    let $a = this.$menu.find('.active a');
+                    text = $a.text();
 
                     this.$element
-                    .val(this.updater(text))
+                    .val(this.updater(this.preventSelect ? '' : text))
                     .change();
                 } else {
                     text = this.$element.val();
@@ -100,27 +101,23 @@
 
                 if (this.options.onSelect) {
                     this.options.onSelect({
-                        value: value,
-                        text: text
+                        value: value, text: text
                     });
                 }
             }
             return this.hide();
-        },
-        updater: function (item) {
+        }, updater: function (item) {
             return item;
-        },
-        show: function () {
+        }, show: function () {
             var pos = $.extend({}, this.$element.position(), {
                 height: this.$element[0].offsetHeight
             });
 
             this.$menu.css({
-                top: pos.top + pos.height,
-                left: pos.left
+                top: pos.top + pos.height, left: pos.left
             });
 
-            if(this.options.alignWidth) {
+            if (this.options.alignWidth) {
                 var width = $(this.$element[0]).outerWidth();
                 this.$menu.css({
                     width: width
@@ -130,13 +127,11 @@
             this.$menu.show();
             this.shown = true;
             return this;
-        },
-        hide: function () {
+        }, hide: function () {
             this.$menu.hide();
             this.shown = false;
             return this;
-        },
-        ajaxLookup: function () {
+        }, ajaxLookup: function () {
 
             var query = $.trim(this.$element.val());
 
@@ -168,19 +163,15 @@
                 this.ajaxToggleLoadClass(true);
 
                 // Cancel last call if already in progress
-                if (this.ajax.xhr)
+                if (this.ajax.xhr) {
                     this.ajax.xhr.abort();
+                }
 
                 var params = this.ajax.preDispatch ? this.ajax.preDispatch(query) : {
                     query: query
                 };
                 this.ajax.xhr = $.ajax({
-                    url: this.ajax.url,
-                    data: params,
-                    success: $.proxy(this.ajaxSource, this),
-                    type: this.ajax.method || 'get',
-                    dataType: 'json',
-                    headers: this.ajax.headers || {}
+                    url: this.ajax.url, data: params, success: $.proxy(this.ajaxSource, this), type: this.ajax.method || 'get', dataType: 'json', headers: this.ajax.headers || {}
                 });
                 this.ajax.timerId = null;
             }
@@ -189,17 +180,21 @@
             this.ajax.timerId = setTimeout($.proxy(execute, this), this.ajax.timeout);
 
             return this;
-        },
-        ajaxSource: function (data) {
+        }, ajaxSource: function (data) {
             this.ajaxToggleLoadClass(false);
             var that = this, items;
-            if (!that.ajax.xhr)
+            if (!that.ajax.xhr) {
                 return;
+            }
             if (that.ajax.preProcess) {
                 data = that.ajax.preProcess(data);
             }
             // Save for selection retreival
             that.ajax.data = data;
+
+            if (typeof data === 'object' && 'html' in data) {
+                return that.render(data).show();
+            }
 
             // Manipulate objects
             items = that.grepper(that.ajax.data) || [];
@@ -209,18 +204,16 @@
 
             that.ajax.xhr = null;
             return that.render(items.slice(0, that.options.items)).show();
-        },
-        ajaxToggleLoadClass: function (enable) {
-            if (!this.ajax.loadingClass)
+        }, ajaxToggleLoadClass: function (enable) {
+            if (!this.ajax.loadingClass) {
                 return;
+            }
             this.$element.toggleClass(this.ajax.loadingClass, enable);
-        },
-        lookup: function (event) {
+        }, lookup: function (event) {
             var that = this, items;
             if (that.ajax) {
                 that.ajaxer();
-            }
-            else {
+            } else {
                 that.query = that.$element.val();
 
                 if (!that.query) {
@@ -229,67 +222,69 @@
 
                 items = that.grepper(that.source);
 
-
                 if (!items || items.length === 0) {
                     return that.shown ? that.hide() : that;
                 }
 
                 return that.render(items.slice(0, that.options.items)).show();
             }
-        },
-        matcher: function (item) {
+        }, matcher: function (item) {
             return ~item.toLowerCase().indexOf(this.query.toLowerCase());
-        },
-        sorter: function (items) {
+        }, sorter: function (items) {
             if (!this.options.ajax) {
-                var beginswith = [],
-                    caseSensitive = [],
-                    caseInsensitive = [],
-                    item;
+                var beginswith = [], caseSensitive = [], caseInsensitive = [], item;
 
                 while (item = items.shift()) {
-                    if (!item.toLowerCase().indexOf(this.query.toLowerCase()))
+                    if (!item.toLowerCase().indexOf(this.query.toLowerCase())) {
                         beginswith.push(item);
-                    else if (~item.indexOf(this.query))
+                    } else if (~item.indexOf(this.query)) {
                         caseSensitive.push(item);
-                    else
+                    } else {
                         caseInsensitive.push(item);
+                    }
                 }
 
                 return beginswith.concat(caseSensitive, caseInsensitive);
             } else {
                 return items;
             }
-        },
-        highlighter: function (item) {
+        }, highlighter: function (item) {
             var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
             return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
                 return '<strong>' + match + '</strong>';
             });
-        },
-        render: function (items) {
+        }, render: function (items) {
             var that = this, display, isString = typeof that.options.displayField === 'string';
 
-            items = $(items).map(function (i, item) {
-                if (typeof item === 'object') {
-                    display = isString ? item[that.options.displayField] : that.options.displayField(item);
-                    i = $(that.options.item).attr('data-value', item[that.options.valueField]);
-                } else {
-                    display = item;
-                    i = $(that.options.item).attr('data-value', item);
-                }
-                i.find('a').html(that.highlighter(display));
-                return i[0];
-            });
+            let autoSelect = this.autoSelect;
+            if (typeof items === 'object' && 'html' in items) {
+                items = items.html;
+                autoSelect = false;
+            } else {
+                items = $(items).map(function (i, item) {
+                    if (typeof item === 'object') {
+                        display = isString ? item[that.options.displayField] : that.options.displayField(item);
+                        i = $(that.options.item).attr('data-value', item[that.options.valueField]);
+                    } else {
+                        display = item;
+                        i = $(that.options.item).attr('data-value', item);
+                    }
+                    i.find('a').html(that.highlighter(display));
+                    if (typeof item === 'object' && 'target' in item) {
+                        i.find('a').attr('target', item.target);
+                    }
 
-            if(that.autoSelect){
-                items.first().addClass('active');
+                    return i[0];
+                });
+
+                if (autoSelect) {
+                    items.first().addClass('active');
+                }
             }
 
             this.$menu.html(items);
             return this;
-        },
-        //------------------------------------------------------------------
+        }, //------------------------------------------------------------------
         //  Filters relevent results
         //
         grepper: function (data) {
@@ -312,10 +307,8 @@
                 return null;
             }
             return this.sorter(items);
-        },
-        next: function (event) {
-            var active = this.$menu.find('.active').removeClass('active'),
-                next = active.next();
+        }, next: function (event) {
+            var active = this.$menu.find('.active').removeClass('active'), next = active.next();
 
             if (!next.length) {
                 next = $(this.$menu.find('li')[0]);
@@ -329,10 +322,8 @@
             }
 
             next.addClass('active');
-        },
-        prev: function (event) {
-            var active = this.$menu.find('.active').removeClass('active'),
-                prev = active.prev();
+        }, prev: function (event) {
+            var active = this.$menu.find('.active').removeClass('active'), prev = active.prev();
 
             if (!prev.length) {
                 prev = this.$menu.find('li').last();
@@ -352,8 +343,7 @@
 
             prev.addClass('active');
 
-        },
-        listen: function () {
+        }, listen: function () {
             this.$element
             .on('focus', $.proxy(this.focus, this))
             .on('blur', $.proxy(this.blur, this))
@@ -368,17 +358,23 @@
             .on('click', $.proxy(this.click, this))
             .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
             .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
-        },
-        move: function (e) {
-            if (!this.shown)
+        }, move: function (e) {
+            if (!this.shown) {
                 return
+            }
 
             switch (e.keyCode) {
                 case 9: // tab
-                case 13: // enter
                 case 27: // escape
                     e.preventDefault();
                     break
+                case 13: // enter
+                    if (!this.defaultEnter) {
+                        e.preventDefault();
+                        break;
+                    } else {
+                        return;
+                    }
 
                 case 38: // up arrow
                     e.preventDefault()
@@ -392,17 +388,15 @@
             }
 
             e.stopPropagation();
-        },
-        keydown: function (e) {
+        }, keydown: function (e) {
             this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40, 38, 9, 13, 27])
             this.move(e)
-        },
-        keypress: function (e) {
-            if (this.suppressKeyPressRepeat)
+        }, keypress: function (e) {
+            if (this.suppressKeyPressRepeat) {
                 return
+            }
             this.move(e)
-        },
-        keyup: function (e) {
+        }, keyup: function (e) {
             switch (e.keyCode) {
                 case 40: // down arrow
                 case 38: // up arrow
@@ -413,52 +407,57 @@
 
                 case 9: // tab
                 case 13: // enter
-                    if (!this.shown)
+                    if (!this.shown) {
                         return
-                    this.select()
-                    break
+                    }
+                    var $selectedItem = this.$menu.find('.active');
+                    if ($selectedItem || !this.defaultEnter) {
+                        this.select();
+                    } else if (this.defaultEnter) {
+                        return;
+                    }
+
+                    break;
 
                 case 27: // escape
-                    if (!this.shown)
+                    if (!this.shown) {
                         return
+                    }
                     this.hide()
                     break
 
                 default:
-                    if (this.ajax)
+                    if (this.ajax) {
                         this.ajaxLookup()
-                    else
+                    } else {
                         this.lookup()
+                    }
             }
 
             e.stopPropagation()
             e.preventDefault()
-        },
-        focus: function (e) {
+        }, focus: function (e) {
             this.focused = true
-        },
-        blur: function (e) {
+        }, blur: function (e) {
             this.focused = false
-            if (!this.mousedover && this.shown)
+            if (!this.mousedover && this.shown) {
                 this.hide()
-        },
-        click: function (e) {
+            }
+        }, click: function (e) {
             e.stopPropagation()
             e.preventDefault()
             this.select()
             this.$element.focus()
-        },
-        mouseenter: function (e) {
+        }, mouseenter: function (e) {
             this.mousedover = true
             this.$menu.find('.active').removeClass('active')
             $(e.currentTarget).addClass('active')
-        },
-        mouseleave: function (e) {
+        }, mouseleave: function (e) {
             this.mousedover = false
-            if (!this.focused && this.shown)
+            if (!this.focused && this.shown) {
                 this.hide()
-        },
-        destroy: function() {
+            }
+        }, destroy: function () {
             this.$element
             .off('focus', $.proxy(this.focus, this))
             .off('blur', $.proxy(this.blur, this))
@@ -477,42 +476,25 @@
         }
     };
 
-
     /* TYPEAHEAD PLUGIN DEFINITION
      * =========================== */
 
     $.fn.typeahead = function (option) {
         return this.each(function () {
-            var $this = $(this),
-                data = $this.data('typeahead'),
-                options = typeof option === 'object' && option;
-            if (!data)
+            var $this = $(this), data = $this.data('typeahead'), options = typeof option === 'object' && option;
+            if (!data) {
                 $this.data('typeahead', (data = new Typeahead(this, options)));
-            if (typeof option === 'string')
+            }
+            if (typeof option === 'string') {
                 data[option]();
+            }
         });
     };
 
     $.fn.typeahead.defaults = {
-        source: [],
-        items: 10,
-        scrollBar: false,
-        alignWidth: true,
-        menu: '<ul class="typeahead dropdown-menu"></ul>',
-        item: '<li><a href="#"></a></li>',
-        valueField: 'id',
-        displayField: 'name',
-        autoSelect: true,
-        onSelect: function () {
-        },
-        ajax: {
-            url: null,
-            timeout: 300,
-            method: 'get',
-            triggerLength: 1,
-            loadingClass: null,
-            preDispatch: null,
-            preProcess: null
+        source: [], items: 10, scrollBar: false, alignWidth: true, menu: '<ul class="typeahead dropdown-menu"></ul>', item: '<li><a href="#"></a></li>', valueField: 'id', displayField: 'name', autoSelect: true, onSelect: function () {
+        }, defaultEnter: false, prevetSelect: false, ajax: {
+            url: null, timeout: 300, method: 'get', triggerLength: 1, loadingClass: null, preDispatch: null, preProcess: null
         }
     };
 
@@ -524,8 +506,9 @@
     $(function () {
         $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
             var $this = $(this);
-            if ($this.data('typeahead'))
+            if ($this.data('typeahead')) {
                 return;
+            }
             e.preventDefault();
             $this.typeahead($this.data());
         });

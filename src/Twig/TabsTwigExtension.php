@@ -20,7 +20,7 @@ class TabsTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tabs_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('tabs_widget', $this->renderWidget(...), ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 
@@ -31,7 +31,7 @@ class TabsTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function renderWidget(Environment $env, TabPane $tabPane, $options = [], $template = '@HgabkaUtils/TabsTwigExtension/widget.html.twig')
+    public function renderWidget(Environment $env, TabPane $tabPane, array $options = [], string $template = '@HgabkaUtils/TabsTwigExtension/widget.html.twig')
     {
         $template = $env->load($template);
 

@@ -17,19 +17,15 @@ use Symfony\Component\Console\Question\Question;
  */
 abstract class RoleCommand extends Command
 {
-    private $userManipulator;
-
-    public function __construct(UserManipulator $userManipulator)
+    public function __construct(private readonly UserManipulator $userManipulator)
     {
         parent::__construct();
-
-        $this->userManipulator = $userManipulator;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDefinition([
@@ -69,12 +65,12 @@ abstract class RoleCommand extends Command
      * @param bool   $super
      * @param string $role
      */
-    abstract protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role);
+    abstract protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role): void;
 
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $questions = [];
 

@@ -3,7 +3,7 @@
 {% include '@HgabkaUtils/AdminListTwigExtension/filters.html.twig' %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated', {
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap', {
 		'prev_message' : 'kuma_admin_list.pagerfanta.prev_message' | trans,
 		'next_message' : 'kuma_admin_list.pagerfanta.next_message' | trans
 		})
@@ -119,7 +119,7 @@
                     {% endif %}
 
                     {% if adminlist.canDelete(item) %}
-                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.list.delete' | trans }}">
+                        <a href="#sure" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.list.delete' | trans }}">
                             <i class="fa fa-trash-o"></i>
                         </a>
                     {% endif %}
@@ -167,7 +167,7 @@
 </div>
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated', {
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap', {
 		'prev_message' : 'kuma_admin_list.pagerfanta.prev_message' | trans,
 		'next_message' : 'kuma_admin_list.pagerfanta.next_message' | trans
 		})

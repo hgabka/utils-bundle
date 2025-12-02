@@ -63,8 +63,8 @@ services:
         class: '%hgabka_utils.slugifier.class%'
 
     hgabka_utils.twig.extension:
-        class: Hgabka\UtilsBundle\Twig\UtilitiesTwigExtension
-        arguments: ['@hgabka_utils.slugifier']
+        class: Hgabka\UtilsBundle\Twig\Extension\UtilitiesTwigExtension
+        arguments: ['@hgabka_utils.slugifier', '@Hgabka\UtilsBundle\Helper\Formatter']
         tags:
             - { name: twig.extension }
 
@@ -128,6 +128,12 @@ services:
 
     hgabka_utils.form.recaptcha_type:
         class: Hgabka\UtilsBundle\Form\Type\RecaptchaType
+        arguments: ['']
+        tags:
+            - { name: form.type }
+
+    hgabka_utils.form.invisible_recaptcha_type:
+        class: Hgabka\UtilsBundle\Form\Type\InvisibleRecaptchaType
         arguments: ['']
         tags:
             - { name: form.type }
@@ -410,4 +416,56 @@ services:
         public: false
         autowire: true
         autoconfigure: true
-    
+ 
+    Hgabka\UtilsBundle\Security\Md5PasswordHasher:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Security\Sha1PasswordHasher:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Security\LoginManager:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $firewallMap: '@security.firewall.map'
+            
+    Hgabka\UtilsBundle\Security\UserChecker:
+        autowire: true
+        autoconfigure: true            
+
+    Hgabka\UtilsBundle\Helper\Formatter:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Form\Type\NumberRangeType:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Filter\NumberRangeFilter:
+        public: false
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: sonata.admin.filter.type }
+
+    Hgabka\UtilsBundle\Command\PromoteGeneralUserCommand:
+        autowire: true
+        autoconfigure: true
+        public: false
+        arguments:
+            $manager: '@doctrine.orm.entity_manager'
+            $generator: '@?maker.generator'
+
+    Hgabka\UtilsBundle\Command\DemoteGeneralUserCommand:
+        autowire: true
+        autoconfigure: true
+        public: false
+        arguments:
+            $manager: '@doctrine.orm.entity_manager'
+            $generator: '@?maker.generator'
