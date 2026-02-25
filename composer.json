@@ -18,7 +18,7 @@
         "symfony/acl-bundle": "^3.0",
         "symfony/framework-bundle": "^7.0",
         "liip/imagine-bundle": "^2.1",
-        "hgabka/doctrine-translatable-bundle": "^7.0",
+        "hgabka/doctrine-translatable-bundle": "^7.1",
         "google/apiclient": "^2.7",
         "guzzlehttp/guzzle": ">= 6.3",
         "symfony/webpack-encore-bundle": "^2.0",
