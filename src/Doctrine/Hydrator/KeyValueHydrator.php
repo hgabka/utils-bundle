@@ -28,7 +28,7 @@ class KeyValueHydrator extends AbstractHydrator
     protected function hydrateRowData(array $row, array &$result): void
     {
         if (0 === \count($row)) {
-            return false;
+            return;
         }
 
         $keys = array_keys($row);
@@ -43,7 +43,5 @@ class KeyValueHydrator extends AbstractHydrator
         }
 
         $result[$id] = $value;
-
-        return true;
     }
 }
