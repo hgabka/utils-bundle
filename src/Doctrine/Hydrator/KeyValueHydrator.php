@@ -13,7 +13,7 @@ class KeyValueHydrator extends AbstractHydrator
      *
      * @return array
      */
-    protected function hydrateAllData()
+    protected function hydrateAllData(): mixed
     {
         return $this->_stmt->fetchAllKeyValue();
     }
@@ -25,7 +25,7 @@ class KeyValueHydrator extends AbstractHydrator
      *
      * @return bool
      */
-    protected function hydrateRowData(array $row, array &$result)
+    protected function hydrateRowData(array $row, array &$result): void
     {
         if (0 === \count($row)) {
             return false;
