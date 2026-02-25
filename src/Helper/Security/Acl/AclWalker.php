@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Helper\Security\Acl;
 
+use Doctrine\ORM\Query\AST;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
@@ -16,7 +17,7 @@ class AclWalker extends SqlWalker
      *
      * @return string the SQL
      */
-    public function walkFromClause($fromClause)
+    public function walkFromClause(AST\FromClause $fromClause): string
     {
         $sql = parent::walkFromClause($fromClause);
         $tableAlias = $this->getSQLTableAlias($this->getQuery()->getHint('acl.entityRootTableName'), $this->getQuery()->getHint('acl.entityRootTableDqlAlias'));
