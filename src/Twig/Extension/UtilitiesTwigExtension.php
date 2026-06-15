@@ -29,7 +29,7 @@ class UtilitiesTwigExtension extends AbstractExtension
      */
     public function slugify(?string $text): ?string
     {
-        return $this->slugifier->slugify($text, '');
+        return null === $text ? null : $this->slugifier->slugify($text, '');
     }
 
     public function formatNumber($number, int $decimals = 0, string $decimalSeparator = ',', string $thousandsSeparator = ' '): string
