@@ -283,11 +283,6 @@ services:
         tags:
         -  { name: 'twig.extension' }
 
-    Hgabka\UtilsBundle\Datagrid\CustomDatagridBuilder:
-        public: true
-        arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
-        autowire: false
-
     hgabka_utils.asset.tag_renderer:
         class: Hgabka\UtilsBundle\Asset\TagRenderer
         arguments: ['@webpack_encore.entrypoint_lookup_collection', '@assets.packages', []]
