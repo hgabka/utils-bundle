@@ -13,7 +13,7 @@ class IndexedHydrator extends AbstractHydrator
      *
      * @return array
      */
-    protected function hydrateAllData()
+    protected function hydrateAllData(): mixed
     {
         return $this->_stmt->fetchAllAssociativeIndexed();
     }

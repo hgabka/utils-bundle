@@ -14,7 +14,7 @@ class CountHydrator extends AbstractHydrator
      *
      * @return array|mixed
      */
-    protected function hydrateAllData()
+    protected function hydrateAllData(): mixed
     {
         return (int) $this->_stmt->fetchOne();
     }
