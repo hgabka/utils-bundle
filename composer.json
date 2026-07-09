@@ -28,7 +28,7 @@
         "babdev/pagerfanta-bundle": "~4.0"
     },
     "require-dev": {
-        "phpunit/phpunit" : "4.*",
+        "phpunit/phpunit" : "^9.6",
         "mockery/mockery": "^0.9.4"
     },
     "autoload": {
