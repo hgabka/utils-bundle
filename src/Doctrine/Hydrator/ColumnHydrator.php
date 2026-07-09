@@ -13,7 +13,7 @@ class ColumnHydrator extends AbstractHydrator
      *
      * @return array|mixed
      */
-    protected function hydrateAllData()
+    protected function hydrateAllData(): mixed
     {
         return $this->_stmt->fetchFirstColumn();
     }
