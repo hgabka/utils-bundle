@@ -235,11 +235,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: hgabka_utils.onDeepCloneAndSave, method: onDeepCloneAndSave }
 
-    hgabka.utils.array.datagrid.builder:
-        class: Hgabka\UtilsBundle\Datagrid\ArrayDatagridBuilder
-        arguments: ['@form.factory', '@sonata.admin.builder.filter.factory', '@sonata.admin.guesser.orm_datagrid_chain', '%form.type_extension.csrf.enabled%']
-        public: true
-
 #    hgabka_utils.logger.processor.user:
 #        class: Hgabka\UtilsBundle\Helper\UserProcessor
 #        arguments: [ '@service_container' ]
@@ -275,7 +270,6 @@ services:
     Hgabka\UtilsBundle\Breadcrumb\BreadcrumbManager: "@hgabka_utils.breadcrumb_manager"
     Hgabka\UtilsBundle\Helper\Slugifier: '@hgabka_utils.slugifier'
     Hgabka\UtilsBundle\Helper\Number\RomanHelper: '@hgabka_utils.roman'
-    Hgabka\UtilsBundle\Datagrid\ArrayDatagridBuilder: '@hgabka.utils.array.datagrid.builder'
 
     hgabka_utils.menubuilder:
         alias: Hgabka\UtilsBundle\Helper\Menu\MenuBuilder
