@@ -19,7 +19,17 @@ class UtilitiesTwigExtension extends AbstractExtension
             new TwigFilter('slugify', $this->slugify(...)),
             new TwigFilter('utils_format_number', $this->formatNumber(...)),
             new TwigFilter('utils_format_price', $this->formatPrice(...)),
+            new TwigFilter('hg_spaceless', $this->spaceless(...), ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * Drop-in replacement for Twig's own deprecated "spaceless" filter,
+     * with identical behaviour (removes whitespace between HTML tags).
+     */
+    public function spaceless(string $content): string
+    {
+        return trim(preg_replace('/>\s+</', '><', $content));
     }
 
     /**
