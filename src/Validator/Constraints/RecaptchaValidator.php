@@ -34,7 +34,7 @@ class RecaptchaValidator extends ConstraintValidator
 
         $request = $this->requestStack->getCurrentRequest();
         $remoteip = $request->getClientIp();
-        $response = $request->get('g-recaptcha-response');
+        $response = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'g-recaptcha-response');
 
         $isValid = $this->checkAnswer($this->secret, $remoteip, $response, $constraint->mode, $constraint->action, $constraint->minimumScore);
         if (!$isValid) {

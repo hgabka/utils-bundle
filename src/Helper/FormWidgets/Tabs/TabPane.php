@@ -61,8 +61,8 @@ class TabPane
         $this->slugifier = new Slugifier();
         if ($request->request->get('currenttab')) {
             $this->activeTab = $request->request->get('currenttab');
-        } elseif ($request->get('currenttab')) {
-            $this->activeTab = $request->get('currenttab');
+        } elseif (\Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'currenttab')) {
+            $this->activeTab = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'currenttab');
         }
     }
 

@@ -768,7 +768,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_' . $request->get('_route');
+        $adminListName = 'listconfig_' . \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, '_route');
         $adminListName = str_replace('_set_pagesize', '', $adminListName);
 
         $this->page = $query->has('pagesize') ? 1 : $query->getInt('page', 1);

@@ -329,11 +329,6 @@ services:
         arguments:
             $userClass: '%hgabka_utils.backend_user_class%'
             
-    Hgabka\UtilsBundle\Security\AdminLoginAuthenticator:
-        public: false
-        autoconfigure: true
-        autowire: true
-         
     Hgabka\UtilsBundle\Form\AdminLoginForm:
         public: false
         autowire: true

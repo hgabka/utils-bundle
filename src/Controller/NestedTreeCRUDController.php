@@ -38,7 +38,7 @@ class NestedTreeCRUDController extends CRUDController
         $em = $this->doctrine;
         $repo = $em->getRepository($class);
 
-        $folderId = $request->get($this->admin->getIdParameter());
+        $folderId = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, $this->admin->getIdParameter());
 
         // @var Folder $folder
         $folder = empty($folderId) ? $repo->findOneBy(['parent' => null]) : $repo->find($folderId);
@@ -99,8 +99,8 @@ class NestedTreeCRUDController extends CRUDController
     {
         $this->admin->checkAccess('reorder');
         $folders = [];
-        $nodeIds = $request->get('nodes');
-        $changeParents = $request->get('parent');
+        $nodeIds = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'nodes');
+        $changeParents = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'parent');
 
         $em = $this->doctrine->getManager();
         $class = $this->admin->getClass();
@@ -208,7 +208,7 @@ class NestedTreeCRUDController extends CRUDController
     {
         $this->assertObjectExists($request, true);
 
-        $id = $request->get($this->admin->getIdParameter());
+        $id = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, $this->admin->getIdParameter());
         \assert(null !== $id);
         $object = $this->admin->getObject($id);
         \assert(null !== $object);

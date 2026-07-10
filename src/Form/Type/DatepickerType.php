@@ -19,7 +19,7 @@ class DatepickerType extends AbstractType
         'js-options' => [],
     ];
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($transform) {
@@ -42,7 +42,7 @@ class DatepickerType extends AbstractType
         $builder->setAttribute('data-options', json_encode($options['js-options']));
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         foreach (array_keys($this->jsOpts) as $optName) {
             $view->vars[$optName] = $options[$optName];
@@ -53,18 +53,18 @@ class DatepickerType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults($this->jsOpts);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'hgabka_datepicker';
     }

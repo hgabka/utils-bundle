@@ -2,8 +2,7 @@
     "name": "hgabka/utils-bundle",
     "type": "symfony-bundle",
     "description": "Utils bundle",
-    "keywords": [
-    ],
+    "keywords": [],
     "homepage": "https://github.com/hgabka/utils-bundle",
     "license": "proprietary",
     "authors": [
@@ -17,9 +16,9 @@
         "php": "^8.2",
         "behat/transliterator": "^1.5",
         "symfony/acl-bundle": "^2.0",
-        "symfony/framework-bundle": "^7.0",
+        "symfony/framework-bundle": "^7.0|^8.0",
         "liip/imagine-bundle": "^2.1",
-        "hgabka/doctrine-translatable-bundle": "^7.1",
+        "hgabka/doctrine-translatable-bundle": "^7.1|^8.1",
         "google/apiclient": "^2.7",
         "guzzlehttp/guzzle": ">= 6.3",
         "symfony/webpack-encore-bundle": "^2.0",
@@ -28,7 +27,7 @@
         "babdev/pagerfanta-bundle": "~4.0"
     },
     "require-dev": {
-        "phpunit/phpunit" : "^9.6",
+        "phpunit/phpunit": "^9.6",
         "mockery/mockery": "^0.9.4"
     },
     "autoload": {
@@ -46,7 +45,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.0-dev",
+            "dev-v8": "8.1.x-dev"
         }
     }
 }

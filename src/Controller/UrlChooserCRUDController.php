@@ -68,7 +68,7 @@ class UrlChooserCRUDController extends CRUDController
         // the key used to lookup the template
         $templateKey = 'edit';
 
-        $id = $request->get($this->admin->getIdParameter());
+        $id = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, $this->admin->getIdParameter());
         $existingObject = $this->admin->getObject($id);
 
         if (!$existingObject) {
