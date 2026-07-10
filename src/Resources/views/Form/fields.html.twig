@@ -183,7 +183,9 @@
 {% block form_widget_simple %}
     {% apply spaceless %}
         {% set type = type|default('text') %}
-        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+        {% if type != 'file' %}
+            {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+        {% endif %}
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
         {% if attr['maxlength'] is defined %}
             <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
