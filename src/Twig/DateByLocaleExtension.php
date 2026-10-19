@@ -4,6 +4,7 @@ namespace Hgabka\UtilsBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * DateByLocaleExtension.

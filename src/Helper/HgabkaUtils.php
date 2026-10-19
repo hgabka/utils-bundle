@@ -1001,7 +1001,7 @@ class HgabkaUtils
             $this->createDateTime($from),
             new \DateInterval($interval ?: 'P1D'),
             $this->createDateTime($to),
-            $intervalOptions
+            $intervalOptions ?? 0
         );
 
         if ($returnArray) {

@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Form;
 
+use Hgabka\UtilsBundle\Entity\Role;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +33,7 @@ class GroupType extends AbstractType
                 EntityType::class,
                 [
                     'label' => 'settings.group.roles',
-                    'class' => 'KunstmaanAdminBundle:Role',
+                    'class' => Role::class,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('r')
                             ->orderBy('r.name', 'ASC');

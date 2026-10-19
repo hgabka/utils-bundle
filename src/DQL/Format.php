@@ -3,7 +3,7 @@
 namespace Hgabka\UtilsBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
-use Doctrine\ORM\Query\Lexer;
+use Doctrine\ORM\Query\TokenType;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
@@ -20,15 +20,15 @@ class Format extends FunctionNode
     public function parse(Parser $parser): void
     {
         $lexer = $parser->getLexer();
-        $parser->match(Lexer::T_IDENTIFIER);
-        $parser->match(Lexer::T_OPEN_PARENTHESIS);
+        $parser->match(TokenType::T_IDENTIFIER);
+        $parser->match(TokenType::T_OPEN_PARENTHESIS);
         $this->arithmeticExpression = $parser->SimpleArithmeticExpression();
         // parse second parameter if available
-        if (Lexer::T_COMMA === $lexer->lookahead->type) {
-            $parser->match(Lexer::T_COMMA);
+        if (TokenType::T_COMMA === $lexer->lookahead->type) {
+            $parser->match(TokenType::T_COMMA);
             $this->decimals = $parser->ArithmeticPrimary();
         }
-        $parser->match(Lexer::T_CLOSE_PARENTHESIS);
+        $parser->match(TokenType::T_CLOSE_PARENTHESIS);
     }
 
     public function getSql(SqlWalker $sqlWalker): string

@@ -3,11 +3,11 @@
 namespace Hgabka\UtilsBundle\AdminList\Configurator;
 
 use InvalidArgumentException;
-use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\Field;
-use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Hgabka\UtilsBundle\AdminList\BulkAction\BulkActionInterface;
+use Hgabka\UtilsBundle\AdminList\Field;
+use Hgabka\UtilsBundle\AdminList\FilterBuilder;
+use Hgabka\UtilsBundle\AdminList\ItemAction\ItemActionInterface;
+use Hgabka\UtilsBundle\AdminList\ListAction\ListActionInterface;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 

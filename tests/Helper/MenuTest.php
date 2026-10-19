@@ -133,6 +133,17 @@ class MenuTest extends TestCase
         $this->assertNull($builder->getLowestTopChild());
     }
 
+    public function testTopLevelItemsCanBeActiveWithoutAParent(): void
+    {
+        $builder = $this->builder($this->request('dashboard'));
+        $builder->addAdaptMenu($this->simpleAdaptor());
+
+        $top = $builder->getTopChildren();
+
+        $this->assertTrue($top[0]->getActive());
+        $this->assertSame('Dashboard', $builder->getCurrent()->getLabel());
+    }
+
     public function testAdaptorsRunInPriorityOrder(): void
     {
         $order = [];

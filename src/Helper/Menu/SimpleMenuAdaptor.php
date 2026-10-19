@@ -32,7 +32,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
      * @param null|MenuItem $parent    The parent Menu item
      * @param Request       $request   The Request
      */
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
+    public function adaptChildren(MenuBuilder $menu, array &$children, ?MenuItem $parent = null, ?Request $request = null)
     {
         foreach ($this->menuItems as $item) {
             if (false === $this->parentMatches($parent, $item)) {
@@ -52,7 +52,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
 
             if ($request && 0 === stripos($request->attributes->get('_route'), $menuItem->getRoute())) {
                 $menuItem->setActive(true);
-                $parent->setActive(true);
+                $parent?->setActive(true);
             }
 
             $children[] = $menuItem;
@@ -65,7 +65,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
      *
      * @return bool
      */
-    private function parentMatches(MenuItem $parent = null, $item)
+    private function parentMatches(?MenuItem $parent, $item)
     {
         if (null === $parent) {
             return null === $item['parent'];

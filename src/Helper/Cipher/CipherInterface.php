@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
+namespace Hgabka\UtilsBundle\Helper\Cipher;
 
 /**
  * Cipher interface, classes which extends this interface will make it possible to encrypt and decrypt string values.

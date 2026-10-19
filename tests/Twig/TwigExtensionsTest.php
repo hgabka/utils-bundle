@@ -17,6 +17,7 @@ class TwigExtensionsTest extends TestCase
     {
         $twig = new Environment(new ArrayLoader(['t' => $template]), ['autoescape' => 'html']);
         $twig->addExtension(new UtilitiesTwigExtension(new Slugifier(), new Formatter($this->createStub(HgabkaUtils::class))));
+        $twig->addExtension(new DateByLocaleExtension());
 
         return $twig;
     }
@@ -55,5 +56,17 @@ class TwigExtensionsTest extends TestCase
         $this->assertSame('2024. március 5.', DateByLocaleExtension::localeDateFilter($date, 'hu', 'long'));
         $this->assertSame('March 5, 2024', DateByLocaleExtension::localeDateFilter($date, 'en', 'long'));
         $this->assertSame('05/03/2024 13:14', DateByLocaleExtension::localeDateFilter($date, 'hu', 'none', 'none', 'dd/MM/yyyy HH:mm'));
+    }
+
+    public function testLocaleDateFilterInTemplates(): void
+    {
+        $twig = $this->twig("{{ date|localeDate('en', 'long') }}");
+
+        $this->assertSame('March 5, 2024', $twig->render('t', ['date' => new \DateTime('2024-03-05 10:00:00', new \DateTimeZone('Europe/Brussels'))]));
+    }
+
+    public function testDateExtensionRegistersTheFilter(): void
+    {
+        $this->assertSame(['localeDate'], array_map(static fn ($f) => $f->getName(), (new DateByLocaleExtension())->getFilters()));
     }
 }

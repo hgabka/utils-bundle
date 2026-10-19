@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
+namespace Hgabka\UtilsBundle\Helper\Cipher;
 
 /**
  * Cipher, this class can be used to encrypt string values to a format which is safe to use in urls.

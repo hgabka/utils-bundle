@@ -3,6 +3,7 @@
 namespace Hgabka\UtilsBundle\Tests\Helper;
 
 use Hgabka\UtilsBundle\Helper\ClassLookup;
+use Hgabka\UtilsBundle\Tests\Fixtures\ProxyStub;
 use Hgabka\UtilsBundle\Helper\RequestHelper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,16 @@ class ClassLookupTest extends TestCase
     public function testClassOfAPlainObject(): void
     {
         $this->assertSame(\stdClass::class, ClassLookup::getClass(new \stdClass()));
+    }
+
+    public function testProxyClassesResolveToTheirParent(): void
+    {
+        $this->assertSame(\ArrayObject::class, ClassLookup::getClass(new ProxyStub()));
+    }
+
+    public function testNonObjectsAreRejected(): void
+    {
+        $this->assertFalse(ClassLookup::getClass('string'));
     }
 
     public function testClassNameWithoutNamespace(): void

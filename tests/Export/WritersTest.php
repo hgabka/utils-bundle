@@ -101,6 +101,34 @@ class WritersTest extends TestCase
         return [[0, 'A'], [1, 'B'], [25, 'Z'], [26, 'AA'], [27, 'AB'], [51, 'AZ'], [52, 'BA'], [701, 'ZZ'], [702, 'AAA']];
     }
 
+    public function testXmlWriterWithCdata(): void
+    {
+        $writer = new XmlWriter($this->file, 'people', 'person');
+
+        $writer->open();
+        $writer->write(['name' => 'Ann & Co', 'address' => ['city' => 'Pécs', 'geo' => ['lat' => '1']]]);
+        $writer->close();
+
+        $xml = simplexml_load_file($this->file);
+        $this->assertSame('people', $xml->getName());
+        $this->assertSame('Ann & Co', (string) $xml->person->name);
+        $this->assertSame('Pécs', (string) $xml->person->address->city);
+        $this->assertSame('1', (string) $xml->person->address->geo->lat);
+        $this->assertStringContainsString('<![CDATA[Ann & Co]]>', file_get_contents($this->file));
+    }
+
+    public function testXmlWriterWithoutCdataEscapesValues(): void
+    {
+        $writer = new XmlWriter($this->file, 'people', 'person', false);
+
+        $writer->open();
+        $writer->write(['name' => 'Ann & <Co>']);
+        $writer->close();
+
+        $this->assertSame('Ann & <Co>', (string) simplexml_load_file($this->file)->person->name);
+        $this->assertStringNotContainsString('CDATA', file_get_contents($this->file));
+    }
+
     public function testXmlMetadata(): void
     {
         $writer = new XmlWriter($this->file, 'r', 'x');

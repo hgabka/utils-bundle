@@ -151,7 +151,7 @@ class BreadcrumbManager implements IteratorAggregate, Countable
      *
      * @return BreadCrumbManager
      */
-    public function setExternalLabel($label): Breadcrumb
+    public function setExternalLabel($label): static
     {
         if (null !== $this->waitingForLabel) {
             $this->waitingForLabel->setLabel($label);

@@ -36,6 +36,7 @@ class EnumTypeTest extends TestCase
     public function testColumnDeclaration(): void
     {
         $this->assertSame('TEXT', $this->type->getSQLDeclaration([], $this->platform));
+        $this->assertSame('suit', $this->type->getName());
         $this->assertSame(Suit::class, SuitType::getEnumClass());
     }
 }

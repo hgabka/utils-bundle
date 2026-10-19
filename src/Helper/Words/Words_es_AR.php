@@ -1,8 +1,8 @@
 <?php
 
-namespace Hgabka\KunstmaanExtensionBundle\Helper\Words;
+namespace Hgabka\UtilsBundle\Helper\Words;
 
-use Hgabka\KunstmaanExtensionBundle\Helper\Number\Words;
+use Hgabka\UtilsBundle\Helper\Number\Words;
 
 /**
  * Class for translating numbers into Argentinian Spanish.

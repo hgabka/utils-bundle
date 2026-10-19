@@ -150,6 +150,15 @@ class BreadcrumbTest extends TestCase
         $this->assertFalse($manager->isEmpty());
     }
 
+    public function testExternalLabelIsAppliedToTheCurrentRouteBreadcrumb(): void
+    {
+        $manager = $this->manager('cart')->setAddHomepage(false);
+        $manager->addCurrentRoute();
+
+        $this->assertSame($manager, $manager->setExternalLabel('Kosár'));
+        $this->assertSame('Kosár', $manager->getBreadcrumbs()[0]->getLabel());
+    }
+
     public function testPredefinedLabel(): void
     {
         $this->assertSame('breadcrumb.some_route', $this->manager()->getPredefinedLabel('some_route'));

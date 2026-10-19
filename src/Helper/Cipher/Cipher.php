@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
+namespace Hgabka\UtilsBundle\Helper\Cipher;
 
 use InvalidArgumentException;
 
@@ -9,6 +9,12 @@ use InvalidArgumentException;
  */
 class Cipher implements CipherInterface
 {
+    /**
+     * The old mcrypt (Rijndael-256) based implementation does not exist any more on PHP 7.2+,
+     * values encrypted with it cannot be decrypted by this class.
+     */
+    private const METHOD = 'aes-256-cbc';
+
     /**
      * @var string
      */
@@ -34,7 +40,9 @@ class Cipher implements CipherInterface
      */
     public function encrypt($value)
     {
-        return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($this->secret), $value, MCRYPT_MODE_CBC, md5(md5($this->secret))));
+        $encrypted = openssl_encrypt((string) $value, self::METHOD, $this->getKey(), \OPENSSL_RAW_DATA, $this->getIv());
+
+        return base64_encode($encrypted);
     }
 
     /**
@@ -46,6 +54,21 @@ class Cipher implements CipherInterface
      */
     public function decrypt($value)
     {
-        return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($this->secret), base64_decode($value, true), MCRYPT_MODE_CBC, md5(md5($this->secret))), "\0");
+        $decoded = base64_decode((string) $value, true);
+        if (false === $decoded) {
+            return false;
+        }
+
+        return openssl_decrypt($decoded, self::METHOD, $this->getKey(), \OPENSSL_RAW_DATA, $this->getIv());
+    }
+
+    private function getKey(): string
+    {
+        return md5($this->secret);
+    }
+
+    private function getIv(): string
+    {
+        return substr(md5(md5($this->secret)), 0, 16);
     }
 }
