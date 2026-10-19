@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\Helper;
+namespace Hgabka\UtilsBundle\Helper;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Pagerfanta\Adapter\AdapterInterface;

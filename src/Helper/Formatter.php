@@ -2,6 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Helper;
 
+use DateTimeInterface;
 use IntlDateFormatter;
 use IntlTimeZone;
 
@@ -49,7 +50,7 @@ class Formatter
 
     public function getRag(int $szam): string
     {
-        $utso = $szam[strlen($szam) - 1];
+        $utso = (int) substr((string) $szam, -1);
 
         switch ($utso) {
             case 0:

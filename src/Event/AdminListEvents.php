@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgabka\UtilsBundleBundle\Event;
+namespace Hgabka\UtilsBundle\Event;
 
 class AdminListEvents
 {

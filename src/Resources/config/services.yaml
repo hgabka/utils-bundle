@@ -356,6 +356,21 @@ services:
         autowire: true
         autoconfigure: true
 
+    Hgabka\UtilsBundle\Command\ActivateUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\DeactivateUserCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\UtilsBundle\Command\ChangePasswordCommand:
+        public: false
+        autowire: true
+        autoconfigure: true
+
     Hgabka\UtilsBundle\Command\UpdateAclCommand:
         public: false
         autowire: true

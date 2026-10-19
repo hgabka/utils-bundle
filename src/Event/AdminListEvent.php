@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\Event;
+namespace Hgabka\UtilsBundle\Event;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

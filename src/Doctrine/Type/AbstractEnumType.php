@@ -10,7 +10,7 @@ abstract class AbstractEnumType extends Type implements EnumTypeInterface
 {
     public function getName(): string
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string

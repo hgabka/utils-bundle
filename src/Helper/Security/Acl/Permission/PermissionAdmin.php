@@ -175,7 +175,7 @@ class PermissionAdmin
      */
     public function getAllRoles()
     {
-        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        return $this->em->getRepository(Role::class)->findAll();
     }
 
     /**

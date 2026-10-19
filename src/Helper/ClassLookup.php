@@ -2,7 +2,7 @@
 
 namespace Hgabka\UtilsBundle\Helper;
 
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 
 /**
  * Helper for looking up the classname, not the ORM proxy.
@@ -18,6 +18,10 @@ class ClassLookup
      */
     public static function getClass($object)
     {
+        if (!\is_object($object)) {
+            return false;
+        }
+
         return ($object instanceof Proxy) ? get_parent_class($object) : \get_class($object);
     }
 

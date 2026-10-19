@@ -34,10 +34,10 @@ class Words
             $locale = 'en_US';
         }
 
-        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_${locale}";
+        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_{$locale}";
 
         if (!class_exists($classname)) {
-            return $this->raiseError("Unable to include the Numbers/Words/lang.${locale}.php file");
+            return $this->raiseError("Unable to include the Numbers/Words/lang.{$locale}.php file");
         }
 
         $methods = get_class_methods($classname);
@@ -99,10 +99,10 @@ class Words
     {
         $ret = $num;
 
-        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_${locale}";
+        $classname = "Hgabka\UtilsBundle\Helper\Words\Words_{$locale}";
 
         if (!class_exists($classname)) {
-            return $this->raiseError("Unable to include the Numbers/Words/lang.${locale}.php file");
+            return $this->raiseError("Unable to include the Numbers/Words/lang.{$locale}.php file");
         }
 
         $methods = get_class_methods($classname);
