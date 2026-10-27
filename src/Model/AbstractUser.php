@@ -203,7 +203,7 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     }
 
     /**
-     * @return false
+     * @return bool
      */
     public function isEnabled(): bool
     {
