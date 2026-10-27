@@ -6,6 +6,11 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @template T of object
+ *
+ * @extends AbstractAdmin<T>
+ */
 abstract class NestedTreeAdmin extends AbstractAdmin
 {
     protected $accessMapping = [
