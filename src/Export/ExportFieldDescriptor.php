@@ -42,7 +42,7 @@ class ExportFieldDescriptor
 
     /**
      * @param       $key
-     * @param null  $type
+     * @param null|string $type
      * @param array $options
      *
      * @return $this
