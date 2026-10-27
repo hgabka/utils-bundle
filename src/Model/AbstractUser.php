@@ -211,9 +211,9 @@ abstract class AbstractUser implements UserInterface, SecurityUserInterface, Pas
     }
 
     /**
-     * @param false $enabled
+     * @param bool $enabled
      *
-     * @return User
+     * @return static
      */
     public function setEnabled(bool $enabled): static
     {
