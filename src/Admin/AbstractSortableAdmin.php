@@ -6,6 +6,11 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
+/**
+ * @template T of object
+ *
+ * @extends AbstractAdmin<T>
+ */
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
     /**

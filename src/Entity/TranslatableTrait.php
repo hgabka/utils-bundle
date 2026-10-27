@@ -6,6 +6,9 @@ use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\Entity\TranslatableTrait as BaseTranslatableTrait;
 use Hgabka\Doctrine\Translatable\TranslationInterface;
 
+/**
+ * @template T of TranslationInterface
+ */
 trait TranslatableTrait
 {
     use BaseTranslatableTrait;
@@ -33,6 +36,9 @@ trait TranslatableTrait
         return $this;
     }
 
+    /**
+     * @return null|T
+     */
     public function translate(?string $locale = null): ?TranslationInterface
     {
         if (null === $locale) {
