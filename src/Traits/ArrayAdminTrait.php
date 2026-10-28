@@ -2,17 +2,8 @@
 
 namespace Hgabka\UtilsBundle\Traits;
 
-use Hgabka\UtilsBundle\Datagrid\ArrayDatagridBuilder;
-
 trait ArrayAdminTrait
 {
-    public function getDatagridBuilder()
-    {
-        $container = $this->getConfigurationPool()->getContainer();
-
-        return $container->get(ArrayDatagridBuilder::class);
-    }
-
     public function getTemplate($name)
     {
         if ('inner_list_row' === $name) {
