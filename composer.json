@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": "^8.2",
+        "doctrine/orm": "^3.7",
         "behat/transliterator": "^1.5",
         "symfony/acl-bundle": "^2.0",
         "symfony/framework-bundle": "^7.0|^8.0",

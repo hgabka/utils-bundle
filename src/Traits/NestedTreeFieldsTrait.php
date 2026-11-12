@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use SortDirection;
 
 trait NestedTreeFieldsTrait
 {
@@ -32,7 +33,7 @@ trait NestedTreeFieldsTrait
     private ?self $parent = null;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => SortDirection::Ascending])]
     private ?Collection $children;
 
     public function __construct()
