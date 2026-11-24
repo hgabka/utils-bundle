@@ -15,6 +15,20 @@ Hgabka\UtilsBundle\HgabkaUtilsBundle::class => ['all' => true],
 
 Főbb függőségek: `hgabka/doctrine-translatable-bundle`, `liip/imagine-bundle`, `pagerfanta`, `phpoffice/phpspreadsheet`, `google/apiclient`, `symfony/webpack-encore-bundle`. A bundle a konténerben elvárja a `requiredlocales` (`hu|en` formátumú) és a `defaultlocale` paramétereket, ezekből képzi a `hgabka_utils.available_locales`, `hgabka_utils.admin_locales` és `hgabka_utils.default_admin_locale` paramétereket.
 
+### Repók
+
+A hgabka csomagok nem szerepelnek a Packagiten, ezért a projekt `composer.json`-jában fel kell venni a repóikat (a függőségek saját `repositories` mezőjét a Composer nem olvassa). A repók nyilvánosak, az `https` url-ekhez nem kell SSH kulcs. Aki GitHub SSH kulccsal dolgozik, használhatja a `git@github.com:hgabka/<név>.git` url-eket is. Kulcs nélkül az anonim GitHub API kérés-limit (60/óra) miatt a Composer előbb-utóbb tokent kérhet.
+
+```json
+"repositories": [
+    {"type": "vcs", "url": "https://github.com/hgabka/utils-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/doctrine-translatable.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/doctrine-translatable-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/acl-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/security-acl.git"}
+]
+```
+
 ## Konfiguráció
 
 ```yaml
@@ -247,3 +261,16 @@ Ha nincs megadva priority, akkor az 'low'-nak számít.
                 ],
             ])
 ```
+
+## Tesztek
+
+A `require-dev` tartalmazza a szükséges csomagokat, a hgabka bundle-ök repóit a `composer.json` `repositories` szekciója adja, így a bundle önmagában is telepíthető és tesztelhető (a `git@github.com:...` url-ekhez SSH kulcs kell, kulcs nélkül cseréld őket `https://github.com/...`-ra):
+
+```bash
+composer install
+vendor/bin/phpunit
+```
+
+## Licenc
+
+MIT, lásd: [LICENSE](LICENSE).
